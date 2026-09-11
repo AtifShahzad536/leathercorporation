@@ -62,7 +62,7 @@ export default function ClothingShowcase() {
         >
           {/* Background image */}
           <img
-            src="https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=2200&auto=format&fit=crop"
+            src="/leatherboys.png"
             alt="Leader Corporation Leather Jackets Collection"
             className="absolute inset-0 w-full h-full object-cover object-center"
             draggable={false}
