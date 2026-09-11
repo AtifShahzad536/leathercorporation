@@ -2,8 +2,8 @@ import React from 'react';
 
 export default function GoalkeeperGlovesSection() {
   const videos = [
-    "https://www.select-sport.com/cdn/shop/videos/c/vp/05b072ff0f6547d0ac4a35024391ff3f/05b072ff0f6547d0ac4a35024391ff3f.HD-1080p-7.2Mbps-22875215.mp4?v=0",
-    "https://www.select-sport.com/cdn/shop/videos/c/vp/a15a4f58c7c84e6a8ff37c206633d943/a15a4f58c7c84e6a8ff37c206633d943.HD-1080p-7.2Mbps-75294252.mp4?v=0"
+    "/leaderhero.mp4",
+    "/herovideo.mp4"
   ];
 
   return (
