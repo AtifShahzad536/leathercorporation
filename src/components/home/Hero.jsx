@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const VIDEO_URL = '/leaderhero.mp4';
 
-const Hero = () => {
+const Hero = ({ onExplore = () => {} }) => {
   return (
     <section className="relative w-full overflow-hidden bg-[var(--secondary)] h-[38svh] md:h-[100svh]">
 
@@ -34,9 +34,10 @@ const Hero = () => {
             </h1>
   
             <motion.button
+              onClick={onExplore}
               whileHover={{ scale: 1.05, backgroundColor: '#F26522', color: '#1E1B6E', borderColor: '#F26522' }}
               whileTap={{ scale: 0.97 }}
-              className="border border-white bg-transparent text-white font-semibold tracking-widest uppercase text-[9px] md:text-sm px-4 py-2 md:px-10 md:py-4 transition-all duration-300 shadow-xl"
+              className="border border-white bg-transparent text-white font-semibold tracking-widest uppercase text-[9px] md:text-sm px-4 py-2 md:px-10 md:py-4 transition-all duration-300 shadow-xl cursor-pointer"
             >
               Explore 2025/2026 Heritage Leather Collection
             </motion.button>

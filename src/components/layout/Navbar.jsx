@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { Search, Globe, ChevronDown, Menu } from 'lucide-react';
+import { Search, Globe, ChevronDown, Menu, ShoppingBag, Sparkles, Building2, BookOpen } from 'lucide-react';
 import MobileMenu from './MobileMenu';
 import SearchOverlay from './SearchOverlay';
 import NavbarDropdown from './NavbarDropdown';
+import { useCart } from '../../context/CartContext';
 
-const Navbar = () => {
+const Navbar = ({ onNavigate = () => {} }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const { totalItems, setCartOpen } = useCart();
 
   const drawerData = {
     PRODUCTS: {
@@ -167,12 +169,71 @@ const Navbar = () => {
     'ABOUT US'
   ];
 
+  const handleNavLinkClick = (link) => {
+    if (link === 'PRODUCTS') {
+      onNavigate('products', 'ALL JACKETS');
+    } else if (link === 'LEATHER STYLES') {
+      onNavigate('styles');
+    } else if (link === 'EXPLORE') {
+      onNavigate('explore');
+    } else if (link === 'PARTNER WITH US') {
+      onNavigate('inquiry');
+    } else if (link === 'COMPLIANCE') {
+      onNavigate('compliance');
+    } else if (link === 'CERTIFICATION') {
+      onNavigate('certification');
+    } else if (link === 'ABOUT US') {
+      onNavigate('about');
+    }
+    setActiveDropdown(null);
+  };
+
   return (
     <>
+      {/* ── TOP UTILITY & ANNOUNCEMENT BAR (Matches theme) ───────────────── */}
+      <div className="w-full bg-[var(--secondary)] text-white border-b border-white/10 py-1.5 z-50">
+        <div className="w-[92%] mx-auto flex items-center justify-between gap-4">
+          
+          {/* Left Tagline */}
+          <div className="flex items-center gap-2 text-[9.5px] sm:text-[10.5px] font-semibold tracking-wider uppercase text-white/80">
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse flex-shrink-0" />
+            <span className="hidden sm:inline">EST. 1947 • MASTER LEATHER APPAREL & BESPOKE ATELIER</span>
+            <span className="sm:hidden">LEADER LEATHER ATELIER</span>
+          </div>
+
+          {/* Right Action Buttons: Catalog & B2B Quote */}
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            {/* Catalog Button in Topbar */}
+            <button
+              onClick={() => onNavigate('products')}
+              className="px-2.5 py-1 bg-white/10 hover:bg-[var(--accent)] text-white text-[9.5px] sm:text-[10.5px] font-bold tracking-wider uppercase rounded-[3px] transition-all flex items-center gap-1 cursor-pointer border border-white/15"
+            >
+              <BookOpen size={11} />
+              <span>Catalog</span>
+            </button>
+
+            {/* B2B Quote / Wholesale Button in Topbar */}
+            <button
+              onClick={() => onNavigate('inquiry')}
+              className="px-2.5 py-1 bg-[var(--accent)] hover:bg-[var(--accent)]/90 text-white text-[9.5px] sm:text-[10.5px] font-bold tracking-wider uppercase rounded-[3px] transition-all flex items-center gap-1 cursor-pointer shadow-sm"
+            >
+              <Building2 size={11} />
+              <span>B2B Quote</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      {/* ── MAIN STICKY NAVIGATION BAR ───────────────────────────────────── */}
       <nav className="sticky top-0 z-50 w-full bg-[var(--primary)]/95 backdrop-blur-sm border-b border-[var(--secondary)]/10">
         <div className="w-[92%] mx-auto h-16 md:h-20 flex items-center justify-between">
 
-          <div className="flex items-center gap-3 group cursor-pointer flex-shrink-0">
+          {/* Logo */}
+          <div 
+            onClick={() => onNavigate('home')}
+            className="flex items-center gap-3 group cursor-pointer flex-shrink-0"
+          >
             <div className="relative w-9 h-9 md:w-11 md:h-11 flex items-center justify-center overflow-hidden">
               <img
                 src="/logo_silverstar1.png"
@@ -180,9 +241,6 @@ const Navbar = () => {
                 className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
               />
             </div>
-            {/* <span className="text-base md:text-lg font-bold tracking-tight text-gray-900 mt-0.5 whitespace-nowrap">
-              Leader Corporation
-            </span> */}
           </div>
 
           {/* Desktop Navigation Links — hidden below lg */}
@@ -200,7 +258,10 @@ const Navbar = () => {
                 }}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <div className="flex items-center gap-1 h-full whitespace-nowrap">
+                <div 
+                  className="flex items-center gap-1 h-full whitespace-nowrap"
+                  onClick={() => handleNavLinkClick(link)}
+                >
                   <span className={`nav-link text-[10px] xl:text-[11px] font-semibold tracking-[0.08em] xl:tracking-[0.12em] whitespace-nowrap transition-all duration-300 ${activeDropdown === link ? 'text-[var(--accent)] font-bold' : 'text-[var(--secondary)]'}`}>
                     {link}
                   </span>
@@ -218,38 +279,66 @@ const Navbar = () => {
                   activeLink={link}
                   data={drawerData[link]}
                   onClose={() => setActiveDropdown(null)}
+                  onSelectCategory={(catName) => {
+                    if (link === 'PARTNER WITH US') {
+                      onNavigate('inquiry', catName);
+                    } else if (link === 'EXPLORE') {
+                      onNavigate('explore', catName);
+                    } else if (link === 'ABOUT US') {
+                      onNavigate('about', catName);
+                    } else if (link === 'LEATHER STYLES') {
+                      onNavigate('styles', catName);
+                    } else {
+                      onNavigate('products', catName);
+                    }
+                    setActiveDropdown(null);
+                  }}
                   alignRight={idx >= navLinks.length - 3}
                 />
               </div>
             ))}
           </div>
 
-          {/* Right Section */}
+          {/* Right Section: International, Search & Cart */}
           <div className="flex items-center gap-3 md:gap-4 lg:gap-5 flex-shrink-0">
             {/* Language — desktop only */}
             <div className="hidden lg:flex items-center gap-2 cursor-pointer hover:opacity-70 transition-opacity">
               <div className="w-5 h-5 rounded-[3px] overflow-hidden flex items-center justify-center bg-blue-600">
                 <Globe size={14} className="text-white" />
               </div>
-              <span className="text-xs font-normal flex items-center gap-1">
-                International
+              <span className="text-[13px] font-semibold flex items-center gap-1 text-[var(--secondary)]">
+                International <ChevronDown size={12} />
               </span>
             </div>
 
-            {/* Search — always visible */}
+            {/* Search Icon */}
             <button
               id="search-toggle"
-              className="p-2 hover:bg-gray-100 rounded-[3px] transition-colors"
+              className="p-2 hover:bg-gray-100 rounded-[3px] transition-colors cursor-pointer"
               onClick={() => setSearchOpen(true)}
               aria-label="Open search"
             >
               <Search size={20} strokeWidth={1.5} className="md:w-[22px] md:h-[22px] text-[var(--secondary)]" />
             </button>
 
-            {/* Hamburger — visible on mobile & tablet (< lg) */}
+            {/* Shopping Cart Button with live Badge */}
+            <button
+              onClick={() => setCartOpen(true)}
+              className="relative p-2 hover:bg-gray-100 rounded-[3px] transition-colors cursor-pointer"
+              aria-label="Shopping Cart"
+            >
+              <ShoppingBag size={20} strokeWidth={1.5} className="md:w-[22px] md:h-[22px] text-[var(--secondary)]" />
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-[var(--accent)] text-white text-[9px] font-black rounded-full flex items-center justify-center shadow-sm">
+                  {totalItems}
+                </span>
+              )}
+            </button>
+
+            {/* Hamburger for mobile */}
             <button
               id="mobile-menu-toggle"
-              className="lg:hidden flex flex-col items-center justify-center w-10 h-10 rounded-[3px] hover:bg-gray-100 transition-colors gap-[5px]"
+              className="lg:hidden flex flex-col items-center justify-center w-10 h-10 rounded-[3px] hover:bg-gray-100 transition-colors gap-[5px] cursor-pointer"
               onClick={() => setMobileMenuOpen(true)}
               aria-label="Open menu"
             >
@@ -257,22 +346,28 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-
-        {/* Desktop Dropdown logic is now localized inside the link loop */}
       </nav>
 
-      {/* Mobile / Tablet Menu — rendered outside <nav> to avoid z-index clipping */}
+      {/* Mobile / Tablet Menu */}
       <MobileMenu
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
         navLinks={navLinks}
         drawerData={drawerData}
+        onNavigate={(page, cat) => {
+          onNavigate(page, cat);
+          setMobileMenuOpen(false);
+        }}
       />
 
       {/* Search Overlay */}
       <SearchOverlay
         isOpen={searchOpen}
         onClose={() => setSearchOpen(false)}
+        onSelectSearch={(term) => {
+          onNavigate('products', 'ALL JACKETS', term);
+          setSearchOpen(false);
+        }}
       />
     </>
   );

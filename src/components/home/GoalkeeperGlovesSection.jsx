@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function GoalkeeperGlovesSection() {
+export default function GoalkeeperGlovesSection({ onExplore = () => {} }) {
   const videos = [
     "/leaderhero.mp4",
     "/herovideo.mp4"
@@ -38,7 +38,8 @@ export default function GoalkeeperGlovesSection() {
           </p>
 
           <button
-            className="px-6 py-3 sm:px-12 sm:py-5 bg-[var(--accent)] text-white font-bold text-[10px] sm:text-xs uppercase tracking-[0.2em] rounded-[3px] hover:scale-105 transition-all shadow-2xl"
+            onClick={onExplore}
+            className="px-6 py-3 sm:px-12 sm:py-5 bg-[var(--accent)] text-white font-bold text-[10px] sm:text-xs uppercase tracking-[0.2em] rounded-[3px] hover:scale-105 transition-all shadow-2xl cursor-pointer"
           >
             See all leather jackets
           </button>

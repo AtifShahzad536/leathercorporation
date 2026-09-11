@@ -57,9 +57,31 @@ const SlideAccordion = ({ isOpen, children, style = {} }) => {
 /* ─────────────────────────────────────────────────────────────────────────
    NavItem — one top-level nav link + its category list
 ──────────────────────────────────────────────────────────────────────────*/
-const NavItem = ({ link, data, isExpanded, onToggle, linkIdx, isMenuOpen }) => {
+const NavItem = ({ link, data, isExpanded, onToggle, linkIdx, isMenuOpen, onNavigate }) => {
   const cats = data?.categories || [];
   const hasSubs = !!data;
+
+  const handleClick = () => {
+    if (hasSubs) {
+      onToggle(link);
+    } else {
+      if (link === 'PRODUCTS') {
+        onNavigate('products', 'ALL JACKETS');
+      } else if (link === 'LEATHER STYLES') {
+        onNavigate('styles');
+      } else if (link === 'EXPLORE') {
+        onNavigate('explore');
+      } else if (link === 'PARTNER WITH US') {
+        onNavigate('inquiry');
+      } else if (link === 'COMPLIANCE') {
+        onNavigate('compliance');
+      } else if (link === 'CERTIFICATION') {
+        onNavigate('certification');
+      } else if (link === 'ABOUT US') {
+        onNavigate('about');
+      }
+    }
+  };
 
   return (
     <li
@@ -73,7 +95,7 @@ const NavItem = ({ link, data, isExpanded, onToggle, linkIdx, isMenuOpen }) => {
     >
       {/* Top-level button */}
       <button
-        onClick={() => hasSubs && onToggle(link)}
+        onClick={handleClick}
         style={{
           width: '100%', display: 'flex', alignItems: 'center',
           justifyContent: 'space-between',
@@ -106,6 +128,7 @@ const NavItem = ({ link, data, isExpanded, onToggle, linkIdx, isMenuOpen }) => {
           <CategoryList
             cats={cats}
             linkKey={link}
+            onNavigate={onNavigate}
           />
         </SlideAccordion>
       )}
@@ -116,7 +139,7 @@ const NavItem = ({ link, data, isExpanded, onToggle, linkIdx, isMenuOpen }) => {
 /* ─────────────────────────────────────────────────────────────────────────
    CategoryList — list of categories under a nav item
 ──────────────────────────────────────────────────────────────────────────*/
-const CategoryList = ({ cats, linkKey }) => {
+const CategoryList = ({ cats, linkKey, onNavigate }) => {
   const [expandedCat, setExpandedCat] = useState(null);
 
   const toggleCat = useCallback((key) => {
@@ -165,12 +188,27 @@ const CategoryList = ({ cats, linkKey }) => {
 
                 {/* Level-2 accordion (sub-categories) */}
                 <SlideAccordion isOpen={isCatOpen} style={{ marginLeft: 16 }}>
-                  <SubCatList subCats={subCats} />
+                  <SubCatList subCats={subCats} onNavigate={onNavigate} />
                 </SlideAccordion>
               </>
             ) : (
               /* Plain category (no sub-items) */
-              <div style={{ padding: '10px 0 10px 16px', cursor: 'pointer' }}>
+              <div 
+                onClick={() => {
+                  if (linkKey === 'EXPLORE') {
+                    onNavigate('explore', catName);
+                  } else if (linkKey === 'ABOUT US') {
+                    onNavigate('about', catName);
+                  } else if (linkKey === 'PARTNER WITH US') {
+                    onNavigate('inquiry', catName);
+                  } else if (linkKey === 'LEATHER STYLES') {
+                    onNavigate('styles', catName);
+                  } else {
+                    onNavigate('products', catName);
+                  }
+                }}
+                style={{ padding: '10px 0 10px 16px', cursor: 'pointer' }}
+              >
                 <span style={{
                   fontSize: 12, fontWeight: 500,
                   letterSpacing: '0.07em', color: 'var(--secondary)',
@@ -189,11 +227,12 @@ const CategoryList = ({ cats, linkKey }) => {
 /* ─────────────────────────────────────────────────────────────────────────
    SubCatList — the innermost list (e.g. FOOTBALLS, HANDBALLS inside BALLS)
 ──────────────────────────────────────────────────────────────────────────*/
-const SubCatList = ({ subCats }) => (
+const SubCatList = ({ subCats, onNavigate }) => (
   <ul style={{ listStyle: 'none', margin: 0, padding: '2px 0 8px 0' }}>
     {subCats.map((sub, si) => (
       <li
         key={si}
+        onClick={() => onNavigate('products', sub.name)}
         style={{
           display: 'flex', alignItems: 'center', gap: 10,
           padding: '7px 0 7px 16px',
@@ -226,7 +265,7 @@ const SubCatList = ({ subCats }) => (
 /* ─────────────────────────────────────────────────────────────────────────
    MobileMenu
 ──────────────────────────────────────────────────────────────────────────*/
-const MobileMenu = ({ isOpen, onClose, navLinks, drawerData }) => {
+const MobileMenu = ({ isOpen, onClose, navLinks, drawerData, onNavigate = () => {} }) => {
   const [expandedLink, setExpandedLink] = useState(null);
   const [mounted, setMounted] = useState(false);
 
@@ -331,6 +370,7 @@ const MobileMenu = ({ isOpen, onClose, navLinks, drawerData }) => {
                 onToggle={toggleLink}
                 linkIdx={idx}
                 isMenuOpen={isOpen}
+                onNavigate={onNavigate}
               />
             ))}
           </ul>

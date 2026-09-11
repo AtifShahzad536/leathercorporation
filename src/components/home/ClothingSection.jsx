@@ -143,13 +143,21 @@ export default function ClothingShowcase() {
                       {spot.description}
                     </p>
                    
-                    <div className="flex gap-px flex-wrap mb-1">
+                    <div className="flex gap-px flex-wrap mb-1.5">
                       {spot.sizes.map((s) => (
                         <span key={s} style={{ fontSize: "clamp(5px, 0.9vw, 10px)", padding: "1px 3px" }} className="border border-white/30 text-white/70 cursor-pointer hover:border-white hover:text-white transition-colors">
                           {s}
                         </span>
                       ))}
                     </div>
+
+                    <button
+                      onClick={() => onExplore(spot.title)}
+                      style={{ fontSize: "clamp(5px, 0.9vw, 10px)" }}
+                      className="text-[var(--accent)] font-bold uppercase tracking-wider hover:underline flex items-center gap-0.5 cursor-pointer"
+                    >
+                      <span>Explore in Catalog &rarr;</span>
+                    </button>
                   
                   </div>
                 )}
@@ -160,7 +168,6 @@ export default function ClothingShowcase() {
       </div>
     );
   }
-
 
 // Position popup above/below and left/right based on spot location
 function getPopupPosition(spot) {

@@ -28,7 +28,7 @@ const footerLinks = {
   'Partner With Us': ['Private Label OEM', 'Wholesale Inquiries', 'Bespoke Made to Measure', 'Club & Brand Orders', 'Contact Us'],
 };
 
-const Footer = () => {
+const Footer = ({ onNavigate = () => {} }) => {
   return (
     <footer className="w-full bg-[var(--secondary)] text-white">
       {/* Top Section */}
@@ -37,7 +37,10 @@ const Footer = () => {
 
           {/* Brand Column */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-3 mb-6">
+            <div 
+              onClick={() => onNavigate('home')}
+              className="flex items-center gap-3 mb-6 cursor-pointer"
+            >
               <div className="relative w-12 h-12 flex items-center justify-center">
                 <img 
                   src="/logo_silverstar1.png" 
@@ -61,7 +64,7 @@ const Footer = () => {
                 <button
                   key={label}
                   aria-label={label}
-                  className="w-9 h-9 rounded-[3px] border border-white/20 flex items-center justify-center hover:bg-[var(--accent)] hover:text-white hover:border-[var(--accent)] transition-all duration-200 group"
+                  className="w-9 h-9 rounded-[3px] border border-white/20 flex items-center justify-center hover:bg-[var(--accent)] hover:text-white hover:border-[var(--accent)] transition-all duration-200 group cursor-pointer"
                 >
                   <span className="group-hover:scale-110 transition-transform">{icon}</span>
                 </button>
@@ -76,12 +79,25 @@ const Footer = () => {
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link}>
-                    <a
-                      href="#"
-                      className="text-sm text-white/60 hover:text-[var(--accent)] transition-colors duration-200 tracking-wide"
+                    <button
+                      onClick={() => {
+                        if (section === 'Products') {
+                          onNavigate('products', link);
+                        } else if (section === 'Leather Craft') {
+                          onNavigate('styles');
+                        } else if (section === 'Explore') {
+                          if (link.includes('About')) onNavigate('about');
+                          else if (link.includes('Sustainability') || link.includes('Standards')) onNavigate('compliance');
+                          else onNavigate('explore');
+                        } else if (section === 'Partner With Us') {
+                          if (link.includes('Contact')) onNavigate('about');
+                          else onNavigate('inquiry');
+                        }
+                      }}
+                      className="text-sm text-white/60 hover:text-[var(--accent)] transition-colors duration-200 tracking-wide text-left cursor-pointer"
                     >
                       {link}
-                    </a>
+                    </button>
                   </li>
                 ))}
               </ul>

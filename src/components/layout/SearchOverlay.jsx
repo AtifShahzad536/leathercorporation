@@ -25,7 +25,7 @@ const POPULAR = [
   'Shearling Aviator', 'Lambskin Nappa', 'Custom OEM'
 ];
 
-const SearchOverlay = ({ isOpen, onClose }) => {
+const SearchOverlay = ({ isOpen, onClose, onSelectSearch = () => {} }) => {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [activeIdx, setActiveIdx] = useState(-1);
@@ -69,6 +69,14 @@ const SearchOverlay = ({ isOpen, onClose }) => {
 
   /* Keyboard navigation */
   const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      if (activeIdx >= 0 && suggestions[activeIdx]) {
+        onSelectSearch(suggestions[activeIdx]);
+      } else if (query.trim()) {
+        onSelectSearch(query.trim());
+      }
+      return;
+    }
     if (!suggestions.length) return;
     if (e.key === 'ArrowDown') {
       e.preventDefault();
@@ -76,16 +84,11 @@ const SearchOverlay = ({ isOpen, onClose }) => {
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       setActiveIdx((p) => Math.max(p - 1, -1));
-    } else if (e.key === 'Enter' && activeIdx >= 0) {
-      setQuery(suggestions[activeIdx]);
-      setSuggestions([]);
     }
   };
 
   const pickSuggestion = (s) => {
-    setQuery(s);
-    setSuggestions([]);
-    inputRef.current?.focus();
+    onSelectSearch(s);
   };
 
   const showSuggestions = suggestions.length > 0;

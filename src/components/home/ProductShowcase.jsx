@@ -133,7 +133,7 @@ const products = [
   }
 ];
 
-export default function ProductShowcase() {
+export default function ProductShowcase({ onSeeAll = () => {} }) {
   const [activeCategory, setActiveCategory] = useState('ALL JACKETS');
   const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -159,21 +159,31 @@ export default function ProductShowcase() {
             </p>
           </div>
 
-          {/* Category Filter Pills */}
-          <div className="flex overflow-x-auto scrollbar-hide gap-1.5 sm:gap-2 pb-1 max-w-full">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-[3px] text-[9.5px] sm:text-[11px] font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer whitespace-nowrap flex-shrink-0 ${
-                  activeCategory === cat
-                    ? 'bg-[var(--secondary)] text-white shadow-md shadow-[var(--secondary)]/20 scale-105'
-                    : 'bg-white border border-[var(--secondary)]/10 text-[var(--secondary)]/70 hover:border-[var(--accent)] hover:text-[var(--accent)]'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+          {/* Category Filter Pills & See All button */}
+          <div className="flex items-center gap-3">
+            <div className="flex overflow-x-auto scrollbar-hide gap-1.5 sm:gap-2 pb-1 max-w-full">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-[3px] text-[9.5px] sm:text-[11px] font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer whitespace-nowrap flex-shrink-0 ${
+                    activeCategory === cat
+                      ? 'bg-[var(--secondary)] text-white shadow-md shadow-[var(--secondary)]/20 scale-105'
+                      : 'bg-white border border-[var(--secondary)]/10 text-[var(--secondary)]/70 hover:border-[var(--accent)] hover:text-[var(--accent)]'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={onSeeAll}
+              className="hidden lg:inline-flex items-center gap-1.5 px-4 py-2 bg-[var(--accent)] hover:bg-[var(--accent)]/90 text-white font-bold text-xs uppercase tracking-wider rounded-[3px] shadow-sm transition-all whitespace-nowrap flex-shrink-0 cursor-pointer"
+            >
+              <span>Full Catalog</span>
+              <ArrowRight size={13} />
+            </button>
           </div>
         </div>
 
@@ -266,8 +276,19 @@ export default function ProductShowcase() {
           </AnimatePresence>
         </motion.div>
 
+        {/* View All Masterworks Footer CTA */}
+        <div className="mt-8 text-center">
+          <button
+            onClick={onSeeAll}
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-white border border-[var(--secondary)]/20 hover:border-[var(--accent)] text-[var(--secondary)] hover:text-[var(--accent)] font-bold text-xs uppercase tracking-widest rounded-[3px] shadow-sm hover:shadow-md transition-all cursor-pointer"
+          >
+            <span>Explore All 16+ Leather Masterpieces</span>
+            <ArrowRight size={14} />
+          </button>
+        </div>
+
         {/* Bespoke Banner */}
-        <div className="mt-14 p-8 md:p-10 rounded-[3px] bg-gradient-to-r from-[var(--secondary)] to-[#2d2894] text-white flex flex-col lg:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden">
+        <div className="mt-10 p-8 md:p-10 rounded-[3px] bg-gradient-to-r from-[var(--secondary)] to-[#2d2894] text-white flex flex-col lg:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden">
           <div className="absolute right-0 top-0 opacity-5 pointer-events-none">
             <Shield size={320} />
           </div>
@@ -285,10 +306,16 @@ export default function ProductShowcase() {
           </div>
 
           <div className="relative z-10 flex flex-wrap gap-4">
-            <button className="px-8 py-4 bg-[var(--accent)] hover:bg-[var(--accent)]/90 text-white font-bold text-xs uppercase tracking-widest rounded-[3px] transition-all shadow-xl hover:scale-105">
-              Request OEM Catalog
+            <button 
+              onClick={onSeeAll}
+              className="px-8 py-4 bg-[var(--accent)] hover:bg-[var(--accent)]/90 text-white font-bold text-xs uppercase tracking-widest rounded-[3px] transition-all shadow-xl hover:scale-105 cursor-pointer"
+            >
+              Open Full Products Catalog
             </button>
-            <button className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-widest rounded-[3px] border border-white/20 transition-all">
+            <button 
+              onClick={onSeeAll}
+              className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-widest rounded-[3px] border border-white/20 transition-all cursor-pointer"
+            >
               Bespoke Fit Guide
             </button>
           </div>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 
-const NavbarDropdown = ({ isOpen, activeLink, data, onClose, alignRight = false }) => {
+const NavbarDropdown = ({ isOpen, activeLink, data, onClose, onSelectCategory = () => {}, alignRight = false }) => {
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(null);
 
   if (!data) return null;
@@ -35,10 +35,17 @@ const NavbarDropdown = ({ isOpen, activeLink, data, onClose, alignRight = false 
                   <li 
                     key={idx} 
                     className={`px-6 py-3 cursor-pointer flex items-center justify-between transition-colors ${isActive ? 'bg-[var(--secondary)]/5' : 'hover:bg-[var(--secondary)]/5'}`}
+                    onMouseEnter={() => {
+                      if (hasSubs) {
+                        setActiveCategoryIndex(idx);
+                      }
+                    }}
                     onClick={(e) => {
                       e.stopPropagation();
                       if (hasSubs) {
                         setActiveCategoryIndex(isActive ? null : idx);
+                      } else {
+                        onSelectCategory(name);
                       }
                     }}
                   >
@@ -64,9 +71,12 @@ const NavbarDropdown = ({ isOpen, activeLink, data, onClose, alignRight = false 
                 transition={{ duration: 0.2 }}
                 className={`w-64 bg-[var(--primary)] border-[var(--secondary)]/10 shadow-[20px_10px_40px_rgba(30,27,110,0.12)] ${alignRight ? 'mr-[-1px] rounded-[3px] border-l border-t border-b' : 'ml-[-1px] rounded-[3px] border-r border-t border-b'} py-6 px-8`}
               >
-                <div className="mb-4 border-b border-[var(--secondary)]/5 pb-2">
-                  <h4 className="text-[10px] font-bold text-[var(--accent)] tracking-[0.2em] uppercase">
-                    {data.categories[activeCategoryIndex].name}
+                <div 
+                  className="mb-4 border-b border-[var(--secondary)]/5 pb-2 cursor-pointer group"
+                  onClick={() => onSelectCategory(data.categories[activeCategoryIndex].name)}
+                >
+                  <h4 className="text-[10px] font-bold text-[var(--accent)] tracking-[0.2em] uppercase group-hover:underline">
+                    {data.categories[activeCategoryIndex].name} &rarr;
                   </h4>
                 </div>
                 <ul className="flex flex-col gap-3">
@@ -74,8 +84,9 @@ const NavbarDropdown = ({ isOpen, activeLink, data, onClose, alignRight = false 
                     <li 
                       key={sIdx} 
                       className="group cursor-pointer"
+                      onClick={() => onSelectCategory(sub.name)}
                     >
-                      <span className="text-[13px] font-medium text-[var(--secondary)]/60 group-hover:text-[var(--secondary)] transition-colors leading-tight">
+                      <span className="text-[13px] font-medium text-[var(--secondary)]/60 group-hover:text-[var(--accent)] transition-colors leading-tight">
                         {sub.name}
                       </span>
                     </li>
