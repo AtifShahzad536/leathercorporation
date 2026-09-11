@@ -14,20 +14,20 @@ export default function SustainabilitySection() {
   const cards = [
     {
       id: 0,
-      title: "GREENER SILVER STAR GROUP",
-      subtitle: "COMMITMENT",
-      description: "We are pioneering the transition to 100% recycled materials across our professional football range.",
-      button: "EXPLORE FUTURE",
-      image: "https://www.select-sport.com/cdn/shop/files/SUSTAINABILITY_63f2ee20-eb83-493b-b6af-f2e2e7971375.jpg?v=1720425234&width=1200",
+      title: "SUSTAINABLE TANNERIES",
+      subtitle: "LWG GOLD CERTIFIED",
+      description: "We are pioneering ecological leathercraft across our outerwear range — utilizing zero-chrome vegetable tanning, organic oils, and closed-loop water treatment facilities.",
+      button: "OUR ECO INITIATIVES",
+      image: "https://images.unsplash.com/photo-1559551409-dadc959f76b8?q=80&w=1200&auto=format&fit=crop",
       accent: "var(--accent)"
     },
     {
       id: 1,
-      title: "SILVER STAR GROUP LAB",
-      subtitle: "INNOVATION",
-      description: "Where elite craftsmanship meets aerodynamic science to produce the world's most stable footballs.",
-      button: "VIEW THE DATA",
-      image: "https://www.select-sport.com/cdn/shop/files/SELECT_lab.jpg?v=1742389828&width=1200",
+      title: "LEADER LEATHER LAB",
+      subtitle: "MATERIAL SCIENCE",
+      description: "Where artisan pattern engineering meets tensile strength calibration and abrasion resistance testing to craft heirloom leather jackets.",
+      button: "EXPLORE THE DATA",
+      image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=1200&auto=format&fit=crop",
       accent: "var(--secondary)"
     }
   ];

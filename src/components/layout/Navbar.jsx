@@ -13,129 +13,126 @@ const Navbar = () => {
     PRODUCTS: {
       categories: [
         {
-          name: 'PRODUCT 1',
+          name: "MEN'S JACKETS",
           subCategories: [
-            { name: 'PRODUCT SUBMENU 1', image: 'https://images.unsplash.com/photo-1614632537190-23e4146777db?q=80&w=150&auto=format&fit=crop' },
-            { name: 'PRODUCT SUBMENU 2', image: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=150&auto=format&fit=crop' },
-            { name: 'PRODUCT SUBMENU 3', image: 'https://images.unsplash.com/photo-1552667466-07770ae110d0?q=80&w=150&auto=format&fit=crop' },
-            { name: 'PRODUCT SUBMENU 4', image: 'https://images.unsplash.com/photo-1518605388461-9c1682f63eef?q=80&w=150&auto=format&fit=crop' },
-            { name: 'PRODUCT SUBMENU 5', image: 'https://images.unsplash.com/photo-1587329310686-91414b8e3cb7?q=80&w=150&auto=format&fit=crop' }
+            { name: 'CLASSIC BIKER JACKETS', image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=150&auto=format&fit=crop' },
+            { name: 'CAFE RACER JACKETS', image: 'https://images.unsplash.com/photo-1520975954732-35dd22299614?q=80&w=150&auto=format&fit=crop' },
+            { name: 'BOMBER & FLIGHT JACKETS', image: 'https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?q=80&w=150&auto=format&fit=crop' },
+            { name: 'SUEDE & HARINGTON', image: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?q=80&w=150&auto=format&fit=crop' },
+            { name: 'TRENCH & OVERCOATS', image: 'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?q=80&w=150&auto=format&fit=crop' }
           ]
         },
         {
-          name: 'PRODUCT 2',
+          name: "WOMEN'S JACKETS",
           subCategories: [
-            { name: 'PRODUCT SUBMENU 1', image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=150&auto=format&fit=crop' },
-            { name: 'PRODUCT SUBMENU 2', image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=150&auto=format&fit=crop' },
-            { name: 'PRODUCT SUBMENU 3', image: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=150&auto=format&fit=crop' }
+            { name: 'MOTO & BIKER JACKETS', image: 'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?q=80&w=150&auto=format&fit=crop' },
+            { name: 'CROPPED LEATHER JACKETS', image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=150&auto=format&fit=crop' },
+            { name: 'SHEARLING & AVIATOR', image: 'https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?q=80&w=150&auto=format&fit=crop' },
+            { name: 'LEATHER BLAZERS', image: 'https://images.unsplash.com/photo-1520975954732-35dd22299614?q=80&w=150&auto=format&fit=crop' }
           ]
         },
         {
-          name: 'PRODUCT 3',
+          name: 'MOTORCYCLE & RACING',
           subCategories: [
-            { name: 'PRODUCT SUBMENU 1', image: 'https://images.unsplash.com/photo-1517466787929-bc90951d0974?q=80&w=150&auto=format&fit=crop' },
-            { name: 'PRODUCT SUBMENU 2', image: 'https://images.unsplash.com/photo-1590483256059-e31460c5cff9?q=80&w=150&auto=format&fit=crop' },
-            { name: 'PRODUCT SUBMENU 3', image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=150&auto=format&fit=crop' }
+            { name: 'CE-ARMORED BIKER JACKETS', image: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=150&auto=format&fit=crop' },
+            { name: 'RACING LEATHER SUITS', image: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=150&auto=format&fit=crop' },
+            { name: 'RIDING LEATHER VESTS', image: 'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?q=80&w=150&auto=format&fit=crop' }
           ]
         },
         {
-          name: 'PRODUCT 4',
+          name: 'LEATHER FINISHES',
           subCategories: [
-            { name: 'PRODUCT SUBMENU 1', image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=150&auto=format&fit=crop' },
-            { name: 'PRODUCT SUBMENU 2', image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3?q=80&w=150&auto=format&fit=crop' }
+            { name: 'FULL GRAIN COWHIDE', image: 'https://images.unsplash.com/photo-1559551409-dadc959f76b8?q=80&w=150&auto=format&fit=crop' },
+            { name: 'LAMBSKIN NAPPA', image: 'https://images.unsplash.com/photo-1520975954732-35dd22299614?q=80&w=150&auto=format&fit=crop' },
+            { name: 'DISTRESSED VINTAGE', image: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?q=80&w=150&auto=format&fit=crop' }
           ]
         },
         {
-          name: 'PRODUCT 5',
+          name: 'CUSTOM & BESPOKE',
           subCategories: [
-            { name: 'PRODUCT SUBMENU 1', image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=150&auto=format&fit=crop' },
-            { name: 'PRODUCT SUBMENU 2', image: 'https://images.unsplash.com/photo-1588612143162-87a718d09553?q=80&w=150&auto=format&fit=crop' }
+            { name: 'MADE TO MEASURE', image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=150&auto=format&fit=crop' },
+            { name: 'OEM & PRIVATE LABEL', image: 'https://images.unsplash.com/photo-1559551409-dadc959f76b8?q=80&w=150&auto=format&fit=crop' }
           ]
         }
       ],
       bottomImage: {
-        src: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=800&auto=format&fit=crop',
-        alt: 'My Training',
+        src: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800&auto=format&fit=crop',
+        alt: 'Leader Leather Jackets',
         badge: 'NEW',
-        title: 'SELECT MY TRAINING'
+        title: 'HERITAGE 2025 COLLECTION'
       }
     },
-    SPORT: {
+    'LEATHER STYLES': {
       categories: [
         {
-          name: 'FOOTBALL',
+          name: 'BIKER & MOTO',
           subCategories: [
-            { name: 'FOOTBALLS', image: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=150&auto=format&fit=crop' },
-            { name: 'CLOTHING', image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=150&auto=format&fit=crop' },
-            { name: 'GOALKEEPER GLOVES', image: 'https://images.unsplash.com/photo-1614632537190-23e4146777db?q=80&w=150&auto=format&fit=crop' },
-            { name: 'SHINGUARDS', image: 'https://images.unsplash.com/photo-1590483256059-e31460c5cff9?q=80&w=150&auto=format&fit=crop' },
-            { name: 'CARE & SUPPORTS', image: 'https://images.unsplash.com/photo-1527668752968-14dc70a27c95?q=80&w=150&auto=format&fit=crop' },
-            { name: 'EQUIPMENT', image: 'https://images.unsplash.com/photo-1541252260730-0412e8e2108e?q=80&w=150&auto=format&fit=crop' }
+            { name: 'DOUBLE RIDER JACKETS', image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=150&auto=format&fit=crop' },
+            { name: 'CAFE RACER JACKETS', image: 'https://images.unsplash.com/photo-1520975954732-35dd22299614?q=80&w=150&auto=format&fit=crop' },
+            { name: 'DIAMOND QUILTED', image: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?q=80&w=150&auto=format&fit=crop' },
+            { name: 'RETRO DISTRESSED', image: 'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?q=80&w=150&auto=format&fit=crop' }
           ]
         },
         {
-          name: 'HANDBALL',
+          name: 'AVIATOR & BOMBER',
           subCategories: [
-            { name: 'HANDBALLS', image: 'https://images.unsplash.com/photo-1552667466-07770ae110d0?q=80&w=150&auto=format&fit=crop' },
-            { name: 'CLOTHING', image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=150&auto=format&fit=crop' },
-            { name: 'CARE & SUPPORTS', image: 'https://images.unsplash.com/photo-1527668752968-14dc70a27c95?q=80&w=150&auto=format&fit=crop' },
-            { name: 'RESIN PRODUCTS', image: 'https://images.unsplash.com/photo-1584735935682-167814db35ed?q=80&w=150&auto=format&fit=crop' },
-            { name: 'EQUIPMENT', image: 'https://images.unsplash.com/photo-1541252260730-0412e8e2108e?q=80&w=150&auto=format&fit=crop' }
+            { name: 'B3 SHEEPSKIN BOMBER', image: 'https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?q=80&w=150&auto=format&fit=crop' },
+            { name: 'MA-1 LEATHER BOMBER', image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=150&auto=format&fit=crop' },
+            { name: 'A2 FLIGHT JACKET', image: 'https://images.unsplash.com/photo-1520975954732-35dd22299614?q=80&w=150&auto=format&fit=crop' }
           ]
         },
         {
-          name: 'FUTSAL',
+          name: 'CASUAL & SUEDE',
           subCategories: [
-            { name: 'FUTSAL BALLS', image: 'https://images.unsplash.com/photo-1518605388461-9c1682f63eef?q=80&w=150&auto=format&fit=crop' },
-            { name: 'CLOTHING', image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=150&auto=format&fit=crop' },
-            { name: 'GLOVES', image: 'https://images.unsplash.com/photo-1614632537190-23e4146777db?q=80&w=150&auto=format&fit=crop' },
-            { name: 'CARE & SUPPORTS', image: 'https://images.unsplash.com/photo-1527668752968-14dc70a27c95?q=80&w=150&auto=format&fit=crop' },
-            { name: 'EQUIPMENT', image: 'https://images.unsplash.com/photo-1541252260730-0412e8e2108e?q=80&w=150&auto=format&fit=crop' }
+            { name: 'GOAT SUEDE OVERSHIRTS', image: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?q=80&w=150&auto=format&fit=crop' },
+            { name: 'LEATHER BLAZERS', image: 'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?q=80&w=150&auto=format&fit=crop' },
+            { name: 'TRENCH & DUSTER COATS', image: 'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?q=80&w=150&auto=format&fit=crop' }
           ]
         },
         {
-          name: 'OTHER',
+          name: 'ACCESSORIES',
           subCategories: [
-            { name: 'BALLS', image: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=150&auto=format&fit=crop' }
+            { name: 'LEATHER RIDING GLOVES', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=150&auto=format&fit=crop' },
+            { name: 'LEATHER BAGS & DUFFLES', image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=150&auto=format&fit=crop' }
           ]
         }
       ],
       bottomImage: [
         {
-          src: 'https://images.unsplash.com/photo-1552667466-07770ae110d0?q=80&w=800&auto=format&fit=crop',
-          alt: 'Other balls',
+          src: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800&auto=format&fit=crop',
+          alt: 'Biker Jackets',
           badge: '',
-          title: 'Other balls'
+          title: 'Biker Series'
         },
         {
-          src: 'https://images.unsplash.com/photo-1574629810360-7efbc193988b?q=80&w=800&auto=format&fit=crop',
-          alt: 'Handballs',
+          src: 'https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?q=80&w=800&auto=format&fit=crop',
+          alt: 'Bomber & Flight',
           badge: '',
-          title: 'Handballs'
+          title: 'Bomber Series'
         }
       ]
     },
     EXPLORE: {
       categories: [
-        'GUIDES', 'CATALOGUE', 'SILVER STAR LAB'
+        'LEATHER CARE GUIDE', 'SIZE & FIT GUIDE', 'LEATHER GRADES & GRAINS', 'LEADER LEATHER LAB', 'LOOKBOOK 2025'
       ],
       hideChevrons: true,
       bottomImage: {
-        src: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format&fit=crop',
-        alt: 'Brochure',
+        src: 'https://images.unsplash.com/photo-1559551409-dadc959f76b8?q=80&w=800&auto=format&fit=crop',
+        alt: 'Leather Craftsmanship',
         isRawImage: true
       }
     },
     'ABOUT US': {
       categories: [
-        'ABOUT SILVER STAR', 'CONTACT', 'CSR', 'ENVIROMENTAL TRANSITION',
-        'PRESS & NEWS', 'CHARITY', 'SPONSORSHIPS'
+        'ABOUT LEADER CORPORATION', 'OUR TANNERY & CRAFT', 'LWG SUSTAINABILITY', 'GLOBAL EXPORTS',
+        'PRESS & NEWS', 'ETHICAL SOURCING', 'CONTACT US'
       ],
       hideChevrons: true,
       bottomImage: {
         src: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15f?q=80&w=800&auto=format&fit=crop',
-        alt: 'Environmental transition',
-        title: 'Environmental transition',
+        alt: 'Sustainable Leather Tanning',
+        title: 'Sustainable Leather Tanning',
         isRawImage: true,
         noRotate: true
       }
@@ -143,26 +140,26 @@ const Navbar = () => {
     'PARTNER WITH US': {
       categories: [
         {
-          name: 'SPONSORSHIPS',
+          name: 'OEM & PRIVATE LABEL',
           subCategories: [
-            { name: 'Sponsorships - Football' },
-            { name: 'Sponsorships - Handball' },
-            { name: 'Sponsorships - Futsal' }
+            { name: 'Custom Jacket Manufacturing' },
+            { name: 'Motorcycle Brand Apparel' },
+            { name: 'Wholesale & Export Supply' }
           ]
         },
-        'EVERYTHING FOR YOUR CLUB'
+        'BESPOKE & CLUB ORDERS'
       ],
       bottomImage: {
-        src: 'https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=800&auto=format&fit=crop',
-        alt: 'Jerseys',
-        title: 'EXCELLENT PARTNERSHIP'
+        src: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=800&auto=format&fit=crop',
+        alt: 'OEM Manufacturing',
+        title: 'GLOBAL OEM PARTNERSHIP'
       }
     }
   };
 
   const navLinks = [
     'PRODUCTS',
-    'SPORT',
+    'LEATHER STYLES',
     'EXPLORE',
     'PARTNER WITH US',
     'COMPLIANCE',
@@ -175,25 +172,25 @@ const Navbar = () => {
       <nav className="sticky top-0 z-50 w-full bg-[var(--primary)]/95 backdrop-blur-sm border-b border-[var(--secondary)]/10">
         <div className="w-[92%] mx-auto h-16 md:h-20 flex items-center justify-between">
 
-          <div className="flex items-center gap-3 group cursor-pointer">
+          <div className="flex items-center gap-3 group cursor-pointer flex-shrink-0">
             <div className="relative w-9 h-9 md:w-11 md:h-11 flex items-center justify-center overflow-hidden">
               <img
                 src="/logo_silverstar1.png"
-                alt="Silver Star Group"
+                alt="Leader Corporation"
                 className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
               />
             </div>
             {/* <span className="text-base md:text-lg font-bold tracking-tight text-gray-900 mt-0.5 whitespace-nowrap">
-              Silver Star
+              Leader Corporation
             </span> */}
           </div>
 
           {/* Desktop Navigation Links — hidden below lg */}
-          <div className="hidden lg:flex items-center gap-10 h-full">
+          <div className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-8 h-full flex-nowrap">
             {navLinks.map((link, idx) => (
               <div
                 key={link}
-                className="relative flex items-center h-full gap-1 cursor-pointer group"
+                className="relative flex items-center h-full gap-1 cursor-pointer group flex-shrink-0"
                 onMouseEnter={() => {
                   if (drawerData[link]) {
                     setActiveDropdown(link);
@@ -203,14 +200,14 @@ const Navbar = () => {
                 }}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <div className="flex items-center gap-1 h-full">
-                  <span className={`nav-link text-[10px] md:text-[11px] font-medium tracking-[0.15em] transition-all duration-300 ${activeDropdown === link ? 'text-[var(--accent)] font-bold' : 'text-[var(--secondary)]'}`}>
+                <div className="flex items-center gap-1 h-full whitespace-nowrap">
+                  <span className={`nav-link text-[10px] xl:text-[11px] font-semibold tracking-[0.08em] xl:tracking-[0.12em] whitespace-nowrap transition-all duration-300 ${activeDropdown === link ? 'text-[var(--accent)] font-bold' : 'text-[var(--secondary)]'}`}>
                     {link}
                   </span>
                   {drawerData[link] && (
                     <ChevronDown
-                      size={14}
-                      className={`transition-transform duration-300 ${activeDropdown === link ? 'rotate-180 text-[var(--accent)]' : 'group-hover:rotate-180 text-[var(--secondary)]'}`}
+                      size={13}
+                      className={`flex-shrink-0 transition-transform duration-300 ${activeDropdown === link ? 'rotate-180 text-[var(--accent)]' : 'group-hover:rotate-180 text-[var(--secondary)]'}`}
                     />
                   )}
                 </div>
@@ -228,7 +225,7 @@ const Navbar = () => {
           </div>
 
           {/* Right Section */}
-          <div className="flex items-center gap-3 md:gap-4 lg:gap-6">
+          <div className="flex items-center gap-3 md:gap-4 lg:gap-5 flex-shrink-0">
             {/* Language — desktop only */}
             <div className="hidden lg:flex items-center gap-2 cursor-pointer hover:opacity-70 transition-opacity">
               <div className="w-5 h-5 rounded-full overflow-hidden flex items-center justify-center bg-blue-600">

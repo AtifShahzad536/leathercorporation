@@ -3,30 +3,30 @@ import { useState, useRef } from "react";
 const blogs = [
   {
     id: 1,
-    tag: "Anniversary",
-    title: "SILVER STAR GROUP Sport celebrates 75 years!",
+    tag: "HERITAGE",
+    title: "Full-Grain vs Top-Grain: The Leather Jacket Buyer's Master Guide",
     excerpt:
-      "On May 4, it will be 75 years since SILVER STAR GROUP was founded in 1947 by the Danish national football team goalkeeper Eigil Nielsen.",
-    date: "May 4, 2022",
-    image: "https://images.unsplash.com/photo-1614632537190-23e4146777db?w=600&q=80",
+      "Discover why premium grain selection dictates how your leather jacket breaks in, breathes, and develops a rich vintage patina over decades.",
+    date: "May 14, 2025",
+    image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&q=80",
   },
   {
     id: 2,
-    tag: "Innovation",
-    title: "The first football with an integrated tracking sensor",
+    tag: "INNOVATION",
+    title: "Eco-Friendly Vegetable Tanning in Modern Outerwear Production",
     excerpt:
-      "Danish SILVER STAR GROUP and German KINEXON have jointly developed the intelligent football SILVER STAR GROUP Brillant Super iBall.",
-    date: "Apr 20, 2022",
-    image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&q=80",
+      "How Leader Corporation is advancing sustainable leathercraft with zero-chrome vegetable tanning, organic oils, and circular water recycling.",
+    date: "Apr 28, 2025",
+    image: "https://images.unsplash.com/photo-1520975954732-35dd22299614?w=600&q=80",
   },
   {
     id: 3,
-    tag: "Partnership",
-    title: "The world's longest football partnership turns 70 years!",
+    tag: "CRAFTSMANSHIP",
+    title: "Engineering Biker Jackets with CE-Armor Impact Protection",
     excerpt:
-      "The ball from SILVER STAR GROUP has a very special place in Danish football history, and it is therefore also a legendary partnership for the national team football.",
-    date: "Oct 12, 2021",
-    image: "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=600&q=80",
+      "An insider look into our custom atelier where motorcycle passion meets rigorous road safety standards and hand-stitched luxury.",
+    date: "Mar 10, 2025",
+    image: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&q=80",
   },
 ];
 

@@ -5,51 +5,46 @@ const hotspots = [
     id: 1,
     left: "17.5%",
     top: "50%",
-    title: "Training Jacket",
-    description: "Windproof training jacket with hood. Perfect for cold weather warm-ups and outdoor sessions.",
-   
-    color: "Charcoal / Black",
-    sizes: ["XS", "S", "M", "L", "XL"],
+    title: "Cafe Racer Moto",
+    description: "Aniline finish 1.1mm cowhide with snap tab collar, dual chest zip vents, and antique brass YKK hardware.",
+    color: "Vintage Tan",
+    sizes: ["S", "M", "L", "XL", "XXL"],
   },
   {
     id: 2,
     left: "28.5%",
     top: "47%",
-    title: "Club Zip Hoodie",
-    description: "Full-zip sweatshirt with Select branding. Ideal for training days and travel.",
-    
-    color: "Dark Grey",
-    sizes: ["S", "M", "L", "XL", "XXL"],
+    title: "B3 Shearling Aviator",
+    description: "Plush genuine sheepskin fleece lining with dual buckle collar straps and heavy-duty storm flap.",
+    color: "Dark Brown / Cream",
+    sizes: ["S", "M", "L", "XL"],
   },
   {
     id: 3,
     left: "39.5%",
     top: "42%",
-    title: "Player Track Top",
-    description: "Lightweight zip-up training top in vivid blue. Moisture-wicking fabric keeps you dry.",
-
-    color: "Royal Blue",
-    sizes: ["XS", "S", "M", "L", "XL"],
+    title: "Classic Double Rider",
+    description: "Iconic asymmetrical biker jacket with diamond-quilted shoulder accents, waist belt, and CE armor pockets.",
+    color: "Matte Black",
+    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
   },
   {
     id: 4,
     left: "62.5%",
     top: "58%",
-    title: "Junior Kit Set",
-    description: "Complete junior kit for young players — shirt, shorts & socks included in bold blue.",
-   
-    color: "Blue / White",
-    sizes: ["YS", "YM", "YL", "YXL"],
+    title: "Goat Suede Harrington",
+    description: "Velvety soft Italian goat suede overshirt with horn button placket and satin lining.",
+    color: "Cognac Brown",
+    sizes: ["S", "M", "L", "XL"],
   },
   {
     id: 5,
     left: "86%",
     top: "48%",
-    title: "GK Jersey",
-    description: "Goalkeeper jersey in high-visibility green with padded elbows and grip wristbands.",
-  
-    color: "Keeper Green",
-    sizes: ["S", "M", "L", "XL"],
+    title: "Women's Cropped Moto",
+    description: "Supple lambskin Nappa leather with tailored anatomical silhouette and polished silver hardware.",
+    color: "Midnight Black",
+    sizes: ["XS", "S", "M", "L", "XL"],
   },
 ];
 
@@ -67,25 +62,25 @@ export default function ClothingShowcase() {
         >
           {/* Background image */}
           <img
-            src="https://www.select-sport.com/cdn/shop/files/New_Check-out-our-products_clothing.jpg?v=1704362014&width=2200"
-          alt="Clothing Collection"
+            src="https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=2200&auto=format&fit=crop"
+            alt="Leader Corporation Leather Jackets Collection"
             className="absolute inset-0 w-full h-full object-cover object-center"
             draggable={false}
           />
 
           {/* Branded overlay */}
-          <div className="absolute inset-0 bg-[var(--secondary)]/20" />
+          <div className="absolute inset-0 bg-[var(--secondary)]/35" />
 
-          {/* CLOTHING heading + SEE MORE — overlaid on image top-center */}
+          {/* LEATHER JACKETS heading + SEE MORE — overlaid on image top-center */}
           <div className="absolute top-[8%] left-0 right-0 flex flex-col items-center gap-[2%] z-10">
             <h1
               className="text-white font-black tracking-[0.2em] text-sm sm:text-3xl md:text-5xl lg:text-6xl"
               style={{ fontFamily: "'Oswald', 'Arial Black', sans-serif" }}
             >
-              CLOTHING
+              LEATHER JACKETS
             </h1>
             <button className="border border-white/70 bg-[var(--secondary)]/60 backdrop-blur-sm text-white px-3 py-0.5 md:px-10 md:py-2.5 text-[8px] md:text-sm tracking-widest hover:bg-[var(--accent)] hover:text-white transition-all duration-300 font-bold">
-              SEE MORE
+              EXPLORE COLLECTION
             </button>
           </div>
 
@@ -139,7 +134,7 @@ export default function ClothingShowcase() {
                       style={getArrowStyle(spot)}
                     />
 
-                    <p style={{ fontSize: "clamp(5px, 1vw, 10px)", letterSpacing: "0.1em" }} className="text-white/50 uppercase mb-0.5">Select</p>
+                    <p style={{ fontSize: "clamp(5px, 1vw, 10px)", letterSpacing: "0.1em" }} className="text-white/50 uppercase mb-0.5">Leader Leather</p>
                     <h3 style={{ fontSize: "clamp(7px, 1.4vw, 16px)", fontFamily: "'Oswald', sans-serif" }} className="font-black tracking-wide leading-tight mb-0.5">
                       {spot.title}
                     </h3>

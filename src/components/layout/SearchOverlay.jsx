@@ -1,33 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, X, TrendingUp, ArrowRight } from 'lucide-react';
 
-/* ─── Suggestion pool (drawn from your product data) ─────────────────── */
+/* ─── Suggestion pool (drawn from leather jacket collection) ─────────────────── */
 const ALL_SUGGESTIONS = [
-  // Balls
-  'Footballs', 'Handballs', 'Futsal Balls', 'Gym Balls', 'Other Balls',
-  // Clothing
-  'Match & Training Wear', 'Leisure Wear', 'Goalkeeper Wear',
-  'Referee Wear', 'Baselayer', 'Accessories',
-  // Team gear
-  'Shin Guards', 'Ball & Sports Bags', 'Resin Products',
-  'Ball Equipment', 'Training Equipment', 'Referee Equipment',
-  'Training Packages', 'Bibs & Captains Band',
-  // Care
-  'Sports Supports', 'Sports Care',
-  // My Training
-  'Training Bands',
-  // GK
-  'Goalkeeper Gloves',
-  // Sports
-  'Football', 'Handball', 'Futsal',
-  // General
-  'Kids Gear', 'Select Sport', 'Sponsorships', 'Catalogue',
-  'Select Lab', 'About Select', 'Contact', 'Press & News',
+  // Jackets
+  'Classic Biker Jackets', 'Cafe Racer Jackets', 'Bomber & Flight Jackets',
+  'Suede Harrington Jackets', 'Trench & Overcoats', 'Shearling Aviator Jackets',
+  'Women\'s Moto Jackets', 'Cropped Leather Jackets', 'Leather Blazers',
+  // Moto & Racing
+  'CE-Armored Biker Jackets', 'Leather Riding Vests', '2-Piece Racing Suits',
+  // Leather Materials & Finishes
+  'Full Grain Cowhide', 'Lambskin Nappa', 'Distressed Vintage Leather',
+  'Italian Suede', 'Vegetable Tanned Leather',
+  // Custom & Care
+  'Bespoke Made to Measure', 'OEM Private Label', 'Custom Patches & Hardware',
+  'Leather Care Kit & Conditioner', 'Leather Riding Gloves',
+  // General & Heritage
+  'Heritage 2025 Collection', 'LWG Sustainability', 'Leader Leather Tannery',
+  'Size & Fit Guide', 'Lookbook 2025', 'About Leader Corporation', 'Contact Us'
 ];
 
 const POPULAR = [
-  'Footballs', 'Goalkeeper Gloves', 'Match & Training Wear',
-  'Shin Guards', 'Handball', 'Select Lab',
+  'Biker Jackets', 'Cafe Racer', 'Bomber Jackets',
+  'Shearling Aviator', 'Lambskin Nappa', 'Custom OEM'
 ];
 
 const SearchOverlay = ({ isOpen, onClose }) => {

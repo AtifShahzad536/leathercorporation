@@ -9,8 +9,8 @@ const MyTraining = () => {
           {/* Left — Image */}
           <div className="w-full md:w-1/2 relative overflow-hidden min-h-[400px] rounded-2xl">
             <img
-              src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=900&q=80"
-              alt="My Training - Athletes training"
+              src="https://images.unsplash.com/photo-1559551409-dadc959f76b8?w=900&q=80"
+              alt="Bespoke Leather Craftsmanship - Master Artisan at work"
               className="w-full h-full object-cover absolute inset-0"
             />
           </div>
@@ -26,16 +26,16 @@ const MyTraining = () => {
             <div className="text-center">
               {/* Heading */}
               <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase mb-8">
-                MY TRAINING
+                BESPOKE TAILORING
               </h2>
 
               <p className="text-sm text-white/70 leading-relaxed mb-6">
-                My Training has everything you need to get the most out of your workouts. Perfect for warm-ups before matches or training sessions, cool-downs afterwards, or even for strength training between team practices.
+                Our Master Tailoring service crafts each leather jacket to exact anatomical measurements. From hand-selected 1.2mm full-grain hides and heavy-gauge bonded threads to antique brass hardware and quilted silk linings, experience outerwear built for a lifetime of distinction.
               </p>
 
               {/* Bold Tagline */}
               <p className="text-sm font-black mb-10">
-                SILVER STAR GROUP is player's choice – and now that includes our training equipment too.
+                LEADER CORPORATION is the bespoke choice – trusted by international fashion brands, motorcycle clubs, and luxury retailers worldwide.
               </p>
 
               {/* Radiant Orange CTA Button */}
@@ -44,7 +44,7 @@ const MyTraining = () => {
                 whileTap={{ scale: 0.97 }}
                 className="w-full bg-[var(--accent)] hover:bg-[var(--accent)]/90 text-white font-bold text-sm tracking-wide py-4 px-8 transition-colors duration-200"
               >
-                Discover all of our new My Training products
+                Discover Bespoke & OEM Leather Services
               </motion.button>
             </div>
           </motion.div>

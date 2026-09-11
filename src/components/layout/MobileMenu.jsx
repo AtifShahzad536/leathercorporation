@@ -290,12 +290,12 @@ const MobileMenu = ({ isOpen, onClose, navLinks, drawerData }) => {
             <div style={{ position: 'relative', width: 30, height: 30 }}>
               <img
                 src="/logo_silverstar1.png"
-                alt="Silver Star Group"
+                alt="Leader Corporation"
                 style={{ width: '100%', height: '100%', objectFit: 'contain' }}
               />
             </div>
             <span style={{ fontSize: 17, fontWeight: 900, letterSpacing: '-0.04em', marginTop: 2, color: 'var(--secondary)' }}>
-              SILVER STAR
+              LEADER CORP
             </span>
           </div>
 

@@ -1,7 +1,16 @@
 import React from 'react';
 
 const Ticker = () => {
-  const items = Array(12).fill("PLAYER'S CHOICE");
+  const items = [
+    "100% GENUINE LEATHER",
+    "MASTER CRAFTSMANSHIP",
+    "BESPOKE TAILORING",
+    "GLOBAL LEATHER EXPORTS",
+    "PREMIUM FULL GRAIN",
+    "ITALIAN LAMBSKIN NAPPA",
+    "HAND-STITCHED PERFECTION",
+    "CE-ARMORED BIKER GEAR"
+  ];
 
   return (
     <div className="w-full bg-[var(--secondary)]/[0.03] border-y border-[var(--secondary)]/10 py-6 overflow-hidden flex whitespace-nowrap">

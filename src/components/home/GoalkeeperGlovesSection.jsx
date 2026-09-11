@@ -22,25 +22,25 @@ export default function GoalkeeperGlovesSection() {
            </div>
 
           <h3 className="text-[var(--accent)] font-bold text-[10px] tracking-[0.4em] uppercase mb-6 flex items-center gap-3">
-             <span className="w-8 h-[1px] bg-[var(--accent)]" /> 2024 COLLECTION
+             <span className="w-8 h-[1px] bg-[var(--accent)]" /> 2025 HERITAGE SERIES
           </h3>
 
           <h2
             className="text-white font-black text-4xl md:text-7xl uppercase leading-[0.8] mb-10 tracking-tighter"
             style={{ fontFamily: "'Arial Black', sans-serif" }}
           >
-            GOALKEEPER<br />
-            <span className="text-[var(--accent)] italic">GLOVES</span>
+            SIGNATURE BIKER<br />
+            <span className="text-[var(--accent)] italic">JACKETS</span>
           </h2>
 
           <p className="text-white/60 text-lg md:text-xl font-light leading-relaxed max-w-2xl mb-12">
-            We proudly present our professional glove range, crafted with elite-grade latex and ergonomic support systems to secure your clean sheet, regardless of conditions.
+            We proudly present our signature motorcycle and street jacket range, crafted with 1.2mm hand-buffed full-grain cowhide, ergonomic expansion gussets, and removable CE-approved armor protection for uncompromising safety and road presence.
           </p>
 
           <button
             className="px-12 py-5 bg-[var(--accent)] text-white font-bold text-xs uppercase tracking-[0.2em] rounded-full hover:scale-105 transition-all shadow-2xl"
           >
-            See all gloves
+            See all leather jackets
           </button>
         </div>
 
@@ -61,8 +61,8 @@ export default function GoalkeeperGlovesSection() {
               
               {/* Optional Label */}
               <div className="absolute bottom-6 left-6">
-                <span className="text-white text-[8px] font-bold tracking-widest uppercase opacity-60">
-                   {idx === 0 ? 'ELITE GRIP' : 'DURABILITY'}
+                <span className="text-white text-[8px] font-bold tracking-widest uppercase opacity-80 bg-black/40 px-2 py-1 rounded">
+                   {idx === 0 ? '1.2MM FULL GRAIN' : 'CE-ARMOR READY'}
                 </span>
               </div>
             </div>
