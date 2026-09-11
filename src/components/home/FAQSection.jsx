@@ -121,10 +121,10 @@ export default function FAQSection() {
   };
 
   return (
-    <section className="w-full bg-[var(--primary)] py-20 md:py-28 border-t border-[var(--secondary)]/10">
-      <div className="w-[92%] mx-auto max-w-7xl">
+    <section className="w-full bg-[var(--primary)] py-[6%] border-t border-[var(--secondary)]/10">
+      <div className="w-[92%] mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-14 md:mb-20">
+        <div className="flex flex-col items-center text-center mb-10 md:mb-16">
           <span className="text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase text-[var(--accent)] mb-3 flex items-center gap-2">
             <HelpCircle size={15} /> FREQUENTLY ASKED QUESTIONS
           </span>
