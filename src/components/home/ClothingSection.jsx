@@ -93,29 +93,27 @@ export default function ClothingShowcase() {
                 className="absolute"
                 style={{ left: spot.left, top: spot.top, transform: "translate(-50%, -50%)", zIndex: 10 }}
               >
-                {/* Plus / X Button */}
+                {/* Plus / Close Button without bulky background */}
                 <button
                   onClick={() => toggle(spot.id)}
                   className={`
-                    relative w-6 h-6 md:w-11 md:h-11 rounded-[3px] flex items-center justify-center
-                    font-bold text-sm md:text-xl shadow-lg
-                    transition-all duration-300 focus:outline-none
-                    ${isActive
-                      ? "bg-white text-black scale-110"
-                      : "bg-white/90 text-black hover:bg-white hover:scale-110"}
+                    relative w-6 h-6 md:w-8 md:h-8 flex items-center justify-center
+                    focus:outline-none cursor-pointer group transition-all duration-300
+                    ${isActive ? "scale-125" : "hover:scale-125"}
                   `}
                   aria-label={isActive ? "Close" : `See ${spot.title}`}
                 >
                   <span
-                    className="block transition-transform duration-300"
-                    style={{ transform: isActive ? "rotate(45deg)" : "rotate(0deg)", lineHeight: 1 }}
+                    className={`
+                      block font-bold text-lg md:text-2xl leading-none select-none
+                      transition-all duration-300 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]
+                      ${isActive
+                        ? "text-[var(--accent)] rotate-45"
+                        : "text-white group-hover:text-[var(--accent)]"}
+                    `}
                   >
                     +
                   </span>
-                  {/* Pulse ring */}
-                  {!isActive && (
-                    <span className="absolute inset-0 rounded-[3px] bg-white/40 animate-ping" />
-                  )}
                 </button>
 
                 {/* Popup */}
