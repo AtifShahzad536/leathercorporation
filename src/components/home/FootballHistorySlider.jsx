@@ -141,7 +141,7 @@ export default function HistorySlider() {
                       scale: i === current ? 1.5 : 1,
                       backgroundColor: i === current ? "var(--accent)" : "rgba(30, 27, 110, 0.2)"
                     }}
-                    className="w-3 h-3 rounded-full transition-colors"
+                    className="w-3 h-3 rounded-[3px] transition-colors"
                   />
 
                   {/* Year Label */}
@@ -206,10 +206,10 @@ export default function HistorySlider() {
 
                 {/* Navigation Arrows for content area */}
                 <div className="flex items-center gap-4 mt-12">
-                  <button onClick={prev} className="w-12 h-12 rounded-full border border-[var(--secondary)]/10 flex items-center justify-center hover:bg-[var(--secondary)] hover:text-white transition-all duration-300">
+                  <button onClick={prev} className="w-12 h-12 rounded-[3px] border border-[var(--secondary)]/10 flex items-center justify-center hover:bg-[var(--secondary)] hover:text-white transition-all duration-300">
                     <FiChevronUp size={20} className="rotate-[-90deg] lg:rotate-0" />
                   </button>
-                  <button onClick={next} className="w-12 h-12 rounded-full border border-[var(--secondary)]/10 flex items-center justify-center hover:bg-[var(--secondary)] hover:text-white transition-all duration-300">
+                  <button onClick={next} className="w-12 h-12 rounded-[3px] border border-[var(--secondary)]/10 flex items-center justify-center hover:bg-[var(--secondary)] hover:text-white transition-all duration-300">
                     <FiChevronDown size={20} className="rotate-[-90deg] lg:rotate-0" />
                   </button>
                 </div>
@@ -229,7 +229,7 @@ export default function HistorySlider() {
                 className="relative w-full aspect-square md:max-w-2xl"
               >
                 {/* Floating Shadow */}
-                <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 w-[60%] h-[5%] bg-black/10 blur-2xl rounded-full" />
+                <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 w-[60%] h-[5%] bg-black/10 blur-2xl rounded-[3px]" />
 
                 <img
                   src={slide.image}

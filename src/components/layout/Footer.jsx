@@ -61,7 +61,7 @@ const Footer = () => {
                 <button
                   key={label}
                   aria-label={label}
-                  className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-[var(--accent)] hover:text-white hover:border-[var(--accent)] transition-all duration-200 group"
+                  className="w-9 h-9 rounded-[3px] border border-white/20 flex items-center justify-center hover:bg-[var(--accent)] hover:text-white hover:border-[var(--accent)] transition-all duration-200 group"
                 >
                   <span className="group-hover:scale-110 transition-transform">{icon}</span>
                 </button>

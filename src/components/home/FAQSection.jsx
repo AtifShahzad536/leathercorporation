@@ -71,7 +71,7 @@ export default function FAQSection() {
     return (
       <div
         key={faq.id}
-        className={`border rounded-2xl transition-all duration-300 overflow-hidden ${
+        className={`border rounded-[3px] transition-all duration-300 overflow-hidden ${
           isOpen
             ? 'bg-white border-[var(--accent)]/40 shadow-lg shadow-[var(--secondary)]/5'
             : 'bg-white/60 hover:bg-white border-[var(--secondary)]/10 hover:border-[var(--secondary)]/20'
@@ -90,7 +90,7 @@ export default function FAQSection() {
             {faq.question}
           </span>
           <div
-            className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300 ${
+            className={`w-7 h-7 rounded-[3px] flex items-center justify-center flex-shrink-0 transition-transform duration-300 ${
               isOpen
                 ? 'bg-[var(--accent)] text-white rotate-180'
                 : 'bg-[var(--secondary)]/5 text-[var(--secondary)]'
@@ -150,7 +150,7 @@ export default function FAQSection() {
         </div>
 
         {/* Bottom Support Callout */}
-        <div className="mt-14 p-6 md:p-8 rounded-2xl bg-[var(--secondary)] text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+        <div className="mt-14 p-6 md:p-8 rounded-[3px] bg-[var(--secondary)] text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
           <div>
             <h4 className="text-lg md:text-xl font-bold uppercase tracking-tight mb-1">
               Still have questions about our leather jackets?
@@ -159,7 +159,7 @@ export default function FAQSection() {
               Our leather specialists and master tailors are here to assist with custom sizing & OEM quotes.
             </p>
           </div>
-          <button className="px-8 py-3.5 bg-[var(--accent)] hover:bg-[var(--accent)]/90 text-white font-bold text-xs uppercase tracking-widest rounded-full transition-all flex-shrink-0 hover:scale-105 shadow-lg">
+          <button className="px-8 py-3.5 bg-[var(--accent)] hover:bg-[var(--accent)]/90 text-white font-bold text-xs uppercase tracking-widest rounded-[3px] transition-all flex-shrink-0 hover:scale-105 shadow-lg">
             Contact Support
           </button>
         </div>

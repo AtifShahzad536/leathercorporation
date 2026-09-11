@@ -3,11 +3,11 @@ import { motion } from 'framer-motion';
 
 const MyTraining = () => {
   return (
-    <section className="w-full py-6">
+    <section className="w-full py-4 sm:py-6">
       <div className="w-[92%] mx-auto">
-        <div className="flex flex-col md:flex-row gap-4 md:gap-5">
+        <div className="flex flex-col md:flex-row gap-3 sm:gap-5">
           {/* Left — Image */}
-          <div className="w-full md:w-1/2 relative overflow-hidden min-h-[400px] rounded-2xl">
+          <div className="w-full md:w-1/2 relative overflow-hidden h-[240px] sm:h-[320px] md:min-h-[400px] rounded-[3px]">
             <img
               src="https://images.unsplash.com/photo-1559551409-dadc959f76b8?w=900&q=80"
               alt="Bespoke Leather Craftsmanship - Master Artisan at work"
@@ -21,20 +21,20 @@ const MyTraining = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: 'easeOut' }}
-            className="w-full md:w-1/2 bg-[var(--secondary)] text-white flex items-center justify-center px-12 py-16 rounded-2xl"
+            className="w-full md:w-1/2 bg-[var(--secondary)] text-white flex items-center justify-center p-6 sm:px-12 sm:py-16 rounded-[3px]"
           >
             <div className="text-center">
               {/* Heading */}
-              <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase mb-8">
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight uppercase mb-3 sm:mb-8">
                 BESPOKE TAILORING
               </h2>
 
-              <p className="text-sm text-white/70 leading-relaxed mb-6">
+              <p className="text-xs sm:text-sm text-white/70 leading-relaxed mb-4 sm:mb-6">
                 Our Master Tailoring service crafts each leather jacket to exact anatomical measurements. From hand-selected 1.2mm full-grain hides and heavy-gauge bonded threads to antique brass hardware and quilted silk linings, experience outerwear built for a lifetime of distinction.
               </p>
 
               {/* Bold Tagline */}
-              <p className="text-sm font-black mb-10">
+              <p className="text-xs sm:text-sm font-black mb-6 sm:mb-10">
                 LEADER CORPORATION is the bespoke choice – trusted by international fashion brands, motorcycle clubs, and luxury retailers worldwide.
               </p>
 
@@ -42,7 +42,7 @@ const MyTraining = () => {
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                className="w-full bg-[var(--accent)] hover:bg-[var(--accent)]/90 text-white font-bold text-sm tracking-wide py-4 px-8 transition-colors duration-200"
+                className="w-full bg-[var(--accent)] hover:bg-[var(--accent)]/90 text-white font-bold text-xs sm:text-sm tracking-wide py-3.5 sm:py-4 px-6 sm:px-8 transition-colors duration-200"
               >
                 Discover Bespoke & OEM Leather Services
               </motion.button>

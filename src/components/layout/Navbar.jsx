@@ -228,7 +228,7 @@ const Navbar = () => {
           <div className="flex items-center gap-3 md:gap-4 lg:gap-5 flex-shrink-0">
             {/* Language — desktop only */}
             <div className="hidden lg:flex items-center gap-2 cursor-pointer hover:opacity-70 transition-opacity">
-              <div className="w-5 h-5 rounded-full overflow-hidden flex items-center justify-center bg-blue-600">
+              <div className="w-5 h-5 rounded-[3px] overflow-hidden flex items-center justify-center bg-blue-600">
                 <Globe size={14} className="text-white" />
               </div>
               <span className="text-xs font-normal flex items-center gap-1">
@@ -239,7 +239,7 @@ const Navbar = () => {
             {/* Search — always visible */}
             <button
               id="search-toggle"
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              className="p-2 hover:bg-gray-100 rounded-[3px] transition-colors"
               onClick={() => setSearchOpen(true)}
               aria-label="Open search"
             >
@@ -249,7 +249,7 @@ const Navbar = () => {
             {/* Hamburger — visible on mobile & tablet (< lg) */}
             <button
               id="mobile-menu-toggle"
-              className="lg:hidden flex flex-col items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors gap-[5px]"
+              className="lg:hidden flex flex-col items-center justify-center w-10 h-10 rounded-[3px] hover:bg-gray-100 transition-colors gap-[5px]"
               onClick={() => setMobileMenuOpen(true)}
               aria-label="Open menu"
             >

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Navbar from './components/layout/Navbar';
 import Hero from './components/home/Hero';
 import Ticker from './components/home/Ticker';
+import ProductShowcase from './components/home/ProductShowcase';
 import Footer from './components/layout/Footer';
 import MyTraining from './components/home/MyTraining';
 import GoalkeeperGlovesSection from './components/home/GoalkeeperGlovesSection';
@@ -26,6 +27,7 @@ export default function App() {
       <Navbar />
       <Hero />
       <Ticker />
+      <ProductShowcase />
       <MyTraining />
       <GoalkeeperGlovesSection />
       <ClothingSection />

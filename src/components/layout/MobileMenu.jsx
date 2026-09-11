@@ -204,7 +204,7 @@ const SubCatList = ({ subCats }) => (
         {sub.image && (
           <div style={{
             width: 30, height: 30, flexShrink: 0,
-            borderRadius: 6, overflow: 'hidden', background: '#f9fafb',
+            borderRadius: 3, overflow: 'hidden', background: '#f9fafb',
           }}>
             <img
               src={sub.image} alt={sub.name} loading="lazy"
@@ -265,7 +265,7 @@ const MobileMenu = ({ isOpen, onClose, navLinks, drawerData }) => {
           zIndex: 75,
           height: '92dvh',
           background: 'var(--primary)',
-          borderTopLeftRadius: 22, borderTopRightRadius: 22,
+          borderTopLeftRadius: 3, borderTopRightRadius: 3,
           boxShadow: '0 -14px 60px rgba(0,0,0,0.2)',
           display: 'flex', flexDirection: 'column',
           /* iOS-feel spring spring curve */
@@ -277,7 +277,7 @@ const MobileMenu = ({ isOpen, onClose, navLinks, drawerData }) => {
       >
         {/* Drag handle */}
         <div style={{ display: 'flex', justifyContent: 'center', padding: '12px 0 4px' }}>
-          <div style={{ width: 38, height: 4, borderRadius: 99, background: '#e5e7eb' }} />
+          <div style={{ width: 38, height: 4, borderRadius: 3, background: '#e5e7eb' }} />
         </div>
 
         {/* Header */}
@@ -302,7 +302,7 @@ const MobileMenu = ({ isOpen, onClose, navLinks, drawerData }) => {
           <button
             onClick={onClose}
             style={{
-              width: 36, height: 36, borderRadius: '50%',
+              width: 36, height: 36, borderRadius: 3,
               background: 'var(--secondary)', color: '#fff', border: 'none', cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               transition: 'background 180ms',
@@ -339,7 +339,7 @@ const MobileMenu = ({ isOpen, onClose, navLinks, drawerData }) => {
           <div style={{ marginTop: 22, paddingTop: 18, borderTop: '1px solid #f3f4f6' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
               <div style={{
-                width: 20, height: 20, borderRadius: '50%', background: '#2563eb',
+                width: 20, height: 20, borderRadius: 3, background: '#2563eb',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
               }}>
                 <Globe size={11} color="#fff" />

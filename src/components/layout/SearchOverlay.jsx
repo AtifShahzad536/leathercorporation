@@ -132,7 +132,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
           {query && (
             <button
               onClick={() => { setQuery(''); setSuggestions([]); inputRef.current?.focus(); }}
-              className="p-1.5 rounded-full hover:bg-[var(--secondary)]/5 transition-colors flex-shrink-0"
+              className="p-1.5 rounded-[3px] hover:bg-[var(--secondary)]/5 transition-colors flex-shrink-0"
             >
               <X size={18} className="text-[var(--secondary)]/40" />
             </button>
@@ -141,7 +141,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
           {/* Close */}
           <button
             onClick={onClose}
-            className="ml-1 p-2 rounded-full border border-[var(--secondary)]/10 hover:bg-[var(--secondary)]/5 transition-colors flex-shrink-0"
+            className="ml-1 p-2 rounded-[3px] border border-[var(--secondary)]/10 hover:bg-[var(--secondary)]/5 transition-colors flex-shrink-0"
             aria-label="Close search"
           >
             <X size={18} className="text-[var(--secondary)]" />
@@ -160,7 +160,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
               {suggestions.map((s, i) => (
                 <li
                   key={s}
-                  className={`flex items-center justify-between px-3 py-3 rounded-lg cursor-pointer transition-colors group ${
+                  className={`flex items-center justify-between px-3 py-3 rounded-[3px] cursor-pointer transition-colors group ${
                     i === activeIdx ? 'bg-gray-100' : 'hover:bg-gray-50'
                   }`}
                   onMouseDown={(e) => { e.preventDefault(); pickSuggestion(s); }}
@@ -197,7 +197,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                   <button
                     key={term}
                     onMouseDown={(e) => { e.preventDefault(); pickSuggestion(term); }}
-                    className="px-4 py-2 border border-[var(--secondary)]/10 rounded-full text-xs font-medium
+                    className="px-4 py-2 border border-[var(--secondary)]/10 rounded-[3px] text-xs font-medium
                                tracking-wide text-[var(--secondary)]/60 hover:border-[var(--accent)] hover:text-white
                                hover:bg-[var(--accent)] transition-all duration-200"
                   >

@@ -22,7 +22,7 @@ const CookieConsent = () => {
       {/* Floating Action Button - Bottom Left */}
       <button
         onClick={() => setShowPopup(true)}
-        className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-[90] w-10 h-10 sm:w-12 sm:h-12 bg-[var(--primary)] rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all border border-[var(--secondary)]/10 group"
+        className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-[90] w-10 h-10 sm:w-12 sm:h-12 bg-[var(--primary)] rounded-[3px] flex items-center justify-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all border border-[var(--secondary)]/10 group"
         aria-label="Privacy settings"
       >
         <Cookie size={20} className="text-[var(--secondary)] group-hover:rotate-12 transition-transform sm:w-6 sm:h-6" strokeWidth={1.5} />
@@ -31,7 +31,7 @@ const CookieConsent = () => {
       {/* Popup Overlay */}
       {showPopup && (
         <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center bg-[var(--secondary)]/40 backdrop-blur-sm p-3 sm:p-4 animate-fade-in">
-          <div className="bg-[var(--primary)] rounded-t-2xl sm:rounded-sm w-full sm:max-w-[600px] shadow-2xl relative flex flex-col items-center
+          <div className="bg-[var(--primary)] rounded-[3px] w-full sm:max-w-[600px] shadow-2xl relative flex flex-col items-center
                           px-5 py-7 sm:p-10">
 
             <Cookie size={24} className="mb-4 sm:mb-6 text-[var(--secondary)] sm:w-8 sm:h-8" strokeWidth={2} />

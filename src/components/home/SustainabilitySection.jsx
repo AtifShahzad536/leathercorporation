@@ -46,10 +46,10 @@ export default function SustainabilitySection() {
               onClick={() => setActiveIdx(idx)}
               animate={{ 
                 flex: isActive ? 4.5 : 1,
-                borderRadius: "24px"
+                borderRadius: "3px"
               }}
               transition={springTransition}
-              className={`relative overflow-hidden cursor-pointer group bg-[var(--secondary)] shadow-2xl transition-shadow hover:shadow-[0_20px_50px_rgba(30,27,110,0.15)]`}
+              className={`relative overflow-hidden cursor-pointer group bg-[var(--secondary)] shadow-2xl rounded-[3px]`}
             >
               <motion.img
                 src={card.image}
@@ -80,11 +80,11 @@ export default function SustainabilitySection() {
                     className={isActive ? 'mb-6' : 'mb-4'}
                   >
                     {isActive ? (
-                      <span className="inline-block px-4 py-1.5 bg-white text-[var(--secondary)] text-[10px] font-bold tracking-[0.3em] uppercase rounded-full">
+                      <span className="inline-block px-4 py-1.5 bg-white text-[var(--secondary)] text-[10px] font-bold tracking-[0.3em] uppercase rounded-[3px]">
                           {card.subtitle}
                       </span>
                     ) : (
-                      <div className="w-12 h-1.5 bg-[var(--accent)] rounded-full animate-pulse" />
+                      <div className="w-12 h-1.5 bg-[var(--accent)] rounded-[3px] animate-pulse" />
                     )}
                   </motion.div>
 
@@ -113,7 +113,7 @@ export default function SustainabilitySection() {
                         <p className="text-white/80 text-lg font-light leading-relaxed mb-10 max-w-md text-left">
                             {card.description}
                         </p>
-                        <button className="px-10 py-5 bg-[var(--accent)] text-white text-xs font-bold tracking-[0.2em] uppercase rounded-full hover:scale-105 transition-transform shadow-xl">
+                        <button className="px-10 py-5 bg-[var(--accent)] text-white text-xs font-bold tracking-[0.2em] uppercase rounded-[3px] hover:scale-105 transition-transform shadow-xl">
                             {card.button}
                         </button>
                       </motion.div>
@@ -125,7 +125,7 @@ export default function SustainabilitySection() {
               {/* Interaction Indicator */}
               {!isActive && (
                 <div className="absolute top-10 flex flex-col items-center w-full">
-                    <div className="w-1 h-16 bg-white/20 rounded-full relative overflow-hidden">
+                    <div className="w-1 h-16 bg-white/20 rounded-[3px] relative overflow-hidden">
                         <motion.div 
                             animate={{ y: [0, 40, 0] }}
                             transition={{ repeat: Infinity, duration: 2 }}

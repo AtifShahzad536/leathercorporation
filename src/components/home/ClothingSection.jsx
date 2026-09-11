@@ -97,7 +97,7 @@ export default function ClothingShowcase() {
                 <button
                   onClick={() => toggle(spot.id)}
                   className={`
-                    relative w-6 h-6 md:w-11 md:h-11 rounded-full flex items-center justify-center
+                    relative w-6 h-6 md:w-11 md:h-11 rounded-[3px] flex items-center justify-center
                     font-bold text-sm md:text-xl shadow-lg
                     transition-all duration-300 focus:outline-none
                     ${isActive
@@ -114,14 +114,14 @@ export default function ClothingShowcase() {
                   </span>
                   {/* Pulse ring */}
                   {!isActive && (
-                    <span className="absolute inset-0 rounded-full bg-white/40 animate-ping" />
+                    <span className="absolute inset-0 rounded-[3px] bg-white/40 animate-ping" />
                   )}
                 </button>
 
                 {/* Popup */}
                 {isActive && (
                   <div
-                    className="absolute z-20 bg-[var(--secondary)] backdrop-blur-md border border-[var(--accent)] shadow-2xl rounded"
+                    className="absolute z-20 bg-[var(--secondary)] backdrop-blur-md border border-[var(--accent)] shadow-2xl rounded-[3px]"
                     style={{
                       ...getPopupPosition(spot),
                       width: "clamp(80px, 18vw, 240px)",

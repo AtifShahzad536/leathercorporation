@@ -61,7 +61,7 @@ export default function TextSlider() {
             {/* Left Arrow */}
             <button
               onClick={prevSlide}
-              className="w-10 h-10 bg-[var(--secondary)]/5 rounded-full flex items-center justify-center shadow-sm hover:bg-[var(--accent)] hover:text-white transition-all duration-300 hover:scale-110 group"
+              className="w-10 h-10 bg-[var(--secondary)]/5 rounded-[3px] flex items-center justify-center shadow-sm hover:bg-[var(--accent)] hover:text-white transition-all duration-300 hover:scale-110 group"
             >
               <FaChevronLeft className="text-[var(--secondary)] text-sm group-hover:text-white" />
             </button>
@@ -72,7 +72,7 @@ export default function TextSlider() {
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
-                  className={`w-2 h-2 rounded-full transition-colors ${
+                  className={`w-2.5 h-2.5 rounded-[3px] transition-colors ${
                     index === currentSlide ? 'bg-[var(--accent)]' : 'bg-[var(--secondary)]/20'
                   }`}
                 />
@@ -82,7 +82,7 @@ export default function TextSlider() {
             {/* Right Arrow */}
             <button
               onClick={nextSlide}
-              className="w-10 h-10 bg-[var(--secondary)]/5 rounded-full flex items-center justify-center shadow-sm hover:bg-[var(--accent)] hover:text-white transition-all duration-300 hover:scale-110 group"
+              className="w-10 h-10 bg-[var(--secondary)]/5 rounded-[3px] flex items-center justify-center shadow-sm hover:bg-[var(--accent)] hover:text-white transition-all duration-300 hover:scale-110 group"
             >
               <FaChevronRight className="text-[var(--secondary)] text-sm group-hover:text-white" />
             </button>
