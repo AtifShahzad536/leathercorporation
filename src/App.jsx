@@ -10,6 +10,7 @@ import EverythingSection from './components/home/EverythingSection';
 import SustainabilitySection from './components/home/SustainabilitySection';
 import FootballHistorySlider from './components/home/FootballHistorySlider';
 import BlogSection from './components/home/BlogSection';
+import FAQSection from './components/home/FAQSection';
 import CookieConsent from './components/layout/CookieConsent';
 
 export default function App() {
@@ -32,6 +33,7 @@ export default function App() {
       <SustainabilitySection />
       <FootballHistorySlider />
       <BlogSection />
+      <FAQSection />
       <Footer />
       <CookieConsent />
     </div>
