@@ -93,23 +93,26 @@ export default function ClothingShowcase() {
                 className="absolute"
                 style={{ left: spot.left, top: spot.top, transform: "translate(-50%, -50%)", zIndex: 10 }}
               >
-                {/* Plus / Close Button without bulky background */}
+                {/* Plus / Close Button with subtle white glow circle */}
                 <button
                   onClick={() => toggle(spot.id)}
                   className={`
-                    relative w-6 h-6 md:w-8 md:h-8 flex items-center justify-center
-                    focus:outline-none cursor-pointer group transition-all duration-300
-                    ${isActive ? "scale-125" : "hover:scale-125"}
+                    relative w-5 h-5 md:w-7 md:h-7 rounded-full flex items-center justify-center
+                    border border-white/60 bg-black/25 backdrop-blur-[2px]
+                    shadow-[0_0_10px_rgba(255,255,255,0.45)]
+                    hover:border-white hover:bg-white/15 hover:shadow-[0_0_16px_rgba(255,255,255,0.8)]
+                    hover:scale-115 focus:outline-none cursor-pointer group transition-all duration-300
+                    ${isActive ? "!border-[var(--accent)] !bg-[var(--accent)]/20 !shadow-[0_0_14px_rgba(242,101,34,0.6)] scale-110" : ""}
                   `}
                   aria-label={isActive ? "Close" : `See ${spot.title}`}
                 >
                   <span
                     className={`
-                      block font-bold text-lg md:text-2xl leading-none select-none
-                      transition-all duration-300 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]
+                      block font-bold text-xs md:text-sm leading-none select-none
+                      transition-transform duration-300 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]
                       ${isActive
                         ? "text-[var(--accent)] rotate-45"
-                        : "text-white group-hover:text-[var(--accent)]"}
+                        : "text-white group-hover:text-white"}
                     `}
                   >
                     +
