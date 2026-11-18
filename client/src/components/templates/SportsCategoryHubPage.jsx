@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { 
   Check, ArrowRight, Star, ShieldCheck, Clock, Calculator, 
   Calendar, HelpCircle, ChevronRight, Eye, Sparkles, Layers,
@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import TrustBar from '../common/TrustBar';
 import { useCMS } from '../../context/CMSContext';
+import { fullCatalog296 } from '../../data/fullCatalog296';
 
 export default function SportsCategoryHubPage({
   activeSport = 'BASEBALL',
@@ -13,99 +14,106 @@ export default function SportsCategoryHubPage({
   onSelectProduct = () => {},
   onNavigateInquiry = () => {}
 }) {
-  // 1. Jersey Cuts (Section 4)
-  const jerseyCuts = [
-    {
-      id: 'cut-1',
-      name: `Full Button ${activeSport} Jersey`,
-      desc: 'Classic button-up style with custom team colors and player names.',
-      price: '$44.99',
-      image: 'https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=600&q=80',
-      badge: 'TOP SELLER'
-    },
-    {
-      id: 'cut-2',
-      name: `Two Button ${activeSport} Jersey`,
-      desc: 'Modern two-button jersey design for a sleek game day look.',
-      price: '$44.99',
-      image: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=600&q=80',
-      badge: 'PRO FIT'
-    },
-    {
-      id: 'cut-3',
-      name: `V-Neck ${activeSport} Jersey`,
-      desc: 'V-neck style jersey with contemporary athletic mobility.',
-      price: '$41.99',
-      image: 'https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=600&q=80',
-      badge: 'LIGHTWEIGHT'
-    },
-    {
-      id: 'cut-4',
-      name: `Round Neck ${activeSport} Jersey`,
-      desc: 'Traditional round neck jersey for classic team style.',
-      price: '$41.99',
-      image: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80',
-      badge: 'CLASSIC'
-    },
-    {
-      id: 'cut-5',
-      name: `Sleeveless ${activeSport} Jersey`,
-      desc: 'Sleeveless jersey for warm-weather matches and tournaments.',
-      price: '$41.99',
-      image: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=600&q=80',
-      badge: 'SUMMER'
-    },
-    {
-      id: 'cut-6',
-      name: `Batting Practice / Warmup Jersey`,
-      desc: 'Practice jerseys for daily training sessions and pre-game batting.',
-      price: '$39.99',
-      image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80',
-      badge: 'PRACTICE'
+  const [dbProducts, setDbProducts] = useState([]);
+
+  // Fetch live products from backend MongoDB database, with fallback to fullCatalog296
+  useEffect(() => {
+    let isMounted = true;
+    const normSport = (activeSport || 'BASEBALL').toUpperCase();
+    fetch(`/api/products?sport=${encodeURIComponent(normSport)}&limit=100`)
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (isMounted && data?.data && data.data.length > 0) {
+          setDbProducts(data.data);
+        }
+      })
+      .catch(() => {});
+    return () => { isMounted = false; };
+  }, [activeSport]);
+
+  // Master product list for current activeSport
+  const sportProducts = useMemo(() => {
+    const norm = (activeSport || 'BASEBALL').toUpperCase();
+    
+    if (dbProducts && dbProducts.length > 0) {
+      return dbProducts.map(p => ({
+        id: p._id || p.id,
+        name: p.name,
+        slug: p.slug,
+        sport: p.sport || norm,
+        category: p.category || norm,
+        categorySlug: p.categorySlug || `custom-${norm.toLowerCase().replace(/\s+/g, '-')}-uniforms`,
+        price: typeof p.price === 'number' ? `$${p.price.toFixed(2)}` : (p.price || '$44.99'),
+        image: p.images?.[0]?.url || p.images?.[0] || p.image,
+        images: (p.images && p.images.length > 0) ? p.images.map(img => typeof img === 'string' ? img : img.url) : [p.image],
+        badge: p.badge || (p.isBestseller ? 'TOP SELLER' : p.isNew ? 'NEW ARRIVAL' : 'PRO FIT'),
+        fabric: p.fabric || '100% Moisture-Wicking Poly Interlock',
+        desc: p.description || `${p.name} factory direct manufactured in Sialkot, Pakistan.`,
+        sizes: p.sizes || ['YXS', 'YS', 'YM', 'YL', 'YXL', 'AS', 'AM', 'AL', 'AXL', '2XL', '3XL'],
+        colors: p.colors || ['Custom Team Colors']
+      }));
     }
-  ];
+
+    return fullCatalog296.filter(p => {
+      const s = (p.sport || p.category || '').toUpperCase();
+      if (norm === 'FOOTBALL') {
+        return s.includes('FOOTBALL') && !s.includes('FLAG');
+      }
+      return s.includes(norm) || norm.includes(s);
+    });
+  }, [dbProducts, activeSport]);
+
+  // 1. Jersey Cuts (Section 4)
+  const jerseyCuts = useMemo(() => {
+    const list = sportProducts.filter(p => 
+      /jersey|shirt|polo|top|tank|singlet/i.test(p.name)
+    );
+    return (list.length > 0 ? list : sportProducts).slice(0, 6).map(p => ({
+      ...p,
+      img: p.image || p.images?.[0]
+    }));
+  }, [sportProducts]);
 
   // 2. Mockups Gallery (Section 8)
-  const mockupIdeas = [
-    { name: 'Full Button Green / Gold', cut: 'Full Button', img: 'https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Full Button Crimson / White', cut: 'Full Button', img: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Two Button Red / Camo Sleeve', cut: 'Two Button', img: 'https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Two Button Orange / Navy', cut: 'Two Button', img: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=400&q=80' },
-    { name: 'V-Neck Classic Pinstripe', cut: 'V-Neck', img: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=400&q=80' },
-    { name: 'V-Neck Sunset Gradient', cut: 'V-Neck', img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Round Neck Green / White', cut: 'Round Neck', img: 'https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Round Neck Cloud Blue', cut: 'Round Neck', img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Sleeveless Aqua Wave', cut: 'Sleeveless', img: 'https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Sleeveless Pinstripe Crimson', cut: 'Sleeveless', img: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Batting Practice Charcoal', cut: 'Batting Practice', img: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Batting Practice Navy / White', cut: 'Batting Practice', img: 'https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=400&q=80' }
-  ];
+  const mockupIdeas = useMemo(() => {
+    return sportProducts.slice(0, 12).map((p) => ({
+      ...p,
+      cut: p.badge || (/pant|short/i.test(p.name) ? 'Bottoms' : /hoodie|jacket/i.test(p.name) ? 'Outerwear' : 'Game Jersey'),
+      img: p.image || p.images?.[0]
+    }));
+  }, [sportProducts]);
 
   // 3. Pants, Sideline & Bags (Section 9)
-  const gameDayItems = [
-    { name: 'Full Length Game Pant', desc: 'Traditional full-length with reinforced knees', price: '$49.99', img: 'https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Ankle Length Elastic Pant', desc: 'Modern ankle-length style for contemporary agility', price: '$49.99', img: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Knicker Style Game Pant', desc: 'Classic knicker pants that end below the knee', price: '$44.99', img: 'https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Full Button Complete Package', desc: 'Complete uniform package with jersey, pant & socks', price: '$92.99', img: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=400&q=80' }
-  ];
+  const gameDayItems = useMemo(() => {
+    const list = sportProducts.filter(p => 
+      /pant|short|kilt|bottom|uniforms set|package/i.test(p.name)
+    );
+    return (list.length > 0 ? list : sportProducts).slice(0, 8).map(p => ({
+      ...p,
+      desc: p.fabric || `${p.name} with reinforced athletic construction`,
+      img: p.image || p.images?.[0]
+    }));
+  }, [sportProducts]);
 
-  const sidelineItems = [
-    { name: 'Full Zip Team Travel Hoodie', price: '$49.99', img: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Pullover Sublimated Hoodie', price: '$46.99', img: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Crewneck Heavy Sweatshirt', price: '$42.99', img: 'https://images.unsplash.com/photo-1520975954732-35dd22299614?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Quarter Zip Batting Pullover', price: '$46.99', img: 'https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Wind Shirt Water-Resistant', price: '$49.99', img: 'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Varsity Jacket Leather Sleeves', price: '$109.99', img: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Satin Dugout Coach Jacket', price: '$99.99', img: 'https://images.unsplash.com/photo-1559551409-dadc959f76b8?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Dugout Cage Jacket', price: '$48.99', img: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80' }
-  ];
+  const sidelineItems = useMemo(() => {
+    const list = sportProducts.filter(p => 
+      /hoodie|jacket|sweatshirt|pullover|wind|warmup|vest/i.test(p.name)
+    );
+    return (list.length > 0 ? list : sportProducts).slice(0, 8).map(p => ({
+      ...p,
+      img: p.image || p.images?.[0]
+    }));
+  }, [sportProducts]);
 
-  const accessoryItems = [
-    { name: 'Stirrup Pro Game Socks', price: '$22.99', img: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Team Gear Bat Backpack', price: '$79.99', img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Team Equipment Duffle Bag', price: '$69.99', img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Traditional Rolling Catcher Bag', price: '$99.99', img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&q=80' }
-  ];
+  const accessoryItems = useMemo(() => {
+    const list = sportProducts.filter(p => 
+      /bag|backpack|duffle|sock|glove|stirrup/i.test(p.name)
+    );
+    return (list.length > 0 ? list : sportProducts).slice(0, 4).map(p => ({
+      ...p,
+      img: p.image || p.images?.[0]
+    }));
+  }, [sportProducts]);
 
   // 4. Calculator State
   const [calcQty, setCalcQty] = useState(25);
@@ -244,17 +252,19 @@ export default function SportsCategoryHubPage({
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {jerseyCuts.map((cut) => (
             <div
-              key={cut.id}
-              className="group bg-white rounded-[5px] overflow-hidden border border-[var(--secondary)]/10 hover:border-[var(--accent)]/50 transition-all duration-300 hover:shadow-xl flex flex-col justify-between"
+              key={cut.id || cut.slug || cut.name}
+              onClick={() => onSelectProduct(cut)}
+              className="group bg-white rounded-[5px] overflow-hidden border border-[var(--secondary)]/10 hover:border-[var(--accent)]/50 transition-all duration-300 hover:shadow-xl flex flex-col justify-between cursor-pointer"
             >
-              <div className="relative aspect-[4/5] bg-neutral-900 overflow-hidden">
+              <div className="relative aspect-[4/5] bg-neutral-50/80 overflow-hidden flex items-center justify-center p-4">
                 <img
-                  src={cut.image}
-                  alt="HAMLO SPORTS Custom Athletic Jersey Cut"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  src={cut.image || cut.img}
+                  alt={cut.name}
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-md"
+                  loading="lazy"
                 />
                 <span className="absolute top-2.5 left-2.5 bg-[var(--secondary)] text-white text-[9px] font-black tracking-widest uppercase px-2.5 py-1 rounded-[3px] shadow">
-                  {cut.badge}
+                  {cut.badge || 'TOP SELLER'}
                 </span>
               </div>
 
@@ -264,7 +274,7 @@ export default function SportsCategoryHubPage({
                     {cut.name}
                   </h3>
                   <p className="text-xs text-[var(--secondary)]/65 line-clamp-2 leading-relaxed">
-                    {cut.desc}
+                    {cut.desc || cut.fabric || 'Custom dye-sublimated moisture-wicking team jersey.'}
                   </p>
                 </div>
 
@@ -279,7 +289,7 @@ export default function SportsCategoryHubPage({
                   </div>
 
                   <button
-                    onClick={() => onSelectProduct({ name: cut.name, sport: activeSport, price: cut.price, image: cut.image })}
+                    onClick={(e) => { e.stopPropagation(); onSelectProduct(cut); }}
                     className="px-3.5 py-2 bg-[var(--accent)] hover:bg-[var(--secondary)] text-white text-xs font-black uppercase tracking-wider rounded-[3px] transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm flex-shrink-0"
                   >
                     <span>View Details</span>
@@ -521,12 +531,27 @@ export default function SportsCategoryHubPage({
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {mockupIdeas.map((mockup, idx) => (
-            <div key={idx} className="bg-white rounded-[3px] border border-[var(--secondary)]/10 overflow-hidden shadow-sm hover:shadow-lg transition p-3 text-center">
-              <div className="aspect-[4/5] bg-neutral-100 rounded mb-2 overflow-hidden">
-                <img src={mockup.img} alt="HAMLO SPORTS Custom Team Uniform Mockup" className="w-full h-full object-cover" />
+            <div 
+              key={mockup.id || mockup.slug || idx} 
+              onClick={() => onSelectProduct(mockup)}
+              className="group bg-white rounded-[3px] border border-[var(--secondary)]/10 hover:border-[var(--accent)]/50 overflow-hidden shadow-sm hover:shadow-lg transition p-3 text-center cursor-pointer flex flex-col justify-between"
+            >
+              <div className="aspect-[4/5] bg-neutral-50/70 rounded mb-2 overflow-hidden flex items-center justify-center p-2.5">
+                <img 
+                  src={mockup.image || mockup.img} 
+                  alt={mockup.name} 
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm" 
+                  loading="lazy"
+                />
               </div>
-              <span className="text-[10px] font-bold uppercase text-[var(--accent)] block">{mockup.cut}</span>
-              <strong className="text-xs font-black text-[var(--secondary)] line-clamp-1">{mockup.name}</strong>
+              <div>
+                <span className="text-[10px] font-bold uppercase text-[var(--accent)] block mb-1">
+                  {mockup.cut || mockup.sport || activeSport}
+                </span>
+                <strong className="text-xs font-black text-[var(--secondary)] line-clamp-1 group-hover:text-[var(--accent)] transition-colors">
+                  {mockup.name}
+                </strong>
+              </div>
             </div>
           ))}
         </div>
@@ -550,17 +575,31 @@ export default function SportsCategoryHubPage({
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {gameDayItems.map((item, idx) => (
-              <div key={idx} className="bg-white p-3 rounded-[3px] border border-[var(--secondary)]/10 shadow-sm flex flex-col justify-between">
-                <div className="aspect-[4/5] bg-neutral-100 rounded mb-2 overflow-hidden">
-                  <img src={item.img} alt="HAMLO SPORTS Game Day Uniform Pants" className="w-full h-full object-cover" />
+              <div 
+                key={item.id || item.slug || idx} 
+                onClick={() => onSelectProduct(item)}
+                className="group bg-white p-3 rounded-[3px] border border-[var(--secondary)]/10 hover:border-[var(--accent)]/50 transition shadow-sm flex flex-col justify-between cursor-pointer"
+              >
+                <div className="aspect-[4/5] bg-neutral-50/70 rounded mb-2 overflow-hidden flex items-center justify-center p-2.5">
+                  <img 
+                    src={item.image || item.img} 
+                    alt={item.name} 
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm" 
+                    loading="lazy"
+                  />
                 </div>
                 <div>
-                  <h4 className="text-xs font-black uppercase text-[var(--secondary)] line-clamp-1">{item.name}</h4>
-                  <p className="text-[10px] text-neutral-500 mb-2 line-clamp-1">{item.desc}</p>
+                  <h4 className="text-xs font-black uppercase text-[var(--secondary)] line-clamp-1 group-hover:text-[var(--accent)] transition-colors">
+                    {item.name}
+                  </h4>
+                  <p className="text-[10px] text-neutral-500 mb-2 line-clamp-1">{item.desc || item.fabric || 'Reinforced Athletic Fit'}</p>
                 </div>
                 <div className="flex items-center justify-between pt-2 border-t border-neutral-100">
                   <span className="text-xs font-black text-[var(--secondary)]">{item.price}</span>
-                  <button onClick={() => onSelectProduct({ name: item.name, sport: activeSport, price: item.price, image: item.img })} className="text-[9px] font-bold text-[var(--accent)] uppercase hover:underline">
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); onSelectProduct(item); }} 
+                    className="text-[9px] font-bold text-[var(--accent)] uppercase hover:underline"
+                  >
                     Details &rarr;
                   </button>
                 </div>
@@ -576,14 +615,28 @@ export default function SportsCategoryHubPage({
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {sidelineItems.map((item, idx) => (
-              <div key={idx} className="bg-white p-3 rounded-[3px] border border-[var(--secondary)]/10 shadow-sm flex flex-col justify-between">
-                <div className="aspect-[4/5] bg-neutral-100 rounded mb-2 overflow-hidden">
-                  <img src={item.img} alt="HAMLO SPORTS Game Day Uniform Pants" className="w-full h-full object-cover" />
+              <div 
+                key={item.id || item.slug || idx} 
+                onClick={() => onSelectProduct(item)}
+                className="group bg-white p-3 rounded-[3px] border border-[var(--secondary)]/10 hover:border-[var(--accent)]/50 transition shadow-sm flex flex-col justify-between cursor-pointer"
+              >
+                <div className="aspect-[4/5] bg-neutral-50/70 rounded mb-2 overflow-hidden flex items-center justify-center p-2.5">
+                  <img 
+                    src={item.image || item.img} 
+                    alt={item.name} 
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm" 
+                    loading="lazy"
+                  />
                 </div>
-                <h4 className="text-xs font-black uppercase text-[var(--secondary)] line-clamp-1 mb-2">{item.name}</h4>
+                <h4 className="text-xs font-black uppercase text-[var(--secondary)] line-clamp-1 mb-2 group-hover:text-[var(--accent)] transition-colors">
+                  {item.name}
+                </h4>
                 <div className="flex items-center justify-between pt-2 border-t border-neutral-100">
                   <span className="text-xs font-black text-[var(--secondary)]">{item.price}</span>
-                  <button onClick={() => onSelectProduct({ name: item.name, sport: activeSport, price: item.price, image: item.img })} className="text-[9px] font-bold text-[var(--accent)] uppercase hover:underline">
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); onSelectProduct(item); }} 
+                    className="text-[9px] font-bold text-[var(--accent)] uppercase hover:underline"
+                  >
                     Details &rarr;
                   </button>
                 </div>
@@ -599,14 +652,28 @@ export default function SportsCategoryHubPage({
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {accessoryItems.map((item, idx) => (
-              <div key={idx} className="bg-white p-3 rounded-[3px] border border-[var(--secondary)]/10 shadow-sm flex flex-col justify-between">
-                <div className="aspect-[4/5] bg-neutral-100 rounded mb-2 overflow-hidden">
-                  <img src={item.img} alt="HAMLO SPORTS Game Day Uniform Pants" className="w-full h-full object-cover" />
+              <div 
+                key={item.id || item.slug || idx} 
+                onClick={() => onSelectProduct(item)}
+                className="group bg-white p-3 rounded-[3px] border border-[var(--secondary)]/10 hover:border-[var(--accent)]/50 transition shadow-sm flex flex-col justify-between cursor-pointer"
+              >
+                <div className="aspect-[4/5] bg-neutral-50/70 rounded mb-2 overflow-hidden flex items-center justify-center p-2.5">
+                  <img 
+                    src={item.image || item.img} 
+                    alt={item.name} 
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm" 
+                    loading="lazy"
+                  />
                 </div>
-                <h4 className="text-xs font-black uppercase text-[var(--secondary)] line-clamp-1 mb-2">{item.name}</h4>
+                <h4 className="text-xs font-black uppercase text-[var(--secondary)] line-clamp-1 mb-2 group-hover:text-[var(--accent)] transition-colors">
+                  {item.name}
+                </h4>
                 <div className="flex items-center justify-between pt-2 border-t border-neutral-100">
                   <span className="text-xs font-black text-[var(--secondary)]">{item.price}</span>
-                  <button onClick={() => onSelectProduct({ name: item.name, sport: activeSport, price: item.price, image: item.img })} className="text-[9px] font-bold text-[var(--accent)] uppercase hover:underline">
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); onSelectProduct(item); }} 
+                    className="text-[9px] font-bold text-[var(--accent)] uppercase hover:underline"
+                  >
                     Details &rarr;
                   </button>
                 </div>
