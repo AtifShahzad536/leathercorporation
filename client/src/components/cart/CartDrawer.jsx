@@ -94,7 +94,7 @@ export default function CartDrawer({ onNavigateInquiry = () => {}, onContinueSho
                 >
                   <img
                     src={item.image}
-                    alt={item.name}
+                    alt="HAMLO SPORTS Custom Uniform Cart Item"
                     className="w-16 h-20 object-cover rounded-[2px] bg-white flex-shrink-0"
                   />
 

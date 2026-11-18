@@ -47,7 +47,7 @@ function BlogCard({ blog }) {
         <div className="w-full h-[200px] bg-gray-100 overflow-hidden relative">
           <img
             src={blog.image}
-            alt={blog.title}
+            alt="HAMLO SPORTS Athletic Uniform Manufacturing Article"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             onError={(e) => { e.target.style.display = "none"; }}
           />

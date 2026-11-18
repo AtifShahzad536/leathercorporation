@@ -250,7 +250,7 @@ export default function SportsCategoryHubPage({
               <div className="relative aspect-[4/5] bg-neutral-900 overflow-hidden">
                 <img
                   src={cut.image}
-                  alt={cut.name}
+                  alt="HAMLO SPORTS Custom Athletic Jersey Cut"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <span className="absolute top-2.5 left-2.5 bg-[var(--secondary)] text-white text-[9px] font-black tracking-widest uppercase px-2.5 py-1 rounded-[3px] shadow">
@@ -523,7 +523,7 @@ export default function SportsCategoryHubPage({
           {mockupIdeas.map((mockup, idx) => (
             <div key={idx} className="bg-white rounded-[3px] border border-[var(--secondary)]/10 overflow-hidden shadow-sm hover:shadow-lg transition p-3 text-center">
               <div className="aspect-[4/5] bg-neutral-100 rounded mb-2 overflow-hidden">
-                <img src={mockup.img} alt={mockup.name} className="w-full h-full object-cover" />
+                <img src={mockup.img} alt="HAMLO SPORTS Custom Team Uniform Mockup" className="w-full h-full object-cover" />
               </div>
               <span className="text-[10px] font-bold uppercase text-[var(--accent)] block">{mockup.cut}</span>
               <strong className="text-xs font-black text-[var(--secondary)] line-clamp-1">{mockup.name}</strong>
@@ -552,7 +552,7 @@ export default function SportsCategoryHubPage({
             {gameDayItems.map((item, idx) => (
               <div key={idx} className="bg-white p-3 rounded-[3px] border border-[var(--secondary)]/10 shadow-sm flex flex-col justify-between">
                 <div className="aspect-[4/5] bg-neutral-100 rounded mb-2 overflow-hidden">
-                  <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
+                  <img src={item.img} alt="HAMLO SPORTS Game Day Uniform Pants" className="w-full h-full object-cover" />
                 </div>
                 <div>
                   <h4 className="text-xs font-black uppercase text-[var(--secondary)] line-clamp-1">{item.name}</h4>
@@ -578,7 +578,7 @@ export default function SportsCategoryHubPage({
             {sidelineItems.map((item, idx) => (
               <div key={idx} className="bg-white p-3 rounded-[3px] border border-[var(--secondary)]/10 shadow-sm flex flex-col justify-between">
                 <div className="aspect-[4/5] bg-neutral-100 rounded mb-2 overflow-hidden">
-                  <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
+                  <img src={item.img} alt="HAMLO SPORTS Game Day Uniform Pants" className="w-full h-full object-cover" />
                 </div>
                 <h4 className="text-xs font-black uppercase text-[var(--secondary)] line-clamp-1 mb-2">{item.name}</h4>
                 <div className="flex items-center justify-between pt-2 border-t border-neutral-100">
@@ -601,7 +601,7 @@ export default function SportsCategoryHubPage({
             {accessoryItems.map((item, idx) => (
               <div key={idx} className="bg-white p-3 rounded-[3px] border border-[var(--secondary)]/10 shadow-sm flex flex-col justify-between">
                 <div className="aspect-[4/5] bg-neutral-100 rounded mb-2 overflow-hidden">
-                  <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
+                  <img src={item.img} alt="HAMLO SPORTS Game Day Uniform Pants" className="w-full h-full object-cover" />
                 </div>
                 <h4 className="text-xs font-black uppercase text-[var(--secondary)] line-clamp-1 mb-2">{item.name}</h4>
                 <div className="flex items-center justify-between pt-2 border-t border-neutral-100">

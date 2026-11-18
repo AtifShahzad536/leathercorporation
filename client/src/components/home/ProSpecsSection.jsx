@@ -67,7 +67,7 @@ export default function ProSpecsSection({ onExplore = () => {} }) {
               <div className="relative w-full h-[220px] sm:h-[260px] overflow-hidden bg-neutral-900">
                 <img
                   src={card.image}
-                  alt={card.title}
+                  alt="HAMLO SPORTS Technical Athletic Uniform Specification"
                   className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108 filter brightness-95"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />

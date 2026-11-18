@@ -246,7 +246,7 @@ const SubCatList = ({ subCats, onNavigate }) => (
             borderRadius: 3, overflow: 'hidden', background: '#f9fafb',
           }}>
             <img
-              src={sub.image} alt={sub.name} loading="lazy"
+              src={sub.image} alt="HAMLO SPORTS Custom Sport Subcategory" loading="lazy"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
           </div>
@@ -329,12 +329,12 @@ const MobileMenu = ({ isOpen, onClose, navLinks, drawerData, onNavigate = () => 
             <div style={{ position: 'relative', width: 30, height: 30 }}>
               <img
                 src="/logo_silverstar1.png"
-                alt="Leader Corporation"
+                alt="HAMLO SPORTS"
                 style={{ width: '100%', height: '100%', objectFit: 'contain' }}
               />
             </div>
             <span style={{ fontSize: 17, fontWeight: 900, letterSpacing: '-0.04em', marginTop: 2, color: 'var(--secondary)' }}>
-              LEADER CORP
+              HAMLO SPORTS
             </span>
           </div>
 

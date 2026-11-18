@@ -200,7 +200,7 @@ export default function InquiryPage({
                   <div className="flex items-center gap-3">
                     <img 
                       src={selectedProduct.image} 
-                      alt={selectedProduct.name} 
+                      alt="HAMLO SPORTS Selected Uniform Blueprint" 
                       className="w-12 h-14 object-cover rounded-[2px] bg-gray-200"
                     />
                     <div>

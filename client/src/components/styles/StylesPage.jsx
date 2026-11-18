@@ -165,7 +165,7 @@ export default function StylesPage({
               <div className="relative h-64 overflow-hidden bg-gray-100">
                 <img 
                   src={style.image} 
-                  alt={style.title} 
+                  alt="HAMLO SPORTS Custom Athletic Apparel Cut and Style" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />

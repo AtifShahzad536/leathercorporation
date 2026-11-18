@@ -302,7 +302,7 @@ export default function ProductsPage({
                     >
                       <img
                         src={product.image}
-                        alt={product.name}
+                        alt="HAMLO SPORTS Custom Athletic Uniform Product"
                         loading="lazy"
                         className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                       />
@@ -417,7 +417,7 @@ export default function ProductsPage({
               </button>
 
               <div className="w-full md:w-1/2 aspect-square rounded-[3px] overflow-hidden bg-neutral-100">
-                <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full h-full object-cover" />
+                <img src={selectedProduct.image} alt="HAMLO SPORTS Custom Team Uniform Modal View" className="w-full h-full object-cover" />
               </div>
 
               <div className="w-full md:w-1/2 flex flex-col justify-between">
