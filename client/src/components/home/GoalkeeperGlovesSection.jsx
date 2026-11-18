@@ -1,21 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useCMS } from '../../context/CMSContext';
 
 export default function GoalkeeperGlovesSection({ onExplore = () => {} }) {
   const { homeContent } = useCMS();
   const data = homeContent?.goalkeeperGloves || {};
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '300px' }
+    );
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   const tagline = data.tagline || '2026 TEAM UNIFORMS & SUBLIMATION';
   const heading = data.heading || 'CUSTOM TEAM JERSEYS';
   const description = data.description || 'Equip your roster with factory-direct pro uniforms. Featuring 220 GSM moisture-wicking interlock fabrics, precision dye-sublimation with infinite color options, and reinforced bar-tack stitching engineered for peak athlete endurance.';
   const buttonText = data.buttonText || 'See all sports uniforms';
   const videos = [
-    data.video1 || "/leaderhero.mp4",
+    data.video1 || "/leaderheros.mp4",
     data.video2 || "/herovideo.mp4"
   ];
 
   return (
-    <section className="w-full mx-auto my-8 sm:my-16">
+    <section ref={sectionRef} className="w-full mx-auto my-8 sm:my-16">
       <div className="w-[96%] max-w-[1800px] mx-auto flex flex-col md:flex-row gap-4 sm:gap-6 h-auto md:h-[650px]">
         {/* Left - Large Text Card (60% Weight) */}
         <div
@@ -65,12 +82,14 @@ export default function GoalkeeperGlovesSection({ onExplore = () => {} }) {
             <div key={idx} className="flex-1 relative rounded-[3px] overflow-hidden group shadow-lg bg-black">
               <video
                 key={src}
-                autoPlay
+                autoPlay={isVisible}
                 loop
                 muted
                 playsInline
+                preload="none"
+                poster={idx === 0 ? "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=70&w=600&auto=format&fit=crop" : "https://images.unsplash.com/photo-1546519638-68e109498ffc?q=70&w=600&auto=format&fit=crop"}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                src={src}
+                src={isVisible ? src : undefined}
               />
               <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300 pointer-events-none" />
             </div>

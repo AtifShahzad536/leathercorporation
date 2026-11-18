@@ -6,7 +6,7 @@ const Hero = ({ onExplore = () => {} }) => {
   const { homeContent } = useCMS();
   const hero = homeContent?.hero || {};
 
-  const videoSrc = hero.videoUrl || '/leaderhero.mp4';
+  const videoSrc = hero.videoUrl || '/leaderheros.mp4';
   const posterSrc = hero.posterImage || 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1920&auto=format&fit=crop';
   const badgeText = hero.badge || 'CUSTOM SPORTSWEAR & ATHLETIC UNIFORMS MANUFACTURER';
   const headingText = hero.title || 'PRO-GRADE DYE-SUBLIMATED UNIFORMS & TEAM APPAREL FACTORY DIRECT';
@@ -22,6 +22,7 @@ const Hero = ({ onExplore = () => {} }) => {
         muted
         loop
         playsInline
+        preload="metadata"
         poster={posterSrc}
         src={videoSrc}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover"

@@ -108,6 +108,8 @@ export default function ClothingSection({ onExplore = () => {} }) {
         <img
           src={bannerImage}
           alt="Custom Team Sportswear Lineup - HAMLO SPORTS Athletes"
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover object-center filter brightness-100"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />

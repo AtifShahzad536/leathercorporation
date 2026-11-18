@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Navbar from './components/layout/Navbar';
 import Hero from './components/home/Hero';
 import Ticker from './components/home/Ticker';
@@ -17,19 +17,21 @@ import FAQSection from './components/home/FAQSection';
 import ProSpecsSection from './components/home/ProSpecsSection';
 import LiveChatWidget from './components/layout/LiveChatWidget';
 import CookieConsent from './components/layout/CookieConsent';
-import StylesPage from './components/styles/StylesPage';
-import ExplorePage from './components/explore/ExplorePage';
-import CompliancePage from './components/compliance/CompliancePage';
-import CertificationPage from './components/certification/CertificationPage';
-import AboutPage from './components/about/AboutPage';
-import InquiryPage from './components/inquiry/InquiryPage';
 import CartDrawer from './components/cart/CartDrawer';
-import SportsCategoryHubPage from './components/templates/SportsCategoryHubPage';
-import ProductDetailLandingTemplate from './components/templates/ProductDetailLandingTemplate';
 import { CartProvider } from './context/CartContext';
 import { CMSProvider } from './context/CMSContext';
 import { allProducts } from './data/productsData';
 import { fullCatalog296, sportSlugToCategory, categoryToSportSlug } from './data/fullCatalog296';
+
+// Lazy load non-homepage subpages so initial main page payload is ultra-fast
+const StylesPage = lazy(() => import('./components/styles/StylesPage'));
+const ExplorePage = lazy(() => import('./components/explore/ExplorePage'));
+const CompliancePage = lazy(() => import('./components/compliance/CompliancePage'));
+const CertificationPage = lazy(() => import('./components/certification/CertificationPage'));
+const AboutPage = lazy(() => import('./components/about/AboutPage'));
+const InquiryPage = lazy(() => import('./components/inquiry/InquiryPage'));
+const SportsCategoryHubPage = lazy(() => import('./components/templates/SportsCategoryHubPage'));
+const ProductDetailLandingTemplate = lazy(() => import('./components/templates/ProductDetailLandingTemplate'));
 
 function MainApp() {
   const [currentPage, setCurrentPage] = useState('home'); 
@@ -254,82 +256,85 @@ function MainApp() {
     <div className="min-h-screen flex flex-col bg-[var(--primary)]">
       <Navbar onNavigate={navigateTo} />
 
-      {/* ── 1. PRODUCT DETAIL PAGE (HAMCO AUDIT REAL-COST COMPARISON & 3 VIEWS) ── */}
-      {currentPage === 'product-detail' && (
-        <ProductDetailLandingTemplate
-          productName={activeProductDetail?.name || 'Pro Custom Athletic Game Jersey'}
-          sport={activeProductDetail?.sport || activeProductDetail?.category || activeSport || 'Baseball'}
-          basePrice={activeProductDetail?.price ? (String(activeProductDetail.price).startsWith('$') ? activeProductDetail.price : `$${activeProductDetail.price}`) : '$41.99'}
-          images={[
-            activeProductDetail?.image || 'https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80',
-            activeProductDetail?.image || 'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80',
-            activeProductDetail?.image || 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80'
-          ]}
-          onNavigateInquiry={(prod) => navigateTo('inquiry', prod)}
-        />
-      )}
+      {/* ── SUBPAGES SUSPENSE CONTAINER (LAZY LOADED) ── */}
+      <Suspense fallback={<div className="min-h-[60vh] flex items-center justify-center"><div className="w-8 h-8 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" /></div>}>
+        {/* ── 1. PRODUCT DETAIL PAGE (HAMCO AUDIT REAL-COST COMPARISON & 3 VIEWS) ── */}
+        {currentPage === 'product-detail' && (
+          <ProductDetailLandingTemplate
+            productName={activeProductDetail?.name || 'Pro Custom Athletic Game Jersey'}
+            sport={activeProductDetail?.sport || activeProductDetail?.category || activeSport || 'Baseball'}
+            basePrice={activeProductDetail?.price ? (String(activeProductDetail.price).startsWith('$') ? activeProductDetail.price : `$${activeProductDetail.price}`) : '$41.99'}
+            images={[
+              activeProductDetail?.image || 'https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80',
+              activeProductDetail?.image || 'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80',
+              activeProductDetail?.image || 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80'
+            ]}
+            onNavigateInquiry={(prod) => navigateTo('inquiry', prod)}
+          />
+        )}
 
-      {/* ── 2. NEW COMPLETE SPORTS CATEGORY HUB (EXACT HAMCO SCREENSHOT BENCHMARK) ── */}
-      {currentPage === 'sports-hub' && (
-        <SportsCategoryHubPage
-          activeSport={activeSport}
-          onSelectSport={(sport) => {
-            setActiveSport(sport);
-            window.location.hash = `sport/${encodeURIComponent(sport)}`;
-          }}
-          onSelectProduct={(p) => navigateTo('product-detail', p)}
-          onNavigateInquiry={(item) => navigateTo('inquiry', item)}
-        />
-      )}
+        {/* ── 2. NEW COMPLETE SPORTS CATEGORY HUB (EXACT HAMCO SCREENSHOT BENCHMARK) ── */}
+        {currentPage === 'sports-hub' && (
+          <SportsCategoryHubPage
+            activeSport={activeSport}
+            onSelectSport={(sport) => {
+              setActiveSport(sport);
+              window.location.hash = `sport/${encodeURIComponent(sport)}`;
+            }}
+            onSelectProduct={(p) => navigateTo('product-detail', p)}
+            onNavigateInquiry={(item) => navigateTo('inquiry', item)}
+          />
+        )}
 
-      {currentPage === 'styles' && (
-        <StylesPage
-          initialStyle={stylesFilter}
-          onNavigateHome={() => navigateTo('home')}
-          onNavigateProducts={(cat) => navigateTo('sports-hub', cat)}
-          onNavigateInquiry={(p) => navigateTo('inquiry', p)}
-        />
-      )}
+        {currentPage === 'styles' && (
+          <StylesPage
+            initialStyle={stylesFilter}
+            onNavigateHome={() => navigateTo('home')}
+            onNavigateProducts={(cat) => navigateTo('sports-hub', cat)}
+            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
+          />
+        )}
 
-      {currentPage === 'explore' && (
-        <ExplorePage
-          initialTab={exploreTab}
-          onNavigateHome={() => navigateTo('home')}
-          onNavigateProducts={() => navigateTo('sports-hub')}
-          onNavigateInquiry={(p) => navigateTo('inquiry', p)}
-        />
-      )}
+        {currentPage === 'explore' && (
+          <ExplorePage
+            initialTab={exploreTab}
+            onNavigateHome={() => navigateTo('home')}
+            onNavigateProducts={() => navigateTo('sports-hub')}
+            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
+          />
+        )}
 
-      {currentPage === 'compliance' && (
-        <CompliancePage
-          onNavigateHome={() => navigateTo('home')}
-          onNavigateInquiry={(p) => navigateTo('inquiry', p)}
-        />
-      )}
+        {currentPage === 'compliance' && (
+          <CompliancePage
+            onNavigateHome={() => navigateTo('home')}
+            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
+          />
+        )}
 
-      {currentPage === 'certification' && (
-        <CertificationPage
-          onNavigateHome={() => navigateTo('home')}
-          onNavigateInquiry={(p) => navigateTo('inquiry', p)}
-        />
-      )}
+        {currentPage === 'certification' && (
+          <CertificationPage
+            onNavigateHome={() => navigateTo('home')}
+            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
+          />
+        )}
 
-      {currentPage === 'about' && (
-        <AboutPage
-          initialTab={aboutTab}
-          onNavigateHome={() => navigateTo('home')}
-          onNavigateProducts={() => navigateTo('sports-hub')}
-          onNavigateInquiry={(p) => navigateTo('inquiry', p)}
-        />
-      )}
+        {currentPage === 'about' && (
+          <AboutPage
+            initialTab={aboutTab}
+            onNavigateHome={() => navigateTo('home')}
+            onNavigateProducts={() => navigateTo('sports-hub')}
+            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
+          />
+        )}
 
-      {currentPage === 'inquiry' && (
-        <InquiryPage
-          initialProductSlug={inquiryProductSlug}
-          onNavigateHome={() => navigateTo('home')}
-          onNavigateProducts={() => navigateTo('sports-hub')}
-        />
-      )}
+        {currentPage === 'inquiry' && (
+          <InquiryPage
+            initialProductSlug={inquiryProductSlug}
+            onNavigateHome={() => navigateTo('home')}
+            onNavigateProducts={() => navigateTo('sports-hub')}
+          />
+        )}
+      </Suspense>
 
       {currentPage === 'home' && (
         <main className="flex-1">

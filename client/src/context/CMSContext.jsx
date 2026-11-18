@@ -15,7 +15,7 @@ export const CMSProvider = ({ children }) => {
       badge: 'CUSTOM SPORTSWEAR & ATHLETIC UNIFORMS MANUFACTURER',
       title: 'PRO-GRADE DYE-SUBLIMATED UNIFORMS & TEAM APPAREL FACTORY DIRECT',
       buttonText: 'Explore 2026 Sports Uniforms Collection',
-      videoUrl: '/leaderhero.mp4',
+      videoUrl: '/leaderheros.mp4',
       posterImage: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1920&auto=format&fit=crop',
     },
     ticker: {
