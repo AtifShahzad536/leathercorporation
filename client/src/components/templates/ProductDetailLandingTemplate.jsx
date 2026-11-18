@@ -237,7 +237,7 @@ export default function ProductDetailLandingTemplate({
                     className={`aspect-[4/3] rounded-[3px] overflow-hidden border-2 transition cursor-pointer relative ${activeImageIdx === i ? 'border-[var(--accent)] shadow-md' : 'border-neutral-200 opacity-70 hover:opacity-100'
                       }`}
                   >
-                    <img src={img} alt={`View ${i + 1}`} className="w-full h-full object-cover" />
+                    <img src={img} alt="HAMLO SPORTS Custom Uniform Angle View" className="w-full h-full object-cover" />
                     <span className="absolute bottom-1 left-1 bg-black/70 text-white text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">
                       {i === 0 ? 'Front View' : i === 1 ? 'Back View' : 'Full Match Set'}
                     </span>
@@ -292,9 +292,9 @@ export default function ProductDetailLandingTemplate({
 
                 {/* Technical Fabric Specs Table (Page 11 Improved Feature) */}
                 <div className="bg-white rounded-[3px] border border-[var(--secondary)]/10 p-4 mb-6 shadow-xs">
-                  <h4 className="text-[10.5px] font-bold uppercase tracking-wider text-[var(--secondary)] mb-2 flex items-center gap-1.5">
+                  <h2 className="text-[10.5px] font-bold uppercase tracking-wider text-[var(--secondary)] mb-2 flex items-center gap-1.5">
                     <Layers size={13} className="text-[var(--accent)]" /> Factory Fabric Specifications
-                  </h4>
+                  </h2>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10.5px] text-neutral-600">
                     <div><span className="font-bold text-[var(--secondary)] block">Fabric:</span> Micro-Interlock Poly</div>
                     <div><span className="font-bold text-[var(--secondary)] block">Weight:</span> 180 - 220 GSM</div>
@@ -419,9 +419,9 @@ export default function ProductDetailLandingTemplate({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white rounded-[3px] border border-[var(--secondary)]/10 p-6 sm:p-8 shadow-xl">
             {/* Typical Reseller Invoice */}
             <div className="p-5 bg-neutral-50 rounded border border-neutral-200">
-              <h4 className="text-sm font-black uppercase text-neutral-700 mb-4 pb-2 border-b border-neutral-200">
+              <h3 className="text-sm font-black uppercase text-neutral-700 mb-4 pb-2 border-b border-neutral-200">
                 Typical US Retailer / Distributor
-              </h4>
+              </h3>
               <div className="space-y-2 text-xs text-neutral-600">
                 <div className="flex justify-between"><span>25 Match Sets (@ $75.00)</span><span>$1,875.00</span></div>
                 <div className="flex justify-between text-red-600"><span>Player Names & Back Numbers ($5/player)</span><span>+$125.00</span></div>
@@ -437,9 +437,9 @@ export default function ProductDetailLandingTemplate({
             <div className="p-5 bg-emerald-50/50 rounded border-2 border-emerald-500 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-4 pb-2 border-b border-emerald-200">
-                  <h4 className="text-sm font-black uppercase text-emerald-950">
+                  <h3 className="text-sm font-black uppercase text-emerald-950">
                     HAMLO SPORTS Sialkot Factory Direct
-                  </h4>
+                  </h3>
                   <span className="text-[10px] font-black uppercase bg-emerald-600 text-white px-2 py-0.5 rounded">
                     All-Inclusive
                   </span>
@@ -479,7 +479,7 @@ export default function ProductDetailLandingTemplate({
             {decorationMethods.map((m, idx) => (
               <div key={idx} className="p-5 bg-white rounded-[3px] border border-[var(--secondary)]/10 shadow-sm flex flex-col justify-between">
                 <div>
-                  <h4 className="text-sm font-black uppercase text-[var(--secondary)] mb-2">{m.title}</h4>
+                  <h3 className="text-sm font-black uppercase text-[var(--secondary)] mb-2">{m.title}</h3>
                   <p className="text-xs text-[var(--secondary)]/70 mb-4 leading-relaxed">{m.desc}</p>
                 </div>
                 <div className="pt-3 border-t border-neutral-100 text-[10px]">
@@ -532,7 +532,7 @@ export default function ProductDetailLandingTemplate({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {guarantees.map((g, idx) => (
               <div key={idx} className="p-5 bg-white rounded-[3px] border-l-4 border-l-[var(--accent)] border border-[var(--secondary)]/10 shadow-sm">
-                <h5 className="text-xs font-black uppercase text-[var(--secondary)] mb-1.5">{g.title}</h5>
+                <h3 className="text-xs font-black uppercase text-[var(--secondary)] mb-1.5">{g.title}</h3>
                 <p className="text-[11px] text-[var(--secondary)]/70 leading-relaxed">{g.desc}</p>
               </div>
             ))}
@@ -630,9 +630,9 @@ export default function ProductDetailLandingTemplate({
             {upsells.map((u, idx) => (
               <div key={idx} className="bg-white p-3 rounded-[3px] border border-[var(--secondary)]/10 shadow-xs flex flex-col justify-between">
                 <div className="aspect-[4/3] bg-neutral-100 rounded mb-2 overflow-hidden">
-                  <img src={u.img} alt={u.name} className="w-full h-full object-cover" />
+                  <img src={u.img} alt="HAMLO SPORTS Teamwear Apparel" className="w-full h-full object-cover" />
                 </div>
-                <h4 className="text-xs font-black uppercase text-[var(--secondary)] line-clamp-1 mb-1">{u.name}</h4>
+                <h3 className="text-xs font-black uppercase text-[var(--secondary)] line-clamp-1 mb-1">{u.name}</h3>
                 <div className="flex items-center justify-between pt-2 border-t border-neutral-100 text-xs">
                   <span className="font-bold text-[var(--secondary)]">{u.price}</span>
                   <a href="#quote-section" className="text-[10px] font-bold text-[var(--accent)] uppercase hover:underline">
@@ -688,9 +688,9 @@ export default function ProductDetailLandingTemplate({
                 <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--accent)]">
                   DESIGN INSPIRATION
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-black uppercase text-[var(--secondary)] mt-1">
+                <h2 className="text-2xl sm:text-3xl font-black uppercase text-[var(--secondary)] mt-1">
                   POPULAR {sport.toUpperCase()} DESIGN CONCEPTS
-                </h3>
+                </h2>
               </div>
 
               {/* Filter by color */}
@@ -712,7 +712,7 @@ export default function ProductDetailLandingTemplate({
               {filteredInspiration.map((design, idx) => (
                 <div key={idx} className="bg-white p-2 rounded-[3px] border border-neutral-200 text-center">
                   <div className="aspect-[4/5] bg-neutral-100 rounded mb-1.5 overflow-hidden">
-                    <img src={design.img} alt={design.name} className="w-full h-full object-cover" />
+                    <img src={design.img} alt="HAMLO SPORTS Sublimated Design Concept" className="w-full h-full object-cover" />
                   </div>
                   <strong className="text-[10px] font-black uppercase text-[var(--secondary)] block line-clamp-1">{design.name}</strong>
                   <span className="text-[8.5px] text-neutral-400 uppercase font-semibold">Front / Back Sublimated</span>
