@@ -17,10 +17,11 @@
         "order custom athletic apparel no minimum order quantity"
       ],
       "trustManifest": {
+        "identity": "https://hamlosportswear.site",
         "publisher": "HAMLO SPORTS",
         "contact": "mailto:export@hamlosports.com",
         "canonical": "https://hamlosportswear.site/.well-known/ard.json",
-        "lastUpdated": "2026-11-18"
+        "lastUpdated": "2026-11-19"
       }
     },
     {
@@ -35,10 +36,11 @@
         "bulk jersey inquiry for sports club"
       ],
       "trustManifest": {
+        "identity": "https://hamlosportswear.site",
         "publisher": "HAMLO SPORTS",
         "contact": "mailto:export@hamlosports.com",
         "canonical": "https://hamlosportswear.site/.well-known/ard.json",
-        "lastUpdated": "2026-11-18"
+        "lastUpdated": "2026-11-19"
       }
     }
   ]
