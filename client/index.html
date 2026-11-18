@@ -52,12 +52,53 @@
     }
   }
   </script>
+
+  <!-- Critical Inline Preload Styles (Prevents Flash of Unstyled Content) -->
+  <style>
+    @keyframes hamloPulse {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(250%); }
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
 </head>
 
-<body>
-  <!-- SEO006: Meaningful Pre-rendered Fallback HTML for Search Crawlers & Bots before React hydration -->
+<body style="margin: 0; padding: 0; background-color: #FAF9F6;">
+  <!-- SEO006: Pre-rendered Branded Splash for Humans + Semantic Fallback for Crawlers -->
   <div id="root">
-    <div style="font-family: system-ui, -apple-system, sans-serif; max-width: 1200px; margin: 0 auto; padding: 40px 20px;">
+    <!-- Instant Branded Splash (Eliminates 0.7s Raw Text Flash) -->
+    <div style="min-height: 100vh; background-color: #1E1B6E; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Inter', -apple-system, sans-serif; color: #FAF9F6; margin: 0; padding: 0;">
+      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;">
+        <div style="width: 60px; height: 60px; border-radius: 8px; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.25);">
+          <img src="/logo_silverstar.png" alt="HAMLO SPORTS" style="width: 42px; height: 42px; object-fit: contain;" />
+        </div>
+        <div style="text-align: center;">
+          <div style="font-size: 20px; font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase; color: #FAF9F6;">
+            HAMLO <span style="color: #F26522;">SPORTS</span>
+          </div>
+          <div style="font-size: 9.5px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,249,246,0.6); margin-top: 4px;">
+            SIALKOT FACTORY DIRECT
+          </div>
+        </div>
+        <!-- Minimalist Loading Pulse Bar -->
+        <div style="width: 130px; height: 3px; background: rgba(255,255,255,0.12); border-radius: 9999px; overflow: hidden; margin-top: 6px;">
+          <div style="width: 45%; height: 100%; background: #F26522; border-radius: 9999px; animation: hamloPulse 1s ease-in-out infinite alternate;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO & Accessibility Semantic Fallback (Crawled by Search Bots, Visually Hidden from Humans) -->
+    <div class="sr-only">
       <header>
         <h1>HAMLO SPORTS — Custom Team Sports Uniforms & Factory Direct Athletic Apparel</h1>
         <p>Professional dye-sublimated athletic uniforms and team apparel direct from Sialkot manufacturing ateliers. Serving school programs, athletic clubs, and professional leagues with free 12-hour 3D mockups and global DDP delivery.</p>
