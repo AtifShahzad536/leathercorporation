@@ -124,7 +124,7 @@ export default function SizeChartSection({ onNavigateInquiry = () => {} }) {
                 className={`px-3.5 py-1.5 rounded-[3px] text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
                   unit === 'cm'
                     ? 'bg-[var(--accent)] text-white shadow-xs'
-                    : 'text-[var(--secondary)]/70 hover:text-[var(--secondary)]'
+                    : 'text-slate-700 hover:text-[var(--secondary)]'
                 }`}
               >
                 Centimeters (CM)
@@ -150,7 +150,7 @@ export default function SizeChartSection({ onNavigateInquiry = () => {} }) {
               className={`px-6 py-3 rounded-[5px] font-black text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 cursor-pointer whitespace-nowrap border ${
                 activeSport === key
                   ? 'bg-[var(--secondary)] text-white border-[var(--secondary)] shadow-md'
-                  : 'bg-white text-[var(--secondary)]/70 border-[var(--secondary)]/15 hover:border-[var(--accent)] hover:text-[var(--secondary)]'
+                  : 'bg-white text-slate-700 border-[var(--secondary)]/15 hover:border-[var(--accent)] hover:text-[var(--secondary)]'
               }`}
             >
               {data.title}
@@ -168,7 +168,7 @@ export default function SizeChartSection({ onNavigateInquiry = () => {} }) {
                 <h3 className="font-black text-sm uppercase tracking-wider text-[var(--secondary)]">
                   {currentCategory.title} Standard Size Grid
                 </h3>
-                <span className="text-[11px] text-[var(--secondary)]/60 font-medium">
+                <span className="text-[11px] text-slate-600 font-semibold">
                   {currentCategory.tagline} • ({unit.toUpperCase()})
                 </span>
               </div>

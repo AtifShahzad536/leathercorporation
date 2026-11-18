@@ -4,8 +4,9 @@
   :root {
     --primary: #FAF9F6;
     --secondary: #1E1B6E;
-    --accent: #F26522;
-    --text-muted: #64748B;
+    --accent: #C2410C;
+    --accent-bright: #F26522;
+    --text-muted: #475569;
     --font-primary: 'Inter', sans-serif;
   }
 

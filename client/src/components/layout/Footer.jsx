@@ -132,7 +132,7 @@ const Footer = ({ onNavigate = () => {} }) => {
       {/* Bottom Bar */}
       <div className="border-t border-white/10">
         <div className="w-[96%] max-w-[1800px] mx-auto py-5 flex flex-col md:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-white/30 tracking-wide">
+          <p className="text-xs text-white/75 tracking-wide">
             © {new Date().getFullYear()} HAMLO SPORTS. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
@@ -148,7 +148,7 @@ const Footer = ({ onNavigate = () => {} }) => {
                   e.preventDefault();
                   onNavigate('compliance');
                 }}
-                className="text-xs text-white/30 hover:text-white transition-colors tracking-wide"
+                className="text-xs text-white/75 hover:text-white transition-colors tracking-wide underline-offset-2 hover:underline"
               >
                 {label}
               </a>

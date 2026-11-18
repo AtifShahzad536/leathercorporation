@@ -54,7 +54,7 @@ export default function FAQSection() {
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase text-[var(--secondary)] tracking-tight leading-tight">
             EVERYTHING YOU NEED TO KNOW
           </h2>
-          <p className="text-xs sm:text-sm text-[var(--secondary)]/70 max-w-2xl mx-auto mt-3 font-normal leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-700 max-w-2xl mx-auto mt-3 font-normal leading-relaxed">
             Direct answers on turnaround times, zero minimum orders, technical fabrics, sanctioning rules, and single-dye-batch team branding.
           </p>
         </div>
@@ -119,7 +119,7 @@ export default function FAQSection() {
               href="https://wa.me/923000000000?text=Hello%20HAMLO%20SPORTS!%20I%20have%20a%20question%20about%20team%20uniforms."
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs uppercase tracking-wider rounded-[5px] transition cursor-pointer shadow"
+              className="px-5 py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-black text-xs uppercase tracking-wider rounded-[5px] transition cursor-pointer shadow"
             >
               WhatsApp Support
             </a>

@@ -48,6 +48,8 @@ function BlogCard({ blog }) {
           <img
             src={blog.image}
             alt="HAMLO SPORTS Athletic Uniform Manufacturing Article"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             onError={(e) => { e.target.style.display = "none"; }}
           />
@@ -59,12 +61,12 @@ function BlogCard({ blog }) {
           <h3 className="text-[15px] font-black text-[var(--secondary)] group-hover:text-[var(--accent)] transition-colors leading-snug mb-2">
             {blog.title}
           </h3>
-          <p className="text-[12px] text-[var(--secondary)]/70 leading-relaxed font-light line-clamp-3">
+          <p className="text-[12px] text-slate-700 leading-relaxed font-normal line-clamp-3">
             {blog.excerpt}
           </p>
         </div>
       </div>
-      <div className="p-4 pt-0 flex items-center gap-2 text-[11px] text-[var(--secondary)]/50 border-t border-[var(--secondary)]/10 mt-3 pt-3">
+      <div className="p-4 pt-0 flex items-center gap-2 text-[11px] text-slate-600 font-medium border-t border-[var(--secondary)]/10 mt-3 pt-3">
         <CalendarIcon />
         <span>{blog.date}</span>
       </div>
@@ -86,7 +88,7 @@ export default function BlogSection() {
           <h2 className="text-2xl sm:text-4xl font-black uppercase text-[var(--secondary)] mt-1 tracking-tight">
             UNIFORM ADVICE FOR COACHES & CLUBS
           </h2>
-          <p className="text-xs sm:text-sm text-[var(--secondary)]/60 max-w-lg mx-auto mt-2">
+          <p className="text-xs sm:text-sm text-slate-700 max-w-lg mx-auto mt-2 font-normal">
             Real production guidelines, fabric weights, NFHS regulations, and factory ordering tips from HAMLO SPORTS engineers.
           </p>
         </div>

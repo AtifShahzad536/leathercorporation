@@ -183,7 +183,7 @@ export default function HistorySlider() {
                     <FiChevronRight size={20} />
                   </button>
 
-                  <span className="text-xs font-mono font-bold text-[var(--secondary)]/50 ml-3">
+                  <span className="text-xs font-mono font-bold text-[var(--secondary)]/80 ml-3">
                     {slide.year} MILESTONE
                   </span>
                 </div>
@@ -210,26 +210,26 @@ export default function HistorySlider() {
                 <button
                   key={s.year + i}
                   onClick={() => goTo(i)}
-                  className={`group flex flex-col items-center flex-shrink-0 cursor-pointer transition-all duration-300 px-3 sm:px-4 py-2 ${
-                    isActive ? 'scale-105' : 'opacity-50 hover:opacity-100'
+                  className={`group flex flex-col items-center flex-shrink-0 cursor-pointer transition-all duration-300 px-3 sm:px-4 py-2 min-h-[44px] ${
+                    isActive ? 'scale-105 opacity-100' : 'opacity-85 hover:opacity-100'
                   }`}
                 >
                   <div className="relative mb-3 flex items-center justify-center">
                     <div className={`w-3.5 h-3.5 rounded-full transition-all duration-300 ${
                       isActive 
                         ? 'bg-[var(--accent)] ring-4 ring-[var(--accent)]/30 scale-125' 
-                        : 'bg-[var(--secondary)]/30 group-hover:bg-[var(--secondary)]'
+                        : 'bg-[var(--secondary)]/50 group-hover:bg-[var(--secondary)]'
                     }`} />
                   </div>
 
                   <span className={`text-xl sm:text-2xl md:text-3xl font-black font-mono tracking-tight transition-colors duration-300 ${
-                    isActive ? 'text-[var(--accent)]' : 'text-[var(--secondary)]/60 group-hover:text-[var(--secondary)]'
+                    isActive ? 'text-[var(--accent)]' : 'text-[var(--secondary)]/85 group-hover:text-[var(--secondary)]'
                   }`}>
                     {s.year}
                   </span>
 
-                  <span className={`text-[9px] font-bold uppercase tracking-wider mt-1 text-center whitespace-nowrap transition-colors duration-300 ${
-                    isActive ? 'text-[var(--secondary)]' : 'text-[var(--secondary)]/40'
+                  <span className={`text-[9.5px] font-bold uppercase tracking-wider mt-1 text-center whitespace-nowrap transition-colors duration-300 ${
+                    isActive ? 'text-[var(--secondary)]' : 'text-[var(--secondary)]/75'
                   }`}>
                     {(s.title || '').split(' ')[0] || s.year || 'ERA'}
                   </span>

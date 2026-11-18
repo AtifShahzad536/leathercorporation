@@ -98,7 +98,7 @@ export default function ClothingSection({ onExplore = () => {} }) {
             {heading}
           </h2>
         </div>
-        <p className="text-xs md:text-sm text-[var(--secondary)]/70 max-w-md mt-2 md:mt-0 font-light">
+        <p className="text-xs md:text-sm text-slate-700 max-w-md mt-2 md:mt-0 font-normal">
           {description}
         </p>
       </div>

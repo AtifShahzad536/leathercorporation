@@ -49,7 +49,7 @@ export default function ProSpecsSection({ onExplore = () => {} }) {
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-[var(--secondary)] leading-tight mb-4">
             BUILT ON THE SAME SPECS PRO PROGRAMS DEMAND
           </h2>
-          <p className="text-xs sm:text-base text-[var(--secondary)]/75 max-w-2xl mx-auto font-light leading-relaxed">
+          <p className="text-xs sm:text-base text-slate-700 max-w-2xl mx-auto font-normal leading-relaxed">
             Every fabric, weight, and decoration method is matched to the sport. Game-day jerseys engineered to breathe. The right build for the right field.
           </p>
         </div>
@@ -68,6 +68,8 @@ export default function ProSpecsSection({ onExplore = () => {} }) {
                 <img
                   src={card.image}
                   alt="HAMLO SPORTS Technical Athletic Uniform Specification"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108 filter brightness-95"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
@@ -89,7 +91,7 @@ export default function ProSpecsSection({ onExplore = () => {} }) {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-xs sm:text-sm text-[var(--secondary)]/75 font-normal leading-relaxed mb-6">
+                  <p className="text-xs sm:text-sm text-slate-700 font-normal leading-relaxed mb-6">
                     {card.description}
                   </p>
                 </div>

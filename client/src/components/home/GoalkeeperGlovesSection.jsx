@@ -86,11 +86,14 @@ export default function GoalkeeperGlovesSection({ onExplore = () => {} }) {
                 loop
                 muted
                 playsInline
+                aria-hidden="true"
                 preload="none"
                 poster={idx === 0 ? "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=70&w=600&auto=format&fit=crop" : "https://images.unsplash.com/photo-1546519638-68e109498ffc?q=70&w=600&auto=format&fit=crop"}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 src={isVisible ? src : undefined}
-              />
+              >
+                <track kind="captions" src="data:text/vtt,WEBVTT" label="English" default={false} />
+              </video>
               <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300 pointer-events-none" />
             </div>
           ))}

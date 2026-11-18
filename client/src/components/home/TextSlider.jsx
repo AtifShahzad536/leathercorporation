@@ -74,15 +74,20 @@ export default function TextSlider() {
               <FaChevronLeft size={12} />
             </button>
 
-            <div className="flex gap-2">
+            <div className="flex items-center gap-1">
               {slides.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
-                  className={`w-2.5 h-2.5 rounded-full transition-all cursor-pointer ${currentSlide === index ? 'bg-[var(--accent)] w-6' : 'bg-[var(--secondary)]/25'
-                    }`}
+                  className="p-2.5 flex items-center justify-center cursor-pointer min-w-[36px] min-h-[36px]"
                   aria-label={`Go to slide ${index + 1}`}
-                />
+                >
+                  <span
+                    className={`block h-2.5 rounded-full transition-all ${
+                      currentSlide === index ? 'bg-[var(--accent)] w-6' : 'bg-[var(--secondary)]/35 w-2.5 hover:bg-[var(--secondary)]/60'
+                    }`}
+                  />
+                </button>
               ))}
             </div>
 
