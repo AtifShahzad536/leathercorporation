@@ -28,19 +28,25 @@ const PORT = process.env.PORT || 5000;
 // ── MIDDLEWARE ──
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 app.use(cors({
-  origin: true, // Allow all origins (localhost on any port: 5173, 5174, 5175, etc.)
+  origin: true, // Allow all origins
   credentials: true,
 }));
 app.use(morgan('dev'));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// Static uploads directory with cross-origin access
-const localUploadsDir = path.join(__dirname, '../uploads/media');
-if (!fs.existsSync(localUploadsDir)) {
-  fs.mkdirSync(localUploadsDir, { recursive: true });
+// Static uploads directory (Only initialize filesystem storage in non-serverless local environments)
+if (!process.env.VERCEL) {
+  try {
+    const localUploadsDir = path.join(__dirname, '../uploads/media');
+    if (!fs.existsSync(localUploadsDir)) {
+      fs.mkdirSync(localUploadsDir, { recursive: true });
+    }
+    app.use('/uploads', express.static(localUploadsDir));
+  } catch (e) {
+    console.warn('Local uploads dir note:', e.message);
+  }
 }
-app.use('/uploads', express.static(localUploadsDir));
 
 // Rate limiting
 const apiLimiter = rateLimit({
@@ -49,6 +55,41 @@ const apiLimiter = rateLimit({
   message: { success: false, message: 'Too many requests, slow down' },
 });
 app.use('/api/', apiLimiter);
+
+// Middleware to ensure DB connection on serverless API calls
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.warn('DB middleware warning:', err.message);
+    next();
+  }
+});
+
+// ── ROOT & HEALTH CHECK ROUTES ──
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    service: 'HAMLO SPORTS REST API',
+    status: 'online',
+    version: '1.0.0',
+    endpoints: {
+      health: '/api/health',
+      products: '/api/products',
+      inquiries: '/api/inquiries'
+    }
+  });
+});
+
+app.get('/api/health', (req, res) => {
+  res.json({
+    success: true,
+    message: 'HAMLO SPORTS API running',
+    timestamp: new Date().toISOString(),
+    dbConnected: !!(process.env.MONGODB_URI)
+  });
+});
 
 // ── API ROUTES ──
 app.use('/api/auth', authRoutes);
@@ -60,15 +101,6 @@ app.use('/api/email', emailRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/inquiries', inquiryRoutes);
 
-// Health check
-app.get('/api/health', (req, res) => {
-  res.json({
-    success: true,
-    message: 'HAMLO SPORTS API running',
-    timestamp: new Date().toISOString(),
-  });
-});
-
 // Error handling
 app.use((err, req, res, next) => {
   console.error('Server Error:', err.message);
@@ -78,7 +110,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Connect and seed on launch
+// Connect and seed on startup
 connectDB().then(() => {
   seedAdmin().catch(e => console.warn('Seed admin:', e.message));
   if (!process.env.VERCEL) {
