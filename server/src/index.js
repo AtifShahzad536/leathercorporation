@@ -78,29 +78,25 @@ app.use((err, req, res, next) => {
   });
 });
 
-// ── START SERVER ──
-const startServer = async () => {
-  try {
-    // Connect to MongoDB
-    await connectDB();
-
-    // Seed admin account
-    await seedAdmin();
-
-    // Start email marketing cron
-    startEmailCron();
-
-    app.listen(PORT, () => {
-      console.log('═══════════════════════════════════════════════');
-      console.log('  🏀 HAMLO SPORTS REST API Backend Ready');
-      console.log(`  🌐 http://localhost:${PORT}`);
-      console.log(`  📦 Environment: ${process.env.NODE_ENV || 'development'}`);
-      console.log('═══════════════════════════════════════════════');
-    });
-  } catch (error) {
-    console.error('Failed to start server:', error.message);
-    process.exit(1);
+// Connect and seed on launch
+connectDB().then(() => {
+  seedAdmin().catch(e => console.warn('Seed admin:', e.message));
+  if (!process.env.VERCEL) {
+    try { startEmailCron(); } catch (e) {}
   }
-};
+}).catch(err => {
+  console.error('Failed to connect DB on startup:', err.message);
+});
 
-startServer();
+// Start HTTP server locally (Vercel Serverless imports `app` directly)
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log('═══════════════════════════════════════════════');
+    console.log('  🏀 HAMLO SPORTS REST API Backend Ready');
+    console.log(`  🌐 http://localhost:${PORT}`);
+    console.log(`  📦 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log('═══════════════════════════════════════════════');
+  });
+}
+
+module.exports = app;
