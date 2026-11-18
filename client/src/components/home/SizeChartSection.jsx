@@ -221,10 +221,10 @@ export default function SizeChartSection({ onNavigateInquiry = () => {} }) {
             
             {/* How to Measure Card */}
             <div className="bg-white rounded-[5px] border border-[var(--secondary)]/12 p-6 shadow-md">
-              <h4 className="font-black text-sm uppercase tracking-wider text-[var(--secondary)] mb-4 flex items-center gap-2">
+              <h3 className="font-black text-sm uppercase tracking-wider text-[var(--secondary)] mb-4 flex items-center gap-2">
                 <HelpCircle size={16} className="text-[var(--accent)]" />
                 <span>How To Measure Your Athletes</span>
-              </h4>
+              </h3>
 
               <div className="space-y-4 text-xs text-[var(--secondary)]/80 leading-relaxed">
                 <div className="flex gap-3">
@@ -265,9 +265,9 @@ export default function SizeChartSection({ onNavigateInquiry = () => {} }) {
                 <div className="inline-block px-2.5 py-1 bg-[var(--accent)] text-white text-[9px] font-black uppercase tracking-wider rounded-[3px] mb-3">
                   Zero Upcharge
                 </div>
-                <h4 className="font-black text-base uppercase tracking-tight mb-2">
+                <h3 className="font-black text-base uppercase tracking-tight mb-2">
                   Outside The Standard Chart?
-                </h4>
+                </h3>
                 <p className="text-xs text-white/80 leading-relaxed mb-4">
                   Send us your roster measurements sheet. Our pattern engineers cut custom garments with customized torso length, inseam, or armhole taper at zero added fees.
                 </p>

@@ -107,9 +107,9 @@ export default function FAQSection() {
             <div className="inline-block px-2.5 py-1 bg-[var(--accent)] text-white text-[9px] font-black uppercase tracking-wider rounded-[3px] mb-2">
               Factory Direct Support
             </div>
-            <h4 className="text-base sm:text-lg font-black uppercase tracking-tight text-white mb-1">
+            <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-white mb-1">
               Have a specific program requirement or rush deadline?
-            </h4>
+            </h3>
             <p className="text-xs text-white/75 font-normal">
               Our Sialkot production and artwork desk replies within 1 hour during standard hours.
             </p>

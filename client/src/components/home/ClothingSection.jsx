@@ -153,9 +153,9 @@ export default function ClothingSection({ onExplore = () => {} }) {
                       : "left-1/2 -translate-x-1/2"
                   }`}
                 >
-                  <h4 className="font-black text-sm uppercase text-[var(--secondary)] mb-1">
+                  <h3 className="font-black text-sm uppercase text-[var(--secondary)] mb-1">
                     {spot.title}
-                  </h4>
+                  </h3>
                   <p className="text-xs text-neutral-600 mb-2 leading-relaxed">
                     {spot.description}
                   </p>

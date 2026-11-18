@@ -18,6 +18,21 @@ export default function MediaUploadField({
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
+  const [imgError, setImgError] = useState(false);
+
+  React.useEffect(() => {
+    setImgError(false);
+  }, [value]);
+
+  const getPreviewUrl = (url) => {
+    if (!url) return '';
+    if (url.startsWith('http://') || url.startsWith('https://')) return url;
+    if (url.startsWith('/uploads/')) {
+      const apiOrigin = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api').replace(/\/api\/?$/, '');
+      return `${apiOrigin}${url}`;
+    }
+    return url;
+  };
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -111,9 +126,19 @@ export default function MediaUploadField({
       {value && (
         <div className="mt-2 p-2 bg-slate-900 rounded-lg flex items-center gap-3 max-w-sm">
           {type === 'video' ? (
-            <video src={value} className="w-16 h-12 object-cover rounded bg-black" controls={false} />
+            <video src={getPreviewUrl(value)} className="w-16 h-12 object-cover rounded bg-black" controls={false} />
+          ) : !imgError ? (
+            <img 
+              src={getPreviewUrl(value)} 
+              alt="Preview" 
+              onError={() => setImgError(true)}
+              className="w-16 h-12 object-cover rounded bg-black" 
+            />
           ) : (
-            <img src={value} alt="Preview" className="w-16 h-12 object-cover rounded bg-black" />
+            <div className="w-16 h-12 rounded bg-slate-800 border border-slate-700 flex flex-col items-center justify-center text-slate-400">
+              <ImageIcon size={14} />
+              <span className="text-[8px] uppercase tracking-wider font-mono mt-0.5">Asset</span>
+            </div>
           )}
           <div className="truncate flex-1">
             <span className="text-[10px] font-mono text-slate-300 block truncate">{value}</span>

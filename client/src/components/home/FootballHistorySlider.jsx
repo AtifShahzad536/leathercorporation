@@ -11,7 +11,7 @@ const defaultSlides = [
     subtitle: "HAMLO FOUNDATION",
     description:
       "HAMLO SPORTS started as an athletic manufacturing atelier in Sialkot, Pakistan. Crafting high-tension flatlock stitched uniforms, heavy-drill training gear, and field-tested athletic apparel engineered for endurance.",
-    image: "/football/select_fodbold_1947.avif",
+    image: "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=1000&q=80",
     accent: "#F26522",
   },
   {
@@ -20,7 +20,7 @@ const defaultSlides = [
     subtitle: "MOLECULAR COLOR REVOLUTION",
     description:
       "Pioneered Japanese industrial dye-sublimation print engines across team uniforms. Molecularly bonding Pantone colors, custom typography, and team crests directly into technical 220 GSM micro-interlock poly with zero cracking or fading.",
-    image: "/football/Select_fodbold_1951_9c89cd36-273c-4fbf-83af-98a97ae4f3af.webp",
+    image: "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=1000&q=80",
     accent: "#F26522",
   },
   {
@@ -29,7 +29,7 @@ const defaultSlides = [
     subtitle: "COLLEGIATE 3D APPLIQUÉ",
     description:
       "Installed multi-head laser embroidery cutting for collegiate varsity lettering and multi-layer zigzag tackle twill, bringing authentic MLB and NCAA standard baseball and hockey jerseys to club rosters worldwide.",
-    image: "/football/Select_fodbold_1962_cd927d76-7d9c-490d-82cd-8531602753e5.webp",
+    image: "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=1000&q=80",
     accent: "#F26522",
   },
   {
@@ -38,7 +38,7 @@ const defaultSlides = [
     subtitle: "DIRECT DDP USA & EU",
     description:
       "Launched direct door-to-door air freight with pre-cleared customs and duties (DDP). Delivering custom sublimated uniform sets directly to US high schools, colleges, and club directors with zero customs delays.",
-    image: "/football/Select_harndbold_1972.webp",
+    image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1000&q=80",
     accent: "#F26522",
   },
   {
@@ -47,7 +47,7 @@ const defaultSlides = [
     subtitle: "PRECISION DIGITAL ARTWORK",
     description:
       "Revolutionized team uniform ordering with our 12-hour 3D digital mockup turnaround. Coaches inspect true-scale typography, roster numbering, and Pantone color accuracy before a single stitch is sewn.",
-    image: "/football/Select_Brillant_Super_iBall_fodbold_2022_061cbe02-ff5c-4b13-b07d-6a81a0bb2298.webp",
+    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=80",
     accent: "#F26522",
   },
   {
@@ -56,7 +56,7 @@ const defaultSlides = [
     subtitle: "COMPLETE TEAM DIRECT OUTFITTER",
     description:
       "Full 12-discipline sport production spanning Baseball, Basketball, Football, Soccer, Esports, Wrestling, and Hockey. Over 296 verified performance cuts delivered factory-direct with no minimum order requirements.",
-    image: "/football/Select_Brillant_Super_iBall_fodbold_2022_061cbe02-ff5c-4b13-b07d-6a81a0bb2298.webp",
+    image: "https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&w=1000&q=80",
     accent: "#F26522",
   },
 ];
