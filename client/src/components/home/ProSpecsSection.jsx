@@ -10,7 +10,7 @@ import { Layers, Sparkles, CheckCircle2 } from 'lucide-react';
  * 1. SPORT-SPECIFIC FABRICS ("The Right Weight for the Right Game")
  * 2. 4-METHOD DECORATION ("Sublimation, Twill, Embroidery, Screen")
  * 3. FULL-RANGE SIZING ("Men's, Women's, Youth. XS to 4XL.")
- */
+ **/
 
 const specsCards = [
   {
@@ -39,11 +39,11 @@ const specsCards = [
   }
 ];
 
-export default function ProSpecsSection({ onExplore = () => {} }) {
+export default function ProSpecsSection({ onExplore = () => { } }) {
   return (
     <section className="w-full bg-[var(--primary)] text-[var(--secondary)] py-16 sm:py-24 border-b border-[var(--secondary)]/10 relative overflow-hidden select-none">
       <div className="w-[96%] max-w-[1800px] mx-auto">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-4xl mx-auto mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-[var(--secondary)] leading-tight mb-4">

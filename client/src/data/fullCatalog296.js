@@ -1,6 +1,7 @@
 /**
  * Complete 296 Verified Products Catalog mapped directly from Hamco's exact URL taxonomy
  * Supporting URLs like: /custom-<sport>-uniforms/custom-<sport>-<product-slug>/
+ * Hosted on Cloudinary CDN for instant, globally cached, high-fidelity transparent rendering.
  */
 
 export const sportSlugToCategory = {
@@ -45,7 +46,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029834/hamlosports/products/baseball/custom-full-button-baseball-jerseys.png",
     "canonical": "/custom-baseball-uniforms/custom-full-button-baseball-jerseys/",
     "rating": 4.9,
     "reviews": 39,
@@ -69,7 +70,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Full Button Baseball Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Full Button Baseball Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-full-button-baseball-jerseys"
   },
   {
     "id": 2,
@@ -82,7 +84,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029835/hamlosports/products/baseball/custom-two-button-baseball-jerseys.png",
     "canonical": "/custom-baseball-uniforms/custom-two-button-baseball-jerseys/",
     "rating": 4.9,
     "reviews": 40,
@@ -106,7 +108,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom 2 Button Baseball Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom 2 Button Baseball Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-two-button-baseball-jerseys"
   },
   {
     "id": 3,
@@ -119,7 +122,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029830/hamlosports/products/baseball/custom-baseball-pants.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-pants/",
     "rating": 4.9,
     "reviews": 41,
@@ -143,7 +146,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Baseball Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Baseball Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-pants"
   },
   {
     "id": 4,
@@ -156,7 +160,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029830/hamlosports/products/baseball/custom-baseball-jogger-pants.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-jogger-pants/",
     "rating": 4.9,
     "reviews": 42,
@@ -180,7 +184,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Baseball Jogger Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Baseball Jogger Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-jogger-pants"
   },
   {
     "id": 5,
@@ -193,7 +198,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029831/hamlosports/products/baseball/custom-baseball-practice-jerseys.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-practice-jerseys/",
     "rating": 4.9,
     "reviews": 43,
@@ -217,7 +222,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Baseball Practice Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Baseball Practice Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-practice-jerseys"
   },
   {
     "id": 6,
@@ -230,7 +236,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795024660/hamlosports/products/baseball/custom-baseball-cage-jackets.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-cage-jackets/",
     "rating": 4.9,
     "reviews": 44,
@@ -254,7 +260,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Baseball Cage Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Baseball Cage Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-cage-jackets"
   },
   {
     "id": 7,
@@ -267,7 +274,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029830/hamlosports/products/baseball/custom-baseball-crewneck-sweatshirts.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-crewneck-sweatshirts/",
     "rating": 4.9,
     "reviews": 45,
@@ -291,7 +298,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Baseball Crewneck Sweatshirt tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Baseball Crewneck Sweatshirt tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-crewneck-sweatshirts"
   },
   {
     "id": 8,
@@ -304,7 +312,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029834/hamlosports/products/baseball/custom-baseball-uniforms-set.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-uniforms-set/",
     "rating": 4.9,
     "reviews": 46,
@@ -328,7 +336,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Baseball Uniforms Set tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Baseball Uniforms Set tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-uniforms-set"
   },
   {
     "id": 9,
@@ -341,7 +350,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029835/hamlosports/products/baseball/custom-full-length-baseball-pants.png",
     "canonical": "/custom-baseball-uniforms/custom-full-length-baseball-pants/",
     "rating": 4.9,
     "reviews": 47,
@@ -365,7 +374,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Full Length Baseball Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Full Length Baseball Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-full-length-baseball-pants"
   },
   {
     "id": 10,
@@ -378,7 +388,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029835/hamlosports/products/baseball/custom-full-zip-baseball-hoodies.png",
     "canonical": "/custom-baseball-uniforms/custom-full-zip-baseball-hoodies/",
     "rating": 4.9,
     "reviews": 48,
@@ -402,7 +412,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Full Zip Baseball Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Full Zip Baseball Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-full-zip-baseball-hoodies"
   },
   {
     "id": 11,
@@ -415,7 +426,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029835/hamlosports/products/baseball/custom-knicker-style-baseball-pant.png",
     "canonical": "/custom-baseball-uniforms/custom-knicker-style-baseball-pant/",
     "rating": 4.9,
     "reviews": 49,
@@ -439,7 +450,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Knicker Style Baseball Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Knicker Style Baseball Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-knicker-style-baseball-pant"
   },
   {
     "id": 12,
@@ -452,7 +464,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029835/hamlosports/products/baseball/custom-performance-baseball-polos.png",
     "canonical": "/custom-baseball-uniforms/custom-performance-baseball-polos/",
     "rating": 4.9,
     "reviews": 50,
@@ -476,7 +488,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Performance Baseball Polos tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Performance Baseball Polos tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-performance-baseball-polos"
   },
   {
     "id": 13,
@@ -489,7 +502,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029832/hamlosports/products/baseball/custom-baseball-pullover-hoodies.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-pullover-hoodies/",
     "rating": 4.9,
     "reviews": 51,
@@ -513,7 +526,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Baseball Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Baseball Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-pullover-hoodies"
   },
   {
     "id": 14,
@@ -526,7 +540,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029831/hamlosports/products/baseball/custom-baseball-quarter-zipper-pullover.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-quarter-zipper-pullover/",
     "rating": 4.9,
     "reviews": 52,
@@ -550,7 +564,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Baseball Quarter Zip Pullover tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Baseball Quarter Zip Pullover tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-quarter-zipper-pullover"
   },
   {
     "id": 15,
@@ -563,7 +578,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029831/hamlosports/products/baseball/custom-baseball-round-neck-jerseys.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-round-neck-jerseys/",
     "rating": 4.9,
     "reviews": 53,
@@ -587,7 +602,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Round Neck Baseball Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Round Neck Baseball Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-round-neck-jerseys"
   },
   {
     "id": 16,
@@ -600,7 +616,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029830/hamlosports/products/baseball/custom-baseball-dugout-jackets.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-dugout-jackets/",
     "rating": 4.9,
     "reviews": 54,
@@ -624,7 +640,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Baseball Dugout Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Baseball Dugout Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-dugout-jackets"
   },
   {
     "id": 17,
@@ -637,7 +654,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029832/hamlosports/products/baseball/custom-baseball-short-sleeve-practice-t-shirts.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-short-sleeve-practice-t-shirts/",
     "rating": 4.9,
     "reviews": 55,
@@ -661,7 +678,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Baseball Short Sleeve Practice T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Baseball Short Sleeve Practice T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-short-sleeve-practice-t-shirts"
   },
   {
     "id": 18,
@@ -674,7 +692,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029832/hamlosports/products/baseball/custom-baseball-sleeveless-jerseys.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-sleeveless-jerseys/",
     "rating": 4.9,
     "reviews": 56,
@@ -698,7 +716,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Sleeveless Baseball Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Sleeveless Baseball Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-sleeveless-jerseys"
   },
   {
     "id": 19,
@@ -711,7 +730,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029832/hamlosports/products/baseball/custom-baseball-sliding-shorts.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-sliding-shorts/",
     "rating": 4.9,
     "reviews": 57,
@@ -735,7 +754,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Baseball Sliding Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Baseball Sliding Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-sliding-shorts"
   },
   {
     "id": 20,
@@ -748,7 +768,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029832/hamlosports/products/baseball/custom-baseball-stirrup-socks.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-stirrup-socks/",
     "rating": 4.9,
     "reviews": 58,
@@ -772,7 +792,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Baseball Stirrup Socks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Baseball Stirrup Socks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-stirrup-socks"
   },
   {
     "id": 21,
@@ -785,7 +806,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029833/hamlosports/products/baseball/custom-baseball-team-backpacks.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-team-backpacks/",
     "rating": 4.9,
     "reviews": 59,
@@ -809,7 +830,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Baseball Team Backpacks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Baseball Team Backpacks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-team-backpacks"
   },
   {
     "id": 22,
@@ -822,7 +844,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029833/hamlosports/products/baseball/custom-baseball-team-duffle-bags.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-team-duffle-bags/",
     "rating": 4.9,
     "reviews": 60,
@@ -846,7 +868,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Baseball Team Duffle Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Baseball Team Duffle Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-team-duffle-bags"
   },
   {
     "id": 23,
@@ -859,7 +882,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029833/hamlosports/products/baseball/custom-baseball-traditional-bags.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-traditional-bags/",
     "rating": 4.9,
     "reviews": 61,
@@ -883,7 +906,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Baseball Traditional Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Baseball Traditional Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-traditional-bags"
   },
   {
     "id": 24,
@@ -896,7 +920,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029833/hamlosports/products/baseball/custom-baseball-training-shorts.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-training-shorts/",
     "rating": 4.9,
     "reviews": 62,
@@ -920,7 +944,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Baseball Training Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Baseball Training Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-training-shorts"
   },
   {
     "id": 25,
@@ -933,7 +958,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029834/hamlosports/products/baseball/custom-baseball-v-neck-jerseys.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-v-neck-jerseys/",
     "rating": 4.9,
     "reviews": 38,
@@ -957,7 +982,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom V-neck Baseball Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom V-neck Baseball Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-v-neck-jerseys"
   },
   {
     "id": 26,
@@ -970,7 +996,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029834/hamlosports/products/baseball/custom-baseball-varsity-jackets.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-varsity-jackets/",
     "rating": 4.9,
     "reviews": 39,
@@ -994,7 +1020,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Baseball Varsity Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Baseball Varsity Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-varsity-jackets"
   },
   {
     "id": 27,
@@ -1007,7 +1034,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029834/hamlosports/products/baseball/custom-baseball-wind-pullovers.png",
     "canonical": "/custom-baseball-uniforms/custom-baseball-wind-pullovers/",
     "rating": 4.9,
     "reviews": 40,
@@ -1031,7 +1058,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Baseball Wind Pullovers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Baseball Wind Pullovers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/baseball/custom-baseball-wind-pullovers"
   },
   {
     "id": 28,
@@ -1044,7 +1072,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029836/hamlosports/products/basketball/custom-basketball-joggers.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-joggers/",
     "rating": 4.9,
     "reviews": 41,
@@ -1068,7 +1096,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Joggers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Joggers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-joggers"
   },
   {
     "id": 29,
@@ -1081,7 +1110,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029839/hamlosports/products/basketball/custom-basketball-socks.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-socks/",
     "rating": 4.9,
     "reviews": 42,
@@ -1105,7 +1134,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Socks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Socks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-socks"
   },
   {
     "id": 30,
@@ -1118,7 +1148,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029835/hamlosports/products/basketball/custom-basketball-backpack.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-backpack/",
     "rating": 4.9,
     "reviews": 43,
@@ -1142,7 +1172,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Backpack tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Backpack tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-backpack"
   },
   {
     "id": 31,
@@ -1155,7 +1186,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029835/hamlosports/products/basketball/custom-basketball-arm-sleeves.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-arm-sleeves/",
     "rating": 4.9,
     "reviews": 44,
@@ -1179,7 +1210,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Arm Sleeves tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Arm Sleeves tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-arm-sleeves"
   },
   {
     "id": 32,
@@ -1192,7 +1224,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029836/hamlosports/products/basketball/custom-basketball-compression-shorts.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-compression-shorts/",
     "rating": 4.9,
     "reviews": 45,
@@ -1216,7 +1248,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Compression Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Compression Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-compression-shorts"
   },
   {
     "id": 33,
@@ -1229,7 +1262,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029836/hamlosports/products/basketball/custom-basketball-crewneck-sweatshirts.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-crewneck-sweatshirts/",
     "rating": 4.9,
     "reviews": 46,
@@ -1253,7 +1286,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Crewneck Sweatshirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Crewneck Sweatshirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-crewneck-sweatshirts"
   },
   {
     "id": 34,
@@ -1266,7 +1300,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029836/hamlosports/products/basketball/custom-basketball-full-zip-hoodies.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-full-zip-hoodies/",
     "rating": 4.9,
     "reviews": 47,
@@ -1290,7 +1324,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Full Zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Full Zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-full-zip-hoodies"
   },
   {
     "id": 35,
@@ -1303,7 +1338,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029838/hamlosports/products/basketball/custom-basketball-shooting-shirts.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-shooting-shirts/",
     "rating": 4.9,
     "reviews": 48,
@@ -1327,7 +1362,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Shooting Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Shooting Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-shooting-shirts"
   },
   {
     "id": 36,
@@ -1340,7 +1376,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029836/hamlosports/products/basketball/custom-basketball-performance-shorts.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-performance-shorts/",
     "rating": 4.9,
     "reviews": 49,
@@ -1364,7 +1400,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Performance Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Performance Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-performance-shorts"
   },
   {
     "id": 37,
@@ -1377,7 +1414,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029837/hamlosports/products/basketball/custom-basketball-polo-shirts.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-polo-shirts/",
     "rating": 4.9,
     "reviews": 50,
@@ -1401,7 +1438,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Polo Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Polo Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-polo-shirts"
   },
   {
     "id": 38,
@@ -1414,7 +1452,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029837/hamlosports/products/basketball/custom-basketball-pullover-hoodies.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-pullover-hoodies/",
     "rating": 4.9,
     "reviews": 51,
@@ -1438,7 +1476,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-pullover-hoodies"
   },
   {
     "id": 39,
@@ -1451,7 +1490,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029837/hamlosports/products/basketball/custom-basketball-quarter-zip-practice-jerseys.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-quarter-zip-practice-jerseys/",
     "rating": 4.9,
     "reviews": 52,
@@ -1475,7 +1514,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Quarter Zip Practice Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Quarter Zip Practice Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-quarter-zip-practice-jerseys"
   },
   {
     "id": 40,
@@ -1488,7 +1528,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029837/hamlosports/products/basketball/custom-basketball-reversible-uniforms.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-reversible-uniforms/",
     "rating": 4.9,
     "reviews": 53,
@@ -1512,7 +1552,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Reversible Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Reversible Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-reversible-uniforms"
   },
   {
     "id": 41,
@@ -1525,7 +1566,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029838/hamlosports/products/basketball/custom-basketball-round-neck-uniforms.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-round-neck-uniforms/",
     "rating": 4.9,
     "reviews": 54,
@@ -1549,7 +1590,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Round Neck Basketball Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Round Neck Basketball Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-round-neck-uniforms"
   },
   {
     "id": 42,
@@ -1562,7 +1604,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029838/hamlosports/products/basketball/custom-basketball-round-neck-reversible-jerseys.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-round-neck-reversible-jerseys/",
     "rating": 4.9,
     "reviews": 55,
@@ -1586,7 +1628,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Round Neck Reversible Basketball Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Round Neck Reversible Basketball Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-round-neck-reversible-jerseys"
   },
   {
     "id": 43,
@@ -1599,7 +1642,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029838/hamlosports/products/basketball/custom-basketball-satin-bomber-jackets.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-satin-bomber-jackets/",
     "rating": 4.9,
     "reviews": 56,
@@ -1623,7 +1666,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Satin Bomber Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Satin Bomber Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-satin-bomber-jackets"
   },
   {
     "id": 44,
@@ -1636,7 +1680,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029838/hamlosports/products/basketball/custom-basketball-shooting-jackets.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-shooting-jackets/",
     "rating": 4.9,
     "reviews": 57,
@@ -1660,7 +1704,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Shooting Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Shooting Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-shooting-jackets"
   },
   {
     "id": 45,
@@ -1673,7 +1718,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029837/hamlosports/products/basketball/custom-basketball-practice-t-shirts.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-practice-t-shirts/",
     "rating": 4.9,
     "reviews": 58,
@@ -1697,7 +1742,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Practice T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Practice T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-practice-t-shirts"
   },
   {
     "id": 46,
@@ -1710,7 +1756,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029839/hamlosports/products/basketball/custom-basketball-sleeveless-training-t-shirts.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-sleeveless-training-t-shirts/",
     "rating": 4.9,
     "reviews": 59,
@@ -1734,7 +1780,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Sleeveless Training T-shirts (basketball) tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Sleeveless Training T-shirts (basketball) tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-sleeveless-training-t-shirts"
   },
   {
     "id": 47,
@@ -1747,7 +1794,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029839/hamlosports/products/basketball/custom-basketball-team-duffle-bags.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-team-duffle-bags/",
     "rating": 4.9,
     "reviews": 60,
@@ -1771,7 +1818,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Team Duffle Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Team Duffle Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-team-duffle-bags"
   },
   {
     "id": 48,
@@ -1784,7 +1832,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029839/hamlosports/products/basketball/custom-basketball-tear-away-warmup-pants.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-tear-away-warmup-pants/",
     "rating": 4.9,
     "reviews": 61,
@@ -1808,7 +1856,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Tear Away Warmup Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Tear Away Warmup Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-tear-away-warmup-pants"
   },
   {
     "id": 49,
@@ -1821,7 +1870,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029839/hamlosports/products/basketball/custom-basketball-v-neck-uniforms.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-v-neck-uniforms/",
     "rating": 4.9,
     "reviews": 62,
@@ -1845,7 +1894,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom V-neck Basketball Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom V-neck Basketball Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-v-neck-uniforms"
   },
   {
     "id": 50,
@@ -1858,7 +1908,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029839/hamlosports/products/basketball/custom-basketball-v-neck-reversible-jerseys.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-v-neck-reversible-jerseys/",
     "rating": 4.9,
     "reviews": 38,
@@ -1882,7 +1932,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom V-neck Reversible Basketball Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom V-neck Reversible Basketball Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-v-neck-reversible-jerseys"
   },
   {
     "id": 51,
@@ -1895,7 +1946,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029840/hamlosports/products/basketball/custom-basketball-windbreaker-jackets.png",
     "canonical": "/custom-basketball-uniforms/custom-basketball-windbreaker-jackets/",
     "rating": 4.9,
     "reviews": 39,
@@ -1919,7 +1970,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Basketball Windbreaker Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Basketball Windbreaker Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/basketball/custom-basketball-windbreaker-jackets"
   },
   {
     "id": 52,
@@ -1932,7 +1984,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029843/hamlosports/products/esports/custom-esports-short-sleeve-jerseys.png",
     "canonical": "/custom-esports-apparel/custom-esports-short-sleeve-jerseys/",
     "rating": 4.9,
     "reviews": 40,
@@ -1956,7 +2008,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Short Sleeve Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Short Sleeve Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-short-sleeve-jerseys"
   },
   {
     "id": 53,
@@ -1969,7 +2022,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029841/hamlosports/products/esports/custom-esports-long-sleeve-jerseys.png",
     "canonical": "/custom-esports-apparel/custom-esports-long-sleeve-jerseys/",
     "rating": 4.9,
     "reviews": 41,
@@ -1993,7 +2046,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Long Sleeve Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Long Sleeve Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-long-sleeve-jerseys"
   },
   {
     "id": 54,
@@ -2006,7 +2060,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029843/hamlosports/products/esports/custom-esports-sleeveless-jerseys.png",
     "canonical": "/custom-esports-apparel/custom-esports-sleeveless-jerseys/",
     "rating": 4.9,
     "reviews": 42,
@@ -2030,7 +2084,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Sleeveless Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Sleeveless Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-sleeveless-jerseys"
   },
   {
     "id": 55,
@@ -2043,7 +2098,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029842/hamlosports/products/esports/custom-esports-quarter-zipper-jerseys.png",
     "canonical": "/custom-esports-apparel/custom-esports-quarter-zipper-jerseys/",
     "rating": 4.9,
     "reviews": 43,
@@ -2067,7 +2122,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Quarter Zipper Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Quarter Zipper Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-quarter-zipper-jerseys"
   },
   {
     "id": 56,
@@ -2080,7 +2136,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029844/hamlosports/products/esports/custom-esports-uniforms.png",
     "canonical": "/custom-esports-apparel/custom-esports-uniforms/",
     "rating": 4.9,
     "reviews": 44,
@@ -2104,7 +2160,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-uniforms"
   },
   {
     "id": 57,
@@ -2117,7 +2174,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029841/hamlosports/products/esports/custom-esports-full-uniforms.png",
     "canonical": "/custom-esports-apparel/custom-esports-full-uniforms/",
     "rating": 4.9,
     "reviews": 45,
@@ -2141,7 +2198,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Full Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Full Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-full-uniforms"
   },
   {
     "id": 58,
@@ -2154,7 +2212,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029841/hamlosports/products/esports/custom-esports-full-zip-hoodies.png",
     "canonical": "/custom-esports-apparel/custom-esports-full-zip-hoodies/",
     "rating": 4.9,
     "reviews": 46,
@@ -2178,7 +2236,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Full Zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Full Zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-full-zip-hoodies"
   },
   {
     "id": 59,
@@ -2191,7 +2250,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029842/hamlosports/products/esports/custom-esports-pullover-hoodies.png",
     "canonical": "/custom-esports-apparel/custom-esports-pullover-hoodies/",
     "rating": 4.9,
     "reviews": 47,
@@ -2215,7 +2274,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-pullover-hoodies"
   },
   {
     "id": 60,
@@ -2228,7 +2288,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029840/hamlosports/products/esports/custom-esports-bomber-jackets.png",
     "canonical": "/custom-esports-apparel/custom-esports-bomber-jackets/",
     "rating": 4.9,
     "reviews": 48,
@@ -2252,7 +2312,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Bomber Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Bomber Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-bomber-jackets"
   },
   {
     "id": 61,
@@ -2265,7 +2326,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029844/hamlosports/products/esports/custom-esports-track-jackets.png",
     "canonical": "/custom-esports-apparel/custom-esports-track-jackets/",
     "rating": 4.9,
     "reviews": 49,
@@ -2289,7 +2350,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Track Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Track Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-track-jackets"
   },
   {
     "id": 62,
@@ -2302,7 +2364,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029843/hamlosports/products/esports/custom-esports-short-sleeve-t-shirts.png",
     "canonical": "/custom-esports-apparel/custom-esports-short-sleeve-t-shirts/",
     "rating": 4.9,
     "reviews": 50,
@@ -2326,7 +2388,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Short Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Short Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-short-sleeve-t-shirts"
   },
   {
     "id": 63,
@@ -2339,7 +2402,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029841/hamlosports/products/esports/custom-esports-long-sleeve-t-shirts.png",
     "canonical": "/custom-esports-apparel/custom-esports-long-sleeve-t-shirts/",
     "rating": 4.9,
     "reviews": 51,
@@ -2363,7 +2426,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Long Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Long Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-long-sleeve-t-shirts"
   },
   {
     "id": 64,
@@ -2376,7 +2440,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029842/hamlosports/products/esports/custom-esports-polo-shirts.png",
     "canonical": "/custom-esports-apparel/custom-esports-polo-shirts/",
     "rating": 4.9,
     "reviews": 52,
@@ -2400,7 +2464,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Polo Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Polo Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-polo-shirts"
   },
   {
     "id": 65,
@@ -2413,7 +2478,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029842/hamlosports/products/esports/custom-esports-performance-polo-shirts.png",
     "canonical": "/custom-esports-apparel/custom-esports-performance-polo-shirts/",
     "rating": 4.9,
     "reviews": 53,
@@ -2437,7 +2502,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Performance Polo Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Performance Polo Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-performance-polo-shirts"
   },
   {
     "id": 66,
@@ -2450,7 +2516,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029843/hamlosports/products/esports/custom-esports-shorts.png",
     "canonical": "/custom-esports-apparel/custom-esports-shorts/",
     "rating": 4.9,
     "reviews": 54,
@@ -2474,7 +2540,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-shorts"
   },
   {
     "id": 67,
@@ -2487,7 +2554,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029840/hamlosports/products/esports/custom-esports-classic-shorts.png",
     "canonical": "/custom-esports-apparel/custom-esports-classic-shorts/",
     "rating": 4.9,
     "reviews": 55,
@@ -2511,7 +2578,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Classic Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Classic Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-classic-shorts"
   },
   {
     "id": 68,
@@ -2524,7 +2592,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029844/hamlosports/products/esports/custom-esports-training-shorts.png",
     "canonical": "/custom-esports-apparel/custom-esports-training-shorts/",
     "rating": 4.9,
     "reviews": 56,
@@ -2548,7 +2616,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Training Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Training Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-training-shorts"
   },
   {
     "id": 69,
@@ -2561,7 +2630,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029842/hamlosports/products/esports/custom-esports-pants.png",
     "canonical": "/custom-esports-apparel/custom-esports-pants/",
     "rating": 4.9,
     "reviews": 57,
@@ -2585,7 +2654,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-pants"
   },
   {
     "id": 70,
@@ -2598,7 +2668,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029841/hamlosports/products/esports/custom-esports-jogger-pants.png",
     "canonical": "/custom-esports-apparel/custom-esports-jogger-pants/",
     "rating": 4.9,
     "reviews": 58,
@@ -2622,7 +2692,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Jogger Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Jogger Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-jogger-pants"
   },
   {
     "id": 71,
@@ -2635,7 +2706,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029840/hamlosports/products/esports/custom-esports-caps.png",
     "canonical": "/custom-esports-apparel/custom-esports-caps/",
     "rating": 4.9,
     "reviews": 59,
@@ -2659,7 +2730,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Caps tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Caps tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-caps"
   },
   {
     "id": 72,
@@ -2672,7 +2744,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029840/hamlosports/products/esports/custom-esports-backpacks.png",
     "canonical": "/custom-esports-apparel/custom-esports-backpacks/",
     "rating": 4.9,
     "reviews": 60,
@@ -2696,7 +2768,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Backpacks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Backpacks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-backpacks"
   },
   {
     "id": 73,
@@ -2709,7 +2782,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029840/hamlosports/products/esports/custom-esports-arm-sleeves.png",
     "canonical": "/custom-esports-apparel/custom-esports-arm-sleeves/",
     "rating": 4.9,
     "reviews": 61,
@@ -2733,7 +2806,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Esports Arm Sleeves tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Esports Arm Sleeves tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-arm-sleeves"
   },
   {
     "id": 74,
@@ -2746,7 +2820,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029841/hamlosports/products/esports/custom-esports-jerseys.png",
     "canonical": "/custom-esports-apparel/custom-esports-jerseys/",
     "rating": 4.9,
     "reviews": 62,
@@ -2770,7 +2844,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Esports Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Esports Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/esports/custom-esports-jerseys"
   },
   {
     "id": 75,
@@ -2783,7 +2858,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029845/hamlosports/products/flag-football/custom-flag-football-compression-shorts.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-compression-shorts/",
     "rating": 4.9,
     "reviews": 38,
@@ -2807,7 +2882,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Flag Football Compression Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Flag Football Compression Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-compression-shorts"
   },
   {
     "id": 76,
@@ -2820,7 +2896,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029846/hamlosports/products/flag-football/custom-flag-football-jerseys.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-jerseys/",
     "rating": 4.9,
     "reviews": 39,
@@ -2844,7 +2920,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Flag Football Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Flag Football Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-jerseys"
   },
   {
     "id": 77,
@@ -2857,7 +2934,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029846/hamlosports/products/flag-football/custom-flag-football-joggers.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-joggers/",
     "rating": 4.9,
     "reviews": 40,
@@ -2881,7 +2958,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Flag Football Joggers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Flag Football Joggers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-joggers"
   },
   {
     "id": 78,
@@ -2894,7 +2972,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029847/hamlosports/products/flag-football/custom-flag-football-long-sleeve-training-shirts.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-long-sleeve-training-shirts/",
     "rating": 4.9,
     "reviews": 41,
@@ -2918,7 +2996,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Flag Football Long Sleeve Training Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Flag Football Long Sleeve Training Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-long-sleeve-training-shirts"
   },
   {
     "id": 79,
@@ -2931,7 +3010,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029847/hamlosports/products/flag-football/custom-flag-football-practice-jerseys.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-practice-jerseys/",
     "rating": 4.9,
     "reviews": 42,
@@ -2955,7 +3034,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Flag Football Practice Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Flag Football Practice Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-practice-jerseys"
   },
   {
     "id": 80,
@@ -2968,7 +3048,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029848/hamlosports/products/flag-football/custom-flag-football-quarter-zip-pullover.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-quarter-zip-pullover/",
     "rating": 4.9,
     "reviews": 43,
@@ -2992,7 +3072,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Flag Football Quarter Zip Pullover tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Flag Football Quarter Zip Pullover tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-quarter-zip-pullover"
   },
   {
     "id": 81,
@@ -3005,7 +3086,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029848/hamlosports/products/flag-football/custom-flag-football-shorts.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-shorts/",
     "rating": 4.9,
     "reviews": 44,
@@ -3029,7 +3110,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Flag Football Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Flag Football Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-shorts"
   },
   {
     "id": 82,
@@ -3042,7 +3124,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029848/hamlosports/products/flag-football/custom-flag-football-sleeveless-training-tank.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-sleeveless-training-tank/",
     "rating": 4.9,
     "reviews": 45,
@@ -3066,7 +3148,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Flag Football Sleeveless Training Tank tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Flag Football Sleeveless Training Tank tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-sleeveless-training-tank"
   },
   {
     "id": 83,
@@ -3079,7 +3162,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029848/hamlosports/products/flag-football/custom-flag-football-team-jackets.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-team-jackets/",
     "rating": 4.9,
     "reviews": 46,
@@ -3103,7 +3186,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Flag Football Team Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Flag Football Team Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-team-jackets"
   },
   {
     "id": 84,
@@ -3116,7 +3200,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029848/hamlosports/products/flag-football/custom-flag-football-uniform-sets.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-uniform-sets/",
     "rating": 4.9,
     "reviews": 47,
@@ -3140,7 +3224,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Flag Football Uniform Sets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Flag Football Uniform Sets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-uniform-sets"
   },
   {
     "id": 85,
@@ -3153,7 +3238,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029848/hamlosports/products/flag-football/custom-flag-football-warmup-pants.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-warmup-pants/",
     "rating": 4.9,
     "reviews": 48,
@@ -3177,7 +3262,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Flag Football Warmup Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Flag Football Warmup Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-warmup-pants"
   },
   {
     "id": 86,
@@ -3190,7 +3276,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029849/hamlosports/products/flag-football/custom-flag-football-windbreaker-jackets.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-windbreaker-jackets/",
     "rating": 4.9,
     "reviews": 49,
@@ -3214,7 +3300,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Flag Football Windbreaker Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Flag Football Windbreaker Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-windbreaker-jackets"
   },
   {
     "id": 87,
@@ -3227,7 +3314,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029845/hamlosports/products/flag-football/custom-flag-football-full-zip-hoodies.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-full-zip-hoodies/",
     "rating": 4.9,
     "reviews": 50,
@@ -3251,7 +3338,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Flag Football Full Zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Flag Football Full Zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-full-zip-hoodies"
   },
   {
     "id": 88,
@@ -3264,7 +3352,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029847/hamlosports/products/flag-football/custom-flag-football-pullover-hoodies.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-pullover-hoodies/",
     "rating": 4.9,
     "reviews": 51,
@@ -3288,7 +3376,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Flag Football Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Flag Football Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-pullover-hoodies"
   },
   {
     "id": 89,
@@ -3301,7 +3390,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029849/hamlosports/products/flag-football/flag-football-sleeveless-jerseys.png",
     "canonical": "/custom-flag-football-uniforms/flag-football-sleeveless-jerseys/",
     "rating": 4.9,
     "reviews": 52,
@@ -3325,7 +3414,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Flag Football Sleeveless Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Flag Football Sleeveless Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/flag-football-sleeveless-jerseys"
   },
   {
     "id": 90,
@@ -3338,7 +3428,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029844/hamlosports/products/flag-football/custom-flag-football-7-v-7-shorts.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-7-v-7-shorts/",
     "rating": 4.9,
     "reviews": 53,
@@ -3362,7 +3452,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Flag Football 7v7 Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Flag Football 7v7 Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-7-v-7-shorts"
   },
   {
     "id": 91,
@@ -3375,7 +3466,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029844/hamlosports/products/flag-football/custom-flag-football-athletic-shorts.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-athletic-shorts/",
     "rating": 4.9,
     "reviews": 54,
@@ -3399,7 +3490,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Flag Football Athletic Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Flag Football Athletic Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-athletic-shorts"
   },
   {
     "id": 92,
@@ -3412,7 +3504,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029845/hamlosports/products/flag-football/custom-flag-football-cinch-bag.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-cinch-bag/",
     "rating": 4.9,
     "reviews": 55,
@@ -3436,7 +3528,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Flag Football Cinch Bag tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Flag Football Cinch Bag tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-cinch-bag"
   },
   {
     "id": 93,
@@ -3449,7 +3542,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029845/hamlosports/products/flag-football/custom-flag-football-compression-jerseys.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-compression-jerseys/",
     "rating": 4.9,
     "reviews": 56,
@@ -3473,7 +3566,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Flag Football Compression Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Flag Football Compression Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-compression-jerseys"
   },
   {
     "id": 94,
@@ -3486,7 +3580,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029845/hamlosports/products/flag-football/custom-flag-football-compression-uniforms.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-compression-uniforms/",
     "rating": 4.9,
     "reviews": 57,
@@ -3510,7 +3604,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Flag Football Compression Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Flag Football Compression Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-compression-uniforms"
   },
   {
     "id": 95,
@@ -3523,7 +3618,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029846/hamlosports/products/flag-football/custom-flag-football-hooded-jerseys.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-hooded-jerseys/",
     "rating": 4.9,
     "reviews": 58,
@@ -3547,7 +3642,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Flag Football Hooded Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Flag Football Hooded Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-hooded-jerseys"
   },
   {
     "id": 96,
@@ -3560,7 +3656,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029847/hamlosports/products/flag-football/custom-flag-football-long-sleeve-jerseys.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-long-sleeve-jerseys/",
     "rating": 4.9,
     "reviews": 59,
@@ -3584,7 +3680,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Flag Football Long Sleeve Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Flag Football Long Sleeve Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-long-sleeve-jerseys"
   },
   {
     "id": 97,
@@ -3597,7 +3694,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029845/hamlosports/products/flag-football/custom-flag-football-high-tight-compression-pant.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-high-tight-compression-pant/",
     "rating": 4.9,
     "reviews": 60,
@@ -3621,7 +3718,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Flag Football High Tight Compression Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Flag Football High Tight Compression Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-high-tight-compression-pant"
   },
   {
     "id": 98,
@@ -3634,7 +3732,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029848/hamlosports/products/flag-football/custom-flag-football-visors.png",
     "canonical": "/custom-flag-football-uniforms/custom-flag-football-visors/",
     "rating": 4.9,
     "reviews": 61,
@@ -3658,7 +3756,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Flag Football Visors tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Flag Football Visors tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/flag-football/custom-flag-football-visors"
   },
   {
     "id": 99,
@@ -3671,7 +3770,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029850/hamlosports/products/football/custom-football-game-jerseys.png",
     "canonical": "/custom-football-uniforms/custom-football-game-jerseys/",
     "rating": 4.9,
     "reviews": 62,
@@ -3695,7 +3794,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Game Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Game Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-game-jerseys"
   },
   {
     "id": 100,
@@ -3708,7 +3808,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029851/hamlosports/products/football/custom-football-pants.png",
     "canonical": "/custom-football-uniforms/custom-football-pants/",
     "rating": 4.9,
     "reviews": 38,
@@ -3732,7 +3832,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-pants"
   },
   {
     "id": 101,
@@ -3745,7 +3846,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029853/hamlosports/products/football/custom-professional-football-uniforms.png",
     "canonical": "/custom-football-uniforms/custom-professional-football-uniforms/",
     "rating": 4.9,
     "reviews": 39,
@@ -3769,7 +3870,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Professional Football Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Professional Football Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-professional-football-uniforms"
   },
   {
     "id": 102,
@@ -3782,7 +3884,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029849/hamlosports/products/football/custom-alternate-football-uniforms.png",
     "canonical": "/custom-football-uniforms/custom-alternate-football-uniforms/",
     "rating": 4.9,
     "reviews": 40,
@@ -3806,7 +3908,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Alternate Football Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Alternate Football Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-alternate-football-uniforms"
   },
   {
     "id": 103,
@@ -3819,7 +3922,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029852/hamlosports/products/football/custom-football-uniform-sets.png",
     "canonical": "/custom-football-uniforms/custom-football-uniform-sets/",
     "rating": 4.9,
     "reviews": 41,
@@ -3843,7 +3946,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Uniform Sets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Uniform Sets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-uniform-sets"
   },
   {
     "id": 104,
@@ -3856,7 +3960,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029853/hamlosports/products/football/custom-professional-away-football-uniforms.png",
     "canonical": "/custom-football-uniforms/custom-professional-away-football-uniforms/",
     "rating": 4.9,
     "reviews": 42,
@@ -3880,7 +3984,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Away Football Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Away Football Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-professional-away-football-uniforms"
   },
   {
     "id": 105,
@@ -3893,7 +3998,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029851/hamlosports/products/football/custom-football-practice-jerseys.png",
     "canonical": "/custom-football-uniforms/custom-football-practice-jerseys/",
     "rating": 4.9,
     "reviews": 43,
@@ -3917,7 +4022,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Practice Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Practice Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-practice-jerseys"
   },
   {
     "id": 106,
@@ -3930,7 +4036,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029850/hamlosports/products/football/custom-football-fan-jerseys.png",
     "canonical": "/custom-football-uniforms/custom-football-fan-jerseys/",
     "rating": 4.9,
     "reviews": 44,
@@ -3954,7 +4060,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Fan Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Fan Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-fan-jerseys"
   },
   {
     "id": 107,
@@ -3967,7 +4074,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029850/hamlosports/products/football/custom-football-full-zip-hoodies.png",
     "canonical": "/custom-football-uniforms/custom-football-full-zip-hoodies/",
     "rating": 4.9,
     "reviews": 45,
@@ -3991,7 +4098,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Full Zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Full Zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-full-zip-hoodies"
   },
   {
     "id": 108,
@@ -4004,7 +4112,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029851/hamlosports/products/football/custom-football-pullover-hoodies.png",
     "canonical": "/custom-football-uniforms/custom-football-pullover-hoodies/",
     "rating": 4.9,
     "reviews": 46,
@@ -4028,7 +4136,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-pullover-hoodies"
   },
   {
     "id": 109,
@@ -4041,7 +4150,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029851/hamlosports/products/football/custom-football-quarter-zipper-pullovers.png",
     "canonical": "/custom-football-uniforms/custom-football-quarter-zipper-pullovers/",
     "rating": 4.9,
     "reviews": 47,
@@ -4065,7 +4174,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Quarter Zip Pullovers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Quarter Zip Pullovers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-quarter-zipper-pullovers"
   },
   {
     "id": 110,
@@ -4078,7 +4188,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029853/hamlosports/products/football/custom-football-windbreakers.png",
     "canonical": "/custom-football-uniforms/custom-football-windbreakers/",
     "rating": 4.9,
     "reviews": 48,
@@ -4102,7 +4212,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Windbreakers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Windbreakers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-windbreakers"
   },
   {
     "id": 111,
@@ -4115,7 +4226,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029852/hamlosports/products/football/custom-football-varsity-jackets.png",
     "canonical": "/custom-football-uniforms/custom-football-varsity-jackets/",
     "rating": 4.9,
     "reviews": 49,
@@ -4139,7 +4250,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Varsity Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Varsity Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-varsity-jackets"
   },
   {
     "id": 112,
@@ -4152,7 +4264,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029852/hamlosports/products/football/custom-football-sweatpants.png",
     "canonical": "/custom-football-uniforms/custom-football-sweatpants/",
     "rating": 4.9,
     "reviews": 50,
@@ -4176,7 +4288,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Sweatpants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Sweatpants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-sweatpants"
   },
   {
     "id": 113,
@@ -4189,7 +4302,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029851/hamlosports/products/football/custom-football-short-sleeve-t-shirts.png",
     "canonical": "/custom-football-uniforms/custom-football-short-sleeve-t-shirts/",
     "rating": 4.9,
     "reviews": 51,
@@ -4213,7 +4326,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Short Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Short Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-short-sleeve-t-shirts"
   },
   {
     "id": 114,
@@ -4226,7 +4340,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029851/hamlosports/products/football/custom-football-long-sleeve-t-shirts.png",
     "canonical": "/custom-football-uniforms/custom-football-long-sleeve-t-shirts/",
     "rating": 4.9,
     "reviews": 52,
@@ -4250,7 +4364,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Long Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Long Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-long-sleeve-t-shirts"
   },
   {
     "id": 115,
@@ -4263,7 +4378,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029850/hamlosports/products/football/custom-football-compression-shirts.png",
     "canonical": "/custom-football-uniforms/custom-football-compression-shirts/",
     "rating": 4.9,
     "reviews": 53,
@@ -4287,7 +4402,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Compression Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Compression Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-compression-shirts"
   },
   {
     "id": 116,
@@ -4300,7 +4416,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029852/hamlosports/products/football/custom-football-training-shorts.png",
     "canonical": "/custom-football-uniforms/custom-football-training-shorts/",
     "rating": 4.9,
     "reviews": 54,
@@ -4324,7 +4440,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Training Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Training Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-training-shorts"
   },
   {
     "id": 117,
@@ -4337,7 +4454,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029850/hamlosports/products/football/custom-football-compression-shorts.png",
     "canonical": "/custom-football-uniforms/custom-football-compression-shorts/",
     "rating": 4.9,
     "reviews": 55,
@@ -4361,7 +4478,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Compression Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Compression Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-compression-shorts"
   },
   {
     "id": 118,
@@ -4374,7 +4492,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029850/hamlosports/products/football/custom-football-duffle-bags.png",
     "canonical": "/custom-football-uniforms/custom-football-duffle-bags/",
     "rating": 4.9,
     "reviews": 56,
@@ -4398,7 +4516,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Duffle Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Duffle Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-duffle-bags"
   },
   {
     "id": 119,
@@ -4411,7 +4530,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029851/hamlosports/products/football/custom-football-gloves.png",
     "canonical": "/custom-football-uniforms/custom-football-gloves/",
     "rating": 4.9,
     "reviews": 57,
@@ -4435,7 +4554,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Gloves tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Gloves tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-gloves"
   },
   {
     "id": 120,
@@ -4448,7 +4568,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029852/hamlosports/products/football/custom-football-skull-caps.png",
     "canonical": "/custom-football-uniforms/custom-football-skull-caps/",
     "rating": 4.9,
     "reviews": 58,
@@ -4472,7 +4592,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Skull Caps tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Skull Caps tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-skull-caps"
   },
   {
     "id": 121,
@@ -4485,7 +4606,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029849/hamlosports/products/football/custom-football-cape.png",
     "canonical": "/custom-football-uniforms/custom-football-cape/",
     "rating": 4.9,
     "reviews": 59,
@@ -4509,7 +4630,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Football Cape tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Football Cape tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/football/custom-football-cape"
   },
   {
     "id": 122,
@@ -4522,7 +4644,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029856/hamlosports/products/ice-hockey/custom-ice-hockey-socks.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-socks/",
     "rating": 4.9,
     "reviews": 60,
@@ -4546,7 +4668,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Socks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Socks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-socks"
   },
   {
     "id": 123,
@@ -4559,7 +4682,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029854/hamlosports/products/ice-hockey/custom-ice-hockey-game-day-home-jersey.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-game-day-home-jersey/",
     "rating": 4.9,
     "reviews": 61,
@@ -4583,7 +4706,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Game Day Home Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Game Day Home Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-game-day-home-jersey"
   },
   {
     "id": 124,
@@ -4596,7 +4720,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029854/hamlosports/products/ice-hockey/custom-ice-hockey-game-day-away-jerseys.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-game-day-away-jerseys/",
     "rating": 4.9,
     "reviews": 62,
@@ -4620,7 +4744,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Game Day Away Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Game Day Away Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-game-day-away-jerseys"
   },
   {
     "id": 125,
@@ -4633,7 +4758,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029855/hamlosports/products/ice-hockey/custom-ice-hockey-practice-jerseys.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-practice-jerseys/",
     "rating": 4.9,
     "reviews": 38,
@@ -4657,7 +4782,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Practice Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Practice Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-practice-jerseys"
   },
   {
     "id": 126,
@@ -4670,7 +4796,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029856/hamlosports/products/ice-hockey/custom-ice-hockey-reversible-jerseys.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-reversible-jerseys/",
     "rating": 4.9,
     "reviews": 39,
@@ -4694,7 +4820,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Reversible Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Reversible Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-reversible-jerseys"
   },
   {
     "id": 127,
@@ -4707,7 +4834,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029857/hamlosports/products/ice-hockey/custom-ice-hockey-two-tone-jerseys.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-two-tone-jerseys/",
     "rating": 4.9,
     "reviews": 40,
@@ -4731,7 +4858,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Two-tone Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Two-tone Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-two-tone-jerseys"
   },
   {
     "id": 128,
@@ -4744,7 +4872,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029854/hamlosports/products/ice-hockey/custom-ice-hockey-home-uniforms.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-home-uniforms/",
     "rating": 4.9,
     "reviews": 41,
@@ -4768,7 +4896,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Home Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Home Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-home-uniforms"
   },
   {
     "id": 129,
@@ -4781,7 +4910,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029853/hamlosports/products/ice-hockey/custom-ice-hockey-away-uniforms.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-away-uniforms/",
     "rating": 4.9,
     "reviews": 42,
@@ -4805,7 +4934,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Away Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Away Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-away-uniforms"
   },
   {
     "id": 130,
@@ -4818,7 +4948,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029856/hamlosports/products/ice-hockey/custom-ice-hockey-shells.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-shells/",
     "rating": 4.9,
     "reviews": 43,
@@ -4842,7 +4972,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Shells tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Shells tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-shells"
   },
   {
     "id": 131,
@@ -4855,7 +4986,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029856/hamlosports/products/ice-hockey/custom-ice-hockey-track-jackets.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-track-jackets/",
     "rating": 4.9,
     "reviews": 44,
@@ -4879,7 +5010,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Track Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Track Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-track-jackets"
   },
   {
     "id": 132,
@@ -4892,7 +5024,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029855/hamlosports/products/ice-hockey/custom-ice-hockey-pullover-hoodies.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-pullover-hoodies/",
     "rating": 4.9,
     "reviews": 45,
@@ -4916,7 +5048,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-pullover-hoodies"
   },
   {
     "id": 133,
@@ -4929,7 +5062,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029854/hamlosports/products/ice-hockey/custom-ice-hockey-full-zip-hoodies.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-full-zip-hoodies/",
     "rating": 4.9,
     "reviews": 46,
@@ -4953,7 +5086,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Full Zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Full Zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-full-zip-hoodies"
   },
   {
     "id": 134,
@@ -4966,7 +5100,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029854/hamlosports/products/ice-hockey/custom-ice-hockey-bomber-jackets.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-bomber-jackets/",
     "rating": 4.9,
     "reviews": 47,
@@ -4990,7 +5124,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Bomber Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Bomber Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-bomber-jackets"
   },
   {
     "id": 135,
@@ -5003,7 +5138,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029855/hamlosports/products/ice-hockey/custom-ice-hockey-parka-winter-jackets.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-parka-winter-jackets/",
     "rating": 4.9,
     "reviews": 48,
@@ -5027,7 +5162,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Parka Winter Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Parka Winter Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-parka-winter-jackets"
   },
   {
     "id": 136,
@@ -5040,7 +5176,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029856/hamlosports/products/ice-hockey/custom-ice-hockey-track-pants.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-track-pants/",
     "rating": 4.9,
     "reviews": 49,
@@ -5064,7 +5200,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Track Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Track Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-track-pants"
   },
   {
     "id": 137,
@@ -5077,7 +5214,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029856/hamlosports/products/ice-hockey/custom-ice-hockey-short-sleeve-t-shirts.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-short-sleeve-t-shirts/",
     "rating": 4.9,
     "reviews": 50,
@@ -5101,7 +5238,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Short Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Short Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-short-sleeve-t-shirts"
   },
   {
     "id": 138,
@@ -5114,7 +5252,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029855/hamlosports/products/ice-hockey/custom-ice-hockey-long-sleeve-t-shirts.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-long-sleeve-t-shirts/",
     "rating": 4.9,
     "reviews": 51,
@@ -5138,7 +5276,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Long Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Long Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-long-sleeve-t-shirts"
   },
   {
     "id": 139,
@@ -5151,7 +5290,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029855/hamlosports/products/ice-hockey/custom-ice-hockey-quarter-zipper-pullovers.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-quarter-zipper-pullovers/",
     "rating": 4.9,
     "reviews": 52,
@@ -5175,7 +5314,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Quarter Zip Pullovers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Quarter Zip Pullovers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-quarter-zipper-pullovers"
   },
   {
     "id": 140,
@@ -5188,7 +5328,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029856/hamlosports/products/ice-hockey/custom-ice-hockey-training-shorts.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-training-shorts/",
     "rating": 4.9,
     "reviews": 53,
@@ -5212,7 +5352,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Training Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Training Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-training-shorts"
   },
   {
     "id": 141,
@@ -5225,7 +5366,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029855/hamlosports/products/ice-hockey/custom-ice-hockey-jogger-pants.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-jogger-pants/",
     "rating": 4.9,
     "reviews": 54,
@@ -5249,7 +5390,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Jogger Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Jogger Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-jogger-pants"
   },
   {
     "id": 142,
@@ -5262,7 +5404,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029854/hamlosports/products/ice-hockey/custom-ice-hockey-compression-base-layers.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-compression-base-layers/",
     "rating": 4.9,
     "reviews": 55,
@@ -5286,7 +5428,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Compression Base Layers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Compression Base Layers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-compression-base-layers"
   },
   {
     "id": 143,
@@ -5299,7 +5442,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029853/hamlosports/products/ice-hockey/custom-ice-hockey-beanies.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-beanies/",
     "rating": 4.9,
     "reviews": 56,
@@ -5323,7 +5466,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Beanies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Beanies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-beanies"
   },
   {
     "id": 144,
@@ -5336,7 +5480,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029854/hamlosports/products/ice-hockey/custom-ice-hockey-equipment-bags.png",
     "canonical": "/custom-ice-hockey-uniforms/custom-ice-hockey-equipment-bags/",
     "rating": 4.9,
     "reviews": 57,
@@ -5360,7 +5504,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Ice Hockey Equipment Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Ice Hockey Equipment Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/ice-hockey/custom-ice-hockey-equipment-bags"
   },
   {
     "id": 145,
@@ -5373,7 +5518,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029860/hamlosports/products/lacrosse/custom-lacrosse-standard-jerseys.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-standard-jerseys/",
     "rating": 4.9,
     "reviews": 58,
@@ -5397,7 +5542,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Standard Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Standard Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-standard-jerseys"
   },
   {
     "id": 146,
@@ -5410,7 +5556,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029858/hamlosports/products/lacrosse/custom-lacrosse-full-sleeve-jerseys.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-full-sleeve-jerseys/",
     "rating": 4.9,
     "reviews": 59,
@@ -5434,7 +5580,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Full Sleeve Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Full Sleeve Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-full-sleeve-jerseys"
   },
   {
     "id": 147,
@@ -5447,7 +5594,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029860/hamlosports/products/lacrosse/custom-lacrosse-sleeveless-jerseys.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-sleeveless-jerseys/",
     "rating": 4.9,
     "reviews": 60,
@@ -5471,7 +5618,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Sleeveless Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Sleeveless Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-sleeveless-jerseys"
   },
   {
     "id": 148,
@@ -5484,7 +5632,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029859/hamlosports/products/lacrosse/custom-lacrosse-reversible-pinnies.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-reversible-pinnies/",
     "rating": 4.9,
     "reviews": 61,
@@ -5508,7 +5656,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Reversible Pinnies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Reversible Pinnies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-reversible-pinnies"
   },
   {
     "id": 149,
@@ -5521,7 +5670,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029859/hamlosports/products/lacrosse/custom-lacrosse-raceback-tank-tops.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-raceback-tank-tops/",
     "rating": 4.9,
     "reviews": 62,
@@ -5545,7 +5694,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Raceback Tank Tops tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Raceback Tank Tops tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-raceback-tank-tops"
   },
   {
     "id": 150,
@@ -5558,7 +5708,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029860/hamlosports/products/lacrosse/custom-lacrosse-standard-uniforms.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-standard-uniforms/",
     "rating": 4.9,
     "reviews": 38,
@@ -5582,7 +5732,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Standard Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Standard Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-standard-uniforms"
   },
   {
     "id": 151,
@@ -5595,7 +5746,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029861/hamlosports/products/lacrosse/custom-lacrosse-women-uniforms.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-women-uniforms/",
     "rating": 4.9,
     "reviews": 39,
@@ -5619,7 +5770,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Women Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Women Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-women-uniforms"
   },
   {
     "id": 152,
@@ -5632,7 +5784,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029860/hamlosports/products/lacrosse/custom-lacrosse-shorts.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-shorts/",
     "rating": 4.9,
     "reviews": 40,
@@ -5656,7 +5808,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-shorts"
   },
   {
     "id": 153,
@@ -5669,7 +5822,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029860/hamlosports/products/lacrosse/custom-lacrosse-skorts.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-skorts/",
     "rating": 4.9,
     "reviews": 41,
@@ -5693,7 +5846,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Skorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Skorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-skorts"
   },
   {
     "id": 154,
@@ -5706,7 +5860,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029858/hamlosports/products/lacrosse/custom-lacrosse-kilt-skirts.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-kilt-skirts/",
     "rating": 4.9,
     "reviews": 42,
@@ -5730,7 +5884,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Kilt Skirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Kilt Skirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-kilt-skirts"
   },
   {
     "id": 155,
@@ -5743,7 +5898,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029858/hamlosports/products/lacrosse/custom-lacrosse-compression-shorts.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-compression-shorts/",
     "rating": 4.9,
     "reviews": 43,
@@ -5767,7 +5922,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Compression Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Compression Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-compression-shorts"
   },
   {
     "id": 156,
@@ -5780,7 +5936,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029861/hamlosports/products/lacrosse/custom-lacrosse-training-shorts.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-training-shorts/",
     "rating": 4.9,
     "reviews": 44,
@@ -5804,7 +5960,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Training Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Training Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-training-shorts"
   },
   {
     "id": 157,
@@ -5817,7 +5974,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029860/hamlosports/products/lacrosse/custom-lacrosse-short-sleeve-t-shirts.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-short-sleeve-t-shirts/",
     "rating": 4.9,
     "reviews": 45,
@@ -5841,7 +5998,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Short Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Short Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-short-sleeve-t-shirts"
   },
   {
     "id": 158,
@@ -5854,7 +6012,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029859/hamlosports/products/lacrosse/custom-lacrosse-long-sleeve-t-shirts.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-long-sleeve-t-shirts/",
     "rating": 4.9,
     "reviews": 46,
@@ -5878,7 +6036,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Long Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Long Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-long-sleeve-t-shirts"
   },
   {
     "id": 159,
@@ -5891,7 +6050,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029859/hamlosports/products/lacrosse/custom-lacrosse-shooting-shirts.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-shooting-shirts/",
     "rating": 4.9,
     "reviews": 47,
@@ -5915,7 +6074,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Shooting Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Shooting Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-shooting-shirts"
   },
   {
     "id": 160,
@@ -5928,7 +6088,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029860/hamlosports/products/lacrosse/custom-lacrosse-sweatpants.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-sweatpants/",
     "rating": 4.9,
     "reviews": 48,
@@ -5952,7 +6112,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Sweatpants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Sweatpants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-sweatpants"
   },
   {
     "id": 161,
@@ -5965,7 +6126,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029858/hamlosports/products/lacrosse/custom-lacrosse-jogger-pants.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-jogger-pants/",
     "rating": 4.9,
     "reviews": 49,
@@ -5989,7 +6150,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Jogger Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Jogger Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-jogger-pants"
   },
   {
     "id": 162,
@@ -6002,7 +6164,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029859/hamlosports/products/lacrosse/custom-lacrosse-quarter-zipper-pullovers.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-quarter-zipper-pullovers/",
     "rating": 4.9,
     "reviews": 50,
@@ -6026,7 +6188,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Quarter Zipper Pullovers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Quarter Zipper Pullovers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-quarter-zipper-pullovers"
   },
   {
     "id": 163,
@@ -6039,7 +6202,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029859/hamlosports/products/lacrosse/custom-lacrosse-pullover-hoodies.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-pullover-hoodies/",
     "rating": 4.9,
     "reviews": 51,
@@ -6063,7 +6226,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-pullover-hoodies"
   },
   {
     "id": 164,
@@ -6076,7 +6240,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029858/hamlosports/products/lacrosse/custom-lacrosse-full-zip-hoodies.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-full-zip-hoodies/",
     "rating": 4.9,
     "reviews": 52,
@@ -6100,7 +6264,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Full Zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Full Zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-full-zip-hoodies"
   },
   {
     "id": 165,
@@ -6113,7 +6278,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029861/hamlosports/products/lacrosse/custom-lacrosse-track-jackets.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-track-jackets/",
     "rating": 4.9,
     "reviews": 53,
@@ -6137,7 +6302,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Track Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Track Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-track-jackets"
   },
   {
     "id": 166,
@@ -6150,7 +6316,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029861/hamlosports/products/lacrosse/custom-lacrosse-windbreaker-jackets.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-windbreaker-jackets/",
     "rating": 4.9,
     "reviews": 54,
@@ -6174,7 +6340,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Windbreaker Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Windbreaker Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-windbreaker-jackets"
   },
   {
     "id": 167,
@@ -6187,7 +6354,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029857/hamlosports/products/lacrosse/custom-lacrosse-backpacks.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-backpacks/",
     "rating": 4.9,
     "reviews": 55,
@@ -6211,7 +6378,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Backpacks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Backpacks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-backpacks"
   },
   {
     "id": 168,
@@ -6224,7 +6392,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029857/hamlosports/products/lacrosse/custom-lacrosse-cinch-bag.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-cinch-bag/",
     "rating": 4.9,
     "reviews": 56,
@@ -6248,7 +6416,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Cinch Bag tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Cinch Bag tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-cinch-bag"
   },
   {
     "id": 169,
@@ -6261,7 +6430,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029857/hamlosports/products/lacrosse/custom-lacrosse-bucket-hats.png",
     "canonical": "/custom-lacrosse-uniforms/custom-lacrosse-bucket-hats/",
     "rating": 4.9,
     "reviews": 57,
@@ -6285,7 +6454,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Lacrosse Bucket Hats tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Lacrosse Bucket Hats tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/lacrosse/custom-lacrosse-bucket-hats"
   },
   {
     "id": 170,
@@ -6298,7 +6468,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029864/hamlosports/products/rugby/custom-rugby-round-neck-classic-jerseys.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-round-neck-classic-jerseys/",
     "rating": 4.9,
     "reviews": 58,
@@ -6322,7 +6492,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Round Neck Classic Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Round Neck Classic Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-round-neck-classic-jerseys"
   },
   {
     "id": 171,
@@ -6335,7 +6506,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029866/hamlosports/products/rugby/custom-rugby-v-neck-jerseys.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-v-neck-jerseys/",
     "rating": 4.9,
     "reviews": 59,
@@ -6359,7 +6530,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby V-neck Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby V-neck Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-v-neck-jerseys"
   },
   {
     "id": 172,
@@ -6372,7 +6544,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029865/hamlosports/products/rugby/custom-rugby-traditional-button-collar-jerseys.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-traditional-button-collar-jerseys/",
     "rating": 4.9,
     "reviews": 60,
@@ -6396,7 +6568,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Traditional Button Collar Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Traditional Button Collar Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-traditional-button-collar-jerseys"
   },
   {
     "id": 173,
@@ -6409,7 +6582,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029865/hamlosports/products/rugby/custom-rugby-traditional-2-button-collar-jerseys.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-traditional-2-button-collar-jerseys/",
     "rating": 4.9,
     "reviews": 61,
@@ -6433,7 +6606,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Traditional 2-button Collar Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Traditional 2-button Collar Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-traditional-2-button-collar-jerseys"
   },
   {
     "id": 174,
@@ -6446,7 +6620,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029863/hamlosports/products/rugby/custom-rugby-practice-jerseys.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-practice-jerseys/",
     "rating": 4.9,
     "reviews": 62,
@@ -6470,7 +6644,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Practice Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Practice Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-practice-jerseys"
   },
   {
     "id": 175,
@@ -6483,7 +6658,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029864/hamlosports/products/rugby/custom-rugby-standard-uniforms.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-standard-uniforms/",
     "rating": 4.9,
     "reviews": 38,
@@ -6507,7 +6682,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Standard Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Standard Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-standard-uniforms"
   },
   {
     "id": 176,
@@ -6520,7 +6696,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029866/hamlosports/products/rugby/custom-rugby-v-neck-uniforms.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-v-neck-uniforms/",
     "rating": 4.9,
     "reviews": 39,
@@ -6544,7 +6720,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby V-neck Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby V-neck Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-v-neck-uniforms"
   },
   {
     "id": 177,
@@ -6557,7 +6734,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029862/hamlosports/products/rugby/custom-rugby-classic-shorts.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-classic-shorts/",
     "rating": 4.9,
     "reviews": 40,
@@ -6581,7 +6758,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Classic Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Classic Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-classic-shorts"
   },
   {
     "id": 178,
@@ -6594,7 +6772,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029864/hamlosports/products/rugby/custom-rugby-striped-band-shorts.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-striped-band-shorts/",
     "rating": 4.9,
     "reviews": 41,
@@ -6618,7 +6796,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Striped Band Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Striped Band Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-striped-band-shorts"
   },
   {
     "id": 179,
@@ -6631,7 +6810,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029865/hamlosports/products/rugby/custom-rugby-two-tone-shorts.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-two-tone-shorts/",
     "rating": 4.9,
     "reviews": 42,
@@ -6655,7 +6834,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Two Tone Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Two Tone Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-two-tone-shorts"
   },
   {
     "id": 180,
@@ -6668,7 +6848,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029865/hamlosports/products/rugby/custom-rugby-training-shorts.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-training-shorts/",
     "rating": 4.9,
     "reviews": 43,
@@ -6692,7 +6872,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Training Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Training Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-training-shorts"
   },
   {
     "id": 181,
@@ -6705,7 +6886,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029862/hamlosports/products/rugby/custom-rugby-compression-shorts.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-compression-shorts/",
     "rating": 4.9,
     "reviews": 44,
@@ -6729,7 +6910,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Compression Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Compression Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-compression-shorts"
   },
   {
     "id": 182,
@@ -6742,7 +6924,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029862/hamlosports/products/rugby/custom-rugby-full-zip-hoodies.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-full-zip-hoodies/",
     "rating": 4.9,
     "reviews": 45,
@@ -6766,7 +6948,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Full-zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Full-zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-full-zip-hoodies"
   },
   {
     "id": 183,
@@ -6779,7 +6962,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029863/hamlosports/products/rugby/custom-rugby-pullover-hoodies.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-pullover-hoodies/",
     "rating": 4.9,
     "reviews": 46,
@@ -6803,7 +6986,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-pullover-hoodies"
   },
   {
     "id": 184,
@@ -6816,7 +7000,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029864/hamlosports/products/rugby/custom-rugby-quarter-zipper-pullovers.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-quarter-zipper-pullovers/",
     "rating": 4.9,
     "reviews": 47,
@@ -6840,7 +7024,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Quarter-zipper Pullovers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Quarter-zipper Pullovers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-quarter-zipper-pullovers"
   },
   {
     "id": 185,
@@ -6853,7 +7038,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029864/hamlosports/products/rugby/custom-rugby-rain-jackets.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-rain-jackets/",
     "rating": 4.9,
     "reviews": 48,
@@ -6877,7 +7062,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Rain Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Rain Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-rain-jackets"
   },
   {
     "id": 186,
@@ -6890,7 +7076,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029865/hamlosports/products/rugby/custom-rugby-track-jackets.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-track-jackets/",
     "rating": 4.9,
     "reviews": 49,
@@ -6914,7 +7100,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Track Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Track Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-track-jackets"
   },
   {
     "id": 187,
@@ -6927,7 +7114,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029865/hamlosports/products/rugby/custom-rugby-track-pants.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-track-pants/",
     "rating": 4.9,
     "reviews": 50,
@@ -6951,7 +7138,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Track Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Track Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-track-pants"
   },
   {
     "id": 188,
@@ -6964,7 +7152,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029862/hamlosports/products/rugby/custom-rugby-jogger-pants.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-jogger-pants/",
     "rating": 4.9,
     "reviews": 51,
@@ -6988,7 +7176,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Jogger Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Jogger Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-jogger-pants"
   },
   {
     "id": 189,
@@ -7001,7 +7190,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029864/hamlosports/products/rugby/custom-rugby-short-sleeve-t-shirts.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-short-sleeve-t-shirts/",
     "rating": 4.9,
     "reviews": 52,
@@ -7025,7 +7214,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Short Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Short Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-short-sleeve-t-shirts"
   },
   {
     "id": 190,
@@ -7038,7 +7228,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029862/hamlosports/products/rugby/custom-rugby-long-sleeve-t-shirts.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-long-sleeve-t-shirts/",
     "rating": 4.9,
     "reviews": 53,
@@ -7062,7 +7252,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Long Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Long Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-long-sleeve-t-shirts"
   },
   {
     "id": 191,
@@ -7075,7 +7266,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029863/hamlosports/products/rugby/custom-rugby-polo-shirts.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-polo-shirts/",
     "rating": 4.9,
     "reviews": 54,
@@ -7099,7 +7290,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Rugby Polo Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Rugby Polo Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-polo-shirts"
   },
   {
     "id": 192,
@@ -7112,7 +7304,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029862/hamlosports/products/rugby/custom-rugby-duffle-bags.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-duffle-bags/",
     "rating": 4.9,
     "reviews": 55,
@@ -7136,7 +7328,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Duffle Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Duffle Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-duffle-bags"
   },
   {
     "id": 193,
@@ -7149,7 +7342,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029861/hamlosports/products/rugby/custom-rugby-cinch-bags.png",
     "canonical": "/custom-rugby-uniforms/custom-rugby-cinch-bags/",
     "rating": 4.9,
     "reviews": 56,
@@ -7173,7 +7366,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Rugby Cinch Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Rugby Cinch Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/rugby/custom-rugby-cinch-bags"
   },
   {
     "id": 194,
@@ -7186,7 +7380,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029870/hamlosports/products/soccer/custom-soccer-standard-uniforms.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-standard-uniforms/",
     "rating": 4.9,
     "reviews": 57,
@@ -7210,7 +7404,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Standard Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Standard Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-standard-uniforms"
   },
   {
     "id": 195,
@@ -7223,7 +7418,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029870/hamlosports/products/soccer/custom-soccer-standard-collared-uniforms.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-standard-collared-uniforms/",
     "rating": 4.9,
     "reviews": 58,
@@ -7247,7 +7442,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Collared Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Collared Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-standard-collared-uniforms"
   },
   {
     "id": 196,
@@ -7260,7 +7456,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029870/hamlosports/products/soccer/custom-soccer-v-neck-uniforms.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-v-neck-uniforms/",
     "rating": 4.9,
     "reviews": 59,
@@ -7284,7 +7480,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer V-neck Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer V-neck Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-v-neck-uniforms"
   },
   {
     "id": 197,
@@ -7297,7 +7494,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029869/hamlosports/products/soccer/custom-soccer-reversible-uniforms.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-reversible-uniforms/",
     "rating": 4.9,
     "reviews": 60,
@@ -7321,7 +7518,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Reversible Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Reversible Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-reversible-uniforms"
   },
   {
     "id": 198,
@@ -7334,7 +7532,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029869/hamlosports/products/soccer/custom-soccer-round-neck-jerseys.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-round-neck-jerseys/",
     "rating": 4.9,
     "reviews": 61,
@@ -7358,7 +7556,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Round Neck Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Round Neck Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-round-neck-jerseys"
   },
   {
     "id": 199,
@@ -7371,7 +7570,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029870/hamlosports/products/soccer/custom-soccer-v-neck-jerseys.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-v-neck-jerseys/",
     "rating": 4.9,
     "reviews": 62,
@@ -7395,7 +7594,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer V-neck Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer V-neck Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-v-neck-jerseys"
   },
   {
     "id": 200,
@@ -7408,7 +7608,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029868/hamlosports/products/soccer/custom-soccer-polo-style-jerseys.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-polo-style-jerseys/",
     "rating": 4.9,
     "reviews": 38,
@@ -7432,7 +7632,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Polo Style Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Polo Style Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-polo-style-jerseys"
   },
   {
     "id": 201,
@@ -7445,7 +7646,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029869/hamlosports/products/soccer/custom-soccer-reversible-jerseys.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-reversible-jerseys/",
     "rating": 4.9,
     "reviews": 39,
@@ -7469,7 +7670,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Reversible Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Reversible Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-reversible-jerseys"
   },
   {
     "id": 202,
@@ -7482,7 +7684,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029867/hamlosports/products/soccer/custom-soccer-goalkeeper-jerseys.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-goalkeeper-jerseys/",
     "rating": 4.9,
     "reviews": 40,
@@ -7506,7 +7708,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Goalkeeper Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Goalkeeper Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-goalkeeper-jerseys"
   },
   {
     "id": 203,
@@ -7519,7 +7722,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029869/hamlosports/products/soccer/custom-soccer-shorts.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-shorts/",
     "rating": 4.9,
     "reviews": 41,
@@ -7543,7 +7746,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-shorts"
   },
   {
     "id": 204,
@@ -7556,7 +7760,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029867/hamlosports/products/soccer/custom-soccer-goalkeep-padded-shorts.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-goalkeep-padded-shorts/",
     "rating": 4.9,
     "reviews": 42,
@@ -7580,7 +7784,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Goalkeeper Padded Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Goalkeeper Padded Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-goalkeep-padded-shorts"
   },
   {
     "id": 205,
@@ -7593,7 +7798,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029869/hamlosports/products/soccer/custom-soccer-socks.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-socks/",
     "rating": 4.9,
     "reviews": 43,
@@ -7617,7 +7822,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Socks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Socks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-socks"
   },
   {
     "id": 206,
@@ -7630,7 +7836,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029871/hamlosports/products/soccer/custom-soccer-warmup-bib.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-warmup-bib/",
     "rating": 4.9,
     "reviews": 44,
@@ -7654,7 +7860,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Warmup Bibs tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Warmup Bibs tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-warmup-bib"
   },
   {
     "id": 207,
@@ -7667,7 +7874,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029867/hamlosports/products/soccer/custom-soccer-full-zip-hoodie.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-full-zip-hoodie/",
     "rating": 4.9,
     "reviews": 45,
@@ -7691,7 +7898,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Full Zip Hoodie tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Full Zip Hoodie tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-full-zip-hoodie"
   },
   {
     "id": 208,
@@ -7704,7 +7912,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029868/hamlosports/products/soccer/custom-soccer-pullover-hoodies.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-pullover-hoodies/",
     "rating": 4.9,
     "reviews": 46,
@@ -7728,7 +7936,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-pullover-hoodies"
   },
   {
     "id": 209,
@@ -7741,7 +7950,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029866/hamlosports/products/soccer/custom-soccer-bench-jackets.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-bench-jackets/",
     "rating": 4.9,
     "reviews": 47,
@@ -7765,7 +7974,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Bench Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Bench Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-bench-jackets"
   },
   {
     "id": 210,
@@ -7778,7 +7988,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029868/hamlosports/products/soccer/custom-soccer-lightweight-rain-jackets.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-lightweight-rain-jackets/",
     "rating": 4.9,
     "reviews": 48,
@@ -7802,7 +8012,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Lightweight Rain Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Lightweight Rain Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-lightweight-rain-jackets"
   },
   {
     "id": 211,
@@ -7815,7 +8026,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029870/hamlosports/products/soccer/custom-soccer-track-jackets.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-track-jackets/",
     "rating": 4.9,
     "reviews": 49,
@@ -7839,7 +8050,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Track Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Track Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-track-jackets"
   },
   {
     "id": 212,
@@ -7852,7 +8064,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029870/hamlosports/products/soccer/custom-soccer-track-pants.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-track-pants/",
     "rating": 4.9,
     "reviews": 50,
@@ -7876,7 +8088,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Track Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Track Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-track-pants"
   },
   {
     "id": 213,
@@ -7889,7 +8102,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029867/hamlosports/products/soccer/custom-soccer-jogger-pants.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-jogger-pants/",
     "rating": 4.9,
     "reviews": 51,
@@ -7913,7 +8126,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Jogger Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Jogger Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-jogger-pants"
   },
   {
     "id": 214,
@@ -7926,7 +8140,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029867/hamlosports/products/soccer/custom-soccer-crewneck-sweatshirts.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-crewneck-sweatshirts/",
     "rating": 4.9,
     "reviews": 52,
@@ -7950,7 +8164,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Crewneck Sweatshirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Crewneck Sweatshirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-crewneck-sweatshirts"
   },
   {
     "id": 215,
@@ -7963,7 +8178,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029868/hamlosports/products/soccer/custom-soccer-long-sleeve-training-shirts.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-long-sleeve-training-shirts/",
     "rating": 4.9,
     "reviews": 53,
@@ -7987,7 +8202,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Long Sleeve Training Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Long Sleeve Training Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-long-sleeve-training-shirts"
   },
   {
     "id": 216,
@@ -8000,7 +8216,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029869/hamlosports/products/soccer/custom-soccer-short-sleeve-training-shirts.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-short-sleeve-training-shirts/",
     "rating": 4.9,
     "reviews": 54,
@@ -8024,7 +8240,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Short Sleeve Training Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Short Sleeve Training Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-short-sleeve-training-shirts"
   },
   {
     "id": 217,
@@ -8037,7 +8254,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029869/hamlosports/products/soccer/custom-soccer-quarter-zip-training-top.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-quarter-zip-training-top/",
     "rating": 4.9,
     "reviews": 55,
@@ -8061,7 +8278,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Quarter Zipper Training Top tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Quarter Zipper Training Top tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-quarter-zip-training-top"
   },
   {
     "id": 218,
@@ -8074,7 +8292,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029870/hamlosports/products/soccer/custom-soccer-training-shorts.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-training-shorts/",
     "rating": 4.9,
     "reviews": 56,
@@ -8098,7 +8316,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Training Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Training Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-training-shorts"
   },
   {
     "id": 219,
@@ -8111,7 +8330,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029866/hamlosports/products/soccer/custom-soccer-compression-shorts.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-compression-shorts/",
     "rating": 4.9,
     "reviews": 57,
@@ -8135,7 +8354,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Compression Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Compression Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-compression-shorts"
   },
   {
     "id": 220,
@@ -8148,7 +8368,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029867/hamlosports/products/soccer/custom-soccer-duffle-bags.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-duffle-bags/",
     "rating": 4.9,
     "reviews": 58,
@@ -8172,7 +8392,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Duffle Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Duffle Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-duffle-bags"
   },
   {
     "id": 221,
@@ -8185,7 +8406,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029866/hamlosports/products/soccer/custom-soccer-backpacks.png",
     "canonical": "/custom-soccer-uniforms/custom-soccer-backpacks/",
     "rating": 4.9,
     "reviews": 59,
@@ -8209,7 +8430,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Soccer Backpacks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Soccer Backpacks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/soccer/custom-soccer-backpacks"
   },
   {
     "id": 222,
@@ -8222,7 +8444,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029873/hamlosports/products/softball/custom-softball-racerback-uniforms.png",
     "canonical": "/custom-softball-uniforms/custom-softball-racerback-uniforms/",
     "rating": 4.9,
     "reviews": 60,
@@ -8246,7 +8468,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Racerback Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Racerback Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-racerback-uniforms"
   },
   {
     "id": 223,
@@ -8259,7 +8482,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029874/hamlosports/products/softball/custom-softball-v-neck-uniforms.png",
     "canonical": "/custom-softball-uniforms/custom-softball-v-neck-uniforms/",
     "rating": 4.9,
     "reviews": 61,
@@ -8283,7 +8506,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball V-neck Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball V-neck Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-v-neck-uniforms"
   },
   {
     "id": 224,
@@ -8296,7 +8520,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029873/hamlosports/products/softball/custom-softball-round-neck-jerseys.png",
     "canonical": "/custom-softball-uniforms/custom-softball-round-neck-jerseys/",
     "rating": 4.9,
     "reviews": 62,
@@ -8320,7 +8544,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Round-neck Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Round-neck Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-round-neck-jerseys"
   },
   {
     "id": 225,
@@ -8333,7 +8558,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029874/hamlosports/products/softball/custom-softball-v-neck-jerseys.png",
     "canonical": "/custom-softball-uniforms/custom-softball-v-neck-jerseys/",
     "rating": 4.9,
     "reviews": 38,
@@ -8357,7 +8582,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball V-neck Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball V-neck Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-v-neck-jerseys"
   },
   {
     "id": 226,
@@ -8370,7 +8596,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029874/hamlosports/products/softball/custom-softball-sleeveless-jerseys.png",
     "canonical": "/custom-softball-uniforms/custom-softball-sleeveless-jerseys/",
     "rating": 4.9,
     "reviews": 39,
@@ -8394,7 +8620,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Sleeveless Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Sleeveless Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-sleeveless-jerseys"
   },
   {
     "id": 227,
@@ -8407,7 +8634,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029871/hamlosports/products/softball/custom-softball-full-button-jerseys.png",
     "canonical": "/custom-softball-uniforms/custom-softball-full-button-jerseys/",
     "rating": 4.9,
     "reviews": 40,
@@ -8431,7 +8658,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Full-button Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Full-button Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-full-button-jerseys"
   },
   {
     "id": 228,
@@ -8444,7 +8672,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029871/hamlosports/products/softball/custom-softball-2-button-jerseys.png",
     "canonical": "/custom-softball-uniforms/custom-softball-2-button-jerseys/",
     "rating": 4.9,
     "reviews": 41,
@@ -8468,7 +8696,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball 2-button Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball 2-button Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-2-button-jerseys"
   },
   {
     "id": 229,
@@ -8481,7 +8710,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029872/hamlosports/products/softball/custom-softball-long-sleeve-jerseys.png",
     "canonical": "/custom-softball-uniforms/custom-softball-long-sleeve-jerseys/",
     "rating": 4.9,
     "reviews": 42,
@@ -8505,7 +8734,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Long-sleeve Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Long-sleeve Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-long-sleeve-jerseys"
   },
   {
     "id": 230,
@@ -8518,7 +8748,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029872/hamlosports/products/softball/custom-softball-performance-tank-tops.png",
     "canonical": "/custom-softball-uniforms/custom-softball-performance-tank-tops/",
     "rating": 4.9,
     "reviews": 43,
@@ -8542,7 +8772,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Performance Tank Tops tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Performance Tank Tops tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-performance-tank-tops"
   },
   {
     "id": 231,
@@ -8555,7 +8786,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029874/hamlosports/products/softball/custom-softball-standard-pant.png",
     "canonical": "/custom-softball-uniforms/custom-softball-standard-pant/",
     "rating": 4.9,
     "reviews": 44,
@@ -8579,7 +8810,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Standard Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Standard Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-standard-pant"
   },
   {
     "id": 232,
@@ -8592,7 +8824,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029874/hamlosports/products/softball/custom-softball-standard-knickers.png",
     "canonical": "/custom-softball-uniforms/custom-softball-standard-knickers/",
     "rating": 4.9,
     "reviews": 45,
@@ -8616,7 +8848,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Standard Knickers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Standard Knickers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-standard-knickers"
   },
   {
     "id": 233,
@@ -8629,7 +8862,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029872/hamlosports/products/softball/custom-softball-full-length-pants.png",
     "canonical": "/custom-softball-uniforms/custom-softball-full-length-pants/",
     "rating": 4.9,
     "reviews": 46,
@@ -8653,7 +8886,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Full-length Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Full-length Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-full-length-pants"
   },
   {
     "id": 234,
@@ -8666,7 +8900,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029873/hamlosports/products/softball/custom-softball-shorts.png",
     "canonical": "/custom-softball-uniforms/custom-softball-shorts/",
     "rating": 4.9,
     "reviews": 47,
@@ -8690,7 +8924,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-shorts"
   },
   {
     "id": 235,
@@ -8703,7 +8938,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029874/hamlosports/products/softball/custom-softball-socks.png",
     "canonical": "/custom-softball-uniforms/custom-softball-socks/",
     "rating": 4.9,
     "reviews": 48,
@@ -8727,7 +8962,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Socks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Socks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-socks"
   },
   {
     "id": 236,
@@ -8740,7 +8976,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029872/hamlosports/products/softball/custom-softball-full-zip-hoodies.png",
     "canonical": "/custom-softball-uniforms/custom-softball-full-zip-hoodies/",
     "rating": 4.9,
     "reviews": 49,
@@ -8764,7 +9000,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Full-zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Full-zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-full-zip-hoodies"
   },
   {
     "id": 237,
@@ -8777,7 +9014,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029873/hamlosports/products/softball/custom-softball-pullover-hoodies.png",
     "canonical": "/custom-softball-uniforms/custom-softball-pullover-hoodies/",
     "rating": 4.9,
     "reviews": 50,
@@ -8801,7 +9038,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-pullover-hoodies"
   },
   {
     "id": 238,
@@ -8814,7 +9052,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029871/hamlosports/products/softball/custom-softball-crewneck-sweatshirts.png",
     "canonical": "/custom-softball-uniforms/custom-softball-crewneck-sweatshirts/",
     "rating": 4.9,
     "reviews": 51,
@@ -8838,7 +9076,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Crewneck Sweatshirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Crewneck Sweatshirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-crewneck-sweatshirts"
   },
   {
     "id": 239,
@@ -8851,7 +9090,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029871/hamlosports/products/softball/custom-softball-dugout-jackets.png",
     "canonical": "/custom-softball-uniforms/custom-softball-dugout-jackets/",
     "rating": 4.9,
     "reviews": 52,
@@ -8875,7 +9114,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Dugout Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Dugout Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-dugout-jackets"
   },
   {
     "id": 240,
@@ -8888,7 +9128,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029875/hamlosports/products/softball/custom-softball-varsity-jackets.png",
     "canonical": "/custom-softball-uniforms/custom-softball-varsity-jackets/",
     "rating": 4.9,
     "reviews": 53,
@@ -8912,7 +9152,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Varsity Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Varsity Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-varsity-jackets"
   },
   {
     "id": 241,
@@ -8925,7 +9166,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029875/hamlosports/products/softball/custom-softball-windbreakers.png",
     "canonical": "/custom-softball-uniforms/custom-softball-windbreakers/",
     "rating": 4.9,
     "reviews": 54,
@@ -8949,7 +9190,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Windbreakers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Windbreakers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-windbreakers"
   },
   {
     "id": 242,
@@ -8962,7 +9204,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029873/hamlosports/products/softball/custom-softball-quarter-zip-pullovers.png",
     "canonical": "/custom-softball-uniforms/custom-softball-quarter-zip-pullovers/",
     "rating": 4.9,
     "reviews": 55,
@@ -8986,7 +9228,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Quarter-zip Pullovers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Quarter-zip Pullovers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-quarter-zip-pullovers"
   },
   {
     "id": 243,
@@ -8999,7 +9242,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029872/hamlosports/products/softball/custom-softball-jogger-pants.png",
     "canonical": "/custom-softball-uniforms/custom-softball-jogger-pants/",
     "rating": 4.9,
     "reviews": 56,
@@ -9023,7 +9266,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Jogger Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Jogger Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-jogger-pants"
   },
   {
     "id": 244,
@@ -9036,7 +9280,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029873/hamlosports/products/softball/custom-softball-short-sleeve-t-shirts.png",
     "canonical": "/custom-softball-uniforms/custom-softball-short-sleeve-t-shirts/",
     "rating": 4.9,
     "reviews": 57,
@@ -9060,7 +9304,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Short Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Short Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-short-sleeve-t-shirts"
   },
   {
     "id": 245,
@@ -9073,7 +9318,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029874/hamlosports/products/softball/custom-softball-training-shorts.png",
     "canonical": "/custom-softball-uniforms/custom-softball-training-shorts/",
     "rating": 4.9,
     "reviews": 58,
@@ -9097,7 +9342,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Training Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Training Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-training-shorts"
   },
   {
     "id": 246,
@@ -9110,7 +9356,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029871/hamlosports/products/softball/custom-softball-backpacks.png",
     "canonical": "/custom-softball-uniforms/custom-softball-backpacks/",
     "rating": 4.9,
     "reviews": 59,
@@ -9134,7 +9380,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Backpacks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Backpacks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-backpacks"
   },
   {
     "id": 247,
@@ -9147,7 +9394,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029871/hamlosports/products/softball/custom-softball-cinch-bags.png",
     "canonical": "/custom-softball-uniforms/custom-softball-cinch-bags/",
     "rating": 4.9,
     "reviews": 60,
@@ -9171,7 +9418,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Cinch Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Cinch Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-cinch-bags"
   },
   {
     "id": 248,
@@ -9184,7 +9432,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029875/hamlosports/products/softball/custom-softball-wheeled-bags.png",
     "canonical": "/custom-softball-uniforms/custom-softball-wheeled-bags/",
     "rating": 4.9,
     "reviews": 61,
@@ -9208,7 +9456,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Wheeled Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Wheeled Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-wheeled-bags"
   },
   {
     "id": 249,
@@ -9221,7 +9470,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029875/hamlosports/products/softball/custom-softball-visors.png",
     "canonical": "/custom-softball-uniforms/custom-softball-visors/",
     "rating": 4.9,
     "reviews": 62,
@@ -9245,7 +9494,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Softball Visors tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Softball Visors tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/softball/custom-softball-visors"
   },
   {
     "id": 250,
@@ -9258,7 +9508,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029879/hamlosports/products/volleyball/custom-volleyball-uniform-sets.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-uniform-sets/",
     "rating": 4.9,
     "reviews": 38,
@@ -9282,7 +9532,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Uniforms (uniform Sets) tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Uniforms (uniform Sets) tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-uniform-sets"
   },
   {
     "id": 251,
@@ -9295,7 +9546,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029878/hamlosports/products/volleyball/custom-volleyball-short-sleeve-jerseys.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-short-sleeve-jerseys/",
     "rating": 4.9,
     "reviews": 39,
@@ -9319,7 +9570,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Short Sleeve Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Short Sleeve Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-short-sleeve-jerseys"
   },
   {
     "id": 252,
@@ -9332,7 +9584,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029876/hamlosports/products/volleyball/custom-volleyball-cap-sleeved-uniforms.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-cap-sleeved-uniforms/",
     "rating": 4.9,
     "reviews": 40,
@@ -9356,7 +9608,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Cap Sleeved Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Cap Sleeved Uniforms tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-cap-sleeved-uniforms"
   },
   {
     "id": 253,
@@ -9369,7 +9622,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029877/hamlosports/products/volleyball/custom-volleyball-long-sleeve-jerseys.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-long-sleeve-jerseys/",
     "rating": 4.9,
     "reviews": 41,
@@ -9393,7 +9646,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Long Sleeve Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Long Sleeve Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-long-sleeve-jerseys"
   },
   {
     "id": 254,
@@ -9406,7 +9660,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029876/hamlosports/products/volleyball/custom-volleyball-crewneck-cap-sleeve-jerseys.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-crewneck-cap-sleeve-jerseys/",
     "rating": 4.9,
     "reviews": 42,
@@ -9430,7 +9684,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Crewneck Cap Sleeve Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Crewneck Cap Sleeve Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-crewneck-cap-sleeve-jerseys"
   },
   {
     "id": 255,
@@ -9443,7 +9698,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029878/hamlosports/products/volleyball/custom-volleyball-racerback-tanktop-jerseys.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-racerback-tanktop-jerseys/",
     "rating": 4.9,
     "reviews": 43,
@@ -9467,7 +9722,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Racerback Tank Top Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Racerback Tank Top Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-racerback-tanktop-jerseys"
   },
   {
     "id": 256,
@@ -9480,7 +9736,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029878/hamlosports/products/volleyball/custom-volleyball-sleeveless-jerseys.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-sleeveless-jerseys/",
     "rating": 4.9,
     "reviews": 44,
@@ -9504,7 +9760,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Sleeveless Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Sleeveless Jerseys tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-sleeveless-jerseys"
   },
   {
     "id": 257,
@@ -9517,7 +9774,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029876/hamlosports/products/volleyball/custom-volleyball-competition-shorts.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-competition-shorts/",
     "rating": 4.9,
     "reviews": 45,
@@ -9541,7 +9798,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Competition Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Competition Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-competition-shorts"
   },
   {
     "id": 258,
@@ -9554,7 +9812,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029877/hamlosports/products/volleyball/custom-volleyball-poly-spandex-shorts.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-poly-spandex-shorts/",
     "rating": 4.9,
     "reviews": 46,
@@ -9578,7 +9836,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Poly-spandex Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Poly-spandex Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-poly-spandex-shorts"
   },
   {
     "id": 259,
@@ -9591,7 +9850,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029875/hamlosports/products/volleyball/custom-volleyball-athletic-shorts.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-athletic-shorts/",
     "rating": 4.9,
     "reviews": 47,
@@ -9615,7 +9874,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Athletic Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Athletic Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-athletic-shorts"
   },
   {
     "id": 260,
@@ -9628,7 +9888,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029876/hamlosports/products/volleyball/custom-volleyball-full-zip-hoodies.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-full-zip-hoodies/",
     "rating": 4.9,
     "reviews": 48,
@@ -9652,7 +9912,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Full-zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Full-zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-full-zip-hoodies"
   },
   {
     "id": 261,
@@ -9665,7 +9926,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029877/hamlosports/products/volleyball/custom-volleyball-pullover-hoodies.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-pullover-hoodies/",
     "rating": 4.9,
     "reviews": 49,
@@ -9689,7 +9950,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-pullover-hoodies"
   },
   {
     "id": 262,
@@ -9702,7 +9964,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029879/hamlosports/products/volleyball/custom-volleyball-warmup-jackets.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-warmup-jackets/",
     "rating": 4.9,
     "reviews": 50,
@@ -9726,7 +9988,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Warmup Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Warmup Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-warmup-jackets"
   },
   {
     "id": 263,
@@ -9739,7 +10002,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029877/hamlosports/products/volleyball/custom-volleyball-quarter-zipper-pullovers.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-quarter-zipper-pullovers/",
     "rating": 4.9,
     "reviews": 51,
@@ -9763,7 +10026,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Quarter-zip Pullovers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Quarter-zip Pullovers tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-quarter-zipper-pullovers"
   },
   {
     "id": 264,
@@ -9776,7 +10040,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029877/hamlosports/products/volleyball/custom-volleyball-jogger-pants.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-jogger-pants/",
     "rating": 4.9,
     "reviews": 52,
@@ -9800,7 +10064,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Jogger Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Jogger Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-jogger-pants"
   },
   {
     "id": 265,
@@ -9813,7 +10078,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029879/hamlosports/products/volleyball/custom-volleyball-warmup-pants.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-warmup-pants/",
     "rating": 4.9,
     "reviews": 53,
@@ -9837,7 +10102,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Warmup Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Warmup Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-warmup-pants"
   },
   {
     "id": 266,
@@ -9850,7 +10116,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029878/hamlosports/products/volleyball/custom-volleyball-sweat-pants.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-sweat-pants/",
     "rating": 4.9,
     "reviews": 54,
@@ -9874,7 +10140,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Sweat Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Sweat Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-sweat-pants"
   },
   {
     "id": 267,
@@ -9887,7 +10154,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029878/hamlosports/products/volleyball/custom-volleyball-short-sleeve-t-shirts.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-short-sleeve-t-shirts/",
     "rating": 4.9,
     "reviews": 55,
@@ -9911,7 +10178,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Short Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Short Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-short-sleeve-t-shirts"
   },
   {
     "id": 268,
@@ -9924,7 +10192,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029877/hamlosports/products/volleyball/custom-volleyball-long-sleeve-t-shirts.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-long-sleeve-t-shirts/",
     "rating": 4.9,
     "reviews": 56,
@@ -9948,7 +10216,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Long Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Long Sleeve T-shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-long-sleeve-t-shirts"
   },
   {
     "id": 269,
@@ -9961,7 +10230,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029876/hamlosports/products/volleyball/custom-volleyball-backpacks.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-backpacks/",
     "rating": 4.9,
     "reviews": 57,
@@ -9985,7 +10254,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Backpacks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Backpacks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-backpacks"
   },
   {
     "id": 270,
@@ -9998,7 +10268,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029876/hamlosports/products/volleyball/custom-volleyball-cinch-bags.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-cinch-bags/",
     "rating": 4.9,
     "reviews": 58,
@@ -10022,7 +10292,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Cinch Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Cinch Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-cinch-bags"
   },
   {
     "id": 271,
@@ -10035,7 +10306,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029877/hamlosports/products/volleyball/custom-volleyball-knee-pads.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-knee-pads/",
     "rating": 4.9,
     "reviews": 59,
@@ -10059,7 +10330,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Knee Pads tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Knee Pads tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-knee-pads"
   },
   {
     "id": 272,
@@ -10072,7 +10344,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029878/hamlosports/products/volleyball/custom-volleyball-socks.png",
     "canonical": "/custom-volleyball-uniforms/custom-volleyball-socks/",
     "rating": 4.9,
     "reviews": 60,
@@ -10096,7 +10368,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Volleyball Socks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Volleyball Socks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/volleyball/custom-volleyball-socks"
   },
   {
     "id": 273,
@@ -10109,7 +10382,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029882/hamlosports/products/wrestling/custom-wrestling-team-singlets.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-team-singlets/",
     "rating": 4.9,
     "reviews": 61,
@@ -10133,7 +10406,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Team Singlets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Team Singlets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-team-singlets"
   },
   {
     "id": 274,
@@ -10146,7 +10420,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029879/hamlosports/products/wrestling/custom-wrestling-board-shorts.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-board-shorts/",
     "rating": 4.9,
     "reviews": 62,
@@ -10170,7 +10444,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Board Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Board Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-board-shorts"
   },
   {
     "id": 275,
@@ -10183,7 +10458,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029879/hamlosports/products/wrestling/custom-wrestling-cinch-bags.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-cinch-bags/",
     "rating": 4.9,
     "reviews": 38,
@@ -10207,7 +10482,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Cinch Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Cinch Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-cinch-bags"
   },
   {
     "id": 276,
@@ -10220,7 +10496,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029879/hamlosports/products/wrestling/custom-wrestling-compression-shorts.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-compression-shorts/",
     "rating": 4.9,
     "reviews": 39,
@@ -10244,7 +10520,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Compression Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Compression Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-compression-shorts"
   },
   {
     "id": 277,
@@ -10257,7 +10534,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029879/hamlosports/products/wrestling/custom-wrestling-crewneck-sweatshirts.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-crewneck-sweatshirts/",
     "rating": 4.9,
     "reviews": 40,
@@ -10281,7 +10558,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Crewneck Sweatshirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Crewneck Sweatshirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-crewneck-sweatshirts"
   },
   {
     "id": 278,
@@ -10294,7 +10572,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029880/hamlosports/products/wrestling/custom-wrestling-duffle-bags.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-duffle-bags/",
     "rating": 4.9,
     "reviews": 41,
@@ -10318,7 +10596,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Duffle Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Duffle Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-duffle-bags"
   },
   {
     "id": 279,
@@ -10331,7 +10610,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029880/hamlosports/products/wrestling/custom-wrestling-fight-shorts.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-fight-shorts/",
     "rating": 4.9,
     "reviews": 42,
@@ -10355,7 +10634,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Fight Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Fight Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-fight-shorts"
   },
   {
     "id": 280,
@@ -10368,7 +10648,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029880/hamlosports/products/wrestling/custom-wrestling-full-length-warmup-pants.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-full-length-warmup-pants/",
     "rating": 4.9,
     "reviews": 43,
@@ -10392,7 +10672,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Full Length Warmup Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Full Length Warmup Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-full-length-warmup-pants"
   },
   {
     "id": 281,
@@ -10405,7 +10686,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029880/hamlosports/products/wrestling/custom-wrestling-full-zip-hoodies.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-full-zip-hoodies/",
     "rating": 4.9,
     "reviews": 44,
@@ -10429,7 +10710,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Full Zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Full Zip Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-full-zip-hoodies"
   },
   {
     "id": 282,
@@ -10442,7 +10724,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029881/hamlosports/products/wrestling/custom-wrestling-full-zip-warmup-jackets.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-full-zip-warmup-jackets/",
     "rating": 4.9,
     "reviews": 45,
@@ -10466,7 +10748,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Full Zip Warmup Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Full Zip Warmup Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-full-zip-warmup-jackets"
   },
   {
     "id": 283,
@@ -10479,7 +10762,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029881/hamlosports/products/wrestling/custom-wrestling-gear-bags.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-gear-bags/",
     "rating": 4.9,
     "reviews": 46,
@@ -10503,7 +10786,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Gear Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Gear Bags tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-gear-bags"
   },
   {
     "id": 284,
@@ -10516,7 +10800,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029881/hamlosports/products/wrestling/custom-wrestling-lightweight-track-jackets.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-lightweight-track-jackets/",
     "rating": 4.9,
     "reviews": 47,
@@ -10540,7 +10824,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Lightweight Track Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Lightweight Track Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-lightweight-track-jackets"
   },
   {
     "id": 285,
@@ -10553,7 +10838,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029881/hamlosports/products/wrestling/custom-wrestling-long-sleeve-compression-shirts.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-long-sleeve-compression-shirts/",
     "rating": 4.9,
     "reviews": 48,
@@ -10577,7 +10862,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Long Sleeve Compression Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Long Sleeve Compression Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-long-sleeve-compression-shirts"
   },
   {
     "id": 286,
@@ -10590,7 +10876,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029881/hamlosports/products/wrestling/custom-wrestling-long-sleeve-performance-shirts.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-long-sleeve-performance-shirts/",
     "rating": 4.9,
     "reviews": 49,
@@ -10614,7 +10900,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Long Sleeve Performance Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Long Sleeve Performance Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-long-sleeve-performance-shirts"
   },
   {
     "id": 287,
@@ -10627,7 +10914,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029881/hamlosports/products/wrestling/custom-wrestling-performance-polo-shirts.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-performance-polo-shirts/",
     "rating": 4.9,
     "reviews": 50,
@@ -10651,7 +10938,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Performance Polo Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Performance Polo Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-performance-polo-shirts"
   },
   {
     "id": 288,
@@ -10664,7 +10952,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029881/hamlosports/products/wrestling/custom-wrestling-practice-shorts.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-practice-shorts/",
     "rating": 4.9,
     "reviews": 51,
@@ -10688,7 +10976,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Practice Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Practice Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-practice-shorts"
   },
   {
     "id": 289,
@@ -10701,7 +10990,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029882/hamlosports/products/wrestling/custom-wrestling-pullover-hoodies.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-pullover-hoodies/",
     "rating": 4.9,
     "reviews": 52,
@@ -10725,7 +11014,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Pullover Hoodies tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-pullover-hoodies"
   },
   {
     "id": 290,
@@ -10738,7 +11028,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029882/hamlosports/products/wrestling/custom-wrestling-quarter-zipper-warmup-jackets.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-quarter-zipper-warmup-jackets/",
     "rating": 4.9,
     "reviews": 53,
@@ -10762,7 +11052,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Quarter Zip Warmup Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Quarter Zip Warmup Jackets tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-quarter-zipper-warmup-jackets"
   },
   {
     "id": 291,
@@ -10775,7 +11066,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029882/hamlosports/products/wrestling/custom-wrestling-short-sleeve-compression-shirts.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-short-sleeve-compression-shirts/",
     "rating": 4.9,
     "reviews": 54,
@@ -10799,7 +11090,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Short Sleeve Compression Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Short Sleeve Compression Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-short-sleeve-compression-shirts"
   },
   {
     "id": 292,
@@ -10812,7 +11104,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029882/hamlosports/products/wrestling/custom-wrestling-short-sleeve-performance-shirts.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-short-sleeve-performance-shirts/",
     "rating": 4.9,
     "reviews": 55,
@@ -10836,7 +11128,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Short Sleeve Performance Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Short Sleeve Performance Shirts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-short-sleeve-performance-shirts"
   },
   {
     "id": 293,
@@ -10849,7 +11142,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029882/hamlosports/products/wrestling/custom-wrestling-socks.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-socks/",
     "rating": 4.9,
     "reviews": 56,
@@ -10873,7 +11166,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Socks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Socks tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-socks"
   },
   {
     "id": 294,
@@ -10886,7 +11180,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029883/hamlosports/products/wrestling/custom-wrestling-tear-away-warmup-pants.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-tear-away-warmup-pants/",
     "rating": 4.9,
     "reviews": 57,
@@ -10910,7 +11204,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Tear Away Warmup Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Tear Away Warmup Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-tear-away-warmup-pants"
   },
   {
     "id": 295,
@@ -10923,7 +11218,7 @@ export const fullCatalog296 = [
     "price": 34.99,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029883/hamlosports/products/wrestling/custom-wrestling-training-shorts.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-training-shorts/",
     "rating": 4.9,
     "reviews": 58,
@@ -10947,7 +11242,8 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Training Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Training Shorts tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-training-shorts"
   },
   {
     "id": 296,
@@ -10960,7 +11256,7 @@ export const fullCatalog296 = [
     "price": 38,
     "fabric": "Dye-Sublimated Moisture-Wicking Performance Polyester (180-220 GSM)",
     "finish": "Anti-Bacterial, Quick-Dry, Interlock Weave",
-    "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029883/hamlosports/products/wrestling/custom-wrestling-warmup-pants.png",
     "canonical": "/custom-wrestling-singlets/custom-wrestling-warmup-pants/",
     "rating": 4.9,
     "reviews": 59,
@@ -10984,6 +11280,9 @@ export const fullCatalog296 = [
       "3XL",
       "4XL"
     ],
-    "description": "Custom Custom Wrestling Warmup Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup."
+    "description": "Custom Custom Wrestling Warmup Pants tailored for professional clubs, high schools, and travel teams. Factory-direct export production with no middleman markup.",
+    "cloudinaryPublicId": "hamlosports/products/wrestling/custom-wrestling-warmup-pants"
   }
 ];
+
+export default fullCatalog296;

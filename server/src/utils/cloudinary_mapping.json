@@ -1,0 +1,2370 @@
+{
+  "baseball/custom-baseball-jogger-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029830/hamlosports/products/baseball/custom-baseball-jogger-pants.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-jogger-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 241904
+  },
+  "baseball/custom-baseball-crewneck-sweatshirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029830/hamlosports/products/baseball/custom-baseball-crewneck-sweatshirts.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-crewneck-sweatshirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 447740
+  },
+  "baseball/custom-baseball-practice-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029831/hamlosports/products/baseball/custom-baseball-practice-jerseys.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-practice-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 701806
+  },
+  "baseball/custom-baseball-cage-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795024660/hamlosports/products/baseball/custom-baseball-cage-jackets.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-cage-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 630732
+  },
+  "baseball/custom-baseball-dugout-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029830/hamlosports/products/baseball/custom-baseball-dugout-jackets.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-dugout-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 344825
+  },
+  "baseball/custom-baseball-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029830/hamlosports/products/baseball/custom-baseball-pants.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 328210
+  },
+  "baseball/custom-baseball-quarter-zipper-pullover": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029831/hamlosports/products/baseball/custom-baseball-quarter-zipper-pullover.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-quarter-zipper-pullover",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 524088
+  },
+  "baseball/custom-baseball-pullover-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029832/hamlosports/products/baseball/custom-baseball-pullover-hoodies.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-pullover-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 734956
+  },
+  "baseball/custom-baseball-short-sleeve-practice-t-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029832/hamlosports/products/baseball/custom-baseball-short-sleeve-practice-t-shirts.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-short-sleeve-practice-t-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 611191
+  },
+  "baseball/custom-baseball-round-neck-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029831/hamlosports/products/baseball/custom-baseball-round-neck-jerseys.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-round-neck-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 461981
+  },
+  "baseball/custom-baseball-stirrup-socks": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029832/hamlosports/products/baseball/custom-baseball-stirrup-socks.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-stirrup-socks",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 505030
+  },
+  "baseball/custom-baseball-team-duffle-bags": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029833/hamlosports/products/baseball/custom-baseball-team-duffle-bags.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-team-duffle-bags",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 709247
+  },
+  "baseball/custom-baseball-sleeveless-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029832/hamlosports/products/baseball/custom-baseball-sleeveless-jerseys.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-sleeveless-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 403075
+  },
+  "baseball/custom-baseball-sliding-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029832/hamlosports/products/baseball/custom-baseball-sliding-shorts.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-sliding-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 310580
+  },
+  "baseball/custom-baseball-training-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029833/hamlosports/products/baseball/custom-baseball-training-shorts.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-training-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 236129
+  },
+  "baseball/custom-baseball-uniforms-set": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029834/hamlosports/products/baseball/custom-baseball-uniforms-set.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-uniforms-set",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 257902
+  },
+  "baseball/custom-baseball-traditional-bags": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029833/hamlosports/products/baseball/custom-baseball-traditional-bags.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-traditional-bags",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 758934
+  },
+  "baseball/custom-baseball-team-backpacks": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029833/hamlosports/products/baseball/custom-baseball-team-backpacks.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-team-backpacks",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 816856
+  },
+  "baseball/custom-baseball-wind-pullovers": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029834/hamlosports/products/baseball/custom-baseball-wind-pullovers.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-wind-pullovers",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 451704
+  },
+  "baseball/custom-baseball-v-neck-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029834/hamlosports/products/baseball/custom-baseball-v-neck-jerseys.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-v-neck-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 832992
+  },
+  "baseball/custom-baseball-varsity-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029834/hamlosports/products/baseball/custom-baseball-varsity-jackets.png",
+    "publicId": "hamlosports/products/baseball/custom-baseball-varsity-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 622877
+  },
+  "baseball/custom-full-button-baseball-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029834/hamlosports/products/baseball/custom-full-button-baseball-jerseys.png",
+    "publicId": "hamlosports/products/baseball/custom-full-button-baseball-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 751358
+  },
+  "baseball/custom-full-zip-baseball-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029835/hamlosports/products/baseball/custom-full-zip-baseball-hoodies.png",
+    "publicId": "hamlosports/products/baseball/custom-full-zip-baseball-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 740588
+  },
+  "baseball/custom-full-length-baseball-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029835/hamlosports/products/baseball/custom-full-length-baseball-pants.png",
+    "publicId": "hamlosports/products/baseball/custom-full-length-baseball-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 455961
+  },
+  "baseball/custom-performance-baseball-polos": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029835/hamlosports/products/baseball/custom-performance-baseball-polos.png",
+    "publicId": "hamlosports/products/baseball/custom-performance-baseball-polos",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 401030
+  },
+  "basketball/custom-basketball-arm-sleeves": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029835/hamlosports/products/basketball/custom-basketball-arm-sleeves.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-arm-sleeves",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 210595
+  },
+  "baseball/custom-knicker-style-baseball-pant": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029835/hamlosports/products/baseball/custom-knicker-style-baseball-pant.png",
+    "publicId": "hamlosports/products/baseball/custom-knicker-style-baseball-pant",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 433844
+  },
+  "basketball/custom-basketball-backpack": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029835/hamlosports/products/basketball/custom-basketball-backpack.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-backpack",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 410837
+  },
+  "baseball/custom-two-button-baseball-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029835/hamlosports/products/baseball/custom-two-button-baseball-jerseys.png",
+    "publicId": "hamlosports/products/baseball/custom-two-button-baseball-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 684166
+  },
+  "basketball/custom-basketball-compression-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029836/hamlosports/products/basketball/custom-basketball-compression-shorts.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-compression-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 378480
+  },
+  "basketball/custom-basketball-crewneck-sweatshirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029836/hamlosports/products/basketball/custom-basketball-crewneck-sweatshirts.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-crewneck-sweatshirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 801053
+  },
+  "basketball/custom-basketball-performance-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029836/hamlosports/products/basketball/custom-basketball-performance-shorts.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-performance-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 553786
+  },
+  "basketball/custom-basketball-joggers": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029836/hamlosports/products/basketball/custom-basketball-joggers.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-joggers",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 405814
+  },
+  "basketball/custom-basketball-full-zip-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029836/hamlosports/products/basketball/custom-basketball-full-zip-hoodies.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-full-zip-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 754626
+  },
+  "basketball/custom-basketball-practice-t-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029837/hamlosports/products/basketball/custom-basketball-practice-t-shirts.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-practice-t-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 686295
+  },
+  "basketball/custom-basketball-pullover-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029837/hamlosports/products/basketball/custom-basketball-pullover-hoodies.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-pullover-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 312552
+  },
+  "basketball/custom-basketball-polo-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029837/hamlosports/products/basketball/custom-basketball-polo-shirts.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-polo-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 630283
+  },
+  "basketball/custom-basketball-quarter-zip-practice-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029837/hamlosports/products/basketball/custom-basketball-quarter-zip-practice-jerseys.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-quarter-zip-practice-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 315714
+  },
+  "basketball/custom-basketball-round-neck-reversible-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029838/hamlosports/products/basketball/custom-basketball-round-neck-reversible-jerseys.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-round-neck-reversible-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 575483
+  },
+  "basketball/custom-basketball-round-neck-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029838/hamlosports/products/basketball/custom-basketball-round-neck-uniforms.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-round-neck-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 392065
+  },
+  "basketball/custom-basketball-reversible-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029837/hamlosports/products/basketball/custom-basketball-reversible-uniforms.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-reversible-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 502083
+  },
+  "basketball/custom-basketball-satin-bomber-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029838/hamlosports/products/basketball/custom-basketball-satin-bomber-jackets.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-satin-bomber-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 725225
+  },
+  "basketball/custom-basketball-shooting-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029838/hamlosports/products/basketball/custom-basketball-shooting-shirts.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-shooting-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 332842
+  },
+  "basketball/custom-basketball-sleeveless-training-t-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029839/hamlosports/products/basketball/custom-basketball-sleeveless-training-t-shirts.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-sleeveless-training-t-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 553711
+  },
+  "basketball/custom-basketball-shooting-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029838/hamlosports/products/basketball/custom-basketball-shooting-jackets.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-shooting-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 689822
+  },
+  "basketball/custom-basketball-socks": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029839/hamlosports/products/basketball/custom-basketball-socks.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-socks",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 644468
+  },
+  "basketball/custom-basketball-team-duffle-bags": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029839/hamlosports/products/basketball/custom-basketball-team-duffle-bags.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-team-duffle-bags",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 483623
+  },
+  "basketball/custom-basketball-tear-away-warmup-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029839/hamlosports/products/basketball/custom-basketball-tear-away-warmup-pants.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-tear-away-warmup-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 451786
+  },
+  "basketball/custom-basketball-v-neck-reversible-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029839/hamlosports/products/basketball/custom-basketball-v-neck-reversible-jerseys.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-v-neck-reversible-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 586634
+  },
+  "esports/custom-esports-backpacks": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029840/hamlosports/products/esports/custom-esports-backpacks.png",
+    "publicId": "hamlosports/products/esports/custom-esports-backpacks",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 580759
+  },
+  "basketball/custom-basketball-windbreaker-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029840/hamlosports/products/basketball/custom-basketball-windbreaker-jackets.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-windbreaker-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 378673
+  },
+  "basketball/custom-basketball-v-neck-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029839/hamlosports/products/basketball/custom-basketball-v-neck-uniforms.png",
+    "publicId": "hamlosports/products/basketball/custom-basketball-v-neck-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 467455
+  },
+  "esports/custom-esports-arm-sleeves": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029840/hamlosports/products/esports/custom-esports-arm-sleeves.png",
+    "publicId": "hamlosports/products/esports/custom-esports-arm-sleeves",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 325995
+  },
+  "esports/custom-esports-caps": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029840/hamlosports/products/esports/custom-esports-caps.png",
+    "publicId": "hamlosports/products/esports/custom-esports-caps",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 452408
+  },
+  "esports/custom-esports-classic-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029840/hamlosports/products/esports/custom-esports-classic-shorts.png",
+    "publicId": "hamlosports/products/esports/custom-esports-classic-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 238244
+  },
+  "esports/custom-esports-full-zip-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029841/hamlosports/products/esports/custom-esports-full-zip-hoodies.png",
+    "publicId": "hamlosports/products/esports/custom-esports-full-zip-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 474248
+  },
+  "esports/custom-esports-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029841/hamlosports/products/esports/custom-esports-jerseys.png",
+    "publicId": "hamlosports/products/esports/custom-esports-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 365738
+  },
+  "esports/custom-esports-full-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029841/hamlosports/products/esports/custom-esports-full-uniforms.png",
+    "publicId": "hamlosports/products/esports/custom-esports-full-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 263499
+  },
+  "esports/custom-esports-bomber-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029840/hamlosports/products/esports/custom-esports-bomber-jackets.png",
+    "publicId": "hamlosports/products/esports/custom-esports-bomber-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 817216
+  },
+  "esports/custom-esports-long-sleeve-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029841/hamlosports/products/esports/custom-esports-long-sleeve-jerseys.png",
+    "publicId": "hamlosports/products/esports/custom-esports-long-sleeve-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 611205
+  },
+  "esports/custom-esports-jogger-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029841/hamlosports/products/esports/custom-esports-jogger-pants.png",
+    "publicId": "hamlosports/products/esports/custom-esports-jogger-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 287699
+  },
+  "esports/custom-esports-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029842/hamlosports/products/esports/custom-esports-pants.png",
+    "publicId": "hamlosports/products/esports/custom-esports-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 380014
+  },
+  "esports/custom-esports-polo-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029842/hamlosports/products/esports/custom-esports-polo-shirts.png",
+    "publicId": "hamlosports/products/esports/custom-esports-polo-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 616076
+  },
+  "esports/custom-esports-performance-polo-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029842/hamlosports/products/esports/custom-esports-performance-polo-shirts.png",
+    "publicId": "hamlosports/products/esports/custom-esports-performance-polo-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 724415
+  },
+  "esports/custom-esports-long-sleeve-t-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029841/hamlosports/products/esports/custom-esports-long-sleeve-t-shirts.png",
+    "publicId": "hamlosports/products/esports/custom-esports-long-sleeve-t-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 337979
+  },
+  "esports/custom-esports-pullover-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029842/hamlosports/products/esports/custom-esports-pullover-hoodies.png",
+    "publicId": "hamlosports/products/esports/custom-esports-pullover-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 293249
+  },
+  "esports/custom-esports-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029843/hamlosports/products/esports/custom-esports-shorts.png",
+    "publicId": "hamlosports/products/esports/custom-esports-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 575228
+  },
+  "esports/custom-esports-quarter-zipper-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029842/hamlosports/products/esports/custom-esports-quarter-zipper-jerseys.png",
+    "publicId": "hamlosports/products/esports/custom-esports-quarter-zipper-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 344148
+  },
+  "esports/custom-esports-short-sleeve-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029843/hamlosports/products/esports/custom-esports-short-sleeve-jerseys.png",
+    "publicId": "hamlosports/products/esports/custom-esports-short-sleeve-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 633904
+  },
+  "esports/custom-esports-sleeveless-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029843/hamlosports/products/esports/custom-esports-sleeveless-jerseys.png",
+    "publicId": "hamlosports/products/esports/custom-esports-sleeveless-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 415317
+  },
+  "esports/custom-esports-track-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029844/hamlosports/products/esports/custom-esports-track-jackets.png",
+    "publicId": "hamlosports/products/esports/custom-esports-track-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 482630
+  },
+  "esports/custom-esports-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029844/hamlosports/products/esports/custom-esports-uniforms.png",
+    "publicId": "hamlosports/products/esports/custom-esports-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 586350
+  },
+  "flag-football/custom-flag-football-7-v-7-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029844/hamlosports/products/flag-football/custom-flag-football-7-v-7-shorts.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-7-v-7-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 404504
+  },
+  "esports/custom-esports-short-sleeve-t-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029843/hamlosports/products/esports/custom-esports-short-sleeve-t-shirts.png",
+    "publicId": "hamlosports/products/esports/custom-esports-short-sleeve-t-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 413376
+  },
+  "flag-football/custom-flag-football-athletic-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029844/hamlosports/products/flag-football/custom-flag-football-athletic-shorts.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-athletic-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 756035
+  },
+  "esports/custom-esports-training-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029844/hamlosports/products/esports/custom-esports-training-shorts.png",
+    "publicId": "hamlosports/products/esports/custom-esports-training-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 541355
+  },
+  "flag-football/custom-flag-football-compression-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029845/hamlosports/products/flag-football/custom-flag-football-compression-shorts.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-compression-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 739825
+  },
+  "flag-football/custom-flag-football-full-zip-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029845/hamlosports/products/flag-football/custom-flag-football-full-zip-hoodies.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-full-zip-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 797525
+  },
+  "flag-football/custom-flag-football-compression-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029845/hamlosports/products/flag-football/custom-flag-football-compression-jerseys.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-compression-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 340567
+  },
+  "flag-football/custom-flag-football-high-tight-compression-pant": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029845/hamlosports/products/flag-football/custom-flag-football-high-tight-compression-pant.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-high-tight-compression-pant",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 230185
+  },
+  "flag-football/custom-flag-football-cinch-bag": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029845/hamlosports/products/flag-football/custom-flag-football-cinch-bag.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-cinch-bag",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 524255
+  },
+  "flag-football/custom-flag-football-hooded-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029846/hamlosports/products/flag-football/custom-flag-football-hooded-jerseys.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-hooded-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 667371
+  },
+  "flag-football/custom-flag-football-compression-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029845/hamlosports/products/flag-football/custom-flag-football-compression-uniforms.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-compression-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 390186
+  },
+  "flag-football/custom-flag-football-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029846/hamlosports/products/flag-football/custom-flag-football-jerseys.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 539353
+  },
+  "flag-football/custom-flag-football-practice-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029847/hamlosports/products/flag-football/custom-flag-football-practice-jerseys.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-practice-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 605062
+  },
+  "flag-football/custom-flag-football-long-sleeve-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029847/hamlosports/products/flag-football/custom-flag-football-long-sleeve-jerseys.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-long-sleeve-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 806428
+  },
+  "flag-football/custom-flag-football-long-sleeve-training-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029847/hamlosports/products/flag-football/custom-flag-football-long-sleeve-training-shirts.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-long-sleeve-training-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 485253
+  },
+  "flag-football/custom-flag-football-joggers": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029846/hamlosports/products/flag-football/custom-flag-football-joggers.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-joggers",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 316510
+  },
+  "flag-football/custom-flag-football-pullover-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029847/hamlosports/products/flag-football/custom-flag-football-pullover-hoodies.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-pullover-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 547225
+  },
+  "flag-football/custom-flag-football-quarter-zip-pullover": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029848/hamlosports/products/flag-football/custom-flag-football-quarter-zip-pullover.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-quarter-zip-pullover",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 662486
+  },
+  "flag-football/custom-flag-football-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029848/hamlosports/products/flag-football/custom-flag-football-shorts.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 306567
+  },
+  "flag-football/custom-flag-football-team-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029848/hamlosports/products/flag-football/custom-flag-football-team-jackets.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-team-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 630462
+  },
+  "flag-football/custom-flag-football-visors": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029848/hamlosports/products/flag-football/custom-flag-football-visors.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-visors",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 243330
+  },
+  "flag-football/custom-flag-football-uniform-sets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029848/hamlosports/products/flag-football/custom-flag-football-uniform-sets.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-uniform-sets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 357497
+  },
+  "flag-football/custom-flag-football-sleeveless-training-tank": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029848/hamlosports/products/flag-football/custom-flag-football-sleeveless-training-tank.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-sleeveless-training-tank",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 378974
+  },
+  "flag-football/custom-flag-football-warmup-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029848/hamlosports/products/flag-football/custom-flag-football-warmup-pants.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-warmup-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 327367
+  },
+  "flag-football/custom-flag-football-windbreaker-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029849/hamlosports/products/flag-football/custom-flag-football-windbreaker-jackets.png",
+    "publicId": "hamlosports/products/flag-football/custom-flag-football-windbreaker-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 467946
+  },
+  "football/custom-football-cape": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029849/hamlosports/products/football/custom-football-cape.png",
+    "publicId": "hamlosports/products/football/custom-football-cape",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 475220
+  },
+  "football/custom-alternate-football-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029849/hamlosports/products/football/custom-alternate-football-uniforms.png",
+    "publicId": "hamlosports/products/football/custom-alternate-football-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 330051
+  },
+  "flag-football/flag-football-sleeveless-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029849/hamlosports/products/flag-football/flag-football-sleeveless-jerseys.png",
+    "publicId": "hamlosports/products/flag-football/flag-football-sleeveless-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 367178
+  },
+  "football/custom-football-compression-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029850/hamlosports/products/football/custom-football-compression-shirts.png",
+    "publicId": "hamlosports/products/football/custom-football-compression-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 687120
+  },
+  "football/custom-football-compression-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029850/hamlosports/products/football/custom-football-compression-shorts.png",
+    "publicId": "hamlosports/products/football/custom-football-compression-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 412570
+  },
+  "football/custom-football-duffle-bags": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029850/hamlosports/products/football/custom-football-duffle-bags.png",
+    "publicId": "hamlosports/products/football/custom-football-duffle-bags",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 203661
+  },
+  "football/custom-football-fan-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029850/hamlosports/products/football/custom-football-fan-jerseys.png",
+    "publicId": "hamlosports/products/football/custom-football-fan-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 537869
+  },
+  "football/custom-football-full-zip-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029850/hamlosports/products/football/custom-football-full-zip-hoodies.png",
+    "publicId": "hamlosports/products/football/custom-football-full-zip-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 593001
+  },
+  "football/custom-football-game-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029850/hamlosports/products/football/custom-football-game-jerseys.png",
+    "publicId": "hamlosports/products/football/custom-football-game-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 726339
+  },
+  "football/custom-football-long-sleeve-t-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029851/hamlosports/products/football/custom-football-long-sleeve-t-shirts.png",
+    "publicId": "hamlosports/products/football/custom-football-long-sleeve-t-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 339678
+  },
+  "football/custom-football-gloves": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029851/hamlosports/products/football/custom-football-gloves.png",
+    "publicId": "hamlosports/products/football/custom-football-gloves",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 859414
+  },
+  "football/custom-football-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029851/hamlosports/products/football/custom-football-pants.png",
+    "publicId": "hamlosports/products/football/custom-football-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 398937
+  },
+  "football/custom-football-practice-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029851/hamlosports/products/football/custom-football-practice-jerseys.png",
+    "publicId": "hamlosports/products/football/custom-football-practice-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 700703
+  },
+  "football/custom-football-quarter-zipper-pullovers": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029851/hamlosports/products/football/custom-football-quarter-zipper-pullovers.png",
+    "publicId": "hamlosports/products/football/custom-football-quarter-zipper-pullovers",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 416148
+  },
+  "football/custom-football-pullover-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029851/hamlosports/products/football/custom-football-pullover-hoodies.png",
+    "publicId": "hamlosports/products/football/custom-football-pullover-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 507650
+  },
+  "football/custom-football-short-sleeve-t-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029851/hamlosports/products/football/custom-football-short-sleeve-t-shirts.png",
+    "publicId": "hamlosports/products/football/custom-football-short-sleeve-t-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 410831
+  },
+  "football/custom-football-sweatpants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029852/hamlosports/products/football/custom-football-sweatpants.png",
+    "publicId": "hamlosports/products/football/custom-football-sweatpants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 383368
+  },
+  "football/custom-football-uniform-sets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029852/hamlosports/products/football/custom-football-uniform-sets.png",
+    "publicId": "hamlosports/products/football/custom-football-uniform-sets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 436033
+  },
+  "football/custom-football-skull-caps": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029852/hamlosports/products/football/custom-football-skull-caps.png",
+    "publicId": "hamlosports/products/football/custom-football-skull-caps",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 834047
+  },
+  "football/custom-football-varsity-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029852/hamlosports/products/football/custom-football-varsity-jackets.png",
+    "publicId": "hamlosports/products/football/custom-football-varsity-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 776295
+  },
+  "football/custom-football-windbreakers": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029853/hamlosports/products/football/custom-football-windbreakers.png",
+    "publicId": "hamlosports/products/football/custom-football-windbreakers",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 670802
+  },
+  "football/custom-professional-football-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029853/hamlosports/products/football/custom-professional-football-uniforms.png",
+    "publicId": "hamlosports/products/football/custom-professional-football-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 295924
+  },
+  "football/custom-football-training-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029852/hamlosports/products/football/custom-football-training-shorts.png",
+    "publicId": "hamlosports/products/football/custom-football-training-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 607263
+  },
+  "football/custom-professional-away-football-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029853/hamlosports/products/football/custom-professional-away-football-uniforms.png",
+    "publicId": "hamlosports/products/football/custom-professional-away-football-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 351308
+  },
+  "ice-hockey/custom-ice-hockey-away-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029853/hamlosports/products/ice-hockey/custom-ice-hockey-away-uniforms.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-away-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 351632
+  },
+  "ice-hockey/custom-ice-hockey-beanies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029853/hamlosports/products/ice-hockey/custom-ice-hockey-beanies.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-beanies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 1171580
+  },
+  "ice-hockey/custom-ice-hockey-bomber-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029854/hamlosports/products/ice-hockey/custom-ice-hockey-bomber-jackets.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-bomber-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 834689
+  },
+  "ice-hockey/custom-ice-hockey-full-zip-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029854/hamlosports/products/ice-hockey/custom-ice-hockey-full-zip-hoodies.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-full-zip-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 355480
+  },
+  "ice-hockey/custom-ice-hockey-game-day-away-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029854/hamlosports/products/ice-hockey/custom-ice-hockey-game-day-away-jerseys.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-game-day-away-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 485951
+  },
+  "ice-hockey/custom-ice-hockey-equipment-bags": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029854/hamlosports/products/ice-hockey/custom-ice-hockey-equipment-bags.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-equipment-bags",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 446751
+  },
+  "ice-hockey/custom-ice-hockey-compression-base-layers": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029854/hamlosports/products/ice-hockey/custom-ice-hockey-compression-base-layers.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-compression-base-layers",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 665031
+  },
+  "ice-hockey/custom-ice-hockey-game-day-home-jersey": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029854/hamlosports/products/ice-hockey/custom-ice-hockey-game-day-home-jersey.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-game-day-home-jersey",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 571915
+  },
+  "ice-hockey/custom-ice-hockey-jogger-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029855/hamlosports/products/ice-hockey/custom-ice-hockey-jogger-pants.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-jogger-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 289250
+  },
+  "ice-hockey/custom-ice-hockey-home-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029854/hamlosports/products/ice-hockey/custom-ice-hockey-home-uniforms.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-home-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 339759
+  },
+  "ice-hockey/custom-ice-hockey-long-sleeve-t-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029855/hamlosports/products/ice-hockey/custom-ice-hockey-long-sleeve-t-shirts.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-long-sleeve-t-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 712699
+  },
+  "ice-hockey/custom-ice-hockey-practice-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029855/hamlosports/products/ice-hockey/custom-ice-hockey-practice-jerseys.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-practice-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 502300
+  },
+  "ice-hockey/custom-ice-hockey-parka-winter-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029855/hamlosports/products/ice-hockey/custom-ice-hockey-parka-winter-jackets.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-parka-winter-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 701622
+  },
+  "ice-hockey/custom-ice-hockey-pullover-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029855/hamlosports/products/ice-hockey/custom-ice-hockey-pullover-hoodies.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-pullover-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 453086
+  },
+  "ice-hockey/custom-ice-hockey-quarter-zipper-pullovers": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029855/hamlosports/products/ice-hockey/custom-ice-hockey-quarter-zipper-pullovers.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-quarter-zipper-pullovers",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 659919
+  },
+  "ice-hockey/custom-ice-hockey-shells": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029856/hamlosports/products/ice-hockey/custom-ice-hockey-shells.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-shells",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 477241
+  },
+  "ice-hockey/custom-ice-hockey-short-sleeve-t-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029856/hamlosports/products/ice-hockey/custom-ice-hockey-short-sleeve-t-shirts.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-short-sleeve-t-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 358231
+  },
+  "ice-hockey/custom-ice-hockey-socks": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029856/hamlosports/products/ice-hockey/custom-ice-hockey-socks.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-socks",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 759081
+  },
+  "ice-hockey/custom-ice-hockey-track-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029856/hamlosports/products/ice-hockey/custom-ice-hockey-track-jackets.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-track-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 677911
+  },
+  "ice-hockey/custom-ice-hockey-reversible-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029856/hamlosports/products/ice-hockey/custom-ice-hockey-reversible-jerseys.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-reversible-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 894966
+  },
+  "ice-hockey/custom-ice-hockey-training-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029856/hamlosports/products/ice-hockey/custom-ice-hockey-training-shorts.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-training-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 432820
+  },
+  "ice-hockey/custom-ice-hockey-track-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029856/hamlosports/products/ice-hockey/custom-ice-hockey-track-pants.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-track-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 435109
+  },
+  "ice-hockey/custom-ice-hockey-two-tone-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029857/hamlosports/products/ice-hockey/custom-ice-hockey-two-tone-jerseys.png",
+    "publicId": "hamlosports/products/ice-hockey/custom-ice-hockey-two-tone-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 832917
+  },
+  "lacrosse/custom-lacrosse-backpacks": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029857/hamlosports/products/lacrosse/custom-lacrosse-backpacks.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-backpacks",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 499342
+  },
+  "lacrosse/custom-lacrosse-bucket-hats": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029857/hamlosports/products/lacrosse/custom-lacrosse-bucket-hats.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-bucket-hats",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 657253
+  },
+  "lacrosse/custom-lacrosse-cinch-bag": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029857/hamlosports/products/lacrosse/custom-lacrosse-cinch-bag.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-cinch-bag",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 646637
+  },
+  "lacrosse/custom-lacrosse-compression-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029858/hamlosports/products/lacrosse/custom-lacrosse-compression-shorts.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-compression-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 482717
+  },
+  "lacrosse/custom-lacrosse-full-sleeve-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029858/hamlosports/products/lacrosse/custom-lacrosse-full-sleeve-jerseys.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-full-sleeve-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 683987
+  },
+  "lacrosse/custom-lacrosse-jogger-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029858/hamlosports/products/lacrosse/custom-lacrosse-jogger-pants.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-jogger-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 494522
+  },
+  "lacrosse/custom-lacrosse-kilt-skirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029858/hamlosports/products/lacrosse/custom-lacrosse-kilt-skirts.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-kilt-skirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 455388
+  },
+  "lacrosse/custom-lacrosse-full-zip-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029858/hamlosports/products/lacrosse/custom-lacrosse-full-zip-hoodies.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-full-zip-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 370738
+  },
+  "lacrosse/custom-lacrosse-pullover-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029859/hamlosports/products/lacrosse/custom-lacrosse-pullover-hoodies.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-pullover-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 434800
+  },
+  "lacrosse/custom-lacrosse-raceback-tank-tops": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029859/hamlosports/products/lacrosse/custom-lacrosse-raceback-tank-tops.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-raceback-tank-tops",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 512703
+  },
+  "lacrosse/custom-lacrosse-quarter-zipper-pullovers": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029859/hamlosports/products/lacrosse/custom-lacrosse-quarter-zipper-pullovers.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-quarter-zipper-pullovers",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 535804
+  },
+  "lacrosse/custom-lacrosse-shooting-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029859/hamlosports/products/lacrosse/custom-lacrosse-shooting-shirts.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-shooting-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 501824
+  },
+  "lacrosse/custom-lacrosse-reversible-pinnies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029859/hamlosports/products/lacrosse/custom-lacrosse-reversible-pinnies.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-reversible-pinnies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 501692
+  },
+  "lacrosse/custom-lacrosse-long-sleeve-t-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029859/hamlosports/products/lacrosse/custom-lacrosse-long-sleeve-t-shirts.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-long-sleeve-t-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 641382
+  },
+  "lacrosse/custom-lacrosse-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029860/hamlosports/products/lacrosse/custom-lacrosse-shorts.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 351321
+  },
+  "lacrosse/custom-lacrosse-short-sleeve-t-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029860/hamlosports/products/lacrosse/custom-lacrosse-short-sleeve-t-shirts.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-short-sleeve-t-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 731464
+  },
+  "lacrosse/custom-lacrosse-skorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029860/hamlosports/products/lacrosse/custom-lacrosse-skorts.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-skorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 609747
+  },
+  "lacrosse/custom-lacrosse-standard-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029860/hamlosports/products/lacrosse/custom-lacrosse-standard-uniforms.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-standard-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 464018
+  },
+  "lacrosse/custom-lacrosse-sleeveless-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029860/hamlosports/products/lacrosse/custom-lacrosse-sleeveless-jerseys.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-sleeveless-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 444136
+  },
+  "lacrosse/custom-lacrosse-sweatpants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029860/hamlosports/products/lacrosse/custom-lacrosse-sweatpants.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-sweatpants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 298639
+  },
+  "lacrosse/custom-lacrosse-track-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029861/hamlosports/products/lacrosse/custom-lacrosse-track-jackets.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-track-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 650830
+  },
+  "lacrosse/custom-lacrosse-windbreaker-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029861/hamlosports/products/lacrosse/custom-lacrosse-windbreaker-jackets.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-windbreaker-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 563632
+  },
+  "lacrosse/custom-lacrosse-standard-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029860/hamlosports/products/lacrosse/custom-lacrosse-standard-jerseys.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-standard-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 1028545
+  },
+  "rugby/custom-rugby-cinch-bags": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029861/hamlosports/products/rugby/custom-rugby-cinch-bags.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-cinch-bags",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 560587
+  },
+  "lacrosse/custom-lacrosse-training-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029861/hamlosports/products/lacrosse/custom-lacrosse-training-shorts.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-training-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 321820
+  },
+  "lacrosse/custom-lacrosse-women-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029861/hamlosports/products/lacrosse/custom-lacrosse-women-uniforms.png",
+    "publicId": "hamlosports/products/lacrosse/custom-lacrosse-women-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 489133
+  },
+  "rugby/custom-rugby-full-zip-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029862/hamlosports/products/rugby/custom-rugby-full-zip-hoodies.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-full-zip-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 768457
+  },
+  "rugby/custom-rugby-classic-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029862/hamlosports/products/rugby/custom-rugby-classic-shorts.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-classic-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 383094
+  },
+  "rugby/custom-rugby-compression-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029862/hamlosports/products/rugby/custom-rugby-compression-shorts.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-compression-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 435264
+  },
+  "rugby/custom-rugby-duffle-bags": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029862/hamlosports/products/rugby/custom-rugby-duffle-bags.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-duffle-bags",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 651852
+  },
+  "rugby/custom-rugby-long-sleeve-t-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029862/hamlosports/products/rugby/custom-rugby-long-sleeve-t-shirts.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-long-sleeve-t-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 843442
+  },
+  "rugby/custom-rugby-polo-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029863/hamlosports/products/rugby/custom-rugby-polo-shirts.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-polo-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 645027
+  },
+  "rugby/custom-rugby-jogger-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029862/hamlosports/products/rugby/custom-rugby-jogger-pants.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-jogger-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 388902
+  },
+  "rugby/custom-rugby-pullover-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029863/hamlosports/products/rugby/custom-rugby-pullover-hoodies.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-pullover-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 771275
+  },
+  "rugby/custom-rugby-practice-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029863/hamlosports/products/rugby/custom-rugby-practice-jerseys.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-practice-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 699058
+  },
+  "rugby/custom-rugby-rain-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029864/hamlosports/products/rugby/custom-rugby-rain-jackets.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-rain-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 331325
+  },
+  "rugby/custom-rugby-round-neck-classic-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029864/hamlosports/products/rugby/custom-rugby-round-neck-classic-jerseys.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-round-neck-classic-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 911747
+  },
+  "rugby/custom-rugby-standard-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029864/hamlosports/products/rugby/custom-rugby-standard-uniforms.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-standard-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 583358
+  },
+  "rugby/custom-rugby-striped-band-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029864/hamlosports/products/rugby/custom-rugby-striped-band-shorts.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-striped-band-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 634254
+  },
+  "rugby/custom-rugby-short-sleeve-t-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029864/hamlosports/products/rugby/custom-rugby-short-sleeve-t-shirts.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-short-sleeve-t-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 492945
+  },
+  "rugby/custom-rugby-track-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029865/hamlosports/products/rugby/custom-rugby-track-jackets.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-track-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 791990
+  },
+  "rugby/custom-rugby-quarter-zipper-pullovers": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029864/hamlosports/products/rugby/custom-rugby-quarter-zipper-pullovers.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-quarter-zipper-pullovers",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 530328
+  },
+  "rugby/custom-rugby-track-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029865/hamlosports/products/rugby/custom-rugby-track-pants.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-track-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 344456
+  },
+  "rugby/custom-rugby-training-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029865/hamlosports/products/rugby/custom-rugby-training-shorts.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-training-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 403361
+  },
+  "rugby/custom-rugby-traditional-2-button-collar-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029865/hamlosports/products/rugby/custom-rugby-traditional-2-button-collar-jerseys.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-traditional-2-button-collar-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 574309
+  },
+  "rugby/custom-rugby-traditional-button-collar-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029865/hamlosports/products/rugby/custom-rugby-traditional-button-collar-jerseys.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-traditional-button-collar-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 712842
+  },
+  "rugby/custom-rugby-v-neck-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029866/hamlosports/products/rugby/custom-rugby-v-neck-jerseys.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-v-neck-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 769033
+  },
+  "rugby/custom-rugby-v-neck-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029866/hamlosports/products/rugby/custom-rugby-v-neck-uniforms.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-v-neck-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 560659
+  },
+  "soccer/custom-soccer-backpacks": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029866/hamlosports/products/soccer/custom-soccer-backpacks.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-backpacks",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 431188
+  },
+  "soccer/custom-soccer-bench-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029866/hamlosports/products/soccer/custom-soccer-bench-jackets.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-bench-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 599546
+  },
+  "rugby/custom-rugby-two-tone-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029865/hamlosports/products/rugby/custom-rugby-two-tone-shorts.png",
+    "publicId": "hamlosports/products/rugby/custom-rugby-two-tone-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 622193
+  },
+  "soccer/custom-soccer-compression-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029866/hamlosports/products/soccer/custom-soccer-compression-shorts.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-compression-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 451837
+  },
+  "soccer/custom-soccer-full-zip-hoodie": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029867/hamlosports/products/soccer/custom-soccer-full-zip-hoodie.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-full-zip-hoodie",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 588524
+  },
+  "soccer/custom-soccer-crewneck-sweatshirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029867/hamlosports/products/soccer/custom-soccer-crewneck-sweatshirts.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-crewneck-sweatshirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 665314
+  },
+  "soccer/custom-soccer-duffle-bags": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029867/hamlosports/products/soccer/custom-soccer-duffle-bags.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-duffle-bags",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 506369
+  },
+  "soccer/custom-soccer-goalkeeper-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029867/hamlosports/products/soccer/custom-soccer-goalkeeper-jerseys.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-goalkeeper-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 654836
+  },
+  "soccer/custom-soccer-goalkeep-padded-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029867/hamlosports/products/soccer/custom-soccer-goalkeep-padded-shorts.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-goalkeep-padded-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 478739
+  },
+  "soccer/custom-soccer-lightweight-rain-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029868/hamlosports/products/soccer/custom-soccer-lightweight-rain-jackets.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-lightweight-rain-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 830025
+  },
+  "soccer/custom-soccer-jogger-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029867/hamlosports/products/soccer/custom-soccer-jogger-pants.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-jogger-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 276535
+  },
+  "soccer/custom-soccer-long-sleeve-training-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029868/hamlosports/products/soccer/custom-soccer-long-sleeve-training-shirts.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-long-sleeve-training-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 821550
+  },
+  "soccer/custom-soccer-pullover-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029868/hamlosports/products/soccer/custom-soccer-pullover-hoodies.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-pullover-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 496682
+  },
+  "soccer/custom-soccer-polo-style-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029868/hamlosports/products/soccer/custom-soccer-polo-style-jerseys.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-polo-style-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 513952
+  },
+  "soccer/custom-soccer-quarter-zip-training-top": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029869/hamlosports/products/soccer/custom-soccer-quarter-zip-training-top.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-quarter-zip-training-top",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 402961
+  },
+  "soccer/custom-soccer-reversible-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029869/hamlosports/products/soccer/custom-soccer-reversible-uniforms.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-reversible-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 269956
+  },
+  "soccer/custom-soccer-reversible-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029869/hamlosports/products/soccer/custom-soccer-reversible-jerseys.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-reversible-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 341453
+  },
+  "soccer/custom-soccer-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029869/hamlosports/products/soccer/custom-soccer-shorts.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 450268
+  },
+  "soccer/custom-soccer-round-neck-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029869/hamlosports/products/soccer/custom-soccer-round-neck-jerseys.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-round-neck-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 444881
+  },
+  "soccer/custom-soccer-socks": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029869/hamlosports/products/soccer/custom-soccer-socks.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-socks",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 363051
+  },
+  "soccer/custom-soccer-short-sleeve-training-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029869/hamlosports/products/soccer/custom-soccer-short-sleeve-training-shirts.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-short-sleeve-training-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 350946
+  },
+  "soccer/custom-soccer-standard-collared-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029870/hamlosports/products/soccer/custom-soccer-standard-collared-uniforms.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-standard-collared-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 340201
+  },
+  "soccer/custom-soccer-standard-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029870/hamlosports/products/soccer/custom-soccer-standard-uniforms.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-standard-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 409284
+  },
+  "soccer/custom-soccer-track-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029870/hamlosports/products/soccer/custom-soccer-track-pants.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-track-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 316926
+  },
+  "soccer/custom-soccer-track-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029870/hamlosports/products/soccer/custom-soccer-track-jackets.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-track-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 521918
+  },
+  "soccer/custom-soccer-v-neck-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029870/hamlosports/products/soccer/custom-soccer-v-neck-jerseys.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-v-neck-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 514961
+  },
+  "soccer/custom-soccer-v-neck-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029870/hamlosports/products/soccer/custom-soccer-v-neck-uniforms.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-v-neck-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 348397
+  },
+  "soccer/custom-soccer-training-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029870/hamlosports/products/soccer/custom-soccer-training-shorts.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-training-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 494511
+  },
+  "soccer/custom-soccer-warmup-bib": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029871/hamlosports/products/soccer/custom-soccer-warmup-bib.png",
+    "publicId": "hamlosports/products/soccer/custom-soccer-warmup-bib",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 859417
+  },
+  "softball/custom-softball-backpacks": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029871/hamlosports/products/softball/custom-softball-backpacks.png",
+    "publicId": "hamlosports/products/softball/custom-softball-backpacks",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 801308
+  },
+  "softball/custom-softball-crewneck-sweatshirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029871/hamlosports/products/softball/custom-softball-crewneck-sweatshirts.png",
+    "publicId": "hamlosports/products/softball/custom-softball-crewneck-sweatshirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 832488
+  },
+  "softball/custom-softball-2-button-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029871/hamlosports/products/softball/custom-softball-2-button-jerseys.png",
+    "publicId": "hamlosports/products/softball/custom-softball-2-button-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 391491
+  },
+  "softball/custom-softball-cinch-bags": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029871/hamlosports/products/softball/custom-softball-cinch-bags.png",
+    "publicId": "hamlosports/products/softball/custom-softball-cinch-bags",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 796022
+  },
+  "softball/custom-softball-dugout-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029871/hamlosports/products/softball/custom-softball-dugout-jackets.png",
+    "publicId": "hamlosports/products/softball/custom-softball-dugout-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 507307
+  },
+  "softball/custom-softball-full-button-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029871/hamlosports/products/softball/custom-softball-full-button-jerseys.png",
+    "publicId": "hamlosports/products/softball/custom-softball-full-button-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 739872
+  },
+  "softball/custom-softball-full-length-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029872/hamlosports/products/softball/custom-softball-full-length-pants.png",
+    "publicId": "hamlosports/products/softball/custom-softball-full-length-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 164898
+  },
+  "softball/custom-softball-performance-tank-tops": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029872/hamlosports/products/softball/custom-softball-performance-tank-tops.png",
+    "publicId": "hamlosports/products/softball/custom-softball-performance-tank-tops",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 425274
+  },
+  "softball/custom-softball-long-sleeve-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029872/hamlosports/products/softball/custom-softball-long-sleeve-jerseys.png",
+    "publicId": "hamlosports/products/softball/custom-softball-long-sleeve-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 459741
+  },
+  "softball/custom-softball-pullover-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029873/hamlosports/products/softball/custom-softball-pullover-hoodies.png",
+    "publicId": "hamlosports/products/softball/custom-softball-pullover-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 269689
+  },
+  "softball/custom-softball-jogger-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029872/hamlosports/products/softball/custom-softball-jogger-pants.png",
+    "publicId": "hamlosports/products/softball/custom-softball-jogger-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 386252
+  },
+  "softball/custom-softball-full-zip-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029872/hamlosports/products/softball/custom-softball-full-zip-hoodies.png",
+    "publicId": "hamlosports/products/softball/custom-softball-full-zip-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 484388
+  },
+  "softball/custom-softball-racerback-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029873/hamlosports/products/softball/custom-softball-racerback-uniforms.png",
+    "publicId": "hamlosports/products/softball/custom-softball-racerback-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 399842
+  },
+  "softball/custom-softball-round-neck-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029873/hamlosports/products/softball/custom-softball-round-neck-jerseys.png",
+    "publicId": "hamlosports/products/softball/custom-softball-round-neck-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 508521
+  },
+  "softball/custom-softball-quarter-zip-pullovers": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029873/hamlosports/products/softball/custom-softball-quarter-zip-pullovers.png",
+    "publicId": "hamlosports/products/softball/custom-softball-quarter-zip-pullovers",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 810499
+  },
+  "softball/custom-softball-short-sleeve-t-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029873/hamlosports/products/softball/custom-softball-short-sleeve-t-shirts.png",
+    "publicId": "hamlosports/products/softball/custom-softball-short-sleeve-t-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 478527
+  },
+  "softball/custom-softball-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029873/hamlosports/products/softball/custom-softball-shorts.png",
+    "publicId": "hamlosports/products/softball/custom-softball-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 481751
+  },
+  "softball/custom-softball-sleeveless-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029874/hamlosports/products/softball/custom-softball-sleeveless-jerseys.png",
+    "publicId": "hamlosports/products/softball/custom-softball-sleeveless-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 524360
+  },
+  "softball/custom-softball-socks": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029874/hamlosports/products/softball/custom-softball-socks.png",
+    "publicId": "hamlosports/products/softball/custom-softball-socks",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 727963
+  },
+  "softball/custom-softball-standard-pant": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029874/hamlosports/products/softball/custom-softball-standard-pant.png",
+    "publicId": "hamlosports/products/softball/custom-softball-standard-pant",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 249831
+  },
+  "softball/custom-softball-training-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029874/hamlosports/products/softball/custom-softball-training-shorts.png",
+    "publicId": "hamlosports/products/softball/custom-softball-training-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 340729
+  },
+  "softball/custom-softball-v-neck-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029874/hamlosports/products/softball/custom-softball-v-neck-uniforms.png",
+    "publicId": "hamlosports/products/softball/custom-softball-v-neck-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 713128
+  },
+  "softball/custom-softball-v-neck-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029874/hamlosports/products/softball/custom-softball-v-neck-jerseys.png",
+    "publicId": "hamlosports/products/softball/custom-softball-v-neck-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 482732
+  },
+  "softball/custom-softball-standard-knickers": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029874/hamlosports/products/softball/custom-softball-standard-knickers.png",
+    "publicId": "hamlosports/products/softball/custom-softball-standard-knickers",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 259147
+  },
+  "softball/custom-softball-varsity-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029875/hamlosports/products/softball/custom-softball-varsity-jackets.png",
+    "publicId": "hamlosports/products/softball/custom-softball-varsity-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 583337
+  },
+  "softball/custom-softball-wheeled-bags": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029875/hamlosports/products/softball/custom-softball-wheeled-bags.png",
+    "publicId": "hamlosports/products/softball/custom-softball-wheeled-bags",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 240885
+  },
+  "softball/custom-softball-visors": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029875/hamlosports/products/softball/custom-softball-visors.png",
+    "publicId": "hamlosports/products/softball/custom-softball-visors",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 194374
+  },
+  "softball/custom-softball-windbreakers": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029875/hamlosports/products/softball/custom-softball-windbreakers.png",
+    "publicId": "hamlosports/products/softball/custom-softball-windbreakers",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 530169
+  },
+  "volleyball/custom-volleyball-athletic-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029875/hamlosports/products/volleyball/custom-volleyball-athletic-shorts.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-athletic-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 383196
+  },
+  "volleyball/custom-volleyball-backpacks": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029876/hamlosports/products/volleyball/custom-volleyball-backpacks.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-backpacks",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 754155
+  },
+  "volleyball/custom-volleyball-cinch-bags": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029876/hamlosports/products/volleyball/custom-volleyball-cinch-bags.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-cinch-bags",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 553695
+  },
+  "volleyball/custom-volleyball-cap-sleeved-uniforms": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029876/hamlosports/products/volleyball/custom-volleyball-cap-sleeved-uniforms.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-cap-sleeved-uniforms",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 262928
+  },
+  "volleyball/custom-volleyball-crewneck-cap-sleeve-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029876/hamlosports/products/volleyball/custom-volleyball-crewneck-cap-sleeve-jerseys.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-crewneck-cap-sleeve-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 669684
+  },
+  "volleyball/custom-volleyball-competition-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029876/hamlosports/products/volleyball/custom-volleyball-competition-shorts.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-competition-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 225919
+  },
+  "volleyball/custom-volleyball-jogger-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029877/hamlosports/products/volleyball/custom-volleyball-jogger-pants.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-jogger-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 236827
+  },
+  "volleyball/custom-volleyball-long-sleeve-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029877/hamlosports/products/volleyball/custom-volleyball-long-sleeve-jerseys.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-long-sleeve-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 491331
+  },
+  "volleyball/custom-volleyball-knee-pads": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029877/hamlosports/products/volleyball/custom-volleyball-knee-pads.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-knee-pads",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 828738
+  },
+  "volleyball/custom-volleyball-long-sleeve-t-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029877/hamlosports/products/volleyball/custom-volleyball-long-sleeve-t-shirts.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-long-sleeve-t-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 485368
+  },
+  "volleyball/custom-volleyball-full-zip-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029876/hamlosports/products/volleyball/custom-volleyball-full-zip-hoodies.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-full-zip-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 482240
+  },
+  "volleyball/custom-volleyball-poly-spandex-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029877/hamlosports/products/volleyball/custom-volleyball-poly-spandex-shorts.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-poly-spandex-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 711603
+  },
+  "volleyball/custom-volleyball-quarter-zipper-pullovers": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029877/hamlosports/products/volleyball/custom-volleyball-quarter-zipper-pullovers.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-quarter-zipper-pullovers",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 551156
+  },
+  "volleyball/custom-volleyball-pullover-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029877/hamlosports/products/volleyball/custom-volleyball-pullover-hoodies.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-pullover-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 309131
+  },
+  "volleyball/custom-volleyball-racerback-tanktop-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029878/hamlosports/products/volleyball/custom-volleyball-racerback-tanktop-jerseys.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-racerback-tanktop-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 567917
+  },
+  "volleyball/custom-volleyball-short-sleeve-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029878/hamlosports/products/volleyball/custom-volleyball-short-sleeve-jerseys.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-short-sleeve-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 384830
+  },
+  "volleyball/custom-volleyball-sleeveless-jerseys": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029878/hamlosports/products/volleyball/custom-volleyball-sleeveless-jerseys.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-sleeveless-jerseys",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 298804
+  },
+  "volleyball/custom-volleyball-socks": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029878/hamlosports/products/volleyball/custom-volleyball-socks.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-socks",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 476172
+  },
+  "volleyball/custom-volleyball-short-sleeve-t-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029878/hamlosports/products/volleyball/custom-volleyball-short-sleeve-t-shirts.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-short-sleeve-t-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 603496
+  },
+  "volleyball/custom-volleyball-uniform-sets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029879/hamlosports/products/volleyball/custom-volleyball-uniform-sets.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-uniform-sets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 508517
+  },
+  "volleyball/custom-volleyball-sweat-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029878/hamlosports/products/volleyball/custom-volleyball-sweat-pants.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-sweat-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 387065
+  },
+  "volleyball/custom-volleyball-warmup-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029879/hamlosports/products/volleyball/custom-volleyball-warmup-jackets.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-warmup-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 572405
+  },
+  "wrestling/custom-wrestling-board-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029879/hamlosports/products/wrestling/custom-wrestling-board-shorts.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-board-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 459776
+  },
+  "volleyball/custom-volleyball-warmup-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029879/hamlosports/products/volleyball/custom-volleyball-warmup-pants.png",
+    "publicId": "hamlosports/products/volleyball/custom-volleyball-warmup-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 287174
+  },
+  "wrestling/custom-wrestling-compression-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029879/hamlosports/products/wrestling/custom-wrestling-compression-shorts.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-compression-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 419287
+  },
+  "wrestling/custom-wrestling-cinch-bags": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029879/hamlosports/products/wrestling/custom-wrestling-cinch-bags.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-cinch-bags",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 583376
+  },
+  "wrestling/custom-wrestling-duffle-bags": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029880/hamlosports/products/wrestling/custom-wrestling-duffle-bags.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-duffle-bags",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 767171
+  },
+  "wrestling/custom-wrestling-fight-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029880/hamlosports/products/wrestling/custom-wrestling-fight-shorts.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-fight-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 393713
+  },
+  "wrestling/custom-wrestling-full-length-warmup-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029880/hamlosports/products/wrestling/custom-wrestling-full-length-warmup-pants.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-full-length-warmup-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 223697
+  },
+  "wrestling/custom-wrestling-crewneck-sweatshirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029879/hamlosports/products/wrestling/custom-wrestling-crewneck-sweatshirts.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-crewneck-sweatshirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 683835
+  },
+  "wrestling/custom-wrestling-full-zip-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029880/hamlosports/products/wrestling/custom-wrestling-full-zip-hoodies.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-full-zip-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 774862
+  },
+  "wrestling/custom-wrestling-gear-bags": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029881/hamlosports/products/wrestling/custom-wrestling-gear-bags.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-gear-bags",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 521528
+  },
+  "wrestling/custom-wrestling-lightweight-track-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029881/hamlosports/products/wrestling/custom-wrestling-lightweight-track-jackets.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-lightweight-track-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 574687
+  },
+  "wrestling/custom-wrestling-full-zip-warmup-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029881/hamlosports/products/wrestling/custom-wrestling-full-zip-warmup-jackets.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-full-zip-warmup-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 555360
+  },
+  "wrestling/custom-wrestling-long-sleeve-compression-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029881/hamlosports/products/wrestling/custom-wrestling-long-sleeve-compression-shirts.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-long-sleeve-compression-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 458757
+  },
+  "wrestling/custom-wrestling-performance-polo-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029881/hamlosports/products/wrestling/custom-wrestling-performance-polo-shirts.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-performance-polo-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 515588
+  },
+  "wrestling/custom-wrestling-long-sleeve-performance-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029881/hamlosports/products/wrestling/custom-wrestling-long-sleeve-performance-shirts.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-long-sleeve-performance-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 682740
+  },
+  "wrestling/custom-wrestling-practice-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029881/hamlosports/products/wrestling/custom-wrestling-practice-shorts.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-practice-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 417957
+  },
+  "wrestling/custom-wrestling-short-sleeve-compression-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029882/hamlosports/products/wrestling/custom-wrestling-short-sleeve-compression-shirts.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-short-sleeve-compression-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 390561
+  },
+  "wrestling/custom-wrestling-pullover-hoodies": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029882/hamlosports/products/wrestling/custom-wrestling-pullover-hoodies.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-pullover-hoodies",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 794784
+  },
+  "wrestling/custom-wrestling-quarter-zipper-warmup-jackets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029882/hamlosports/products/wrestling/custom-wrestling-quarter-zipper-warmup-jackets.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-quarter-zipper-warmup-jackets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 608895
+  },
+  "wrestling/custom-wrestling-training-shorts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029883/hamlosports/products/wrestling/custom-wrestling-training-shorts.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-training-shorts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 545419
+  },
+  "wrestling/custom-wrestling-socks": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029882/hamlosports/products/wrestling/custom-wrestling-socks.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-socks",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 809125
+  },
+  "wrestling/custom-wrestling-short-sleeve-performance-shirts": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029882/hamlosports/products/wrestling/custom-wrestling-short-sleeve-performance-shirts.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-short-sleeve-performance-shirts",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 445376
+  },
+  "wrestling/custom-wrestling-warmup-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029883/hamlosports/products/wrestling/custom-wrestling-warmup-pants.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-warmup-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 279219
+  },
+  "wrestling/custom-wrestling-team-singlets": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029882/hamlosports/products/wrestling/custom-wrestling-team-singlets.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-team-singlets",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 346640
+  },
+  "wrestling/custom-wrestling-tear-away-warmup-pants": {
+    "url": "https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029883/hamlosports/products/wrestling/custom-wrestling-tear-away-warmup-pants.png",
+    "publicId": "hamlosports/products/wrestling/custom-wrestling-tear-away-warmup-pants",
+    "format": "png",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 481665
+  }
+}

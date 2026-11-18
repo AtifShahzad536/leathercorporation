@@ -1,51 +1,45 @@
 {
-  "specVersion": "1.0",
+  "specVersion": "0.91",
   "host": {
     "displayName": "HAMLO SPORTS",
-    "identifier": "did:web:hamlosportswear.site",
-    "documentationUrl": "https://hamlosportswear.site/explore/",
-    "logoUrl": "https://hamlosportswear.site/logo_silverstar.png"
+    "identifier": "hamlosportswear.site"
   },
   "entries": [
     {
-      "@context": "https://agenticresourcediscovery.org/context/v1",
       "identifier": "urn:air:hamlosportswear.site:catalog:custom-uniforms",
       "displayName": "HAMLO SPORTS Custom Athletic Uniforms Catalog",
       "type": "application/json",
       "url": "https://hamlosportswear.site/sitemap.xml",
+      "description": "Factory-direct custom athletic team uniforms, sublimated jerseys, and apparel catalog.",
       "representativeQueries": [
         "custom team sports uniforms factory direct Sialkot",
         "sublimated basketball baseball soccer jerseys bulk quote",
         "order custom athletic apparel no minimum order quantity"
       ],
-      "tags": [
-        "sportswear",
-        "custom-uniforms",
-        "sublimation",
-        "factory-direct",
-        "team-apparel"
-      ],
-      "version": "1.0.0",
-      "updatedAt": "2026-11-18T00:00:00Z"
+      "trustManifest": {
+        "publisher": "HAMLO SPORTS",
+        "contact": "mailto:export@hamlosports.com",
+        "canonical": "https://hamlosportswear.site/.well-known/ard.json",
+        "lastUpdated": "2026-11-18"
+      }
     },
     {
-      "@context": "https://agenticresourcediscovery.org/context/v1",
       "identifier": "urn:air:hamlosportswear.site:service:3d-mockup-inquiry",
       "displayName": "12-Hour 3D Team Mockup & B2B Inquiry Desk",
       "type": "application/json",
       "url": "https://hamlosportswear.site/inquiry/",
+      "description": "Free 12-hour 3D team mockups and factory direct wholesale quote request desk.",
       "representativeQueries": [
         "get free 3D sports uniform mockup proof",
-        "request wholesale athletic team pricing quote"
+        "request wholesale athletic team pricing quote",
+        "bulk jersey inquiry for sports club"
       ],
-      "tags": [
-        "quote",
-        "3d-mockup",
-        "b2b",
-        "inquiry"
-      ],
-      "version": "1.0.0",
-      "updatedAt": "2026-11-18T00:00:00Z"
+      "trustManifest": {
+        "publisher": "HAMLO SPORTS",
+        "contact": "mailto:export@hamlosports.com",
+        "canonical": "https://hamlosportswear.site/.well-known/ard.json",
+        "lastUpdated": "2026-11-18"
+      }
     }
   ]
 }
