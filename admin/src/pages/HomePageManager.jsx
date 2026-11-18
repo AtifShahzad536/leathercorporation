@@ -3,7 +3,8 @@ import api from '../api/client';
 import MediaUploadField from '../components/MediaUploadField';
 import { 
   Home, Video, Image as ImageIcon, Save, RefreshCw, 
-  CheckCircle, Sliders, Type, Layers, ExternalLink, Plus, Trash2, Grid 
+  CheckCircle, Sliders, Type, Layers, ExternalLink, Plus, Trash2, Grid,
+  ChevronUp, ChevronDown, Copy, Sparkles
 } from 'lucide-react';
 
 export default function HomePageManager() {
@@ -166,6 +167,64 @@ export default function HomePageManager() {
     } finally {
       setSaving(false);
     }
+  };
+
+  // ── TIMELINE & PRODUCT SHOWCASE CONTROLS ──
+  const handleAddTimelineSlide = () => {
+    const slides = homeData.footballHistory?.slides || [];
+    const nextYear = (2026 + slides.length).toString();
+    const newSlide = {
+      year: nextYear,
+      title: 'PRO CUSTOM PERFORMANCE UNIFORM',
+      subtitle: 'SIALKOT ATELIER CRAFT',
+      description: 'Engineered with 220 GSM moisture-wicking interlock fabric, precision dye-sublimation, and reinforced bar-tack stitching for elite athletic mobility.',
+      image: 'https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80'
+    };
+    setHomeData({
+      ...homeData,
+      footballHistory: { ...homeData.footballHistory, slides: [...slides, newSlide] }
+    });
+  };
+
+  const handleDeleteTimelineSlide = (idx) => {
+    const list = homeData.footballHistory?.slides || [];
+    if (list.length <= 1) {
+      alert('You must keep at least 1 showcase product slide.');
+      return;
+    }
+    const updated = list.filter((_, i) => i !== idx);
+    setHomeData({
+      ...homeData,
+      footballHistory: { ...homeData.footballHistory, slides: updated }
+    });
+  };
+
+  const handleMoveTimelineSlide = (idx, direction) => {
+    const list = [...(homeData.footballHistory?.slides || [])];
+    const targetIdx = idx + direction;
+    if (targetIdx < 0 || targetIdx >= list.length) return;
+    const temp = list[idx];
+    list[idx] = list[targetIdx];
+    list[targetIdx] = temp;
+    setHomeData({
+      ...homeData,
+      footballHistory: { ...homeData.footballHistory, slides: list }
+    });
+  };
+
+  const handleDuplicateTimelineSlide = (idx) => {
+    const list = [...(homeData.footballHistory?.slides || [])];
+    const item = list[idx];
+    const clone = { 
+      ...item, 
+      year: `${item.year}-V2`, 
+      title: `${item.title} (EDITION 2)` 
+    };
+    list.splice(idx + 1, 0, clone);
+    setHomeData({
+      ...homeData,
+      footballHistory: { ...homeData.footballHistory, slides: list }
+    });
   };
 
   const sectionsList = [
@@ -611,69 +670,194 @@ export default function HomePageManager() {
             </div>
           )}
 
-          {/* ── 8. EVOLUTION TIMELINE ── */}
+          {/* ── 8. EVOLUTION TIMELINE & PRODUCT SHOWCASE (ADVANCED DYNAMIC) ── */}
           {activeTab === 'historyTimeline' && (
-            <div className="space-y-5">
-              <div className="flex items-center justify-between border-b pb-2">
-                <h3 className="font-black text-sm uppercase text-slate-900 flex items-center gap-2">
-                  <Layers size={16} className="text-[#F26522]" />
-                  <span>The Hamlo Sports Evolution Eras ({homeData.footballHistory.slides.length})</span>
-                </h3>
+            <div className="space-y-6">
+              {/* Top Action Bar */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <div>
+                  <h3 className="font-black text-sm uppercase text-slate-900 flex items-center gap-2">
+                    <Layers size={17} className="text-[#F26522]" />
+                    <span>Evolution Timeline & Product Showcase</span>
+                  </h3>
+                  <p className="text-xs text-slate-500 font-medium mt-0.5">
+                    Add as many showcase products, uniform innovations, and timeline milestones as you want.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 self-start sm:self-auto">
+                  <span className="text-xs font-mono font-bold bg-slate-100 px-3 py-1.5 rounded-lg text-slate-700 border border-slate-200">
+                    {homeData.footballHistory?.slides?.length || 0} Products
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleAddTimelineSlide}
+                    className="px-4 py-2 bg-[#F26522] hover:bg-[#d95316] text-white rounded-lg text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow transition cursor-pointer"
+                  >
+                    <Plus size={14} />
+                    <span>Add New Product / Era</span>
+                  </button>
+                </div>
               </div>
 
+              {/* Slides List */}
               <div className="space-y-4">
-                {homeData.footballHistory.slides.map((era, idx) => (
-                  <div key={idx} className="p-4 border border-slate-200 rounded-xl bg-slate-50/50 space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-base font-black text-[#F26522]">Era: {era.year}</span>
-                      <span className="text-[10px] font-bold uppercase bg-slate-200 px-2 py-0.5 rounded text-slate-700">
-                        Milestone {idx + 1}
-                      </span>
+                {(homeData.footballHistory?.slides || []).map((era, idx) => (
+                  <div 
+                    key={idx} 
+                    className="p-5 border border-slate-200 rounded-xl bg-white hover:border-[#F26522]/40 transition-all shadow-sm space-y-4"
+                  >
+                    {/* Header Bar with Reorder, Clone & Delete */}
+                    <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100">
+                      <div className="flex items-center gap-2.5">
+                        <span className="w-6 h-6 rounded-full bg-[#1E1B6E] text-white text-[11px] font-black flex items-center justify-center">
+                          {idx + 1}
+                        </span>
+                        <div className="flex items-center gap-1.5">
+                          <label className="text-[10px] font-black uppercase text-slate-400">Year / Watermark:</label>
+                          <input
+                            type="text"
+                            value={era.year || ''}
+                            onChange={(e) => {
+                              const updated = [...homeData.footballHistory.slides];
+                              updated[idx].year = e.target.value;
+                              setHomeData({ ...homeData, footballHistory: { slides: updated } });
+                            }}
+                            placeholder="e.g. 2026, 1994, PRO-1"
+                            className="w-28 px-2 py-1 text-xs font-mono font-black text-[#F26522] bg-slate-50 border border-slate-300 rounded focus:border-[#F26522] focus:outline-none"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Reorder & Action Controls */}
+                      <div className="flex items-center gap-1">
+                        <button
+                          type="button"
+                          onClick={() => handleMoveTimelineSlide(idx, -1)}
+                          disabled={idx === 0}
+                          title="Move Up"
+                          className="p-1.5 text-slate-500 hover:text-[#1E1B6E] hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent rounded transition cursor-pointer"
+                        >
+                          <ChevronUp size={16} />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleMoveTimelineSlide(idx, 1)}
+                          disabled={idx === (homeData.footballHistory.slides.length - 1)}
+                          title="Move Down"
+                          className="p-1.5 text-slate-500 hover:text-[#1E1B6E] hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent rounded transition cursor-pointer"
+                        >
+                          <ChevronDown size={16} />
+                        </button>
+                        <div className="w-[1px] h-4 bg-slate-200 mx-1" />
+                        <button
+                          type="button"
+                          onClick={() => handleDuplicateTimelineSlide(idx)}
+                          title="Duplicate This Product"
+                          className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded transition cursor-pointer flex items-center gap-1 text-[11px] font-bold"
+                        >
+                          <Copy size={14} />
+                          <span className="hidden sm:inline">Clone</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteTimelineSlide(idx)}
+                          title="Delete This Product"
+                          className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded transition cursor-pointer flex items-center gap-1 text-[11px] font-bold"
+                        >
+                          <Trash2 size={14} />
+                          <span className="hidden sm:inline">Delete</span>
+                        </button>
+                      </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-[10px] font-bold uppercase text-slate-500 mb-1">Title</label>
-                        <input
-                          type="text"
-                          value={era.title}
-                          onChange={(e) => {
-                            const updated = [...homeData.footballHistory.slides];
-                            updated[idx].title = e.target.value;
-                            setHomeData({ ...homeData, footballHistory: { slides: updated } });
-                          }}
-                          className="w-full border border-slate-300 rounded-lg p-2 text-xs font-bold bg-white"
-                        />
+                    {/* Content Fields */}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                      {/* Left Side: Subtitle, Title & Description (7 Cols) */}
+                      <div className="lg:col-span-7 space-y-3.5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div>
+                            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                              Subtitle / Badge
+                            </label>
+                            <input
+                              type="text"
+                              value={era.subtitle || ''}
+                              onChange={(e) => {
+                                const updated = [...homeData.footballHistory.slides];
+                                updated[idx].subtitle = e.target.value;
+                                setHomeData({ ...homeData, footballHistory: { slides: updated } });
+                              }}
+                              placeholder="e.g. COLLEGIATE 3D APPLIQUÉ"
+                              className="w-full border border-slate-300 rounded-lg p-2 text-xs font-semibold bg-white focus:border-[#F26522] focus:outline-none"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                              Main Product / Era Title
+                            </label>
+                            <input
+                              type="text"
+                              value={era.title || ''}
+                              onChange={(e) => {
+                                const updated = [...homeData.footballHistory.slides];
+                                updated[idx].title = e.target.value;
+                                setHomeData({ ...homeData, footballHistory: { slides: updated } });
+                              }}
+                              placeholder="e.g. LASER TACKLE TWILL"
+                              className="w-full border border-slate-300 rounded-lg p-2 text-xs font-black text-slate-900 bg-white focus:border-[#F26522] focus:outline-none"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                            Product & Milestone Description
+                          </label>
+                          <textarea
+                            rows="3"
+                            value={era.description || ''}
+                            onChange={(e) => {
+                              const updated = [...homeData.footballHistory.slides];
+                              updated[idx].description = e.target.value;
+                              setHomeData({ ...homeData, footballHistory: { slides: updated } });
+                            }}
+                            placeholder="Describe fabric specs, embroidery, printing technology or athletic cut details..."
+                            className="w-full border border-slate-300 rounded-lg p-2.5 text-xs text-slate-700 leading-relaxed bg-white focus:border-[#F26522] focus:outline-none"
+                          />
+                        </div>
                       </div>
-                      <div>
+
+                      {/* Right Side: Product Visual Upload Field (5 Cols) */}
+                      <div className="lg:col-span-5 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
                         <MediaUploadField
-                          label="Product Visual Image"
-                          value={era.image}
+                          label="3D Floating Product Image"
+                          value={era.image || ''}
                           onChange={(url) => {
                             const updated = [...homeData.footballHistory.slides];
                             updated[idx].image = url;
                             setHomeData({ ...homeData, footballHistory: { slides: updated } });
                           }}
                           type="image"
+                          helperText="Use transparent PNG cutouts or high-res product photos for optimal 3D floating effect."
                         />
                       </div>
                     </div>
-
-                    <div>
-                      <label className="block text-[10px] font-bold uppercase text-slate-500 mb-1">Historical Milestone Description</label>
-                      <textarea
-                        rows="2"
-                        value={era.description}
-                        onChange={(e) => {
-                          const updated = [...homeData.footballHistory.slides];
-                          updated[idx].description = e.target.value;
-                          setHomeData({ ...homeData, footballHistory: { slides: updated } });
-                        }}
-                        className="w-full border border-slate-300 rounded-lg p-2 text-xs bg-white"
-                      />
-                    </div>
                   </div>
                 ))}
+              </div>
+
+              {/* Bottom Add Button */}
+              <div className="pt-2 flex justify-center">
+                <button
+                  type="button"
+                  onClick={handleAddTimelineSlide}
+                  className="px-6 py-3 border-2 border-dashed border-[#F26522] text-[#F26522] hover:bg-[#F26522] hover:text-white rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-2 transition cursor-pointer shadow-xs"
+                >
+                  <Plus size={16} />
+                  <span>+ Add Another Product / Showcase Slide</span>
+                </button>
               </div>
             </div>
           )}

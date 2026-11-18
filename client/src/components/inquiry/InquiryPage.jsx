@@ -472,11 +472,11 @@ export default function InquiryPage({
               <div className="bg-white border border-[var(--secondary)]/10 rounded-[3px] p-5 shadow-sm space-y-2.5 text-xs">
                 <div className="flex items-center gap-2 text-[var(--secondary)]/70">
                   <Mail size={13} className="text-[var(--accent)]" />
-                  <span>export@zarkosports.com</span>
+                  <span>export@hamlosports.com</span>
                 </div>
                 <div className="flex items-center gap-2 text-[var(--secondary)]/70">
                   <Phone size={13} className="text-[var(--accent)]" />
-                  <span>Direct Export Desk: +92 (52) 111-ZARKO</span>
+                  <span>Direct Export Desk: +92 (52) 111-HAMLO</span>
                 </div>
                 <div className="flex items-center gap-2 text-[var(--secondary)]/70">
                   <Globe size={13} className="text-[var(--accent)]" />

@@ -219,7 +219,7 @@ export default function ProductDetailLandingTemplate({
               <div className="relative aspect-[4/5] bg-neutral-100 rounded-[3px] overflow-hidden shadow-xl border border-[var(--secondary)]/10 mb-3">
                 <ProgressiveImage
                   src={images[activeImageIdx]}
-                  alt={`${productName} - View ${activeImageIdx + 1} - ZARKO`}
+                  alt={`${productName} - View ${activeImageIdx + 1} - HAMLO SPORTS`}
                   className="w-full h-full object-cover"
                   priority={true}
                 />
@@ -433,12 +433,12 @@ export default function ProductDetailLandingTemplate({
               </div>
             </div>
 
-            {/* ZARKO Factory Direct Invoice */}
+            {/* HAMLO SPORTS Factory Direct Invoice */}
             <div className="p-5 bg-emerald-50/50 rounded border-2 border-emerald-500 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-4 pb-2 border-b border-emerald-200">
                   <h4 className="text-sm font-black uppercase text-emerald-950">
-                    ZARKO Sialkot Factory Direct
+                    HAMLO SPORTS Sialkot Factory Direct
                   </h4>
                   <span className="text-[10px] font-black uppercase bg-emerald-600 text-white px-2 py-0.5 rounded">
                     All-Inclusive
@@ -603,7 +603,7 @@ export default function ProductDetailLandingTemplate({
                   Lock Price on Quote
                 </button>
                 <a
-                  href={buildWhatsAppLink(`Hello ZARKO! I calculated an estimate for ${calcQty} players of ${productName} ($${calcResult.total} total, $${calcResult.unit}/player). Can you prepare our free 3D design proof?`)}
+                  href={buildWhatsAppLink(`Hello HAMLO SPORTS! I calculated an estimate for ${calcQty} players of ${productName} ($${calcResult.total} total, $${calcResult.unit}/player). Can you prepare our free 3D design proof?`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 py-2 bg-emerald-600 text-white text-[11px] font-black uppercase tracking-wider rounded-[3px] hover:bg-emerald-700 transition flex items-center justify-center gap-1.5 cursor-pointer"

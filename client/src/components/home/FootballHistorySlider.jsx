@@ -103,14 +103,14 @@ export default function HistorySlider() {
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
         <AnimatePresence mode="wait">
           <motion.span
-            key={slide.year}
+            key={`${slide.year || '2026'}-${activeIndex}`}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 0.04, scale: 1 }}
             exit={{ opacity: 0, scale: 1.1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="font-black text-[28vw] md:text-[22rem] leading-none text-[var(--secondary)]"
           >
-            {slide.year}
+            {slide.year || '2026'}
           </motion.span>
         </AnimatePresence>
       </div>
@@ -124,7 +124,7 @@ export default function HistorySlider() {
           <div className="lg:col-span-7 flex items-center justify-center order-1 relative min-h-[320px] sm:min-h-[440px] md:min-h-[500px]">
             <AnimatePresence mode="wait">
               <motion.div
-                key={slide.year}
+                key={`${slide.year || 'era'}-${activeIndex}-img`}
                 initial={{ opacity: 0, scale: 0.85, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 1.1, y: -20 }}
@@ -135,7 +135,7 @@ export default function HistorySlider() {
 
                 <img
                   src={slide.image}
-                  alt={slide.title}
+                  alt={slide.title || 'Product Showcase'}
                   className="w-full h-full object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.25)] select-none pointer-events-none"
                 />
               </motion.div>
@@ -146,7 +146,7 @@ export default function HistorySlider() {
           <div className="lg:col-span-5 flex flex-col justify-center order-2">
             <AnimatePresence mode="wait">
               <motion.div
-                key={slide.year}
+                key={`${slide.year || 'era'}-${activeIndex}-text`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -154,7 +154,7 @@ export default function HistorySlider() {
               >
                 <div className="inline-flex items-center gap-2 text-[10px] sm:text-xs font-black tracking-[0.3em] uppercase text-[var(--accent)] mb-3">
                   <Sparkles size={14} />
-                  <span>{slide.subtitle}</span>
+                  <span>{slide.subtitle || 'PERFORMANCE INNOVATION'}</span>
                 </div>
 
                 <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-[var(--secondary)] uppercase tracking-tight leading-none mb-6">
@@ -229,7 +229,7 @@ export default function HistorySlider() {
                   <span className={`text-[9px] font-bold uppercase tracking-wider mt-1 text-center whitespace-nowrap transition-colors duration-300 ${
                     isActive ? 'text-[var(--secondary)]' : 'text-[var(--secondary)]/40'
                   }`}>
-                    {s.title.split(' ')[0]}
+                    {(s.title || '').split(' ')[0] || s.year || 'ERA'}
                   </span>
                 </button>
               );

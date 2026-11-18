@@ -203,7 +203,7 @@ const Navbar = ({ onNavigate = () => {} }) => {
             <div className="w-9 h-9 sm:w-12 sm:h-12 relative flex-shrink-0">
               <img
                 src="/logo_silverstar.png"
-                alt="Zarko Sportswear"
+                alt="HAMLO SPORTS"
                 className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
               />
             </div>

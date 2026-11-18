@@ -194,7 +194,7 @@ function MainApp() {
       // Update clean HTML5 History URL + Title
       const cleanPath = `/${catSlug}/${prodSlug}/`;
       window.history.pushState({}, '', cleanPath);
-      document.title = `${product.name} | Custom ${product.sport || product.category || activeSport} Uniforms | ZARKO`;
+      document.title = `${product.name} | Custom ${product.sport || product.category || activeSport} Uniforms | HAMLO SPORTS`;
     } else if (page === 'sports-hub' || page === 'products') {
       let targetSport = 'BASEBALL';
       if (param1) {
@@ -219,32 +219,32 @@ function MainApp() {
       // Push clean path like /custom-baseball-uniforms/
       const cleanPath = `/${catSlug}/`;
       window.history.pushState({}, '', cleanPath);
-      document.title = `Custom ${targetSport} Uniforms & Jerseys - Sialkot Factory Direct | ZARKO`;
+      document.title = `Custom ${targetSport} Uniforms & Jerseys - Sialkot Factory Direct | HAMLO SPORTS`;
     } else if (page === 'styles') {
       const styleParam = param1 || 'ALL';
       setStylesFilter(styleParam);
       window.history.pushState({}, '', '/styles/');
-      document.title = 'Sportswear Styles & Cuts | ZARKO';
+      document.title = 'Sportswear Styles & Cuts | HAMLO SPORTS';
     } else if (page === 'explore') {
       window.history.pushState({}, '', '/explore/');
-      document.title = 'Explore Performance Materials | ZARKO';
+      document.title = 'Explore Performance Materials | HAMLO SPORTS';
     } else if (page === 'compliance') {
       window.history.pushState({}, '', '/compliance/');
-      document.title = 'Compliance & Ethical Factory Standards | ZARKO';
+      document.title = 'Compliance & Ethical Factory Standards | HAMLO SPORTS';
     } else if (page === 'certification') {
       window.history.pushState({}, '', '/certification/');
-      document.title = 'Export Quality Certifications | ZARKO';
+      document.title = 'Export Quality Certifications | HAMLO SPORTS';
     } else if (page === 'about') {
       window.history.pushState({}, '', '/about/');
-      document.title = 'About ZARKO Sportswear | Sialkot Manufacturing';
+      document.title = 'About HAMLO SPORTS | Sialkot Manufacturing';
     } else if (page === 'inquiry' || page === 'checkout') {
       const productSlug = typeof param1 === 'object' ? (param1.slug || param1.name) : param1;
       setInquiryProductSlug(productSlug || '');
       window.history.pushState({}, '', productSlug ? `/inquiry/?product=${encodeURIComponent(productSlug)}` : '/inquiry/');
-      document.title = 'Request a 12-Hour 3D Team Mockup & B2B Quote | ZARKO';
+      document.title = 'Request a 12-Hour 3D Team Mockup & B2B Quote | HAMLO SPORTS';
     } else {
       window.history.pushState({}, '', '/');
-      document.title = 'ZARKO Sportswear | Custom Team Sports Uniforms & Factory Direct Athletic Apparel';
+      document.title = 'HAMLO SPORTS | Custom Team Sports Uniforms & Factory Direct Athletic Apparel';
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });

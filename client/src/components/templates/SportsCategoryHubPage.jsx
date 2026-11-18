@@ -763,7 +763,7 @@ export default function SportsCategoryHubPage({
                   <Phone size={20} className="text-[var(--accent)]" />
                   <span className="text-xs font-bold text-white">Direct Production Hotline</span>
                 </div>
-                <span className="text-xs font-black text-[var(--accent)]">+92 (300) ZARKO-PRO</span>
+                <span className="text-xs font-black text-[var(--accent)]">+92 (300) 000-0000</span>
               </div>
 
               <div className="p-4 bg-white/5 border border-white/10 rounded-[3px] flex items-center justify-between">
@@ -771,7 +771,7 @@ export default function SportsCategoryHubPage({
                   <Mail size={20} className="text-[var(--accent)]" />
                   <span className="text-xs font-bold text-white">Factory Sales Email</span>
                 </div>
-                <span className="text-xs text-white/80">production@zarkosportswear.com</span>
+                <span className="text-xs text-white/80">export@hamlosports.com</span>
               </div>
 
               {/* Badges */}
