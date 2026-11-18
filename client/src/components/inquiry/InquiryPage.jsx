@@ -207,9 +207,9 @@ export default function InquiryPage({
                       <span className="text-[9px] font-bold text-[var(--accent)] uppercase tracking-wider block">
                         Selected Uniform Blueprint
                       </span>
-                      <h4 className="text-sm font-black uppercase text-[var(--secondary)]">
+                      <h3 className="text-sm font-black uppercase text-[var(--secondary)]">
                         {selectedProduct.name}
-                      </h4>
+                      </h3>
                       <p className="text-[10px] text-gray-500">{selectedProduct.sport || selectedProduct.category} • Starting ${selectedProduct.price}</p>
                     </div>
                   </div>
