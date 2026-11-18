@@ -7,6 +7,7 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
 const fs = require('fs');
+const mongoose = require('mongoose');
 
 const connectDB = require('./config/db');
 const seedAdmin = require('./utils/seedAdmin');
@@ -28,7 +29,7 @@ const PORT = process.env.PORT || 5000;
 // ── MIDDLEWARE ──
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 app.use(cors({
-  origin: true, // Allow all origins
+  origin: true,
   credentials: true,
 }));
 app.use(morgan('dev'));
@@ -56,18 +57,7 @@ const apiLimiter = rateLimit({
 });
 app.use('/api/', apiLimiter);
 
-// Middleware to ensure DB connection on serverless API calls
-app.use(async (req, res, next) => {
-  try {
-    await connectDB();
-    next();
-  } catch (err) {
-    console.warn('DB middleware warning:', err.message);
-    next();
-  }
-});
-
-// ── ROOT & HEALTH CHECK ROUTES ──
+// ── ROOT & HEALTH CHECK ROUTES (Always Instant 200 OK Without DB Dependency) ──
 app.get('/', (req, res) => {
   res.json({
     success: true,
@@ -87,8 +77,19 @@ app.get('/api/health', (req, res) => {
     success: true,
     message: 'HAMLO SPORTS API running',
     timestamp: new Date().toISOString(),
-    dbConnected: !!(process.env.MONGODB_URI)
+    dbConnected: mongoose.connection.readyState >= 1
   });
+});
+
+// Middleware to ensure DB connection on serverless API calls
+app.use('/api/', async (req, res, next) => {
+  if (req.path === '/health') return next();
+  try {
+    await connectDB();
+  } catch (err) {
+    console.warn('DB connection middleware warning:', err.message);
+  }
+  next();
 });
 
 // ── API ROUTES ──
@@ -110,18 +111,17 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Connect and seed on startup
-connectDB().then(() => {
-  seedAdmin().catch(e => console.warn('Seed admin:', e.message));
-  if (!process.env.VERCEL) {
-    try { startEmailCron(); } catch (e) {}
-  }
-}).catch(err => {
-  console.error('Failed to connect DB on startup:', err.message);
-});
-
-// Start HTTP server locally (Vercel Serverless imports `app` directly)
+// Connect, seed, and listen ONLY in traditional non-serverless mode
 if (!process.env.VERCEL) {
+  connectDB().then(async (conn) => {
+    if (conn) {
+      await seedAdmin().catch(e => console.warn('Seed admin:', e.message));
+    }
+    try { startEmailCron(); } catch (e) {}
+  }).catch(err => {
+    console.error('Failed to connect DB on startup:', err.message);
+  });
+
   app.listen(PORT, () => {
     console.log('═══════════════════════════════════════════════');
     console.log('  🏀 HAMLO SPORTS REST API Backend Ready');

@@ -11,9 +11,14 @@ if (!process.env.VERCEL) {
 
 const mongoose = require('mongoose');
 
+// In serverless, do not buffer queries when disconnected to avoid 10s function timeouts
+if (process.env.VERCEL) {
+  mongoose.set('bufferCommands', false);
+}
+
 const connectDB = async () => {
   // If already connected in serverless container, reuse existing connection
-  if (mongoose.connection.readyState === 1) {
+  if (mongoose.connection.readyState >= 1) {
     return mongoose.connection;
   }
 
@@ -24,12 +29,14 @@ const connectDB = async () => {
 
   try {
     const conn = await mongoose.connect(process.env.MONGODB_URI, {
-      serverSelectionTimeoutMS: 15000,
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 5000,
     });
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
     return conn;
   } catch (error) {
     console.error(`❌ MongoDB Error: ${error.message}`);
+    return null;
   }
 };
 
