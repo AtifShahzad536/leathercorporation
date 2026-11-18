@@ -52,7 +52,7 @@ export default function SportsCategoryHubPage({
       name: `Sleeveless ${activeSport} Jersey`,
       desc: 'Sleeveless jersey for warm-weather matches and tournaments.',
       price: '$41.99',
-      image: 'https://images.unsplash.com/photo-1529763486259-17182122c451?auto=format&fit=crop&w=600&q=80',
+      image: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=600&q=80',
       badge: 'SUMMER'
     },
     {
@@ -71,7 +71,7 @@ export default function SportsCategoryHubPage({
     { name: 'Full Button Crimson / White', cut: 'Full Button', img: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=400&q=80' },
     { name: 'Two Button Red / Camo Sleeve', cut: 'Two Button', img: 'https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=400&q=80' },
     { name: 'Two Button Orange / Navy', cut: 'Two Button', img: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=400&q=80' },
-    { name: 'V-Neck Classic Pinstripe', cut: 'V-Neck', img: 'https://images.unsplash.com/photo-1529763486259-17182122c451?auto=format&fit=crop&w=400&q=80' },
+    { name: 'V-Neck Classic Pinstripe', cut: 'V-Neck', img: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=400&q=80' },
     { name: 'V-Neck Sunset Gradient', cut: 'V-Neck', img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80' },
     { name: 'Round Neck Green / White', cut: 'Round Neck', img: 'https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=400&q=80' },
     { name: 'Round Neck Cloud Blue', cut: 'Round Neck', img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80' },

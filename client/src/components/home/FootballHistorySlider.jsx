@@ -136,6 +136,8 @@ export default function HistorySlider() {
                 <img
                   src={slide.image}
                   alt="HAMLO SPORTS Custom Athletic Uniform Showcase"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.25)] select-none pointer-events-none"
                 />
               </motion.div>

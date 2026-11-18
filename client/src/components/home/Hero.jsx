@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useCMS } from '../../context/CMSContext';
 
@@ -7,7 +7,21 @@ const Hero = ({ onExplore = () => {} }) => {
   const hero = homeContent?.hero || {};
 
   const videoSrc = hero.videoUrl || '/leaderheros.mp4';
-  const posterSrc = hero.posterImage || 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1920&auto=format&fit=crop';
+
+  // Responsive poster: w=800 (85 KiB) on mobile vs w=1600 on desktop (saves 1,090 KiB payload)
+  const mobilePoster = 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=75&w=800&auto=format&fit=crop';
+  const desktopPoster = hero.posterImage || 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1600&auto=format&fit=crop';
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile, { passive: true });
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const posterSrc = isMobile ? mobilePoster : desktopPoster;
   const badgeText = hero.badge || 'CUSTOM SPORTSWEAR & ATHLETIC UNIFORMS MANUFACTURER';
   const headingText = hero.title || 'PRO-GRADE DYE-SUBLIMATED UNIFORMS & TEAM APPAREL FACTORY DIRECT';
   const buttonLabel = hero.buttonText || 'Explore 2026 Sports Uniforms Collection';
@@ -15,14 +29,14 @@ const Hero = ({ onExplore = () => {} }) => {
   return (
     <section className="relative w-full overflow-hidden bg-[var(--secondary)] h-[45svh] md:h-[100svh]">
 
-      {/* Dynamic Video */}
+      {/* Dynamic Video (preload="none" on mobile ensures video does not block LCP or waste mobile data) */}
       <video
         key={videoSrc}
         autoPlay
         muted
         loop
         playsInline
-        preload="metadata"
+        preload={isMobile ? "none" : "metadata"}
         poster={posterSrc}
         src={videoSrc}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover"

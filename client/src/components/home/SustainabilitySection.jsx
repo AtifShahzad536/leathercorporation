@@ -32,6 +32,8 @@ export default function SustainabilitySection({ onExplore = () => { } }) {
             <img
               src={leftImage}
               alt="Sustainable Teamwear & Recycled Interlock"
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 filter brightness-95"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[var(--secondary)]/90 via-black/40 to-transparent group-hover:from-[var(--secondary)]/80 transition-colors duration-500" />
@@ -110,6 +112,8 @@ export default function SustainabilitySection({ onExplore = () => { } }) {
             <img
               src={rightImage}
               alt="HAMLO Sports Performance Lab"
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 filter brightness-95"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent group-hover:from-black/75 transition-colors duration-500" />

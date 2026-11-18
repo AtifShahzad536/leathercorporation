@@ -140,7 +140,7 @@ export default function ProductDetailLandingTemplate({
     { name: 'Athletic Shoulder Panels', color: 'RED', img: 'https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=400&q=80' },
     { name: 'Vegas Gold Pinstripe', color: 'GOLD', img: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=400&q=80' },
     { name: 'Neon Digital Pixel', color: 'BLACK', img: 'https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Vintage Classic Stripe', color: 'BLUE', img: 'https://images.unsplash.com/photo-1529763486259-17182122c451?auto=format&fit=crop&w=400&q=80' },
+    { name: 'Vintage Classic Stripe', color: 'BLUE', img: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=400&q=80' },
     { name: 'Flame Accent Energy', color: 'RED', img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80' }
   ];
 

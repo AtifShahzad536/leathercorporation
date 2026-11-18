@@ -31,7 +31,7 @@ const defaultHome = {
     { id: 'football', name: 'Football', image: 'https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=1200&q=80', badge: 'HEAVYWEIGHT INTERLOCK' },
     { id: 'ice-hockey', name: 'Ice Hockey', image: 'https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=1200&q=80', badge: 'AIR-KNIT SWEATERS' },
     { id: 'lacrosse', name: 'Lacrosse', image: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1200&q=80', badge: 'PRO MESH PINNIES' },
-    { id: 'rugby', name: 'Rugby', image: 'https://images.unsplash.com/photo-1529763486259-17182122c451?auto=format&fit=crop&w=1200&q=80', badge: 'TEAR-RESISTANT DRILL' },
+    { id: 'rugby', name: 'Rugby', image: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=1200&q=80', badge: 'TEAR-RESISTANT DRILL' },
     { id: 'soccer', name: 'Soccer', image: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1200&q=80', badge: 'AERODYNE VENTILATION' },
     { id: 'softball', name: 'Softball', image: 'https://images.unsplash.com/photo-1593341646782-e0b495cffd6d?auto=format&fit=crop&w=1200&q=80', badge: 'FASTPITCH COMFORT' },
     { id: 'volleyball', name: 'Volleyball', image: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=1200&q=80', badge: '4-WAY STRETCH' },

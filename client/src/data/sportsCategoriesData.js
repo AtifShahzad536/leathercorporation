@@ -76,8 +76,8 @@ export const sportsCategories = [
     slug: 'custom-lacrosse-uniforms',
     tagline: 'Aerodynamic On-Field Speed',
     description: 'Custom reversible pinnies, shooter shirts, and lightweight stretch shorts engineered for high ventilation and freedom of movement.',
-    image: 'https://images.unsplash.com/photo-1529763486259-17182122c451?auto=format&fit=crop&w=1200&q=80',
-    placeholder: 'https://images.unsplash.com/photo-1529763486259-17182122c451?auto=format&fit=crop&w=50&q=20',
+    image: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1200&q=80',
+    placeholder: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=50&q=20',
     badge: 'FEATHERWEIGHT MESH',
     subcategories: ['Reversible Pinnies', 'Game Jerseys', 'Lacrosse Kilt / Shorts', 'Sublimated Hoodies']
   },

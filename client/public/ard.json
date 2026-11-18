@@ -1,0 +1,51 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "HAMLO SPORTS",
+    "identifier": "did:web:hamlosportswear.site",
+    "documentationUrl": "https://hamlosportswear.site/explore/",
+    "logoUrl": "https://hamlosportswear.site/logo_silverstar.png"
+  },
+  "entries": [
+    {
+      "@context": "https://agenticresourcediscovery.org/context/v1",
+      "identifier": "urn:air:hamlosportswear.site:catalog:custom-uniforms",
+      "displayName": "HAMLO SPORTS Custom Athletic Uniforms Catalog",
+      "type": "application/json",
+      "url": "https://hamlosportswear.site/sitemap.xml",
+      "representativeQueries": [
+        "custom team sports uniforms factory direct Sialkot",
+        "sublimated basketball baseball soccer jerseys bulk quote",
+        "order custom athletic apparel no minimum order quantity"
+      ],
+      "tags": [
+        "sportswear",
+        "custom-uniforms",
+        "sublimation",
+        "factory-direct",
+        "team-apparel"
+      ],
+      "version": "1.0.0",
+      "updatedAt": "2026-11-18T00:00:00Z"
+    },
+    {
+      "@context": "https://agenticresourcediscovery.org/context/v1",
+      "identifier": "urn:air:hamlosportswear.site:service:3d-mockup-inquiry",
+      "displayName": "12-Hour 3D Team Mockup & B2B Inquiry Desk",
+      "type": "application/json",
+      "url": "https://hamlosportswear.site/inquiry/",
+      "representativeQueries": [
+        "get free 3D sports uniform mockup proof",
+        "request wholesale athletic team pricing quote"
+      ],
+      "tags": [
+        "quote",
+        "3d-mockup",
+        "b2b",
+        "inquiry"
+      ],
+      "version": "1.0.0",
+      "updatedAt": "2026-11-18T00:00:00Z"
+    }
+  ]
+}
