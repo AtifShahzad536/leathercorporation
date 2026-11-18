@@ -5,24 +5,44 @@ const Media = require('../models/Media');
 const { protect } = require('../middleware/auth');
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
 const router = express.Router();
 
-// Ensure upload directories exist
-const tempUploadDir = path.join(__dirname, '../../uploads');
-const localMediaDir = path.join(__dirname, '../../uploads/media');
-const clientPublicUploads = path.join(__dirname, '../../../client/public/uploads');
-const adminPublicUploads = path.join(__dirname, '../../../admin/public/uploads');
+const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.NOW_REGION);
 
-[tempUploadDir, localMediaDir, clientPublicUploads, adminPublicUploads].forEach(dir => {
-  if (!fs.existsSync(dir)) {
-    try { fs.mkdirSync(dir, { recursive: true }); } catch (e) {}
+// Ensure upload directories exist only in local persistent environment
+const tempUploadDir = isServerless ? os.tmpdir() : path.join(__dirname, '../../uploads');
+const localMediaDir = isServerless ? path.join(os.tmpdir(), 'media') : path.join(__dirname, '../../uploads/media');
+const clientPublicUploads = !isServerless ? path.join(__dirname, '../../../client/public/uploads') : null;
+const adminPublicUploads = !isServerless ? path.join(__dirname, '../../../admin/public/uploads') : null;
+
+if (!isServerless) {
+  [tempUploadDir, localMediaDir].forEach(dir => {
+    if (!fs.existsSync(dir)) {
+      try { fs.mkdirSync(dir, { recursive: true }); } catch (e) {}
+    }
+  });
+}
+
+// Multer storage using destination function so NO synchronous mkdir is called at require time
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const targetDir = isServerless ? os.tmpdir() : tempUploadDir;
+    if (!fs.existsSync(targetDir)) {
+      try { fs.mkdirSync(targetDir, { recursive: true }); } catch (e) {}
+    }
+    cb(null, targetDir);
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname) || '';
+    const cleanBase = path.basename(file.originalname, ext).replace(/[^a-zA-Z0-9_-]/g, '_');
+    cb(null, `${Date.now()}-${cleanBase}${ext}`);
   }
 });
 
-// Multer temp storage
 const upload = multer({
-  dest: tempUploadDir,
+  storage,
   limits: { fileSize: 50 * 1024 * 1024 }, // 50MB
   fileFilter: (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png|gif|webp|avif|svg|mp4|webm|mov/;
@@ -69,7 +89,7 @@ async function processFileUpload(file, folder = 'hamlo-sports') {
   let height = null;
   let format = path.extname(file.originalname).replace('.', '').toLowerCase() || (isVideo ? 'mp4' : 'jpg');
   let size = file.size;
-  let storage = 'cloudinary';
+  let storageType = 'cloudinary';
 
   // 1. Try Cloudinary
   try {
@@ -85,10 +105,10 @@ async function processFileUpload(file, folder = 'hamlo-sports') {
       height = result.height;
       format = result.format;
       size = result.bytes;
-      storage = 'cloudinary';
+      storageType = 'cloudinary';
 
       if (fs.existsSync(file.path)) {
-        fs.unlinkSync(file.path);
+        try { fs.unlinkSync(file.path); } catch (e) {}
       }
     } else {
       throw new Error('Cloudinary not configured');
@@ -101,22 +121,24 @@ async function processFileUpload(file, folder = 'hamlo-sports') {
     const cleanBase = path.basename(file.originalname, ext).replace(/[^a-zA-Z0-9_-]/g, '_');
     const filename = `${Date.now()}-${cleanBase}${ext}`;
 
-    const destLocal = path.join(localMediaDir, filename);
-    const destClient = path.join(clientPublicUploads, filename);
-    const destAdmin = path.join(adminPublicUploads, filename);
-
-    fs.copyFileSync(file.path, destLocal);
-    try { fs.copyFileSync(file.path, destClient); } catch (e) {}
-    try { fs.copyFileSync(file.path, destAdmin); } catch (e) {}
-
-    if (fs.existsSync(file.path)) {
-      fs.unlinkSync(file.path);
+    if (!isServerless) {
+      const destLocal = path.join(localMediaDir, filename);
+      try { fs.copyFileSync(file.path, destLocal); } catch (e) {}
+      if (clientPublicUploads) {
+        try { fs.copyFileSync(file.path, path.join(clientPublicUploads, filename)); } catch (e) {}
+      }
+      if (adminPublicUploads) {
+        try { fs.copyFileSync(file.path, path.join(adminPublicUploads, filename)); } catch (e) {}
+      }
     }
 
-    // Direct access URL via backend or relative /uploads path
-    fileUrl = `http://localhost:5000/uploads/${filename}`;
+    if (fs.existsSync(file.path)) {
+      try { fs.unlinkSync(file.path); } catch (e) {}
+    }
+
+    fileUrl = `/uploads/${filename}`;
     publicId = `local-${filename}`;
-    storage = 'local';
+    storageType = 'local';
   }
 
   const media = await Media.create({
@@ -131,7 +153,7 @@ async function processFileUpload(file, folder = 'hamlo-sports') {
     format,
   });
 
-  return { media, storage };
+  return { media, storage: storageType };
 }
 
 // POST /api/media/upload - Upload to Cloudinary (with automatic local fallback)
@@ -142,13 +164,13 @@ router.post('/upload', protect, upload.single('file'), async (req, res) => {
     }
 
     const folder = req.body.folder || 'hamlo-sports';
-    const { media, storage } = await processFileUpload(req.file, folder);
+    const { media, storage: storageType } = await processFileUpload(req.file, folder);
 
     res.status(201).json({ 
       success: true, 
       data: media, 
-      storage,
-      message: storage === 'cloudinary' 
+      storage: storageType,
+      message: storageType === 'cloudinary' 
         ? 'Uploaded to Cloudinary CDN successfully' 
         : 'Uploaded to Local Server Storage (Cloudinary API key lacks write permission)'
     });
@@ -186,15 +208,17 @@ router.delete('/:id', protect, async (req, res) => {
 
     if (media.publicId && media.publicId.startsWith('local-')) {
       const filename = media.publicId.replace('local-', '');
-      const localFile = path.join(localMediaDir, filename);
-      const clientFile = path.join(clientPublicUploads, filename);
-      const adminFile = path.join(adminPublicUploads, filename);
+      if (!isServerless) {
+        const localFile = path.join(localMediaDir, filename);
+        const clientFile = clientPublicUploads ? path.join(clientPublicUploads, filename) : null;
+        const adminFile = adminPublicUploads ? path.join(adminPublicUploads, filename) : null;
 
-      [localFile, clientFile, adminFile].forEach(f => {
-        if (fs.existsSync(f)) {
-          try { fs.unlinkSync(f); } catch (e) {}
-        }
-      });
+        [localFile, clientFile, adminFile].filter(Boolean).forEach(f => {
+          if (fs.existsSync(f)) {
+            try { fs.unlinkSync(f); } catch (e) {}
+          }
+        });
+      }
     } else if (media.publicId) {
       try {
         await cloudinary.uploader.destroy(media.publicId, {

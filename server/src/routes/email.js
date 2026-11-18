@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
 const EmailList = require('../models/EmailList');
 const EmailTemplate = require('../models/EmailTemplate');
 const EmailLog = require('../models/EmailLog');
@@ -10,8 +11,24 @@ const { protect } = require('../middleware/auth');
 
 const router = express.Router();
 
+const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.NOW_REGION);
+
+const emailStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const targetDir = isServerless ? os.tmpdir() : path.join(__dirname, '../../uploads');
+    if (!fs.existsSync(targetDir)) {
+      try { fs.mkdirSync(targetDir, { recursive: true }); } catch (e) {}
+    }
+    cb(null, targetDir);
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname) || '';
+    cb(null, `email-${Date.now()}${ext}`);
+  }
+});
+
 const upload = multer({
-  dest: path.join(__dirname, '../../uploads/'),
+  storage: emailStorage,
   limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
   fileFilter: (req, file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase();
