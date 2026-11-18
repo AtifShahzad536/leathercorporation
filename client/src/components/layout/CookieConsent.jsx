@@ -44,7 +44,7 @@ const CookieConsent = () => {
               We use cookies and similar technologies to personalise content and measure
               performance. By giving your consent, you allow us to use this data; you can
               change your settings by clicking Preferences.{' '}
-              <a href="#" className="underline mt-1 inline-block hover:text-[var(--accent)] transition-colors">
+              <a href="/compliance" className="underline mt-1 inline-block hover:text-[var(--accent)] transition-colors">
                 Read more about our cookie policy
               </a>
             </p>

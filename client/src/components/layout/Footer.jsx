@@ -86,7 +86,7 @@ const Footer = ({ onNavigate = () => {} }) => {
                       onClick={() => {
                         if (section === 'Products') {
                           onNavigate('products', link);
-                        } else if (section === 'Leather Craft') {
+                        } else if (section === 'Apparel Cuts') {
                           onNavigate('styles');
                         } else if (section === 'Explore') {
                           if (link.includes('About')) onNavigate('about');
@@ -133,12 +133,24 @@ const Footer = ({ onNavigate = () => {} }) => {
       <div className="border-t border-white/10">
         <div className="w-[96%] max-w-[1800px] mx-auto py-5 flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="text-xs text-white/30 tracking-wide">
-            © {new Date().getFullYear()} Leader Corporation. All rights reserved.
+            © {new Date().getFullYear()} HAMLO SPORTS. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            {['Privacy Policy', 'Cookie Policy', 'Terms of Service'].map((item) => (
-              <a key={item} href="#" className="text-xs text-white/30 hover:text-white transition-colors tracking-wide">
-                {item}
+            {[
+              { label: 'Privacy Policy', path: '/privacy-policy' },
+              { label: 'Cookie Policy', path: '/cookie-policy' },
+              { label: 'Terms of Service', path: '/terms-of-service' },
+            ].map(({ label, path }) => (
+              <a
+                key={label}
+                href={path}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('compliance');
+                }}
+                className="text-xs text-white/30 hover:text-white transition-colors tracking-wide"
+              >
+                {label}
               </a>
             ))}
           </div>
