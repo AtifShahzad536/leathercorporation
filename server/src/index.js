@@ -1,0 +1,106 @@
+require('dotenv').config();
+
+const express = require('express');
+const cors = require('cors');
+const morgan = require('morgan');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const path = require('path');
+const fs = require('fs');
+
+const connectDB = require('./config/db');
+const seedAdmin = require('./utils/seedAdmin');
+const { startEmailCron } = require('./cron/emailCron');
+
+// Route imports
+const authRoutes = require('./routes/auth');
+const pageRoutes = require('./routes/pages');
+const productRoutes = require('./routes/products');
+const settingsRoutes = require('./routes/settings');
+const mediaRoutes = require('./routes/media');
+const emailRoutes = require('./routes/email');
+const analyticsRoutes = require('./routes/analytics');
+const inquiryRoutes = require('./routes/inquiries');
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+// ── MIDDLEWARE ──
+app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
+app.use(cors({
+  origin: true, // Allow all origins (localhost on any port: 5173, 5174, 5175, etc.)
+  credentials: true,
+}));
+app.use(morgan('dev'));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
+// Static uploads directory with cross-origin access
+const localUploadsDir = path.join(__dirname, '../uploads/media');
+if (!fs.existsSync(localUploadsDir)) {
+  fs.mkdirSync(localUploadsDir, { recursive: true });
+}
+app.use('/uploads', express.static(localUploadsDir));
+
+// Rate limiting
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 300,
+  message: { success: false, message: 'Too many requests, slow down' },
+});
+app.use('/api/', apiLimiter);
+
+// ── API ROUTES ──
+app.use('/api/auth', authRoutes);
+app.use('/api/pages', pageRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/settings', settingsRoutes);
+app.use('/api/media', mediaRoutes);
+app.use('/api/email', emailRoutes);
+app.use('/api/analytics', analyticsRoutes);
+app.use('/api/inquiries', inquiryRoutes);
+
+// Health check
+app.get('/api/health', (req, res) => {
+  res.json({
+    success: true,
+    message: 'HAMLO SPORTS API running',
+    timestamp: new Date().toISOString(),
+  });
+});
+
+// Error handling
+app.use((err, req, res, next) => {
+  console.error('Server Error:', err.message);
+  res.status(err.status || 500).json({
+    success: false,
+    message: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error',
+  });
+});
+
+// ── START SERVER ──
+const startServer = async () => {
+  try {
+    // Connect to MongoDB
+    await connectDB();
+
+    // Seed admin account
+    await seedAdmin();
+
+    // Start email marketing cron
+    startEmailCron();
+
+    app.listen(PORT, () => {
+      console.log('═══════════════════════════════════════════════');
+      console.log('  🏀 HAMLO SPORTS REST API Backend Ready');
+      console.log(`  🌐 http://localhost:${PORT}`);
+      console.log(`  📦 Environment: ${process.env.NODE_ENV || 'development'}`);
+      console.log('═══════════════════════════════════════════════');
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error.message);
+    process.exit(1);
+  }
+};
+
+startServer();
