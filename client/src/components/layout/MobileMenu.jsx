@@ -283,11 +283,11 @@ const MobileMenu = ({ isOpen, onClose, navLinks, drawerData, onNavigate = () => 
 
   return (
     <>
-      {/* ── Backdrop ─────────────────────────────────────────── */}
+      {/* ── Backdrop (High z-index to overlay sticky navbars) ── */}
       <div
         onClick={onClose}
         style={{
-          position: 'fixed', inset: 0, zIndex: 70,
+          position: 'fixed', inset: 0, zIndex: 250,
           background: 'var(--secondary)',
           opacity: isOpen ? 0.5 : 0,
           backdropFilter: 'blur(5px)',
@@ -297,11 +297,11 @@ const MobileMenu = ({ isOpen, onClose, navLinks, drawerData, onNavigate = () => 
         }}
       />
 
-      {/* ── Bottom sheet ─────────────────────────────────────── */}
+      {/* ── Bottom sheet (z-255 renders on top of all sticky headers & sports bars) ── */}
       <div
         style={{
           position: 'fixed', bottom: 0, left: 0, right: 0,
-          zIndex: 75,
+          zIndex: 255,
           height: '92dvh',
           background: 'var(--primary)',
           borderTopLeftRadius: 3, borderTopRightRadius: 3,
