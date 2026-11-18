@@ -109,7 +109,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!assets/|\\.well-known/|llms\\.txt|ard\\.json|ai-catalog\\.json|favicon|logo|robots\\.txt|sitemap\\.xml).*)",
+      "source": "/((?!assets/|\\.well-known/|llms\\.txt|ard\\.json|ai-catalog\\.json|favicon|apple-touch-icon|android-chrome|site\\.webmanifest|logo|robots\\.txt|sitemap\\.xml).*)",
       "destination": "/index.html"
     }
   ]
