@@ -303,10 +303,10 @@ export default function HomePageManager() {
           {/* ── 1. HERO SECTION ── */}
           {activeTab === 'hero' && (
             <div className="space-y-5">
-              <h3 className="font-black text-sm uppercase text-slate-900 border-b pb-2 flex items-center gap-2">
+              <h2 className="font-black text-sm uppercase text-slate-900 border-b pb-2 flex items-center gap-2">
                 <Video size={16} className="text-[#F26522]" />
                 <span>Hero Background Video & Top Typography</span>
-              </h3>
+              </h2>
 
               <MediaUploadField
                 label="Hero Background Video (Upload or URL)"
@@ -366,10 +366,10 @@ export default function HomePageManager() {
           {activeTab === 'ticker' && (
             <div className="space-y-5">
               <div className="flex items-center justify-between border-b pb-2">
-                <h3 className="font-black text-sm uppercase text-slate-900 flex items-center gap-2">
+                <h2 className="font-black text-sm uppercase text-slate-900 flex items-center gap-2">
                   <Sliders size={16} className="text-[#F26522]" />
                   <span>Infinite Ticker Marquee Items ({homeData.ticker.items.length})</span>
-                </h3>
+                </h2>
                 <button
                   type="button"
                   onClick={() => setHomeData({ ...homeData, ticker: { items: [...homeData.ticker.items, 'NEW TICKER PHRASE'] } })}
@@ -414,10 +414,10 @@ export default function HomePageManager() {
             <div className="space-y-5">
               <div className="flex items-center justify-between border-b pb-2">
                 <div>
-                  <h3 className="font-black text-sm uppercase text-slate-900 flex items-center gap-2">
+                  <h2 className="font-black text-sm uppercase text-slate-900 flex items-center gap-2">
                     <Grid size={16} className="text-[#F26522]" />
                     <span>Categories Bento Gallery Images & Names ({homeData.categories?.length || 12})</span>
-                  </h3>
+                  </h2>
                   <p className="text-xs text-slate-500 mt-0.5">
                     Upload custom athlete action images for each of the 12 sports disciplines.
                   </p>
@@ -470,10 +470,10 @@ export default function HomePageManager() {
           {/* ── 4. DUAL VIDEO SECTION ── */}
           {activeTab === 'dualVideo' && (
             <div className="space-y-5">
-              <h3 className="font-black text-sm uppercase text-slate-900 border-b pb-2 flex items-center gap-2">
+              <h2 className="font-black text-sm uppercase text-slate-900 border-b pb-2 flex items-center gap-2">
                 <Video size={16} className="text-[#F26522]" />
                 <span>Dual Video Stack & Uniform Banner</span>
-              </h3>
+              </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <MediaUploadField
@@ -525,10 +525,10 @@ export default function HomePageManager() {
           {/* ── 5. ATHLETE LINEUP SECTION ── */}
           {activeTab === 'athleteLineup' && (
             <div className="space-y-5">
-              <h3 className="font-black text-sm uppercase text-slate-900 border-b pb-2 flex items-center gap-2">
+              <h2 className="font-black text-sm uppercase text-slate-900 border-b pb-2 flex items-center gap-2">
                 <ImageIcon size={16} className="text-[#F26522]" />
                 <span>Athlete Uniform Anatomy Spotlight Image</span>
-              </h3>
+              </h2>
 
               <MediaUploadField
                 label="Full-Width Athlete Lineup Banner Image"
@@ -554,10 +554,10 @@ export default function HomePageManager() {
           {activeTab === 'textSlider' && (
             <div className="space-y-5">
               <div className="flex items-center justify-between border-b pb-2">
-                <h3 className="font-black text-sm uppercase text-slate-900 flex items-center gap-2">
+                <h2 className="font-black text-sm uppercase text-slate-900 flex items-center gap-2">
                   <Type size={16} className="text-[#F26522]" />
                   <span>Interactive Quotes Slides ({homeData.textSlider.slides.length})</span>
-                </h3>
+                </h2>
                 <button
                   type="button"
                   onClick={() => setHomeData({
@@ -625,13 +625,13 @@ export default function HomePageManager() {
           {/* ── 7. SUSTAINABILITY BANNERS ── */}
           {activeTab === 'sustainability' && (
             <div className="space-y-5">
-              <h3 className="font-black text-sm uppercase text-slate-900 border-b pb-2 flex items-center gap-2">
+              <h2 className="font-black text-sm uppercase text-slate-900 border-b pb-2 flex items-center gap-2">
                 <ImageIcon size={16} className="text-[#F26522]" />
                 <span>Environmental & Lab Testing High-Res Images</span>
-              </h3>
+              </h2>
 
               <div className="p-4 border border-slate-200 rounded-xl space-y-3 bg-slate-50/50">
-                <h4 className="font-bold text-xs uppercase text-slate-800">Left Side: Recycled Poly Banner</h4>
+                <h3 className="font-bold text-xs uppercase text-slate-800">Left Side: Recycled Poly Banner</h3>
                 <MediaUploadField
                   label="Left Image (Recycled Textile)"
                   value={homeData.sustainability.leftImage}
@@ -650,7 +650,7 @@ export default function HomePageManager() {
               </div>
 
               <div className="p-4 border border-slate-200 rounded-xl space-y-3 bg-slate-50/50">
-                <h4 className="font-bold text-xs uppercase text-slate-800">Right Side: Lab Testing Banner</h4>
+                <h3 className="font-bold text-xs uppercase text-slate-800">Right Side: Lab Testing Banner</h3>
                 <MediaUploadField
                   label="Right Image (Lab Durability Testing)"
                   value={homeData.sustainability.rightImage}
@@ -676,10 +676,10 @@ export default function HomePageManager() {
               {/* Top Action Bar */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                 <div>
-                  <h3 className="font-black text-sm uppercase text-slate-900 flex items-center gap-2">
+                  <h2 className="font-black text-sm uppercase text-slate-900 flex items-center gap-2">
                     <Layers size={17} className="text-[#F26522]" />
                     <span>Evolution Timeline & Product Showcase</span>
-                  </h3>
+                  </h2>
                   <p className="text-xs text-slate-500 font-medium mt-0.5">
                     Add as many showcase products, uniform innovations, and timeline milestones as you want.
                   </p>

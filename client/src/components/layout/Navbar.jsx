@@ -336,6 +336,7 @@ const Navbar = ({ onNavigate = () => {} }) => {
         onClose={() => setMobileMenuOpen(false)}
         drawerData={drawerData}
         navLinks={navLinks}
+        directSports={directSports}
         onNavigate={(page, param) => {
           onNavigate(page, param);
           setMobileMenuOpen(false);
