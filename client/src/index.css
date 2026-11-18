@@ -6,6 +6,8 @@
     --secondary: #1E1B6E;
     --accent: #C2410C;
     --accent-bright: #F26522;
+    --accent-light: #FB923C;
+    --accent-on-dark: #FB923C;
     --text-muted: #475569;
     --font-primary: 'Inter', sans-serif;
   }

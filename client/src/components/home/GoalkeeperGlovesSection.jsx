@@ -46,8 +46,8 @@ export default function GoalkeeperGlovesSection({ onExplore = () => {} }) {
              </svg>
            </div>
 
-          <h3 className="text-[var(--accent)] font-bold text-[9px] sm:text-[10px] tracking-[0.3em] sm:tracking-[0.4em] uppercase mb-3 sm:mb-6 flex items-center gap-2 sm:gap-3">
-             <span className="w-5 sm:w-8 h-[1px] bg-[var(--accent)]" /> {tagline}
+          <h3 className="text-[#FB923C] font-bold text-[9px] sm:text-[10px] tracking-[0.3em] sm:tracking-[0.4em] uppercase mb-3 sm:mb-6 flex items-center gap-2 sm:gap-3">
+             <span className="w-5 sm:w-8 h-[1px] bg-[#FB923C]" /> {tagline}
           </h3>
 
           <h2
@@ -57,10 +57,10 @@ export default function GoalkeeperGlovesSection({ onExplore = () => {} }) {
             {heading.includes(' ') ? (
               <>
                 {heading.split(' ').slice(0, -1).join(' ')}<br />
-                <span className="text-[var(--accent)] italic">{heading.split(' ').slice(-1).join('')}</span>
+                <span className="text-[#FB923C] italic">{heading.split(' ').slice(-1).join('')}</span>
               </>
             ) : (
-              <span className="text-[var(--accent)]">{heading}</span>
+              <span className="text-[#FB923C]">{heading}</span>
             )}
           </h2>
 

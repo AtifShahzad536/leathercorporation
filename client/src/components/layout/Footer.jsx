@@ -50,7 +50,7 @@ const Footer = ({ onNavigate = () => {} }) => {
               </div>
               <div className="flex flex-col">
                 <span className="text-2xl font-black tracking-tighter uppercase whitespace-nowrap text-white">HAMLO</span>
-                <span className="text-[9px] font-bold tracking-[0.25em] uppercase text-[var(--accent)]">SPORTS</span>
+                <span className="text-[9px] font-bold tracking-[0.25em] uppercase text-[#FB923C]">SPORTS</span>
               </div>
             </div>
             <p className="text-sm text-white/70 leading-relaxed mb-8 max-w-[320px]">

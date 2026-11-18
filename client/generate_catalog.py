@@ -31,10 +31,10 @@ sport_images = {
     'FLAG FOOTBALL': 'https://images.unsplash.com/photo-1566577739112-5180d4bf9390?auto=format&fit=crop&w=800&q=80',
     'FOOTBALL': 'https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80',
     'ICE HOCKEY': 'https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=800&q=80',
-    'LACROSSE': 'https://images.unsplash.com/photo-1529763486259-17182122c451?auto=format&fit=crop&w=800&q=80',
+    'LACROSSE': 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=800&q=80',
     'RUGBY': 'https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80',
     'SOCCER': 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80',
-    'SOFTBALL': 'https://images.unsplash.com/photo-1593786267440-5a3d71e21b8b?auto=format&fit=crop&w=800&q=80',
+    'SOFTBALL': 'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80',
     'VOLLEYBALL': 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=800&q=80',
     'WRESTLING': 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80',
 }
