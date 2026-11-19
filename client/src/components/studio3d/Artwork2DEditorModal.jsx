@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Stage, Layer, Text, Image as KonvaImage, Rect, Transformer } from 'react-konva';
-import { 
-  X, Type, Image as ImageIcon, RotateCw, Trash2, 
+import {
+  X, Type, Image as ImageIcon, RotateCw, Trash2,
   ArrowUp, ArrowDown, Check, Undo2, Redo2, Plus, Move
 } from 'lucide-react';
 import { useStudioStore, FONTS_LIST } from './useStudioStore';
 
-// Native Image Loader hook for Konva canvas
-function useImage(url, crossOrigin) {
+// Native Image loader hook for Konva
+function useNativeImage(url, crossOrigin) {
   const [image, setImage] = useState(null);
   useEffect(() => {
     if (!url) return;
@@ -21,7 +21,7 @@ function useImage(url, crossOrigin) {
 
 // URL-based Image component for Konva
 const URLImage = ({ imageObj, isSelected, onSelect, onChange }) => {
-  const [image] = useImage(imageObj.src, 'anonymous');
+  const [image] = useNativeImage(imageObj.src, 'anonymous');
   const shapeRef = useRef();
   const trRef = useRef();
 
@@ -243,7 +243,7 @@ export default function Artwork2DEditorModal({ isOpen, onClose }) {
   return (
     <div className="fixed inset-0 z-[350] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
       <div className="w-full max-w-4xl bg-white rounded-[5px] shadow-2xl border border-neutral-300 flex flex-col max-h-[92vh] overflow-hidden">
-        
+
         {/* Modal Top Header */}
         <div className="px-6 py-4 bg-[var(--secondary)] text-white flex items-center justify-between border-b border-white/10">
           <div>
@@ -265,7 +265,7 @@ export default function Artwork2DEditorModal({ isOpen, onClose }) {
 
         {/* Modal Workspace (Split 2D Canvas + Right Controls) */}
         <div className="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-y-auto">
-          
+
           {/* Left Canvas Preview Area (8 Cols) */}
           <div className="md:col-span-8 p-6 bg-neutral-100 flex flex-col items-center justify-center border-r border-neutral-200">
             <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-2">
@@ -427,11 +427,10 @@ export default function Artwork2DEditorModal({ isOpen, onClose }) {
                   <div
                     key={el.id}
                     onClick={() => setSelectedId(el.id)}
-                    className={`px-3 py-2 rounded text-xs font-bold flex items-center justify-between cursor-pointer border transition ${
-                      selectedId === el.id
-                        ? 'bg-[var(--secondary)] text-white border-[var(--secondary)]'
-                        : 'bg-neutral-50 text-neutral-700 border-neutral-200 hover:bg-neutral-100'
-                    }`}
+                    className={`px-3 py-2 rounded text-xs font-bold flex items-center justify-between cursor-pointer border transition ${selectedId === el.id
+                      ? 'bg-[var(--secondary)] text-white border-[var(--secondary)]'
+                      : 'bg-neutral-50 text-neutral-700 border-neutral-200 hover:bg-neutral-100'
+                      }`}
                   >
                     <span>{el.type === 'text' ? `Text: ${el.text}` : 'Uploaded Logo Image'}</span>
                     <Move size={12} className="opacity-60" />
@@ -469,3 +468,4 @@ export default function Artwork2DEditorModal({ isOpen, onClose }) {
     </div>
   );
 }
+

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import { 
-  Sparkles, Check, ArrowRight, ShieldCheck, Clock, RotateCw, 
-  Layers, Palette, Type, Upload, Send, Award, Phone, Mail, 
+import {
+  Sparkles, Check, ArrowRight, ShieldCheck, Clock, RotateCw,
+  Layers, Palette, Type, Upload, Send, Award, Phone, Mail,
   MessageSquare, Copy, Download, Share2, CheckCircle2,
   Undo2, Redo2, RotateCcw, Maximize2, Minimize2, ChevronDown,
   Eye, Compass, Sliders, Settings2
@@ -33,7 +33,7 @@ export const SPORTS_LIST = [
   { id: 'wrestling', name: 'Wrestling', icon: '🤼', cuts: ['Folkstyle High-Cut Singlet', 'Freestyle Low-Cut Singlet', 'Two-Piece Fight Short & Top'] }
 ];
 
-export default function UniformBuilderPage({ onNavigateInquiry = () => {} }) {
+export default function UniformBuilderPage({ onNavigateInquiry = () => { } }) {
   const [selectedSport, setSelectedSport] = useState(SPORTS_LIST[0]);
   const [selectedCut, setSelectedCut] = useState(SPORTS_LIST[0].cuts[0]);
 
@@ -209,7 +209,7 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
 
       {/* ── 1. IDE TOP COMMAND RIBBON (FIXED HEIGHT, NO SCROLL) ── */}
       <header className="h-12 md:h-13 bg-[#111625] border-b border-white/10 px-3 sm:px-4 flex items-center justify-between gap-2 text-white flex-shrink-0 z-20">
-        
+
         {/* Left: Studio Branding & Dropdown Selectors */}
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           <div className="hidden sm:flex items-center gap-2 pr-3 border-r border-white/10">
@@ -287,9 +287,8 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
             <button
               onClick={toggleAutoRotate}
               title="Toggle 360° Turntable Rotation"
-              className={`px-2 py-1 rounded text-[11px] font-bold transition flex items-center gap-1 cursor-pointer ${
-                autoRotate ? 'bg-[var(--accent)] text-white shadow-xs' : 'text-white/70 hover:bg-white/10 hover:text-white'
-              }`}
+              className={`px-2 py-1 rounded text-[11px] font-bold transition flex items-center gap-1 cursor-pointer ${autoRotate ? 'bg-[var(--accent)] text-white shadow-xs' : 'text-white/70 hover:bg-white/10 hover:text-white'
+                }`}
             >
               <RotateCw size={12} className={autoRotate ? 'animate-spin' : ''} />
               <span>360°</span>
@@ -298,9 +297,8 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
             <button
               onClick={toggleWireframe}
               title="Toggle Wireframe CAD Mode"
-              className={`px-2 py-1 rounded text-[11px] font-bold transition flex items-center gap-1 cursor-pointer ${
-                isWireframe ? 'bg-[var(--accent)] text-white shadow-xs' : 'text-white/70 hover:bg-white/10 hover:text-white'
-              }`}
+              className={`px-2 py-1 rounded text-[11px] font-bold transition flex items-center gap-1 cursor-pointer ${isWireframe ? 'bg-[var(--accent)] text-white shadow-xs' : 'text-white/70 hover:bg-white/10 hover:text-white'
+                }`}
             >
               <Layers size={12} />
               <span>Wireframe</span>
@@ -347,19 +345,17 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
 
       {/* ── 2. MAIN 3-PANEL IDE STAGE (ZERO WINDOW SCROLL, EXACT 100% CONTAINER FIT) ── */}
       <main className="flex-1 min-h-0 flex flex-row overflow-hidden relative">
-        
+
         {/* PANEL 1: LEFT DOCK (Camera Angles + Garment Regions Explorer) */}
-        <div className={`h-full flex-shrink-0 z-10 ${
-          mobileTab === 'dock' ? 'fixed inset-x-0 bottom-12 top-12 z-30 flex w-full' : 'hidden md:flex w-56'
-        }`}>
+        <div className={`h-full flex-shrink-0 z-10 ${mobileTab === 'dock' ? 'fixed inset-x-0 bottom-12 top-12 z-30 flex w-full' : 'hidden md:flex w-56'
+          }`}>
           <StudioLeftPanel />
         </div>
 
         {/* PANEL 2: CENTER 3D STAGE (High-End Three.js WebGL Viewport) */}
-        <div className={`flex-1 h-full min-w-0 relative flex flex-col bg-gradient-to-b from-[#141B2D] via-[#0D1220] to-[#080A12] overflow-hidden ${
-          mobileTab !== 'stage' && 'hidden md:flex'
-        }`}>
-          
+        <div className={`flex-1 h-full min-w-0 relative flex flex-col bg-gradient-to-b from-[#141B2D] via-[#0D1220] to-[#080A12] overflow-hidden ${mobileTab !== 'stage' && 'hidden md:flex'
+          }`}>
+
           {/* Subtle Stage Top Banner */}
           <div className="absolute top-3 left-4 z-10 pointer-events-none flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -372,9 +368,8 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
         </div>
 
         {/* PANEL 3: RIGHT PROPERTIES INSPECTOR (Tabbed Customization Engine) */}
-        <div className={`h-full flex-shrink-0 z-10 ${
-          mobileTab === 'inspector' ? 'fixed inset-x-0 bottom-12 top-12 z-30 flex w-full' : 'hidden md:flex w-80 lg:w-96 xl:w-[420px]'
-        }`}>
+        <div className={`h-full flex-shrink-0 z-10 ${mobileTab === 'inspector' ? 'fixed inset-x-0 bottom-12 top-12 z-30 flex w-full' : 'hidden md:flex w-80 lg:w-96 xl:w-[420px]'
+          }`}>
           <StudioControlPanel
             onSaveDesign={handleOpenQuoteModal}
             isSubmitting={submitting}
@@ -387,9 +382,8 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
       <div className="md:hidden h-12 bg-[#0E1322] border-t border-white/10 flex items-center justify-around px-2 flex-shrink-0 z-20">
         <button
           onClick={() => setMobileTab('dock')}
-          className={`flex-1 py-1.5 flex flex-col items-center gap-0.5 text-[10px] font-bold uppercase transition ${
-            mobileTab === 'dock' ? 'text-[var(--accent)] font-black' : 'text-white/60'
-          }`}
+          className={`flex-1 py-1.5 flex flex-col items-center gap-0.5 text-[10px] font-bold uppercase transition ${mobileTab === 'dock' ? 'text-[var(--accent)] font-black' : 'text-white/60'
+            }`}
         >
           <Compass size={14} />
           <span>Parts & Views</span>
@@ -397,9 +391,8 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
 
         <button
           onClick={() => setMobileTab('stage')}
-          className={`flex-1 py-1.5 flex flex-col items-center gap-0.5 text-[10px] font-bold uppercase transition ${
-            mobileTab === 'stage' ? 'text-[var(--accent)] font-black' : 'text-white/60'
-          }`}
+          className={`flex-1 py-1.5 flex flex-col items-center gap-0.5 text-[10px] font-bold uppercase transition ${mobileTab === 'stage' ? 'text-[var(--accent)] font-black' : 'text-white/60'
+            }`}
         >
           <Eye size={14} />
           <span>3D Stage</span>
@@ -407,9 +400,8 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
 
         <button
           onClick={() => setMobileTab('inspector')}
-          className={`flex-1 py-1.5 flex flex-col items-center gap-0.5 text-[10px] font-bold uppercase transition ${
-            mobileTab === 'inspector' ? 'text-[var(--accent)] font-black' : 'text-white/60'
-          }`}
+          className={`flex-1 py-1.5 flex flex-col items-center gap-0.5 text-[10px] font-bold uppercase transition ${mobileTab === 'inspector' ? 'text-[var(--accent)] font-black' : 'text-white/60'
+            }`}
         >
           <Sliders size={14} />
           <span>Inspector</span>
@@ -426,7 +418,7 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
       {quoteModalOpen && (
         <div className="fixed inset-0 z-[400] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-lg bg-[#0E1322] text-white rounded-[6px] shadow-2xl border border-white/15 overflow-hidden">
-            
+
             <div className="px-6 py-4 bg-[#141A2D] text-white flex items-center justify-between border-b border-white/10">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] block">
@@ -526,52 +518,52 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
         </div>
       )}
 
-      {/* ── 5. SUCCESS CONFIRMATION MODAL OVERLAY ── */}
-      {submittedDesign && (
-        <div className="fixed inset-0 z-[500] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="w-full max-w-lg bg-[#111625] text-white rounded-[6px] border border-white/20 p-6 space-y-5 shadow-2xl">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0">
-                <CheckCircle2 size={24} />
-              </div>
-              <div>
-                <h3 className="text-lg font-black uppercase text-white">3D Design Saved Successfully!</h3>
-                <p className="text-xs text-white/70">
-                  Design Code: <strong className="text-emerald-400 font-mono text-sm">{submittedDesign.code}</strong>
+          {/* ── 5. SUCCESS CONFIRMATION MODAL OVERLAY ── */}
+          {submittedDesign && (
+            <div className="fixed inset-0 z-[500] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+              <div className="w-full max-w-lg bg-[#111625] text-white rounded-[6px] border border-white/20 p-6 space-y-5 shadow-2xl">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0">
+                    <CheckCircle2 size={24} />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-black uppercase text-white">3D Design Saved Successfully!</h3>
+                    <p className="text-xs text-white/70">
+                      Design Code: <strong className="text-emerald-400 font-mono text-sm">{submittedDesign.code}</strong>
+                    </p>
+                  </div>
+                </div>
+
+                <p className="text-xs text-white/80 leading-relaxed bg-[#1A2238] p-3 rounded border border-white/10">
+                  Your custom <strong>{submittedDesign.sport} ({submittedDesign.cut})</strong> design has been assigned to our Sialkot pattern team. You will receive your official 3D production mockup within 12 business hours.
                 </p>
+
+                <div className="flex items-center justify-end gap-3 pt-2 flex-wrap">
+                  <button
+                    onClick={handleCopyCode}
+                    className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase rounded-[4px] transition cursor-pointer flex items-center gap-1.5"
+                  >
+                    <Copy size={13} /> {copiedCode ? 'Copied!' : 'Copy Code'}
+                  </button>
+                  <a
+                    href={`https://wa.me/923105464116?text=${encodeURIComponent(`Hello HAMLO SPORTS! I just designed a custom uniform on your 3D Studio [Design Code: ${submittedDesign.code}]. Please share my production proof.`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs uppercase rounded-[4px] transition cursor-pointer flex items-center gap-1.5"
+                  >
+                    <MessageSquare size={13} /> WhatsApp Fast Track
+                  </a>
+                  <button
+                    onClick={() => setSubmittedDesign(null)}
+                    className="px-4 py-2 bg-[var(--accent)] hover:brightness-110 text-white font-bold text-xs uppercase rounded-[4px] transition cursor-pointer"
+                  >
+                    Back to Studio
+                  </button>
+                </div>
               </div>
             </div>
+          )}
 
-            <p className="text-xs text-white/80 leading-relaxed bg-[#1A2238] p-3 rounded border border-white/10">
-              Your custom <strong>{submittedDesign.sport} ({submittedDesign.cut})</strong> design has been assigned to our Sialkot pattern team. You will receive your official 3D production mockup within 12 business hours.
-            </p>
-
-            <div className="flex items-center justify-end gap-3 pt-2 flex-wrap">
-              <button
-                onClick={handleCopyCode}
-                className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase rounded-[4px] transition cursor-pointer flex items-center gap-1.5"
-              >
-                <Copy size={13} /> {copiedCode ? 'Copied!' : 'Copy Code'}
-              </button>
-              <a
-                href={`https://wa.me/923105464116?text=${encodeURIComponent(`Hello HAMLO SPORTS! I just designed a custom uniform on your 3D Studio [Design Code: ${submittedDesign.code}]. Please share my production proof.`)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs uppercase rounded-[4px] transition cursor-pointer flex items-center gap-1.5"
-              >
-                <MessageSquare size={13} /> WhatsApp Fast Track
-              </a>
-              <button
-                onClick={() => setSubmittedDesign(null)}
-                className="px-4 py-2 bg-[var(--accent)] hover:brightness-110 text-white font-bold text-xs uppercase rounded-[4px] transition cursor-pointer"
-              >
-                Back to Studio
-              </button>
-            </div>
-          </div>
         </div>
-      )}
-
-    </div>
-  );
+      );
 }

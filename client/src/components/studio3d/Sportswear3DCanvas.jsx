@@ -5,8 +5,8 @@ import * as THREE from 'three';
 import { useStudioStore, FABRIC_PRESETS } from './useStudioStore';
 import { getFabricBumpTexture, getPatternTexture } from './FabricTextures';
 import { decalPipeline } from './DecalCanvasPipeline';
-import { 
-  RotateCw, Eye, Maximize2, Minimize2, ZoomIn, ZoomOut, 
+import {
+  RotateCw, Eye, Maximize2, Minimize2, ZoomIn, ZoomOut,
   Sparkles, Layers, ShieldCheck, Camera, Compass
 } from 'lucide-react';
 
@@ -340,9 +340,8 @@ export default function Sportswear3DCanvas({ className = '' }) {
   return (
     <div
       ref={containerRef}
-      className={`relative w-full h-full min-h-0 overflow-hidden select-none bg-gradient-to-b from-[#141B2D] via-[#0D1220] to-[#080A12] ${
-        isFullscreen ? 'fixed inset-0 z-[300] h-screen w-screen' : ''
-      } ${className}`}
+      className={`relative w-full h-full min-h-0 overflow-hidden select-none bg-gradient-to-b from-[#141B2D] via-[#0D1220] to-[#080A12] ${isFullscreen ? 'fixed inset-0 z-[300] h-screen w-screen' : ''
+        } ${className}`}
     >
       {/* Minimal Top-Right Status & Fullscreen Exit */}
       {isFullscreen && (
