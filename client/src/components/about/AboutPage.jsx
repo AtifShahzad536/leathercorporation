@@ -12,8 +12,6 @@ export default function AboutPage({
   onNavigateProducts = () => {}, 
   onNavigateInquiry = () => {} 
 }) {
-  const [activeTab, setActiveTab] = useState('story'); 
-
   // Map category names or hash query to valid tab keys
   const mapTabKey = (tab) => {
     if (!tab) return 'story';
@@ -28,6 +26,8 @@ export default function AboutPage({
     return lower;
   };
 
+  const [activeTab, setActiveTab] = useState(() => mapTabKey(initialTab)); 
+
   useEffect(() => {
     const target = mapTabKey(initialTab);
     setActiveTab(target);
@@ -36,8 +36,7 @@ export default function AboutPage({
   const handleTabClick = (tabKey) => {
     setActiveTab(tabKey);
     onTabChange(tabKey);
-    const url = tabKey !== 'story' ? `/about/?tab=${tabKey}` : '/about/';
-    window.history.pushState({}, '', url);
+    window.history.pushState({}, '', `/about/?tab=${tabKey}`);
   };
 
   const milestones = [

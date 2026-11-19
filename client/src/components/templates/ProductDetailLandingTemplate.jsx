@@ -1071,24 +1071,25 @@ export default function ProductDetailLandingTemplate({
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {upsells.map((u, idx) => (
-              <div key={idx} className="bg-white p-3 rounded-[3px] border border-[var(--secondary)]/10 shadow-xs flex flex-col justify-between group hover:border-[var(--accent)] transition duration-200">
+              <div key={idx} className="bg-white p-3.5 sm:p-4 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm flex flex-col justify-between group hover:border-[var(--accent)] hover:shadow-md transition-all duration-300">
                 <div 
-                  className="aspect-[3/4] sm:aspect-[4/5] bg-neutral-50 rounded mb-2 overflow-hidden cursor-pointer flex items-center justify-center p-3 relative"
+                  className="h-64 sm:h-72 lg:h-80 w-full bg-gradient-to-b from-neutral-50 to-neutral-100/50 rounded mb-3 overflow-hidden cursor-pointer flex items-center justify-center p-4 relative"
                   onClick={() => u.rawProduct && onNavigateProduct(u.rawProduct)}
                 >
                   <img 
                     src={u.img} 
                     alt={`${u.name} - HAMLO SPORTS`} 
-                    className="w-full h-full object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-105" 
+                    className="max-h-full max-w-full w-auto h-auto object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-105" 
+                    loading="lazy"
                   />
                 </div>
                 <h3 
-                  className="text-xs font-black uppercase text-[var(--secondary)] line-clamp-1 mb-1 cursor-pointer hover:text-[var(--accent)]"
+                  className="text-xs font-black uppercase text-[var(--secondary)] line-clamp-2 min-h-[32px] mb-2 cursor-pointer hover:text-[var(--accent)] transition-colors leading-tight"
                   onClick={() => u.rawProduct && onNavigateProduct(u.rawProduct)}
                 >
                   {u.name}
                 </h3>
-                <div className="flex items-center justify-between pt-2 border-t border-neutral-100 text-xs">
+                <div className="flex items-center justify-between pt-2.5 border-t border-neutral-100 text-xs mt-auto">
                   <span className="font-bold text-[var(--secondary)]">{u.price}</span>
                   <button 
                     onClick={() => handleAddUpsellToQuote(u)}

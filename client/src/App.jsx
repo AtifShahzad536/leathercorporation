@@ -199,19 +199,28 @@ function MainApp() {
       document.title = 'Explore Performance Materials & Technologies | HAMLO SPORTS';
       const searchStr = window.location.search || (routeString.includes('?') ? routeString.split('?')[1] : '');
       const hashStr = window.location.hash || '';
-      const combined = `${searchStr}&${hashStr.replace('#', '')}`;
-      const params = new URLSearchParams(combined);
-      const tabParam = params.get('tab');
-      if (tabParam) {
-        const resolved = mapExploreTab(tabParam);
-        if (resolved === 'guide') {
-          setCurrentPage('sizing-chart');
-          document.title = 'Sports Uniform Sizing Chart & Measuring Guide | HAMLO SPORTS';
-          return;
+      let tabParam = null;
+      if (searchStr) {
+        const params = new URLSearchParams(searchStr);
+        tabParam = params.get('tab');
+      }
+      if (!tabParam && hashStr) {
+        const cleanHash = hashStr.replace(/^#\/?/, '');
+        const hashQuery = cleanHash.includes('?') ? cleanHash.split('?')[1] : (cleanHash.startsWith('tab=') ? cleanHash : '');
+        if (hashQuery) {
+          const hashParams = new URLSearchParams(hashQuery);
+          tabParam = hashParams.get('tab');
         }
-        setExploreTab(resolved);
-      } else {
-        setExploreTab('fabrics');
+      }
+      const resolved = mapExploreTab(tabParam);
+      if (resolved === 'guide') {
+        setCurrentPage('sizing-chart');
+        document.title = 'Sports Uniform Sizing Chart & Measuring Guide | HAMLO SPORTS';
+        return;
+      }
+      setExploreTab(resolved);
+      if (window.location.hash && window.location.hash.includes('explore')) {
+        window.history.replaceState({}, '', `/explore/?tab=${resolved}`);
       }
     } else if (routeString.startsWith('compliance')) {
       setCurrentPage('compliance');
@@ -224,13 +233,23 @@ function MainApp() {
       document.title = 'About HAMLO SPORTS | Sialkot Manufacturing Heritage';
       const searchStr = window.location.search || (routeString.includes('?') ? routeString.split('?')[1] : '');
       const hashStr = window.location.hash || '';
-      const combined = `${searchStr}&${hashStr.replace('#', '')}`;
-      const params = new URLSearchParams(combined);
-      const tabParam = params.get('tab');
-      if (tabParam) {
-        setAboutTab(mapAboutTab(tabParam));
-      } else {
-        setAboutTab('story');
+      let tabParam = null;
+      if (searchStr) {
+        const params = new URLSearchParams(searchStr);
+        tabParam = params.get('tab');
+      }
+      if (!tabParam && hashStr) {
+        const cleanHash = hashStr.replace(/^#\/?/, '');
+        const hashQuery = cleanHash.includes('?') ? cleanHash.split('?')[1] : (cleanHash.startsWith('tab=') ? cleanHash : '');
+        if (hashQuery) {
+          const hashParams = new URLSearchParams(hashQuery);
+          tabParam = hashParams.get('tab');
+        }
+      }
+      const resolved = mapAboutTab(tabParam);
+      setAboutTab(resolved);
+      if (window.location.hash && window.location.hash.includes('about')) {
+        window.history.replaceState({}, '', `/about/?tab=${resolved}`);
       }
     } else if (routeString.startsWith('privacy-policy')) {
       setPolicyTab('privacy');
@@ -366,7 +385,7 @@ function MainApp() {
         return;
       }
       setExploreTab(tab);
-      const url = tab && tab !== 'fabrics' ? `/explore/?tab=${tab}` : '/explore/';
+      const url = `/explore/?tab=${tab}`;
       window.history.pushState({}, '', url);
       document.title = 'Explore Performance Materials | HAMLO SPORTS';
     } else if (page === 'compliance') {
@@ -378,7 +397,7 @@ function MainApp() {
     } else if (page === 'about') {
       const tab = mapAboutTab(param1);
       setAboutTab(tab);
-      const url = tab && tab !== 'story' ? `/about/?tab=${tab}` : '/about/';
+      const url = `/about/?tab=${tab}`;
       window.history.pushState({}, '', url);
       document.title = 'About HAMLO SPORTS | Sialkot Manufacturing';
     } else if (page === 'legal-policy') {
@@ -489,8 +508,12 @@ function MainApp() {
 
         {currentPage === 'explore' && (
           <ExplorePage
+            key={exploreTab}
             initialTab={exploreTab}
-            onTabChange={(tab) => setExploreTab(tab)}
+            onTabChange={(tab) => {
+              setExploreTab(tab);
+              window.history.pushState({}, '', `/explore/?tab=${tab}`);
+            }}
             onNavigateHome={() => navigateTo('home')}
             onNavigateProducts={() => navigateTo('sports-hub')}
             onNavigateInquiry={(p) => navigateTo('inquiry', p)}
@@ -513,8 +536,12 @@ function MainApp() {
 
         {currentPage === 'about' && (
           <AboutPage
+            key={aboutTab}
             initialTab={aboutTab}
-            onTabChange={(tab) => setAboutTab(tab)}
+            onTabChange={(tab) => {
+              setAboutTab(tab);
+              window.history.pushState({}, '', `/about/?tab=${tab}`);
+            }}
             onNavigateHome={() => navigateTo('home')}
             onNavigateProducts={() => navigateTo('sports-hub')}
             onNavigateInquiry={(p) => navigateTo('inquiry', p)}

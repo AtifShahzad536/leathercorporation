@@ -12,9 +12,6 @@ export default function ExplorePage({
   onNavigateProducts = () => { },
   onNavigateInquiry = () => { }
 }) {
-  const [activeTab, setActiveTab] = useState('fabrics'); // 'fabrics' | 'sublimation' | 'embroidery' | 'lookbook'
-  const [sizeModalOpen, setSizeModalOpen] = useState(false);
-
   // Map category names or hash query to valid tab keys
   const mapTabKey = (tab) => {
     if (!tab) return 'fabrics';
@@ -26,6 +23,12 @@ export default function ExplorePage({
     if (lower.includes('size') || lower.includes('fit') || lower.includes('guide')) return 'guide';
     return lower;
   };
+
+  const [activeTab, setActiveTab] = useState(() => {
+    const t = mapTabKey(initialTab);
+    return t === 'guide' ? 'fabrics' : t;
+  });
+  const [sizeModalOpen, setSizeModalOpen] = useState(() => mapTabKey(initialTab) === 'guide');
 
   useEffect(() => {
     const target = mapTabKey(initialTab);
@@ -40,8 +43,7 @@ export default function ExplorePage({
   const handleTabClick = (tabKey) => {
     setActiveTab(tabKey);
     onTabChange(tabKey);
-    const url = tabKey !== 'fabrics' ? `/explore/?tab=${tabKey}` : '/explore/';
-    window.history.pushState({}, '', url);
+    window.history.pushState({}, '', `/explore/?tab=${tabKey}`);
   };
 
   const fabricSpecs = [

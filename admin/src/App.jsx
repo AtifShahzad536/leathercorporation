@@ -8,11 +8,12 @@ import MediaLibrary from './pages/MediaLibrary';
 import HomePageManager from './pages/HomePageManager';
 import PagesManager from './pages/PagesManager';
 import InquiriesManager from './pages/InquiriesManager';
+import Model3DManager from './pages/Model3DManager';
 import { 
   LayoutDashboard, Mail, Package, Image as ImageIcon, 
   Layers, LogOut, ExternalLink, ShieldCheck, Home, 
   Search, Bell, ChevronRight, Menu, X, Sparkles, User, Settings,
-  MessageSquare
+  MessageSquare, Box
 } from 'lucide-react';
 
 export default function App() {
@@ -54,6 +55,7 @@ export default function App() {
     {
       group: 'CMS & STORE MANAGEMENT',
       items: [
+        { id: 'models3d', label: '3D Studio & Mesh Inspector', icon: Box },
         { id: 'homePage', label: 'Home Page CMS & Media', icon: Home },
         { id: 'products', label: 'Uniform Products Catalog', icon: Package },
         { id: 'pages', label: 'Other Pages CMS', icon: Layers },
@@ -64,6 +66,7 @@ export default function App() {
 
   const currentTitle = {
     dashboard: 'Executive Overview & Live Telemetry',
+    models3d: '3D Sportswear Models, Mesh Inspector & Region Studio',
     inquiries: 'Customer Inquiries & B2B Custom Quotes Inbox',
     homePage: 'Home Page CMS, Videos & Infinite Marquee',
     products: 'Custom Sports Uniforms Catalog',
@@ -243,6 +246,7 @@ export default function App() {
         <div className="flex-1 overflow-y-auto overflow-x-hidden p-6 sm:p-10 scroll-smooth">
           <div className="max-w-7xl mx-auto pb-16">
             {currentPage === 'dashboard' && <DashboardPage onNavigate={setCurrentPage} />}
+            {currentPage === 'models3d' && <Model3DManager />}
             {currentPage === 'inquiries' && <InquiriesManager />}
             {currentPage === 'homePage' && <HomePageManager />}
             {currentPage === 'products' && <ProductsManager />}

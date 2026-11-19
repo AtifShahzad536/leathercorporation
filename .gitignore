@@ -43,6 +43,8 @@ client/public/uploads/*
 !client/public/uploads/.gitkeep
 admin/public/uploads/*
 !admin/public/uploads/.gitkeep
+3d_models/
+sports_wear_3d_models/
 
 # Editor & OS files
 .vscode/

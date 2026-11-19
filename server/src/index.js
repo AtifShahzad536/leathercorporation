@@ -1,16 +1,18 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '../.env') });
+require('dotenv').config(); // Fallback to cwd .env
 
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
 
 const connectDB = require('./config/db');
 const seedAdmin = require('./utils/seedAdmin');
+const seedModels3D = require('./utils/seedModels3D');
 const { startEmailCron } = require('./cron/emailCron');
 
 // Route imports
@@ -22,6 +24,7 @@ const mediaRoutes = require('./routes/media');
 const emailRoutes = require('./routes/email');
 const analyticsRoutes = require('./routes/analytics');
 const inquiryRoutes = require('./routes/inquiries');
+const models3dRoutes = require('./routes/models3d');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -39,11 +42,15 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 // Static uploads directory (Only initialize filesystem storage in non-serverless local environments)
 if (!process.env.VERCEL) {
   try {
-    const localUploadsDir = path.join(__dirname, '../uploads/media');
-    if (!fs.existsSync(localUploadsDir)) {
-      fs.mkdirSync(localUploadsDir, { recursive: true });
-    }
+    const localUploadsDir = path.join(__dirname, '../uploads');
+    const localMediaDir = path.join(__dirname, '../uploads/media');
+    const localModelsDir = path.join(__dirname, '../uploads/models3d');
+    [localUploadsDir, localMediaDir, localModelsDir].forEach(d => {
+      if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true });
+    });
     app.use('/uploads', express.static(localUploadsDir));
+    app.use('/uploads/media', express.static(localMediaDir));
+    app.use('/uploads/models3d', express.static(localModelsDir));
   } catch (e) {
     console.warn('Local uploads dir note:', e.message);
   }
@@ -101,6 +108,7 @@ app.use('/api/media', mediaRoutes);
 app.use('/api/email', emailRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/inquiries', inquiryRoutes);
+app.use('/api/models3d', models3dRoutes);
 
 // Error handling
 app.use((err, req, res, next) => {
@@ -116,6 +124,7 @@ if (!process.env.VERCEL) {
   connectDB().then(async (conn) => {
     if (conn) {
       await seedAdmin().catch(e => console.warn('Seed admin:', e.message));
+      await seedModels3D().catch(e => console.warn('Seed 3D models:', e.message));
     }
     try { startEmailCron(); } catch (e) {}
   }).catch(err => {

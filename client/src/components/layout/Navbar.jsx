@@ -90,7 +90,7 @@ const Navbar = ({ onNavigate = () => {} }) => {
     },
     'ABOUT US': {
       categories: [
-        'ABOUT OUR FACTORY', 'SUBLIMATION TANNERY', 'OEKO-TEX CERTIFIED', 'GLOBAL EXPORTS',
+        'ABOUT OUR FACTORY', 'SUBLIMATION LAB', 'OEKO-TEX CERTIFIED', 'GLOBAL EXPORTS',
         'PRESS & NEWS', 'FACTORY ETHICS', 'CONTACT US'
       ],
       hideChevrons: true,
