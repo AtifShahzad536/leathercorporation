@@ -23,8 +23,22 @@ function ProceduralJerseyModel({ onSelectMesh, selectedMeshId, hoveredMeshId, on
     patternScale,
     nameNumber,
     logos,
-    isWireframe
+    isWireframe,
+    setDetectedMeshes
   } = useStudioStore();
+
+  // Populate detected meshes for procedural jersey
+  useEffect(() => {
+    setDetectedMeshes([
+      { id: 'mesh_front_body', label: 'Front Torso', region: 'front_body', defaultColor: primaryColor },
+      { id: 'mesh_back_body', label: 'Back Body', region: 'back_body', defaultColor: primaryColor },
+      { id: 'mesh_left_sleeve', label: 'Left Sleeve', region: 'left_sleeve', defaultColor: secondaryColor },
+      { id: 'mesh_right_sleeve', label: 'Right Sleeve', region: 'right_sleeve', defaultColor: secondaryColor },
+      { id: 'mesh_collar', label: 'Collar & Neck Rib', region: 'collar', defaultColor: secondaryColor },
+      { id: 'mesh_cuffs', label: 'Sleeve Cuffs', region: 'cuffs', defaultColor: accentColor },
+      { id: 'mesh_side_panels', label: 'Side Vent Panels', region: 'side_panels', defaultColor: secondaryColor }
+    ]);
+  }, [setDetectedMeshes, primaryColor, secondaryColor, accentColor]);
 
   const [decalFrontTex, setDecalFrontTex] = useState(null);
   const [decalBackTex, setDecalBackTex] = useState(null);
@@ -247,19 +261,108 @@ class ModelErrorBoundary extends React.Component {
   }
 }
 
+// Smart display label generator for arbitrary 3D model meshes
+function formatMeshLabel(child, index, activeModelMeshes) {
+  const meshId = child.name || child.uuid;
+  
+  if (Array.isArray(activeModelMeshes)) {
+    const configured = activeModelMeshes.find(m => m.meshId === meshId);
+    if (configured?.name && configured.name.trim()) {
+      return configured.name.trim();
+    }
+    if (configured?.region) {
+      const regionLabels = {
+        front_body: 'Front Torso / Crown',
+        back_body: 'Back Torso',
+        left_sleeve: 'Left Sleeve',
+        right_sleeve: 'Right Sleeve',
+        collar: 'Collar Rib',
+        cuffs: 'Sleeve Cuffs',
+        side_panels: 'Side Panels',
+        buttons: 'Buttons / Fasteners',
+        zipper: 'Zipper Placket',
+        stripes: 'Accent Trim',
+        waistband: 'Waistband',
+        pockets: 'Pockets'
+      };
+      if (regionLabels[configured.region]) {
+        return regionLabels[configured.region];
+      }
+    }
+  }
+
+  const raw = (child.name || '').toLowerCase();
+  if (raw.includes('visor') || raw.includes('brim') || raw.includes('peak')) return 'Visor / Brim';
+  if (raw.includes('crown') || raw.includes('dome')) return 'Crown Panels';
+  if (raw.includes('button') || raw.includes('pin')) return 'Top Button';
+  if (raw.includes('strap') || raw.includes('buckle') || raw.includes('snapback') || raw.includes('velcro')) return 'Back Closure Strap';
+  if (raw.includes('sweatband') || raw.includes('inner')) return 'Inner Sweatband';
+  if (raw.includes('eyelet') || raw.includes('vent')) return 'Vent Eyelets';
+  if (raw.includes('front') || raw.includes('chest')) return 'Front Torso';
+  if (raw.includes('back') || raw.includes('rear')) return 'Back Body';
+  if (raw.includes('sleeve_l') || raw.includes('left_sleeve') || raw.includes('arm_l')) return 'Left Sleeve';
+  if (raw.includes('sleeve_r') || raw.includes('right_sleeve') || raw.includes('arm_r')) return 'Right Sleeve';
+  if (raw.includes('collar') || raw.includes('neck') || raw.includes('rib')) return 'Collar & Neck Rib';
+  if (raw.includes('cuff') || raw.includes('wrist')) return 'Sleeve Cuffs';
+  if (raw.includes('side') || raw.includes('vent')) return 'Side Vent Panels';
+  if (raw.includes('waist') || raw.includes('belt')) return 'Waistband';
+  if (raw.includes('stripe') || raw.includes('piping') || raw.includes('trim')) return 'Accent Trim';
+
+  if (child.name && !/^node[-_]?\d+/i.test(child.name) && !/^object[-_]?\d+/i.test(child.name) && !/^mesh[-_]?\d+/i.test(child.name)) {
+    const formatted = child.name
+      .replace(/^mesh[_-]/i, '')
+      .replace(/[_-]/g, ' ')
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .trim();
+    if (formatted) {
+      return formatted.replace(/\b\w/g, c => c.toUpperCase());
+    }
+  }
+
+  return `Mesh Part ${index + 1}`;
+}
+
 // ── Uploaded Custom GLTF/GLB Model Renderer ──
 function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHoverMesh }) {
   const resolvedUrl = useMemo(() => resolveModelUrl(url), [url]);
   const { scene } = useGLTF(resolvedUrl);
   const {
+    activeModel,
     meshCustomizations,
     primaryColor,
     secondaryColor,
     activeFabric,
-    isWireframe
+    isWireframe,
+    setDetectedMeshes
   } = useStudioStore();
 
   const clonedScene = useMemo(() => scene.clone(true), [scene]);
+
+  // Dynamically detect all meshes from 3D scene graph and publish to store
+  useEffect(() => {
+    if (!clonedScene) return;
+    const detected = [];
+    clonedScene.traverse((child) => {
+      if (child.isMesh) {
+        const meshId = child.name || child.uuid;
+        const label = formatMeshLabel(child, detected.length, activeModel?.meshes);
+        const matColor = child.material?.color 
+          ? '#' + child.material.color.getHexString() 
+          : (detected.length === 0 ? primaryColor : secondaryColor);
+
+        detected.push({
+          id: meshId,
+          label,
+          region: child.name,
+          defaultColor: matColor
+        });
+      }
+    });
+
+    if (detected.length > 0) {
+      setDetectedMeshes(detected);
+    }
+  }, [clonedScene, activeModel, setDetectedMeshes, primaryColor, secondaryColor]);
 
   useEffect(() => {
     const bumpMap = getFabricBumpTexture(activeFabric);

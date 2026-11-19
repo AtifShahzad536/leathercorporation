@@ -90,6 +90,7 @@ export const FONTS_LIST = [
 export const useStudioStore = create((set, get) => ({
   // Model & Mesh
   activeModel: null,
+  detectedMeshes: [], // [{ id, label, region, defaultColor }]
   selectedMeshId: null, // null = all meshes or global
   hoveredMeshId: null,
   meshCustomizations: {}, // { [meshId]: { color, fabric, roughness, metalness, pattern, patternColor, patternScale } }
@@ -182,8 +183,16 @@ export const useStudioStore = create((set, get) => ({
   },
 
   setActiveModel: (model) => {
-    set({ activeModel: model });
-    if (model?.meshes && Array.isArray(model.meshes)) {
+    set({ activeModel: model, selectedMeshId: null });
+    if (model?.meshes && Array.isArray(model.meshes) && model.meshes.length > 0) {
+      const parts = model.meshes.map((m, idx) => ({
+        id: m.meshId,
+        label: m.name || `Part ${idx + 1}`,
+        region: m.region || 'torso',
+        defaultColor: m.defaultColor || get().primaryColor
+      }));
+      set({ detectedMeshes: parts });
+
       const initCustom = {};
       model.meshes.forEach(m => {
         initCustom[m.meshId] = {
@@ -199,6 +208,30 @@ export const useStudioStore = create((set, get) => ({
       set({ meshCustomizations: initCustom });
     }
     get().saveSnapshot();
+  },
+
+  setDetectedMeshes: (meshes) => {
+    set({ detectedMeshes: meshes });
+    const state = get();
+    const updatedCustom = { ...state.meshCustomizations };
+    let hasChanges = false;
+    meshes.forEach((m, idx) => {
+      if (!updatedCustom[m.id]) {
+        updatedCustom[m.id] = {
+          color: m.defaultColor || (idx === 0 ? state.primaryColor : state.secondaryColor),
+          fabric: state.activeFabric,
+          roughness: 0.6,
+          metalness: 0.05,
+          pattern: 'solid',
+          patternColor: state.secondaryColor,
+          patternScale: 1.0
+        };
+        hasChanges = true;
+      }
+    });
+    if (hasChanges) {
+      set({ meshCustomizations: updatedCustom });
+    }
   },
 
   setSelectedMesh: (meshId) => set({ selectedMeshId: meshId }),
@@ -220,6 +253,10 @@ export const useStudioStore = create((set, get) => ({
       const updated = { ...state.meshCustomizations };
       Object.keys(updated).forEach(k => {
         updated[k] = { ...updated[k], color };
+      });
+      (state.detectedMeshes || []).forEach(m => {
+        if (!updated[m.id]) updated[m.id] = { color };
+        else updated[m.id] = { ...updated[m.id], color };
       });
       return { meshCustomizations: updated, primaryColor: color };
     });

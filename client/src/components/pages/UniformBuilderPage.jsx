@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import { 
-  Sparkles, Check, ArrowRight, ShieldCheck, Clock, RotateCw, 
-  Layers, Palette, Type, Upload, Send, Award, Phone, Mail, 
+import {
+  Sparkles, Check, ArrowRight, ShieldCheck, Clock, RotateCw,
+  Layers, Palette, Type, Upload, Send, Award, Phone, Mail,
   MessageSquare, Copy, Download, Share2, CheckCircle2,
   Undo2, Redo2, RotateCcw, Maximize2, Minimize2, ChevronDown,
   Eye, Compass, Sliders, Settings2
@@ -33,7 +33,7 @@ export const SPORTS_LIST = [
   { id: 'wrestling', name: 'Wrestling', icon: '🤼', cuts: ['Folkstyle High-Cut Singlet', 'Freestyle Low-Cut Singlet', 'Two-Piece Fight Short & Top'] }
 ];
 
-export default function UniformBuilderPage({ onNavigateInquiry = () => {} }) {
+export default function UniformBuilderPage({ onNavigateInquiry = () => { } }) {
   const [selectedSport, setSelectedSport] = useState(SPORTS_LIST[0]);
   const [selectedCut, setSelectedCut] = useState(SPORTS_LIST[0].cuts[0]);
 
@@ -209,7 +209,7 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
 
       {/* ── 1. TOP COMMAND RIBBON (LIGHT THEME, CLEAN NORMAL WEIGHT FONTS) ── */}
       <header className="h-12 bg-white border-b border-slate-200 px-3 sm:px-4 flex items-center justify-between gap-2 text-slate-800 flex-shrink-0 z-20">
-        
+
         {/* Left: Studio Name & Selectors */}
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           <div className="hidden sm:flex items-center gap-2 pr-3 border-r border-slate-200">
@@ -286,9 +286,8 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
             <button
               onClick={toggleAutoRotate}
               title="Toggle 360° Rotation"
-              className={`px-2 py-1 rounded text-xs transition flex items-center gap-1 cursor-pointer ${
-                autoRotate ? 'bg-white text-slate-900 font-medium shadow-2xs border border-slate-200' : 'text-slate-600 hover:bg-white hover:text-slate-900 font-normal'
-              }`}
+              className={`px-2 py-1 rounded text-xs transition flex items-center gap-1 cursor-pointer ${autoRotate ? 'bg-white text-slate-900 font-medium shadow-2xs border border-slate-200' : 'text-slate-600 hover:bg-white hover:text-slate-900 font-normal'
+                }`}
             >
               <RotateCw size={12} className={autoRotate ? 'animate-spin' : ''} />
               <span>360°</span>
@@ -297,9 +296,8 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
             <button
               onClick={toggleWireframe}
               title="Toggle Wireframe View"
-              className={`px-2 py-1 rounded text-xs transition flex items-center gap-1 cursor-pointer ${
-                isWireframe ? 'bg-white text-slate-900 font-medium shadow-2xs border border-slate-200' : 'text-slate-600 hover:bg-white hover:text-slate-900 font-normal'
-              }`}
+              className={`px-2 py-1 rounded text-xs transition flex items-center gap-1 cursor-pointer ${isWireframe ? 'bg-white text-slate-900 font-medium shadow-2xs border border-slate-200' : 'text-slate-600 hover:bg-white hover:text-slate-900 font-normal'
+                }`}
             >
               <Layers size={12} />
               <span>Wireframe</span>
@@ -346,21 +344,19 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
 
       {/* ── 2. MAIN 3-PANEL IDE STAGE (LIGHT THEME, ZERO WINDOW SCROLL) ── */}
       <main className="flex-1 min-h-0 flex flex-row overflow-hidden relative">
-        
+
         {/* PANEL 1: LEFT DOCK (Camera Angles + Garment Parts) */}
         {!isFullscreen && (
-          <div className={`h-full flex-shrink-0 z-10 ${
-            mobileTab === 'dock' ? 'fixed inset-x-0 bottom-12 top-12 z-30 flex w-full' : 'hidden md:flex w-56'
-          }`}>
+          <div className={`h-full flex-shrink-0 z-10 ${mobileTab === 'dock' ? 'fixed inset-x-0 bottom-12 top-12 z-30 flex w-full' : 'hidden md:flex w-56'
+            }`}>
             <StudioLeftPanel />
           </div>
         )}
 
         {/* PANEL 2: CENTER 3D STAGE (Clean Studio Backdrop) */}
-        <div className={`flex-1 h-full min-w-0 relative flex flex-col bg-gradient-to-b from-[#F8FAFC] via-[#F1F5F9] to-[#E2E8F0] overflow-hidden ${
-          mobileTab !== 'stage' && 'hidden md:flex'
-        }`}>
-          
+        <div className={`flex-1 h-full min-w-0 relative flex flex-col bg-gradient-to-b from-[#F8FAFC] via-[#F1F5F9] to-[#E2E8F0] overflow-hidden ${mobileTab !== 'stage' && 'hidden md:flex'
+          }`}>
+
           {/* Subtle Stage Top Indicator */}
           <div className="absolute top-3 left-4 z-10 pointer-events-none flex items-center gap-2">
             <h2 className="text-xs font-medium text-slate-600">
@@ -373,9 +369,8 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
 
         {/* PANEL 3: RIGHT PROPERTIES INSPECTOR */}
         {!isFullscreen && (
-          <div className={`h-full flex-shrink-0 z-10 ${
-            mobileTab === 'inspector' ? 'fixed inset-x-0 bottom-12 top-12 z-30 flex w-full' : 'hidden md:flex w-80 lg:w-96 xl:w-[420px]'
-          }`}>
+          <div className={`h-full flex-shrink-0 z-10 ${mobileTab === 'inspector' ? 'fixed inset-x-0 bottom-12 top-12 z-30 flex w-full' : 'hidden md:flex w-80 lg:w-96 xl:w-[420px]'
+            }`}>
             <StudioControlPanel
               onSaveDesign={handleOpenQuoteModal}
               isSubmitting={submitting}
@@ -389,9 +384,8 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
       <div className="md:hidden h-12 bg-white border-t border-slate-200 flex items-center justify-around px-2 flex-shrink-0 z-20">
         <button
           onClick={() => setMobileTab('dock')}
-          className={`flex-1 py-1.5 flex flex-col items-center gap-0.5 text-[10px] transition ${
-            mobileTab === 'dock' ? 'text-[var(--accent)] font-medium' : 'text-slate-500 font-normal'
-          }`}
+          className={`flex-1 py-1.5 flex flex-col items-center gap-0.5 text-[10px] transition ${mobileTab === 'dock' ? 'text-[var(--accent)] font-medium' : 'text-slate-500 font-normal'
+            }`}
         >
           <Compass size={14} />
           <span>Views & Parts</span>
@@ -399,9 +393,8 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
 
         <button
           onClick={() => setMobileTab('stage')}
-          className={`flex-1 py-1.5 flex flex-col items-center gap-0.5 text-[10px] transition ${
-            mobileTab === 'stage' ? 'text-[var(--accent)] font-medium' : 'text-slate-500 font-normal'
-          }`}
+          className={`flex-1 py-1.5 flex flex-col items-center gap-0.5 text-[10px] transition ${mobileTab === 'stage' ? 'text-[var(--accent)] font-medium' : 'text-slate-500 font-normal'
+            }`}
         >
           <Eye size={14} />
           <span>3D View</span>
@@ -409,9 +402,8 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
 
         <button
           onClick={() => setMobileTab('inspector')}
-          className={`flex-1 py-1.5 flex flex-col items-center gap-0.5 text-[10px] transition ${
-            mobileTab === 'inspector' ? 'text-[var(--accent)] font-medium' : 'text-slate-500 font-normal'
-          }`}
+          className={`flex-1 py-1.5 flex flex-col items-center gap-0.5 text-[10px] transition ${mobileTab === 'inspector' ? 'text-[var(--accent)] font-medium' : 'text-slate-500 font-normal'
+            }`}
         >
           <Sliders size={14} />
           <span>Customize</span>
@@ -428,7 +420,7 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
       {quoteModalOpen && (
         <div className="fixed inset-0 z-[400] bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="w-full max-w-lg bg-white text-slate-800 rounded shadow-xl border border-slate-200 overflow-hidden">
-            
+
             <div className="px-6 py-4 bg-slate-50 text-slate-800 flex items-center justify-between border-b border-slate-200">
               <div>
                 <span className="text-[10px] font-medium text-[var(--accent)] block">

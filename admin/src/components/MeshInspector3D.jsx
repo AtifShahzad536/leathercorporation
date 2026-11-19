@@ -164,7 +164,7 @@ export default function MeshInspector3D({ modelUrl, selectedMeshId, onMeshesDete
 
   return (
     <div className="relative w-full h-[420px] bg-gradient-to-b from-[#F8FAFC] via-[#F1F5F9] to-[#E2E8F0] rounded-xl border border-slate-200 overflow-hidden shadow-xs">
-      
+
       {/* Top HUD Controls */}
       <div className="absolute top-3 left-3 right-3 z-10 flex items-center justify-between pointer-events-none">
         <div className="pointer-events-auto px-2.5 py-1 bg-white/90 backdrop-blur border border-slate-200 rounded-md text-[11px] font-medium text-slate-700 flex items-center gap-2 shadow-xs">
@@ -177,9 +177,8 @@ export default function MeshInspector3D({ modelUrl, selectedMeshId, onMeshesDete
             type="button"
             onClick={() => setIsolateSelected(!isolateSelected)}
             title="Isolate Selected Mesh Part"
-            className={`px-2.5 py-1 text-xs font-medium rounded transition cursor-pointer ${
-              isolateSelected ? 'bg-[#1E1B6E] text-white' : 'text-slate-600 hover:bg-slate-100'
-            }`}
+            className={`px-2.5 py-1 text-xs font-medium rounded transition cursor-pointer ${isolateSelected ? 'bg-[#1E1B6E] text-white' : 'text-slate-600 hover:bg-slate-100'
+              }`}
           >
             {isolateSelected ? 'Show All' : 'Isolate Mesh'}
           </button>

@@ -15,6 +15,7 @@ import {
 export default function StudioControlPanel({ onSaveDesign, isSubmitting = false }) {
   const {
     activeModel,
+    detectedMeshes,
     selectedMeshId,
     meshCustomizations,
     globalPalette,
@@ -88,6 +89,11 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
   const calculatedUnitPrice = (44.99 * (rosterCount >= 100 ? 0.8 : rosterCount >= 50 ? 0.88 : rosterCount >= 25 ? 0.92 : 1) + (decorationMethod === 'twill' ? 10 : decorationMethod === 'both' ? 6 : 0));
   const calculatedTotalPrice = calculatedUnitPrice * rosterCount;
 
+  const selectedPart = (detectedMeshes || []).find(m => m.id === selectedMeshId);
+  const activeTargetLabel = selectedPart 
+    ? (selectedPart.id !== selectedPart.label ? `${selectedPart.label} (${selectedPart.id})` : selectedPart.label)
+    : (selectedMeshId ? selectedMeshId.replace(/^mesh_/, '').replace(/[_-]/g, ' ') : 'Entire Model');
+
   return (
     <aside className="w-full h-full flex flex-col bg-white border-l border-slate-200 text-slate-800 select-none overflow-hidden">
       
@@ -137,22 +143,32 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
             
             {/* Active Editing Target */}
             <div className="p-3 bg-slate-50 rounded border border-slate-200 space-y-2.5">
-              <div className="flex items-center justify-between">
-                <div>
+              <div className="flex items-center justify-between gap-2">
+                <div className="truncate">
                   <span className="text-[10px] text-slate-500 font-normal block">
                     Active Target:
                   </span>
-                  <h4 className="text-xs font-medium text-slate-800 capitalize truncate">
-                    {selectedMeshId ? selectedMeshId.replace(/^mesh_/, '').replace(/_/g, ' ') : 'Entire Uniform Base'}
+                  <h4 className="text-xs font-medium text-slate-800 truncate" title={activeTargetLabel}>
+                    {activeTargetLabel}
                   </h4>
                 </div>
 
-                <button
-                  onClick={() => setAllMeshesColor(currentMeshColor)}
-                  className="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-700 text-xs font-normal rounded border border-slate-200 transition cursor-pointer shadow-2xs"
-                >
-                  Apply to All Parts
-                </button>
+                <div className="flex items-center gap-1.5 flex-shrink-0">
+                  {selectedMeshId && (
+                    <button
+                      onClick={() => setSelectedMesh(null)}
+                      className="px-2 py-0.5 bg-white hover:bg-slate-100 text-slate-600 text-[11px] font-normal rounded border border-slate-200 transition cursor-pointer shadow-2xs"
+                    >
+                      Deselect
+                    </button>
+                  )}
+                  <button
+                    onClick={() => setAllMeshesColor(currentMeshColor)}
+                    className="px-2 py-1 bg-white hover:bg-slate-100 text-slate-700 text-xs font-normal rounded border border-slate-200 transition cursor-pointer shadow-2xs"
+                  >
+                    Apply to All
+                  </button>
+                </div>
               </div>
 
               {/* Color Picker & Hex value */}
