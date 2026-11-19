@@ -22,9 +22,9 @@ const IconX = () => (
 );
 
 const footerLinks = {
-  Products: ['Baseball Uniforms', 'Basketball Jerseys', 'Football Uniforms', 'Soccer Kits', 'Esports Apparel', 'Ice Hockey Sweaters'],
-  'Apparel Cuts': ['Full Button Jerseys', '2-Button Pullovers', 'V-Neck Game Sets', 'Sublimated Hoodies', 'Cage Jackets'],
-  Explore: ['About HAMLO SPORTS', 'Customer Reviews', 'Sizing Chart Guide', 'Team Name Generator', 'Designs Portfolio', 'Factory Compliance'],
+  Products: ['Baseball Uniforms', 'Basketball Jerseys', 'Football Uniforms', 'Soccer Kits', 'Cricket Uniforms', 'Ice Hockey Sweaters'],
+  'Apparel Cuts': ['3D Uniform Builder', 'Full Button Jerseys', '2-Button Pullovers', 'V-Neck Game Sets', 'Sublimated Hoodies', 'Cage Jackets'],
+  Explore: ['About HAMLO SPORTS', '3D Uniform Builder', 'Customer Reviews', 'Sizing Chart Guide', 'Turnaround Lead Time', 'Team Name Generator', 'Designs Portfolio'],
   'Partner With Us': ['Register Your Club', 'Start Custom Orders', '12-Hour 3D Mockup', 'School & Club Orders', 'Contact Sales Desk'],
 };
 
@@ -85,13 +85,17 @@ const Footer = ({ onNavigate = () => {} }) => {
                     <button
                       onClick={() => {
                         if (section === 'Products') {
-                          onNavigate('products', link);
+                          if (link.includes('Cricket')) onNavigate('cricket');
+                          else onNavigate('products', link);
                         } else if (section === 'Apparel Cuts') {
-                          onNavigate('styles');
+                          if (link.includes('3D Uniform')) onNavigate('builder');
+                          else onNavigate('styles');
                         } else if (section === 'Explore') {
                           if (link.includes('About')) onNavigate('about');
+                          else if (link.includes('3D Uniform')) onNavigate('builder');
                           else if (link.includes('Reviews')) onNavigate('reviews');
                           else if (link.includes('Sizing')) onNavigate('sizing-chart');
+                          else if (link.includes('Turnaround')) onNavigate('lead-time');
                           else if (link.includes('Generator')) onNavigate('team-name-generator');
                           else if (link.includes('Portfolio')) onNavigate('portfolio');
                           else if (link.includes('Compliance')) onNavigate('compliance');

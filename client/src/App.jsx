@@ -39,6 +39,12 @@ const RegisterClubPage = lazy(() => import('./components/pages/RegisterClubPage'
 const HowToOrderPage = lazy(() => import('./components/pages/HowToOrderPage'));
 const TeamNameGeneratorPage = lazy(() => import('./components/pages/TeamNameGeneratorPage'));
 const PortfolioPage = lazy(() => import('./components/pages/PortfolioPage'));
+const UniformBuilderPage = lazy(() => import('./components/pages/UniformBuilderPage'));
+const CricketUniformsPage = lazy(() => import('./components/pages/CricketUniformsPage'));
+const TennisApparelPage = lazy(() => import('./components/pages/TennisApparelPage'));
+const FieldHockeyPage = lazy(() => import('./components/pages/FieldHockeyPage'));
+const SportsGlovesPage = lazy(() => import('./components/pages/SportsGlovesPage'));
+const LeadTimeGuidePage = lazy(() => import('./components/pages/LeadTimeGuidePage'));
 
 function MainApp() {
   const [currentPage, setCurrentPage] = useState('home'); 
@@ -214,6 +220,24 @@ function MainApp() {
     } else if (routeString.startsWith('portfolio') || routeString.startsWith('gallery')) {
       setCurrentPage('portfolio');
       document.title = 'Custom Team Uniform Designs by Sport | Portfolio | HAMLO SPORTS';
+    } else if (routeString.startsWith('builder') || routeString.startsWith('3d-builder') || routeString.startsWith('customizer')) {
+      setCurrentPage('builder');
+      document.title = '3D Custom Sports Jersey Builder | Hamlo Sports Wear';
+    } else if (routeString.startsWith('custom-cricket-uniforms') || routeString === 'cricket') {
+      setCurrentPage('cricket');
+      document.title = 'Custom Cricket Uniforms & T20 Jerseys USA | Hamlo Sports Wear';
+    } else if (routeString.startsWith('custom-tennis-apparel') || routeString === 'tennis') {
+      setCurrentPage('tennis');
+      document.title = 'Custom Tennis Apparel & Team Polos USA | Hamlo Sports Wear';
+    } else if (routeString.startsWith('custom-field-hockey-uniforms') || routeString === 'field-hockey') {
+      setCurrentPage('field-hockey');
+      document.title = 'Custom Field Hockey Uniforms & Kilts USA | Hamlo Sports Wear';
+    } else if (routeString.startsWith('custom-sports-gloves') || routeString.startsWith('gloves') || routeString.startsWith('goalkeeper-gloves')) {
+      setCurrentPage('gloves');
+      document.title = 'Custom Sports Gloves & Goalkeeper Gloves | Hamlo Sports Wear';
+    } else if (routeString.startsWith('how-long-do-custom-uniforms-take') || routeString.startsWith('lead-time') || routeString.startsWith('turnaround')) {
+      setCurrentPage('lead-time');
+      document.title = 'How Long Do Custom Uniforms Take? | Hamlo Sports Wear';
     } else if (routeString.startsWith('inquiry') || routeString.startsWith('checkout') || routeString.startsWith('request-a-quote') || routeString.startsWith('contact')) {
       setCurrentPage('inquiry');
       document.title = 'Request a 12-Hour 3D Team Mockup & B2B Quote | HAMLO SPORTS';
@@ -224,7 +248,7 @@ function MainApp() {
       }
     } else {
       setCurrentPage('home');
-      document.title = 'HAMLO SPORTS | Custom Team Sports Uniforms & Factory Direct Athletic Apparel';
+      document.title = 'Hamlo Sports Wear — Custom Team Uniforms | Factory-Direct, Sialkot';
     }
   };
 
@@ -324,6 +348,24 @@ function MainApp() {
     } else if (page === 'portfolio') {
       window.history.pushState({}, '', '/portfolio/');
       document.title = 'Custom Team Uniform Designs by Sport | HAMLO SPORTS';
+    } else if (page === 'builder') {
+      window.history.pushState({}, '', '/builder/');
+      document.title = '3D Custom Sports Jersey Builder | Hamlo Sports Wear';
+    } else if (page === 'cricket') {
+      window.history.pushState({}, '', '/custom-cricket-uniforms/');
+      document.title = 'Custom Cricket Uniforms & T20 Jerseys USA | Hamlo Sports Wear';
+    } else if (page === 'tennis') {
+      window.history.pushState({}, '', '/custom-tennis-apparel/');
+      document.title = 'Custom Tennis Apparel & Team Polos USA | Hamlo Sports Wear';
+    } else if (page === 'field-hockey') {
+      window.history.pushState({}, '', '/custom-field-hockey-uniforms/');
+      document.title = 'Custom Field Hockey Uniforms & Kilts USA | Hamlo Sports Wear';
+    } else if (page === 'gloves') {
+      window.history.pushState({}, '', '/custom-sports-gloves/');
+      document.title = 'Custom Sports Gloves & Goalkeeper Gloves | Hamlo Sports Wear';
+    } else if (page === 'lead-time') {
+      window.history.pushState({}, '', '/how-long-do-custom-uniforms-take/');
+      document.title = 'How Long Do Custom Uniforms Take? | Hamlo Sports Wear';
     } else if (page === 'inquiry' || page === 'checkout') {
       const productSlug = typeof param1 === 'object' ? (param1.slug || param1.name) : param1;
       setInquiryProductSlug(productSlug || '');
@@ -331,7 +373,7 @@ function MainApp() {
       document.title = 'Request a 12-Hour 3D Team Mockup & B2B Quote | HAMLO SPORTS';
     } else {
       window.history.pushState({}, '', '/');
-      document.title = 'HAMLO SPORTS | Custom Team Sports Uniforms & Factory Direct Athletic Apparel';
+      document.title = 'Hamlo Sports Wear — Custom Team Uniforms | Factory-Direct, Sialkot';
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -462,6 +504,42 @@ function MainApp() {
           <PortfolioPage
             onNavigateInquiry={(p) => navigateTo('inquiry', p)}
             onNavigateProduct={(prod) => navigateTo('product-detail', prod)}
+          />
+        )}
+
+        {currentPage === 'builder' && (
+          <UniformBuilderPage
+            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
+          />
+        )}
+
+        {currentPage === 'cricket' && (
+          <CricketUniformsPage
+            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
+          />
+        )}
+
+        {currentPage === 'tennis' && (
+          <TennisApparelPage
+            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
+          />
+        )}
+
+        {currentPage === 'field-hockey' && (
+          <FieldHockeyPage
+            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
+          />
+        )}
+
+        {currentPage === 'gloves' && (
+          <SportsGlovesPage
+            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
+          />
+        )}
+
+        {currentPage === 'lead-time' && (
+          <LeadTimeGuidePage
+            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
           />
         )}
       </Suspense>

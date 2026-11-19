@@ -24,7 +24,8 @@ const Navbar = ({ onNavigate = () => {} }) => {
     { name: 'RUGBY', label: 'Rugby' },
     { name: 'SOFTBALL', label: 'Softball' },
     { name: 'VOLLEYBALL', label: 'Volleyball' },
-    { name: 'WRESTLING', label: 'Wrestling' }
+    { name: 'WRESTLING', label: 'Wrestling' },
+    { name: 'CRICKET', label: 'Cricket' }
   ];
 
   const drawerData = {
@@ -123,6 +124,7 @@ const Navbar = ({ onNavigate = () => {} }) => {
 
   // PRODUCTS removed, STYLES kept in header!
   const navLinks = [
+    '3D BUILDER',
     'STYLES',
     'EXPLORE',
     'PARTNER WITH US',
@@ -132,7 +134,9 @@ const Navbar = ({ onNavigate = () => {} }) => {
   ];
 
   const handleNavLinkClick = (link) => {
-    if (link === 'STYLES') {
+    if (link === '3D BUILDER') {
+      onNavigate('builder');
+    } else if (link === 'STYLES') {
       onNavigate('styles');
     } else if (link === 'EXPLORE') {
       onNavigate('explore');
@@ -319,7 +323,10 @@ const Navbar = ({ onNavigate = () => {} }) => {
           {directSports.map((sport) => (
             <button
               key={sport.name}
-              onClick={() => onNavigate('products', sport.name)}
+              onClick={() => {
+                if (sport.name === 'CRICKET') onNavigate('cricket');
+                else onNavigate('products', sport.name);
+              }}
               className="relative px-1 sm:px-2 py-1.5 text-[9px] sm:text-[10px] xl:text-[11px] font-bold uppercase tracking-wider text-[var(--secondary)]/85 hover:text-[var(--accent)] transition-colors duration-200 cursor-pointer flex-shrink-0 group"
             >
               <span>{sport.label}</span>

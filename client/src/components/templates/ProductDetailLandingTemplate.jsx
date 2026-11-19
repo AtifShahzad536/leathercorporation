@@ -1073,10 +1073,14 @@ export default function ProductDetailLandingTemplate({
             {upsells.map((u, idx) => (
               <div key={idx} className="bg-white p-3 rounded-[3px] border border-[var(--secondary)]/10 shadow-xs flex flex-col justify-between group hover:border-[var(--accent)] transition duration-200">
                 <div 
-                  className="aspect-[4/3] bg-neutral-100 rounded mb-2 overflow-hidden cursor-pointer"
+                  className="aspect-[3/4] sm:aspect-[4/5] bg-neutral-50 rounded mb-2 overflow-hidden cursor-pointer flex items-center justify-center p-3 relative"
                   onClick={() => u.rawProduct && onNavigateProduct(u.rawProduct)}
                 >
-                  <img src={u.img} alt={`${u.name} - HAMLO SPORTS`} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                  <img 
+                    src={u.img} 
+                    alt={`${u.name} - HAMLO SPORTS`} 
+                    className="w-full h-full object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-105" 
+                  />
                 </div>
                 <h3 
                   className="text-xs font-black uppercase text-[var(--secondary)] line-clamp-1 mb-1 cursor-pointer hover:text-[var(--accent)]"
@@ -1169,11 +1173,11 @@ export default function ProductDetailLandingTemplate({
                   className="bg-white p-2 rounded-[3px] border border-neutral-200 text-center group hover:border-[var(--accent)] transition cursor-pointer"
                   onClick={() => design.rawProduct && onNavigateProduct(design.rawProduct)}
                 >
-                  <div className="aspect-[4/5] bg-neutral-100 rounded mb-1.5 overflow-hidden">
+                  <div className="aspect-[3/4] sm:aspect-[4/5] bg-neutral-50 rounded mb-1.5 overflow-hidden flex items-center justify-center p-2 relative">
                     <img 
                       src={design.img} 
                       alt={`${design.fullName || design.name} - HAMLO SPORTS Sublimated Design Concept`} 
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" 
+                      className="w-full h-full object-contain drop-shadow-xs transition-transform duration-300 group-hover:scale-105" 
                     />
                   </div>
                   <strong className="text-[10px] font-black uppercase text-[var(--secondary)] block line-clamp-1 group-hover:text-[var(--accent)]">
