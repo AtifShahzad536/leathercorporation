@@ -133,9 +133,9 @@ export const useStudioStore = create((set, get) => ({
       color: '#F5A623',
       strokeColor: '#000000',
       strokeWidth: 2,
-      position: [0, 0.42, 0.22],
+      position: [0, 0.1, 0.1],
       rotation: [0, 0, 0],
-      scale: 1.0,
+      scale: 0.6,
       targetMeshId: null,
       visible: true
     },
@@ -148,11 +148,11 @@ export const useStudioStore = create((set, get) => ({
       color: '#F5A623',
       strokeColor: '#000000',
       strokeWidth: 3,
-      position: [0, 0.16, 0.23],
+      position: [0, 0.05, 0.1],
       rotation: [0, 0, 0],
-      scale: 1.0,
+      scale: 0.5,
       targetMeshId: null,
-      visible: true
+      visible: false
     },
     {
       id: 'player_name',
@@ -163,17 +163,23 @@ export const useStudioStore = create((set, get) => ({
       color: '#F5A623',
       strokeColor: '#000000',
       strokeWidth: 2,
-      position: [0, 0.42, -0.22],
+      position: [0, 0.1, -0.1],
       rotation: [0, Math.PI, 0],
-      scale: 1.0,
+      scale: 0.6,
       targetMeshId: null,
-      visible: true
+      visible: false
     }
   ],
   selectedTextId: 'team_name',
   isDragging3D: false,
   show3DGizmo: false,
-  meshCenters: {}, // { [meshId]: { center: [x,y,z], size: [x,y,z], surfacePosition: [x,y,z] } }
+  meshCenters: {}, // { [meshId]: { center: [x,y,z], size: [x,y,z], surfacePosition: [x,y,z], rotation: [rx,ry,rz] } }
+  modelBounds: {
+    center: [0, 0.2, 0],
+    size: [0.6, 0.8, 0.4],
+    min: [-0.3, -0.2, -0.2],
+    max: [0.3, 0.6, 0.2]
+  },
 
   // Logos & Decals
   logos: [], // [{ id, url, name, placement: 'chest'|'back'|'left_sleeve'|'right_sleeve', x, y, scale, rotation }]
@@ -482,6 +488,8 @@ export const useStudioStore = create((set, get) => ({
   },
 
   setMeshCenters: (meshCenters) => set({ meshCenters }),
+  setModelBounds: (bounds) => set({ modelBounds: bounds }),
+  setTextItems: (items) => set({ textItems: items }),
   setSelectedTextId: (id) => set({ selectedTextId: id }),
   setIsDragging3D: (isDragging) => set({ isDragging3D: isDragging }),
   setShow3DGizmo: (show) => set((s) => ({ show3DGizmo: typeof show === 'boolean' ? show : !s.show3DGizmo })),
@@ -493,11 +501,19 @@ export const useStudioStore = create((set, get) => ({
     
     // Auto-calculate position if meshId provided
     let pos = initialPos;
+    let rot = [0, 0, 0];
+    let partScale = 0.55;
+
     if (!pos && meshId && state.meshCenters[meshId]?.surfacePosition) {
       pos = [...state.meshCenters[meshId].surfacePosition];
+      rot = state.meshCenters[meshId].rotation ? [...state.meshCenters[meshId].rotation] : [0, (pos[2] < 0 ? Math.PI : 0), 0];
+      if (state.meshCenters[meshId].size) {
+        partScale = Math.min(0.85, Math.max(0.25, state.meshCenters[meshId].size[0] * 0.8));
+      }
     }
     if (!pos) {
-      pos = [0, 0.28, 0.22];
+      const b = state.modelBounds || { center: [0, 0.2, 0], size: [0.5, 0.6, 0.3], max: [0.25, 0.5, 0.15] };
+      pos = [0, b.center[1] + (b.size[1] * 0.1), b.max[2] + 0.003];
     }
 
     const newItem = {
@@ -509,9 +525,17 @@ export const useStudioStore = create((set, get) => ({
       color: state.nameNumber?.textColor || state.secondaryColor || '#F5A623',
       strokeColor: state.nameNumber?.strokeColor || '#000000',
       strokeWidth: 2,
-      position: pos,
-      rotation: [0, (pos[2] < 0 ? Math.PI : 0), 0],
-      scale: 1.0,
+      position: [
+        Math.round(pos[0] * 1000) / 1000,
+        Math.round(pos[1] * 1000) / 1000,
+        Math.round(pos[2] * 1000) / 1000
+      ],
+      rotation: [
+        Math.round(rot[0] * 1000) / 1000,
+        Math.round(rot[1] * 1000) / 1000,
+        Math.round(rot[2] * 1000) / 1000
+      ],
+      scale: partScale,
       targetMeshId: meshId,
       visible: true
     };
@@ -564,13 +588,87 @@ export const useStudioStore = create((set, get) => ({
     const info = state.meshCenters[meshId];
     if (!info) return;
 
-    const surfPos = info.surfacePosition || [0, 0.3, 0.22];
-    const isRear = surfPos[2] < 0;
+    const surfPos = info.surfacePosition || [0, 0.2, 0.15];
+    const rot = info.rotation || [0, surfPos[2] < 0 ? Math.PI : 0, 0];
+    const mSize = info.size || [0.4, 0.4, 0.4];
+    const partScale = Math.min(0.85, Math.max(0.25, mSize[0] * 0.8));
 
     state.updateTextItem(textId, {
-      position: [surfPos[0], surfPos[1], surfPos[2]],
-      rotation: [0, isRear ? Math.PI : 0, 0],
-      targetMeshId: meshId
+      position: [
+        Math.round(surfPos[0] * 1000) / 1000,
+        Math.round(surfPos[1] * 1000) / 1000,
+        Math.round(surfPos[2] * 1000) / 1000
+      ],
+      rotation: [
+        Math.round(rot[0] * 1000) / 1000,
+        Math.round(rot[1] * 1000) / 1000,
+        Math.round(rot[2] * 1000) / 1000
+      ],
+      scale: partScale,
+      targetMeshId: meshId,
+      visible: true
+    });
+  },
+
+  applyPlacementPreset: (textId, presetKey) => {
+    if (!textId) return;
+    get().saveSnapshot();
+    const state = get();
+    const b = state.modelBounds || {
+      center: [0, 0.2, 0],
+      size: [0.5, 0.6, 0.3],
+      min: [-0.25, -0.1, -0.15],
+      max: [0.25, 0.5, 0.15]
+    };
+
+    let pos = [0, b.center[1] + (b.size[1] * 0.12), b.max[2] + 0.003];
+    let rot = [0, 0, 0];
+    const autoScale = Math.min(0.85, Math.max(0.28, b.size[0] * 0.85));
+
+    switch (presetKey) {
+      case 'front_chest':
+        pos = [0, b.center[1] + (b.size[1] * 0.12), b.max[2] + 0.003];
+        rot = [0, 0, 0];
+        break;
+      case 'front_center':
+        pos = [0, b.center[1], b.max[2] + 0.003];
+        rot = [0, 0, 0];
+        break;
+      case 'back_name':
+        pos = [0, b.center[1] + (b.size[1] * 0.12), b.min[2] - 0.003];
+        rot = [0, Math.PI, 0];
+        break;
+      case 'left_leg':
+      case 'left_side':
+        pos = [b.min[0] + (b.size[0] * 0.2), b.center[1] - (b.size[1] * 0.1), b.max[2] + 0.002];
+        rot = [0, 0, 0];
+        break;
+      case 'right_leg':
+      case 'right_side':
+        pos = [b.max[0] - (b.size[0] * 0.2), b.center[1] - (b.size[1] * 0.1), b.max[2] + 0.002];
+        rot = [0, 0, 0];
+        break;
+      case 'waistband':
+        pos = [0, b.max[1] - (b.size[1] * 0.1), b.max[2] + 0.003];
+        rot = [0, 0, 0];
+        break;
+      default:
+        break;
+    }
+
+    state.updateTextItem(textId, {
+      position: [
+        Math.round(pos[0] * 1000) / 1000,
+        Math.round(pos[1] * 1000) / 1000,
+        Math.round(pos[2] * 1000) / 1000
+      ],
+      rotation: [
+        Math.round(rot[0] * 1000) / 1000,
+        Math.round(rot[1] * 1000) / 1000,
+        Math.round(rot[2] * 1000) / 1000
+      ],
+      scale: autoScale,
+      visible: true
     });
   },
 

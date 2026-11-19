@@ -36,6 +36,7 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
     updateTextItem,
     removeTextItem,
     snapTextToMesh,
+    applyPlacementPreset,
     show3DGizmo,
     setShow3DGizmo,
     meshCenters,
@@ -623,45 +624,45 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
                   <div className="grid grid-cols-3 gap-1">
                     <button
                       type="button"
-                      onClick={() => updateTextItem(activeTextItem.id, { position: [0, 0.42, 0.22], rotation: [0, 0, 0] })}
+                      onClick={() => applyPlacementPreset(activeTextItem.id, 'front_chest')}
                       className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700 cursor-pointer"
                     >
                       Front Chest
                     </button>
                     <button
                       type="button"
-                      onClick={() => updateTextItem(activeTextItem.id, { position: [0, 0.18, 0.23], rotation: [0, 0, 0] })}
+                      onClick={() => applyPlacementPreset(activeTextItem.id, 'front_center')}
                       className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700 cursor-pointer"
                     >
                       Front Center
                     </button>
                     <button
                       type="button"
-                      onClick={() => updateTextItem(activeTextItem.id, { position: [0, 0.42, -0.22], rotation: [0, Math.PI, 0] })}
+                      onClick={() => applyPlacementPreset(activeTextItem.id, 'back_name')}
                       className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700 cursor-pointer"
                     >
                       Back Name
                     </button>
                     <button
                       type="button"
-                      onClick={() => updateTextItem(activeTextItem.id, { position: [-0.10, 0.22, 0.20], rotation: [0, 0, 0] })}
+                      onClick={() => applyPlacementPreset(activeTextItem.id, 'left_leg')}
                       className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700 cursor-pointer"
                     >
-                      Left Leg
+                      Left Side
                     </button>
                     <button
                       type="button"
-                      onClick={() => updateTextItem(activeTextItem.id, { position: [0.10, 0.22, 0.20], rotation: [0, 0, 0] })}
+                      onClick={() => applyPlacementPreset(activeTextItem.id, 'right_leg')}
                       className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700 cursor-pointer"
                     >
-                      Right Leg
+                      Right Side
                     </button>
                     <button
                       type="button"
-                      onClick={() => updateTextItem(activeTextItem.id, { position: [0, 0.48, 0.16], rotation: [0, 0, 0] })}
+                      onClick={() => applyPlacementPreset(activeTextItem.id, 'waistband')}
                       className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700 cursor-pointer"
                     >
-                      Waistband
+                      Top / Hem
                     </button>
                   </div>
                 </div>
