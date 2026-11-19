@@ -60,7 +60,7 @@ const sendDailyEmails = async () => {
           .replace(/{{company}}/gi, entry.company || 'Athletic Program');
 
         await transporter.sendMail({
-          from: process.env.EMAIL_FROM || 'HAMLO SPORTS <noreply@hamlosports.com>',
+          from: process.env.EMAIL_FROM || 'HAMLO SPORTS <sale@hamlosportswear.site>',
           to: entry.email,
           subject,
           html,

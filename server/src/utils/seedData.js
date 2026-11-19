@@ -64,7 +64,7 @@ async function seedData() {
     <p style="font-size: 13px; color: #777777;">
       Best regards,<br>
       <strong>HAMLO SPORTS Team</strong><br>
-      Direct WhatsApp: +92 300 0000000 | export@hamlosports.com
+      Direct WhatsApp: +92 310 5464116 | sale@hamlosportswear.site
     </p>
   </div>
 </div>

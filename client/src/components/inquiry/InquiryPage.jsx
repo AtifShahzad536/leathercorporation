@@ -92,7 +92,7 @@ export default function InquiryPage({
 
   const buildWhatsAppText = () => {
     const text = `Hello HAMLO SPORTS!\nI want to request a B2B factory quote:\n- Name: ${formData.fullName || 'Team Coach'}\n- Organization: ${formData.organization || 'Athletic Club'}\n- Sport: ${formData.sportCategory}\n- Quantity: ${formData.quantityTier}\n- Package: ${formData.uniformType}\n- Reference Product: ${selectedProduct ? selectedProduct.name : 'Custom Team Uniform'}\n\nPlease share the 3D mockup and factory pricing.`;
-    return `https://wa.me/923000000000?text=${encodeURIComponent(text)}`;
+    return `https://wa.me/923105464116?text=${encodeURIComponent(text)}`;
   };
 
   return (
@@ -437,7 +437,7 @@ export default function InquiryPage({
                   rel="noopener noreferrer"
                   className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider rounded-[3px] flex items-center justify-center gap-1.5 transition-colors"
                 >
-                  <span>Open WhatsApp (+92)</span>
+                  <span>Open WhatsApp (+92 310 5464116)</span>
                 </a>
               </div>
 
@@ -470,14 +470,14 @@ export default function InquiryPage({
 
               {/* Direct Contacts */}
               <div className="bg-white border border-[var(--secondary)]/10 rounded-[3px] p-5 shadow-sm space-y-2.5 text-xs">
-                <div className="flex items-center gap-2 text-[var(--secondary)]/70">
+                <a href="mailto:sale@hamlosportswear.site" className="flex items-center gap-2 text-[var(--secondary)]/80 hover:text-[var(--accent)] transition-colors">
                   <Mail size={13} className="text-[var(--accent)]" />
-                  <span>export@hamlosports.com</span>
-                </div>
-                <div className="flex items-center gap-2 text-[var(--secondary)]/70">
+                  <span>sale@hamlosportswear.site</span>
+                </a>
+                <a href="https://wa.me/923105464116" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[var(--secondary)]/80 hover:text-[var(--accent)] transition-colors">
                   <Phone size={13} className="text-[var(--accent)]" />
-                  <span>Direct Export Desk: +92 (52) 111-HAMLO</span>
-                </div>
+                  <span>Direct WhatsApp: +92 310 5464116</span>
+                </a>
                 <div className="flex items-center gap-2 text-[var(--secondary)]/70">
                   <Globe size={13} className="text-[var(--accent)]" />
                   <span>Sialkot, Pakistan • Exporting to 35+ Countries</span>

@@ -116,7 +116,7 @@ export default function FAQSection() {
           </div>
           <div className="flex items-center gap-3 flex-shrink-0 flex-wrap">
             <a
-              href="https://wa.me/923000000000?text=Hello%20HAMLO%20SPORTS!%20I%20have%20a%20question%20about%20team%20uniforms."
+              href="https://wa.me/923105464116?text=Hello%20HAMLO%20SPORTS!%20I%20have%20a%20question%20about%20team%20uniforms."
               target="_blank"
               rel="noopener noreferrer"
               className="px-5 py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-black text-xs uppercase tracking-wider rounded-[5px] transition cursor-pointer shadow"

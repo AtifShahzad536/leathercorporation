@@ -301,14 +301,14 @@ export default function AboutPage({
                 <Mail className="text-[var(--accent)] flex-shrink-0 mt-1" size={20} />
                 <div>
                   <h5 className="font-bold text-xs uppercase text-[var(--secondary)]">B2B Team Quotes</h5>
-                  <p className="text-xs text-neutral-600 mt-0.5">sales@hamlosports.com</p>
+                  <p className="text-xs text-neutral-600 mt-0.5">sale@hamlosportswear.site</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <Phone className="text-[var(--accent)] flex-shrink-0 mt-1" size={20} />
                 <div>
                   <h5 className="font-bold text-xs uppercase text-[var(--secondary)]">Direct WhatsApp Desk</h5>
-                  <p className="text-xs text-neutral-600 mt-0.5">+92 (300) 000-0000</p>
+                  <a href="https://wa.me/923105464116" target="_blank" rel="noopener noreferrer" className="text-xs text-[var(--accent)] hover:underline font-bold mt-0.5 block">+92 310 5464116</a>
                 </div>
               </div>
             </div>

@@ -134,7 +134,7 @@ export default function LiveChatWidget({ onNavigateInquiry = () => {} }) {
             <div className="px-4 py-2 bg-neutral-100/90 border-t border-neutral-200 flex items-center justify-between text-[11px]">
               <span className="text-neutral-500 font-medium">Need instant quote?</span>
               <a
-                href="https://wa.me/923000000000?text=Hi%20HAMLO%20SPORTS,%20I%20want%20to%20order%20custom%20team%20uniforms"
+                href="https://wa.me/923105464116?text=Hi%20HAMLO%20SPORTS,%20I%20want%20to%20order%20custom%20team%20uniforms"
                 target="_blank"
                 rel="noreferrer"
                 className="font-bold text-[var(--accent)] hover:underline flex items-center gap-1"

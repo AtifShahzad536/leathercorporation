@@ -445,7 +445,7 @@ export default function ProductDetailLandingTemplate({
     }
   };
 
-  const whatsAppNumber = '923000000000';
+  const whatsAppNumber = '923105464116';
   const buildWhatsAppLink = (customMsg) => {
     const text = customMsg || `Hello HAMLO SPORTS!\n\nI want to request a free 3D digital mockup & B2B team quote for:\n• Product: ${productName}\n• Sport: ${sport}\n• Price Tier: ${basePrice}\n• Estimated Roster Size: ${calcQty} players (${calcFormat === 'set' ? 'Full Uniform Set' : 'Jersey Only'})\n• Estimated Total: $${calcResult.total}\n\nPlease share the 3D proof and team pricing details.`;
     return `https://wa.me/${whatsAppNumber}?text=${encodeURIComponent(text)}`;

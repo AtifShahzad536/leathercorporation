@@ -15,7 +15,7 @@ export default function CartDrawer({ onNavigateInquiry = () => {}, onContinueSho
       text += `${idx + 1}. ${item.name} - Estimated Qty: ${item.quantity} units (Size: ${item.size || 'Custom Team Roster'}, Color: ${item.color || 'Custom Team Colors'})\n`;
     });
     text += `\nPlease provide 3D mockups and volume tier pricing.`;
-    return `https://wa.me/923000000000?text=${encodeURIComponent(text)}`;
+    return `https://wa.me/923105464116?text=${encodeURIComponent(text)}`;
   };
 
   return (

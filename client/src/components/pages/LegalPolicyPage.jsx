@@ -161,7 +161,7 @@ export default function LegalPolicyPage({ initialTab = 'privacy', onNavigateInqu
             <div>
               <h2 className="text-xl font-black uppercase text-[var(--secondary)] mb-2">2. How to File a Remake Claim</h2>
               <p>
-                Simply email <strong>support@hamlosports.com</strong> with your order number and clear photos showing the issue within 30 days of package receipt. Our production desk resolves claims within 24 business hours.
+                Simply email <strong>sale@hamlosportswear.site</strong> with your order number and clear photos showing the issue within 30 days of package receipt. Our production desk resolves claims within 24 business hours.
               </p>
             </div>
           </div>

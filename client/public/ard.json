@@ -19,7 +19,7 @@
       "trustManifest": {
         "identity": "https://hamlosportswear.site",
         "publisher": "HAMLO SPORTS",
-        "contact": "mailto:export@hamlosports.com",
+        "contact": "mailto:sale@hamlosportswear.site",
         "canonical": "https://hamlosportswear.site/.well-known/ard.json",
         "lastUpdated": "2026-11-19"
       }
@@ -38,7 +38,7 @@
       "trustManifest": {
         "identity": "https://hamlosportswear.site",
         "publisher": "HAMLO SPORTS",
-        "contact": "mailto:export@hamlosports.com",
+        "contact": "mailto:sale@hamlosportswear.site",
         "canonical": "https://hamlosportswear.site/.well-known/ard.json",
         "lastUpdated": "2026-11-19"
       }
