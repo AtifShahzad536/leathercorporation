@@ -133,10 +133,10 @@ export const useStudioStore = create((set, get) => ({
       color: '#F5A623',
       strokeColor: '#000000',
       strokeWidth: 2,
-      position: [0, 0.1, 0.1],
+      position: [0, 0.25, 0.15],
       rotation: [0, 0, 0],
-      angle: 0,
       scale: 0.6,
+      angle: 0,
       targetMeshId: null,
       visible: true
     },
@@ -149,10 +149,10 @@ export const useStudioStore = create((set, get) => ({
       color: '#F5A623',
       strokeColor: '#000000',
       strokeWidth: 3,
-      position: [0, 0.05, 0.1],
+      position: [0, 0.15, 0.15],
       rotation: [0, 0, 0],
-      angle: 0,
       scale: 0.5,
+      angle: 0,
       targetMeshId: null,
       visible: false
     },
@@ -165,10 +165,10 @@ export const useStudioStore = create((set, get) => ({
       color: '#F5A623',
       strokeColor: '#000000',
       strokeWidth: 2,
-      position: [0, 0.1, -0.1],
+      position: [0, 0.25, -0.15],
       rotation: [0, Math.PI, 0],
-      angle: 0,
       scale: 0.6,
+      angle: 0,
       targetMeshId: null,
       visible: false
     }
@@ -177,6 +177,8 @@ export const useStudioStore = create((set, get) => ({
   isDragging3D: false,
   show3DGizmo: false,
   meshCenters: {}, // { [meshId]: { center: [x,y,z], size: [x,y,z], surfacePosition: [x,y,z], rotation: [rx,ry,rz] } }
+  modelRevision: 0,
+  frontSurface: null,
   modelBounds: {
     center: [0, 0.2, 0],
     size: [0.6, 0.8, 0.4],
@@ -305,16 +307,16 @@ export const useStudioStore = create((set, get) => ({
         let assignedColor = primary;
 
         if (
-          lower.includes('eyelet') || lower.includes('button') || lower.includes('string') || 
-          lower.includes('cord') || lower.includes('stripe') || lower.includes('piping') || 
+          lower.includes('eyelet') || lower.includes('button') || lower.includes('string') ||
+          lower.includes('cord') || lower.includes('stripe') || lower.includes('piping') ||
           lower.includes('accent') || lower.includes('e_1') || lower.includes('e_2') ||
           lower.includes('e 1') || lower.includes('e 2')
         ) {
           assignedColor = accent;
         } else if (
-          lower.includes('sleeve') || lower.includes('arm') || lower.includes('collar') || 
-          lower.includes('neck') || lower.includes('rib') || lower.includes('cuff') || 
-          lower.includes('waist') || lower.includes('belt') || lower.includes('side') || 
+          lower.includes('sleeve') || lower.includes('arm') || lower.includes('collar') ||
+          lower.includes('neck') || lower.includes('rib') || lower.includes('cuff') ||
+          lower.includes('waist') || lower.includes('belt') || lower.includes('side') ||
           lower.includes('vent') || lower.includes('visor') || lower.includes('brim') ||
           lower.includes('d_1') || lower.includes('d_2') || lower.includes('b_2') || lower.includes('b_3') ||
           lower.includes('d 1') || lower.includes('d 2') || lower.includes('b 2') || lower.includes('b 3')
@@ -365,8 +367,8 @@ export const useStudioStore = create((set, get) => ({
     get().saveSnapshot();
     set((state) => {
       const updated = {};
-      const allParts = state.detectedMeshes && state.detectedMeshes.length > 0 
-        ? state.detectedMeshes 
+      const allParts = state.detectedMeshes && state.detectedMeshes.length > 0
+        ? state.detectedMeshes
         : Object.keys(state.meshCustomizations).map(id => ({ id }));
 
       allParts.forEach(m => {
@@ -392,8 +394,8 @@ export const useStudioStore = create((set, get) => ({
 
         // 1. Accent details: drawstrings, eyelets, buttons, stripes, trim, cords
         if (
-          lower.includes('eyelet') || lower.includes('button') || lower.includes('string') || 
-          lower.includes('cord') || lower.includes('stripe') || lower.includes('piping') || 
+          lower.includes('eyelet') || lower.includes('button') || lower.includes('string') ||
+          lower.includes('cord') || lower.includes('stripe') || lower.includes('piping') ||
           lower.includes('accent') || lower.includes('e_1') || lower.includes('e_2') ||
           lower.includes('e 1') || lower.includes('e 2')
         ) {
@@ -401,9 +403,9 @@ export const useStudioStore = create((set, get) => ({
         }
         // 2. Secondary contrast: waistband, sleeves, collar, cuffs, side panels, visor
         else if (
-          lower.includes('sleeve') || lower.includes('arm') || lower.includes('collar') || 
-          lower.includes('neck') || lower.includes('rib') || lower.includes('cuff') || 
-          lower.includes('waist') || lower.includes('belt') || lower.includes('side') || 
+          lower.includes('sleeve') || lower.includes('arm') || lower.includes('collar') ||
+          lower.includes('neck') || lower.includes('rib') || lower.includes('cuff') ||
+          lower.includes('waist') || lower.includes('belt') || lower.includes('side') ||
           lower.includes('vent') || lower.includes('visor') || lower.includes('brim') ||
           lower.includes('d_1') || lower.includes('d_2') || lower.includes('b_2') || lower.includes('b_3') ||
           lower.includes('d 1') || lower.includes('d 2') || lower.includes('b 2') || lower.includes('b 3')
@@ -500,7 +502,8 @@ export const useStudioStore = create((set, get) => ({
   },
 
   setMeshCenters: (meshCenters) => set({ meshCenters }),
-  setModelBounds: (bounds) => set({ modelBounds: bounds }),
+  setModelBounds: (bounds) => set((s) => ({ modelBounds: bounds, modelRevision: (s.modelRevision || 0) + 1 })),
+  setFrontSurface: (frontSurface) => set({ frontSurface }),
   setTextItems: (items) => set({ textItems: items }),
   setSelectedTextId: (id) => set({ selectedTextId: id }),
   setIsDragging3D: (isDragging) => set({ isDragging3D: isDragging }),
@@ -510,7 +513,7 @@ export const useStudioStore = create((set, get) => ({
     get().saveSnapshot();
     const id = 'text_' + Date.now();
     const state = get();
-    
+
     // Auto-calculate position if meshId provided
     let pos = initialPos;
     let rot = [0, 0, 0];
@@ -524,6 +527,7 @@ export const useStudioStore = create((set, get) => ({
       }
     }
     if (!pos) {
+      pos = [0, 0.28, 0.22];
       const b = state.modelBounds || { center: [0, 0.2, 0], size: [0.5, 0.6, 0.3], max: [0.25, 0.5, 0.15] };
       pos = [0, b.center[1] + (b.size[1] * 0.1), b.max[2] + 0.003];
     }
@@ -755,10 +759,18 @@ export const useStudioStore = create((set, get) => ({
       }
     }
 
-    // 2. Fallback to model front surface center
+    // 2. Fallback to physical front surface of the active model
+    if (!pos && state.frontSurface?.position) {
+      pos = [...state.frontSurface.position];
+      rot = state.frontSurface.rotation ? [...state.frontSurface.rotation] : [0, 0, 0];
+      const b = state.modelBounds || { size: [0.5, 0.6, 0.3] };
+      autoScale = Math.min(0.6, Math.max(0.2, (b.size?.[0] || 0.5) * 0.5));
+    }
+
+    // 3. Fallback to model front surface center
     if (!pos) {
       const b = state.modelBounds || { center: [0, 0.2, 0], size: [0.5, 0.6, 0.3], max: [0.25, 0.5, 0.15] };
-      pos = [0, b.center[1] + (b.size[1] * 0.1), b.max[2] + 0.003];
+      pos = [0, b.center[1] + (b.size[1] * 0.1), (b.center[2] || 0) + 0.15];
       autoScale = Math.min(0.6, Math.max(0.2, b.size[0] * 0.5));
     }
 

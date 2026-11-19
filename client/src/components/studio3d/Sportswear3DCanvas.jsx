@@ -2,6 +2,8 @@ import React, { useRef, useEffect, useState, useMemo, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, useGLTF, Environment, ContactShadows, Float, Html, Center, TransformControls } from '@react-three/drei';
 import * as THREE from 'three';
+import { DecalGeometry } from 'three/examples/jsm/geometries/DecalGeometry.js';
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { useStudioStore, FABRIC_PRESETS } from './useStudioStore';
 import { getFabricBumpTexture, getPatternTexture } from './FabricTextures';
 import { decalPipeline } from './DecalCanvasPipeline';
@@ -353,6 +355,7 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
     setDetectedMeshes,
     setMeshCenters,
     setModelBounds,
+    setFrontSurface,
     setTextItems,
     textItems
   } = useStudioStore();
@@ -425,25 +428,43 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
         const mSize = new THREE.Vector3();
         bb.getSize(mSize);
 
-        const isRear = mCenter.z < boundingInfo.center.z;
-        const testRay = new THREE.Raycaster(
-          new THREE.Vector3(mCenter.x, mCenter.y, isRear ? mCenter.z - 2.0 : mCenter.z + 2.0),
-          new THREE.Vector3(0, 0, isRear ? 1.0 : -1.0)
+        // Try raycasting from FRONT (+Z towards -Z) first so visible surface faces camera
+        const frontTestRay = new THREE.Raycaster(
+          new THREE.Vector3(mCenter.x, mCenter.y, boundingInfo.max.z + 2.0),
+          new THREE.Vector3(0, 0, -1)
         );
-        const hits = testRay.intersectObject(child, true);
+        const frontHits = frontTestRay.intersectObject(child, true);
         let surfPos, rot;
-        if (hits.length > 0) {
-          const hit = hits[0];
+
+        if (frontHits.length > 0) {
+          const hit = frontHits[0];
           const wNorm = hit.face.normal.clone().transformDirection(child.matrixWorld).normalize();
-          surfPos = hit.point.clone().addScaledVector(wNorm, 0.003);
+          surfPos = hit.point.clone();
           dummy.position.copy(surfPos);
           dummy.up.set(0, 1, 0);
           if (Math.abs(wNorm.y) > 0.90) dummy.up.set(0, 0, -1);
           dummy.lookAt(surfPos.clone().add(wNorm));
           rot = [dummy.rotation.x, dummy.rotation.y, dummy.rotation.z];
         } else {
-          surfPos = new THREE.Vector3(mCenter.x, mCenter.y, isRear ? bb.min.z - 0.003 : bb.max.z + 0.003);
-          rot = [0, isRear ? Math.PI : 0, 0];
+          // If no front hit (e.g. back only mesh), test from back
+          const backTestRay = new THREE.Raycaster(
+            new THREE.Vector3(mCenter.x, mCenter.y, boundingInfo.min.z - 2.0),
+            new THREE.Vector3(0, 0, 1)
+          );
+          const backHits = backTestRay.intersectObject(child, true);
+          if (backHits.length > 0) {
+            const hit = backHits[0];
+            const wNorm = hit.face.normal.clone().transformDirection(child.matrixWorld).normalize();
+            surfPos = hit.point.clone();
+            dummy.position.copy(surfPos);
+            dummy.up.set(0, 1, 0);
+            if (Math.abs(wNorm.y) > 0.90) dummy.up.set(0, 0, -1);
+            dummy.lookAt(surfPos.clone().add(wNorm));
+            rot = [dummy.rotation.x, dummy.rotation.y, dummy.rotation.z];
+          } else {
+            surfPos = new THREE.Vector3(mCenter.x, mCenter.y, bb.max.z);
+            rot = [0, 0, 0];
+          }
         }
 
         centers[meshId] = {
@@ -484,10 +505,58 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
     };
     setModelBounds(boundsData);
 
-    // Auto-fit initial text items onto this model surface!
-    const frontZ = boundingInfo.max.z + 0.003;
-    const backZ = boundingInfo.min.z - 0.003;
-    const frontY = boundingInfo.center.y + (boundingInfo.size.y * 0.1);
+    // Cast ray to find exact physical front surface of the model (avoids 11-inch air gap!)
+    const modelFrontY = boundingInfo.center.y + (boundingInfo.size.y * 0.1);
+    const modelFrontRay = new THREE.Raycaster(
+      new THREE.Vector3(0, modelFrontY, boundingInfo.max.z + 2.0),
+      new THREE.Vector3(0, 0, -1)
+    );
+    const modelFrontHits = modelFrontRay.intersectObjects(clonedScene.children, true);
+    let frontPos = new THREE.Vector3(0, modelFrontY, boundingInfo.center.z + 0.15);
+    let frontRot = [0, 0, 0];
+    let frontMeshId = null;
+
+    if (modelFrontHits.length > 0) {
+      const hit = modelFrontHits[0];
+      const wNorm = hit.face.normal.clone().transformDirection(hit.object.matrixWorld).normalize();
+      frontPos = hit.point.clone();
+      dummy.position.copy(frontPos);
+      dummy.up.set(0, 1, 0);
+      if (Math.abs(wNorm.y) > 0.90) dummy.up.set(0, 0, -1);
+      dummy.lookAt(frontPos.clone().add(wNorm));
+      frontRot = [dummy.rotation.x, dummy.rotation.y, dummy.rotation.z];
+      frontMeshId = hit.object.name || hit.object.uuid;
+    }
+
+    // Cast ray to find physical back surface
+    const modelBackRay = new THREE.Raycaster(
+      new THREE.Vector3(0, modelFrontY, boundingInfo.min.z - 2.0),
+      new THREE.Vector3(0, 0, 1)
+    );
+    const modelBackHits = modelBackRay.intersectObjects(clonedScene.children, true);
+    let backPos = new THREE.Vector3(0, modelFrontY, boundingInfo.center.z - 0.15);
+    let backRot = [0, Math.PI, 0];
+    let backMeshId = null;
+
+    if (modelBackHits.length > 0) {
+      const hit = modelBackHits[0];
+      const wNorm = hit.face.normal.clone().transformDirection(hit.object.matrixWorld).normalize();
+      backPos = hit.point.clone();
+      dummy.position.copy(backPos);
+      dummy.up.set(0, 1, 0);
+      if (Math.abs(wNorm.y) > 0.90) dummy.up.set(0, 0, -1);
+      dummy.lookAt(backPos.clone().add(wNorm));
+      backRot = [dummy.rotation.x, dummy.rotation.y, dummy.rotation.z];
+      backMeshId = hit.object.name || hit.object.uuid;
+    }
+
+    setFrontSurface({
+      position: [Math.round(frontPos.x * 1000) / 1000, Math.round(frontPos.y * 1000) / 1000, Math.round(frontPos.z * 1000) / 1000],
+      rotation: [Math.round(frontRot[0] * 1000) / 1000, Math.round(frontRot[1] * 1000) / 1000, Math.round(frontRot[2] * 1000) / 1000],
+      meshId: frontMeshId
+    });
+
+    // Auto-fit initial text items directly onto physical model surface
     const autoScale = Math.min(0.85, Math.max(0.28, boundingInfo.size.x * 0.85));
 
     const currentItems = textItems || [];
@@ -495,8 +564,9 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
       if (item.id === 'team_name') {
         return {
           ...item,
-          position: [0, Math.round(frontY * 1000) / 1000, Math.round(frontZ * 1000) / 1000],
-          rotation: [0, 0, 0],
+          position: [Math.round(frontPos.x * 1000) / 1000, Math.round(frontPos.y * 1000) / 1000, Math.round(frontPos.z * 1000) / 1000],
+          rotation: [Math.round(frontRot[0] * 1000) / 1000, Math.round(frontRot[1] * 1000) / 1000, Math.round(frontRot[2] * 1000) / 1000],
+          targetMeshId: frontMeshId,
           scale: autoScale,
           visible: true
         };
@@ -504,8 +574,9 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
       if (item.id === 'player_number') {
         return {
           ...item,
-          position: [0, Math.round((frontY - (boundingInfo.size.y * 0.18)) * 1000) / 1000, Math.round(frontZ * 1000) / 1000],
-          rotation: [0, 0, 0],
+          position: [Math.round(frontPos.x * 1000) / 1000, Math.round((frontPos.y - (boundingInfo.size.y * 0.16)) * 1000) / 1000, Math.round(frontPos.z * 1000) / 1000],
+          rotation: [Math.round(frontRot[0] * 1000) / 1000, Math.round(frontRot[1] * 1000) / 1000, Math.round(frontRot[2] * 1000) / 1000],
+          targetMeshId: frontMeshId,
           scale: Math.round(autoScale * 0.75 * 100) / 100,
           visible: false
         };
@@ -513,8 +584,9 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
       if (item.id === 'player_name') {
         return {
           ...item,
-          position: [0, Math.round(frontY * 1000) / 1000, Math.round(backZ * 1000) / 1000],
-          rotation: [0, Math.PI, 0],
+          position: [Math.round(backPos.x * 1000) / 1000, Math.round(backPos.y * 1000) / 1000, Math.round(backPos.z * 1000) / 1000],
+          rotation: [Math.round(backRot[0] * 1000) / 1000, Math.round(backRot[1] * 1000) / 1000, Math.round(backRot[2] * 1000) / 1000],
+          targetMeshId: backMeshId,
           scale: autoScale,
           visible: false
         };
@@ -522,7 +594,7 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
       return item;
     });
     setTextItems(updated);
-  }, [clonedScene, boundingInfo, activeModel, setDetectedMeshes, setMeshCenters, setModelBounds, setTextItems]);
+  }, [clonedScene, boundingInfo, activeModel, setDetectedMeshes, setMeshCenters, setModelBounds, setFrontSurface, setTextItems]);
 
   // Apply per-mesh custom styling (strictly isolated per mesh)
   useEffect(() => {
@@ -623,24 +695,65 @@ function CameraRig({ viewAngle, cameraResetCount, autoRotate }) {
   );
 }
 
-// ── Interactive 3D Draggable Text Item Component ──
+// ── Shared Multi-Mesh Surface Decal Geometry Builder ──
+function buildDecalGeometry(modelGroup, posVec, orientEuler, sizeVec) {
+  if (!modelGroup) return null;
+  const p = Array.isArray(posVec) ? new THREE.Vector3(...posVec) : (posVec || new THREE.Vector3());
+  const rotEuler = Array.isArray(orientEuler)
+    ? new THREE.Euler(...orientEuler)
+    : orientEuler instanceof THREE.Euler
+      ? orientEuler
+      : new THREE.Euler(orientEuler?.x || 0, orientEuler?.y || 0, orientEuler?.z || 0);
+
+  const decalBox = new THREE.Box3().setFromCenterAndSize(p, sizeVec.clone().multiplyScalar(2.0));
+  const validGeoms = [];
+
+  modelGroup.traverse((child) => {
+    if (child.isMesh && !child.userData?.isTextDecal && !child.userData?.isLogoDecal) {
+      if (!child.geometry) return;
+      if (!child.geometry.boundingBox) child.geometry.computeBoundingBox();
+      const childBox = child.geometry.boundingBox.clone().applyMatrix4(child.matrixWorld);
+      if (decalBox.intersectsBox(childBox)) {
+        try {
+          const dGeom = new DecalGeometry(child, p, rotEuler, sizeVec);
+          if (dGeom && dGeom.attributes.position && dGeom.attributes.position.count > 0) {
+            validGeoms.push(dGeom);
+          }
+        } catch (e) {
+          // ignore meshes that fail projection
+        }
+      }
+    }
+  });
+
+  if (validGeoms.length === 0) return null;
+  if (validGeoms.length === 1) return validGeoms[0];
+  try {
+    return mergeGeometries(validGeoms);
+  } catch (e) {
+    return validGeoms[0];
+  }
+}
+
+// ── Interactive 3D Draggable Text Item Component (Conforming DecalGeometry) ──
 function TextDecalPlane({ item, modelGroupRef }) {
-  const meshRef = useRef();
   const { camera, gl } = useThree();
   const {
     selectedTextId,
     setSelectedTextId,
     updateTextItem,
     setIsDragging3D,
-    show3DGizmo
+    modelRevision
   } = useStudioStore();
 
   const isSelected = selectedTextId === item.id;
   const isDraggingRef = useRef(false);
   const dummyObj = useMemo(() => new THREE.Object3D(), []);
   const raycaster = useMemo(() => new THREE.Raycaster(), []);
+  const [liveHit, setLiveHit] = useState(null);
+  const liveHitRef = useRef(null);
 
-  // Generate crisp dynamic text texture from HTML5 Canvas
+  // Generate dynamic canvas texture
   const texture = useMemo(() => {
     const canvas = document.createElement('canvas');
     const isNum = item.type === 'number';
@@ -680,9 +793,18 @@ function TextDecalPlane({ item, modelGroupRef }) {
   const isNum = item.type === 'number';
   const planeWidth = (isNum ? 0.32 : 0.65) * (item.scale || 1.0);
   const planeHeight = (isNum ? 0.32 : 0.18) * (item.scale || 1.0);
+  const projDepth = Math.max(0.25, planeWidth * 0.5);
+  const sizeVec = useMemo(() => new THREE.Vector3(planeWidth, planeHeight, projDepth), [planeWidth, planeHeight, projDepth]);
 
-  // Combine surface normal alignment with user in-plane rotation angle
-  const finalRotation = useMemo(() => {
+  // Current active position and rotation (live while dragging, else from item)
+  const currentPos = useMemo(() => {
+    if (liveHit?.pos) return liveHit.pos;
+    if (Array.isArray(item.position)) return new THREE.Vector3(...item.position);
+    return item.position || new THREE.Vector3(0, 0.25, 0.15);
+  }, [liveHit, item.position]);
+
+  const currentRotation = useMemo(() => {
+    if (liveHit?.rotWithAngle) return liveHit.rotWithAngle;
     const d = new THREE.Object3D();
     if (item.rotation) {
       d.rotation.set(item.rotation[0], item.rotation[1], item.rotation[2]);
@@ -690,8 +812,14 @@ function TextDecalPlane({ item, modelGroupRef }) {
     if (item.angle) {
       d.rotateZ(THREE.MathUtils.degToRad(item.angle));
     }
-    return [d.rotation.x, d.rotation.y, d.rotation.z];
-  }, [item.rotation, item.angle]);
+    return d.rotation;
+  }, [liveHit, item.rotation, item.angle]);
+
+  // Build true conforming 3D DecalGeometry on underlying mesh surface(s)
+  const decalGeom = useMemo(() => {
+    if (!modelGroupRef?.current) return null;
+    return buildDecalGeometry(modelGroupRef.current, currentPos, currentRotation, sizeVec);
+  }, [modelGroupRef, currentPos, currentRotation, sizeVec, modelRevision]);
 
   // Surface raycasting directly onto model geometry
   const projectToModelSurface = (clientX, clientY) => {
@@ -703,12 +831,11 @@ function TextDecalPlane({ item, modelGroupRef }) {
     raycaster.setFromCamera(new THREE.Vector2(ndcX, ndcY), camera);
     const intersects = raycaster.intersectObjects(modelGroupRef.current.children, true);
 
-    // Find first valid mesh that is part of the apparel/model (not a decal)
     const hit = intersects.find((h) => h.object?.isMesh && !h.object.userData?.isTextDecal && !h.object.userData?.isLogoDecal);
     if (!hit) return null;
 
     const worldNormal = hit.face.normal.clone().transformDirection(hit.object.matrixWorld).normalize();
-    const pos = hit.point.clone().addScaledVector(worldNormal, 0.003);
+    const pos = hit.point.clone();
 
     dummyObj.position.copy(pos);
     dummyObj.up.set(0, 1, 0);
@@ -725,13 +852,12 @@ function TextDecalPlane({ item, modelGroupRef }) {
 
     return {
       pos,
-      rotWithAngle: dummyObj.rotation,
+      rotWithAngle: dummyObj.rotation.clone(),
       baseRot,
       meshId: hit.object.name || hit.object.uuid
     };
   };
 
-  // Direct Pointer Dragging
   const handlePointerDown = (e) => {
     e.stopPropagation();
     setSelectedTextId(item.id);
@@ -745,23 +871,8 @@ function TextDecalPlane({ item, modelGroupRef }) {
       if (!isDraggingRef.current) return;
       const hit = projectToModelSurface(e.clientX, e.clientY);
       if (hit) {
-        if (meshRef.current) {
-          meshRef.current.position.copy(hit.pos);
-          meshRef.current.rotation.copy(hit.rotWithAngle);
-        }
-        updateTextItem(item.id, {
-          position: [
-            Math.round(hit.pos.x * 1000) / 1000,
-            Math.round(hit.pos.y * 1000) / 1000,
-            Math.round(hit.pos.z * 1000) / 1000
-          ],
-          rotation: [
-            Math.round(hit.baseRot[0] * 1000) / 1000,
-            Math.round(hit.baseRot[1] * 1000) / 1000,
-            Math.round(hit.baseRot[2] * 1000) / 1000
-          ],
-          targetMeshId: hit.meshId
-        });
+        liveHitRef.current = hit;
+        setLiveHit(hit);
       }
     };
 
@@ -770,6 +881,24 @@ function TextDecalPlane({ item, modelGroupRef }) {
         isDraggingRef.current = false;
         setIsDragging3D(false);
         if (gl?.domElement) gl.domElement.style.cursor = 'grab';
+        if (liveHitRef.current) {
+          const lh = liveHitRef.current;
+          updateTextItem(item.id, {
+            position: [
+              Math.round(lh.pos.x * 1000) / 1000,
+              Math.round(lh.pos.y * 1000) / 1000,
+              Math.round(lh.pos.z * 1000) / 1000
+            ],
+            rotation: [
+              Math.round(lh.baseRot[0] * 1000) / 1000,
+              Math.round(lh.baseRot[1] * 1000) / 1000,
+              Math.round(lh.baseRot[2] * 1000) / 1000
+            ],
+            targetMeshId: lh.meshId
+          });
+          liveHitRef.current = null;
+        }
+        setLiveHit(null);
       }
     };
 
@@ -784,70 +913,67 @@ function TextDecalPlane({ item, modelGroupRef }) {
   if (!item.visible) return null;
 
   return (
-    <>
-      <mesh
-        ref={meshRef}
-        position={item.position}
-        rotation={finalRotation}
-        userData={{ isTextDecal: true }}
-        onPointerDown={handlePointerDown}
-        onPointerOver={(e) => {
-          e.stopPropagation();
-          gl.domElement.style.cursor = 'grab';
-        }}
-        onPointerOut={() => {
-          if (!isDraggingRef.current) gl.domElement.style.cursor = 'default';
-        }}
-      >
-        <planeGeometry args={[planeWidth, planeHeight]} />
-        <meshBasicMaterial
-          map={texture}
-          transparent={true}
-          opacity={1.0}
-          depthTest={true}
-          depthWrite={false}
-          polygonOffset={true}
-          polygonOffsetFactor={-3}
-          polygonOffsetUnits={-3}
-          side={THREE.FrontSide}
-          toneMapped={false}
-        />
-      </mesh>
-
-      {/* Optional 3D Transform Gizmo */}
-      {show3DGizmo && isSelected && meshRef.current && (
-        <TransformControls
-          object={meshRef}
-          mode="translate"
-          size={0.5}
-          onMouseDown={() => setIsDragging3D(true)}
-          onMouseUp={() => {
-            setIsDragging3D(false);
-            if (meshRef.current) {
-              updateTextItem(item.id, {
-                position: [
-                  Math.round(meshRef.current.position.x * 1000) / 1000,
-                  Math.round(meshRef.current.position.y * 1000) / 1000,
-                  Math.round(meshRef.current.position.z * 1000) / 1000
-                ]
-              });
-            }
+    <group position={[0, 0, 0]}>
+      {decalGeom ? (
+        <mesh
+          geometry={decalGeom}
+          userData={{ isTextDecal: true }}
+          onPointerDown={handlePointerDown}
+          onPointerOver={(e) => {
+            e.stopPropagation();
+            gl.domElement.style.cursor = 'grab';
           }}
-        />
+          onPointerOut={() => {
+            if (!isDraggingRef.current) gl.domElement.style.cursor = 'default';
+          }}
+        >
+          <meshStandardMaterial
+            map={texture}
+            transparent={true}
+            opacity={1.0}
+            depthTest={true}
+            depthWrite={false}
+            polygonOffset={true}
+            polygonOffsetFactor={-4}
+            polygonOffsetUnits={-4}
+            roughness={0.6}
+            metalness={0.1}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+      ) : (
+        <mesh
+          position={currentPos}
+          rotation={currentRotation}
+          userData={{ isTextDecal: true }}
+          onPointerDown={handlePointerDown}
+        >
+          <planeGeometry args={[planeWidth, planeHeight]} />
+          <meshBasicMaterial
+            map={texture}
+            transparent={true}
+            depthTest={true}
+            depthWrite={false}
+            polygonOffset={true}
+            polygonOffsetFactor={-4}
+            polygonOffsetUnits={-4}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
       )}
-    </>
+    </group>
   );
 }
 
-// ── Interactive 3D Draggable Logo / Emblem Component ──
+// ── Interactive 3D Draggable Logo / Emblem Component (Conforming DecalGeometry) ──
 function LogoDecalPlane({ item, modelGroupRef }) {
-  const meshRef = useRef();
   const { camera, gl } = useThree();
   const {
     selectedLogoId,
     setSelectedLogoId,
     updateLogo,
-    setIsDragging3D
+    setIsDragging3D,
+    modelRevision
   } = useStudioStore();
 
   const isSelected = selectedLogoId === item.id;
@@ -855,6 +981,8 @@ function LogoDecalPlane({ item, modelGroupRef }) {
   const dummyObj = useMemo(() => new THREE.Object3D(), []);
   const raycaster = useMemo(() => new THREE.Raycaster(), []);
   const [aspectRatio, setAspectRatio] = useState(1);
+  const [liveHit, setLiveHit] = useState(null);
+  const liveHitRef = useRef(null);
 
   // Load logo texture
   const texture = useMemo(() => {
@@ -872,9 +1000,18 @@ function LogoDecalPlane({ item, modelGroupRef }) {
   const baseSize = 0.35 * (item.scale || 1.0);
   const planeWidth = aspectRatio >= 1 ? baseSize : baseSize * aspectRatio;
   const planeHeight = aspectRatio >= 1 ? baseSize / aspectRatio : baseSize;
+  const projDepth = Math.max(0.25, baseSize * 0.6);
+  const sizeVec = useMemo(() => new THREE.Vector3(planeWidth, planeHeight, projDepth), [planeWidth, planeHeight, projDepth]);
 
-  // Combine surface normal alignment with user in-plane rotation angle
-  const finalRotation = useMemo(() => {
+  // Current active position and rotation (live while dragging, else from item)
+  const currentPos = useMemo(() => {
+    if (liveHit?.pos) return liveHit.pos;
+    if (Array.isArray(item.position)) return new THREE.Vector3(...item.position);
+    return item.position || new THREE.Vector3(0, 0.25, 0.15);
+  }, [liveHit, item.position]);
+
+  const currentRotation = useMemo(() => {
+    if (liveHit?.rotWithAngle) return liveHit.rotWithAngle;
     const d = new THREE.Object3D();
     if (item.rotation) {
       d.rotation.set(item.rotation[0], item.rotation[1], item.rotation[2]);
@@ -882,8 +1019,14 @@ function LogoDecalPlane({ item, modelGroupRef }) {
     if (item.angle) {
       d.rotateZ(THREE.MathUtils.degToRad(item.angle));
     }
-    return [d.rotation.x, d.rotation.y, d.rotation.z];
-  }, [item.rotation, item.angle]);
+    return d.rotation;
+  }, [liveHit, item.rotation, item.angle]);
+
+  // Build true conforming 3D DecalGeometry across model mesh surface(s)
+  const decalGeom = useMemo(() => {
+    if (!modelGroupRef?.current || !texture) return null;
+    return buildDecalGeometry(modelGroupRef.current, currentPos, currentRotation, sizeVec);
+  }, [modelGroupRef, currentPos, currentRotation, sizeVec, texture, modelRevision]);
 
   // Surface raycasting directly onto model geometry
   const projectToModelSurface = (clientX, clientY) => {
@@ -899,7 +1042,7 @@ function LogoDecalPlane({ item, modelGroupRef }) {
     if (!hit) return null;
 
     const worldNormal = hit.face.normal.clone().transformDirection(hit.object.matrixWorld).normalize();
-    const pos = hit.point.clone().addScaledVector(worldNormal, 0.0035);
+    const pos = hit.point.clone();
 
     dummyObj.position.copy(pos);
     dummyObj.up.set(0, 1, 0);
@@ -916,7 +1059,7 @@ function LogoDecalPlane({ item, modelGroupRef }) {
 
     return {
       pos,
-      rotWithAngle: dummyObj.rotation,
+      rotWithAngle: dummyObj.rotation.clone(),
       baseRot,
       meshId: hit.object.name || hit.object.uuid
     };
@@ -935,23 +1078,8 @@ function LogoDecalPlane({ item, modelGroupRef }) {
       if (!isDraggingRef.current) return;
       const hit = projectToModelSurface(e.clientX, e.clientY);
       if (hit) {
-        if (meshRef.current) {
-          meshRef.current.position.copy(hit.pos);
-          meshRef.current.rotation.copy(hit.rotWithAngle);
-        }
-        updateLogo(item.id, {
-          position: [
-            Math.round(hit.pos.x * 1000) / 1000,
-            Math.round(hit.pos.y * 1000) / 1000,
-            Math.round(hit.pos.z * 1000) / 1000
-          ],
-          rotation: [
-            Math.round(hit.baseRot[0] * 1000) / 1000,
-            Math.round(hit.baseRot[1] * 1000) / 1000,
-            Math.round(hit.baseRot[2] * 1000) / 1000
-          ],
-          targetMeshId: hit.meshId
-        });
+        liveHitRef.current = hit;
+        setLiveHit(hit);
       }
     };
 
@@ -960,6 +1088,24 @@ function LogoDecalPlane({ item, modelGroupRef }) {
         isDraggingRef.current = false;
         setIsDragging3D(false);
         if (gl?.domElement) gl.domElement.style.cursor = 'grab';
+        if (liveHitRef.current) {
+          const lh = liveHitRef.current;
+          updateLogo(item.id, {
+            position: [
+              Math.round(lh.pos.x * 1000) / 1000,
+              Math.round(lh.pos.y * 1000) / 1000,
+              Math.round(lh.pos.z * 1000) / 1000
+            ],
+            rotation: [
+              Math.round(lh.baseRot[0] * 1000) / 1000,
+              Math.round(lh.baseRot[1] * 1000) / 1000,
+              Math.round(lh.baseRot[2] * 1000) / 1000
+            ],
+            targetMeshId: lh.meshId
+          });
+          liveHitRef.current = null;
+        }
+        setLiveHit(null);
       }
     };
 
@@ -974,34 +1120,55 @@ function LogoDecalPlane({ item, modelGroupRef }) {
   if (!item.visible || !texture) return null;
 
   return (
-    <mesh
-      ref={meshRef}
-      position={item.position || [0, 0.2, 0.15]}
-      rotation={finalRotation}
-      userData={{ isLogoDecal: true }}
-      onPointerDown={handlePointerDown}
-      onPointerOver={(e) => {
-        e.stopPropagation();
-        gl.domElement.style.cursor = 'grab';
-      }}
-      onPointerOut={() => {
-        if (!isDraggingRef.current) gl.domElement.style.cursor = 'default';
-      }}
-    >
-      <planeGeometry args={[planeWidth, planeHeight]} />
-      <meshBasicMaterial
-        map={texture}
-        transparent={true}
-        opacity={1.0}
-        depthTest={true}
-        depthWrite={false}
-        polygonOffset={true}
-        polygonOffsetFactor={-3}
-        polygonOffsetUnits={-3}
-        side={THREE.FrontSide}
-        toneMapped={false}
-      />
-    </mesh>
+    <group position={[0, 0, 0]}>
+      {decalGeom ? (
+        <mesh
+          geometry={decalGeom}
+          userData={{ isLogoDecal: true }}
+          onPointerDown={handlePointerDown}
+          onPointerOver={(e) => {
+            e.stopPropagation();
+            gl.domElement.style.cursor = 'grab';
+          }}
+          onPointerOut={() => {
+            if (!isDraggingRef.current) gl.domElement.style.cursor = 'default';
+          }}
+        >
+          <meshStandardMaterial
+            map={texture}
+            transparent={true}
+            opacity={1.0}
+            depthTest={true}
+            depthWrite={false}
+            polygonOffset={true}
+            polygonOffsetFactor={-4}
+            polygonOffsetUnits={-4}
+            roughness={0.6}
+            metalness={0.1}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+      ) : (
+        <mesh
+          position={currentPos}
+          rotation={currentRotation}
+          userData={{ isLogoDecal: true }}
+          onPointerDown={handlePointerDown}
+        >
+          <planeGeometry args={[planeWidth, planeHeight]} />
+          <meshBasicMaterial
+            map={texture}
+            transparent={true}
+            depthTest={true}
+            depthWrite={false}
+            polygonOffset={true}
+            polygonOffsetFactor={-4}
+            polygonOffsetUnits={-4}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+      )}
+    </group>
   );
 }
 
