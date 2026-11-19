@@ -553,7 +553,7 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
     setFrontSurface({
       position: [Math.round(frontPos.x * 1000) / 1000, Math.round(frontPos.y * 1000) / 1000, Math.round(frontPos.z * 1000) / 1000],
       rotation: [Math.round(frontRot[0] * 1000) / 1000, Math.round(frontRot[1] * 1000) / 1000, Math.round(frontRot[2] * 1000) / 1000],
-      meshId: frontMeshId
+      meshId: null
     });
 
     // Auto-fit initial text items directly onto physical model surface
@@ -566,7 +566,7 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
           ...item,
           position: [Math.round(frontPos.x * 1000) / 1000, Math.round(frontPos.y * 1000) / 1000, Math.round(frontPos.z * 1000) / 1000],
           rotation: [Math.round(frontRot[0] * 1000) / 1000, Math.round(frontRot[1] * 1000) / 1000, Math.round(frontRot[2] * 1000) / 1000],
-          targetMeshId: frontMeshId,
+          targetMeshId: null,
           scale: autoScale,
           visible: true
         };
@@ -576,7 +576,7 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
           ...item,
           position: [Math.round(frontPos.x * 1000) / 1000, Math.round((frontPos.y - (boundingInfo.size.y * 0.16)) * 1000) / 1000, Math.round(frontPos.z * 1000) / 1000],
           rotation: [Math.round(frontRot[0] * 1000) / 1000, Math.round(frontRot[1] * 1000) / 1000, Math.round(frontRot[2] * 1000) / 1000],
-          targetMeshId: frontMeshId,
+          targetMeshId: null,
           scale: Math.round(autoScale * 0.75 * 100) / 100,
           visible: false
         };
@@ -586,7 +586,7 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
           ...item,
           position: [Math.round(backPos.x * 1000) / 1000, Math.round(backPos.y * 1000) / 1000, Math.round(backPos.z * 1000) / 1000],
           rotation: [Math.round(backRot[0] * 1000) / 1000, Math.round(backRot[1] * 1000) / 1000, Math.round(backRot[2] * 1000) / 1000],
-          targetMeshId: backMeshId,
+          targetMeshId: null,
           scale: autoScale,
           visible: false
         };
@@ -642,42 +642,48 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
   );
 }
 
-// ── Camera Controller for Smooth Orbit Interpolation & 360 Turntable ──
+// ── Camera Controller for Smooth Orbit Interpolation & Dynamic Framing ──
 function CameraRig({ viewAngle, cameraResetCount, autoRotate }) {
   const { camera } = useThree();
   const controlsRef = useRef();
-  const { isDragging3D } = useStudioStore();
+  const { isDragging3D, modelBounds } = useStudioStore();
+
+  const modelCenterY = modelBounds?.center?.[1] ?? 0.2;
+  const maxDim = modelBounds?.size
+    ? Math.max(modelBounds.size[0], modelBounds.size[1], modelBounds.size[2])
+    : 0.8;
+  const camDist = Math.max(1.25, maxDim * 2.2);
 
   const targetPositions = useMemo(() => ({
-    front: [0, 0.4, 2.3],
-    back: [0, 0.4, -2.3],
-    left: [-2.3, 0.4, 0],
-    right: [2.3, 0.4, 0],
-    top: [0, 2.5, 0.3],
-    perspective: [0.8, 0.55, 2.1]
-  }), []);
+    front: [0, modelCenterY, camDist],
+    back: [0, modelCenterY, -camDist],
+    left: [-camDist, modelCenterY, 0],
+    right: [camDist, modelCenterY, 0],
+    top: [0, modelCenterY + camDist, 0.2],
+    perspective: [camDist * 0.45, modelCenterY + (maxDim * 0.25), camDist * 0.9]
+  }), [modelCenterY, camDist, maxDim]);
 
   useEffect(() => {
     const targetPos = targetPositions[viewAngle] || targetPositions.perspective;
     camera.position.set(...targetPos);
-    camera.lookAt(0, 0.4, 0);
+    camera.lookAt(0, modelCenterY, 0);
     if (controlsRef.current) {
-      controlsRef.current.target.set(0, 0.4, 0);
+      controlsRef.current.target.set(0, modelCenterY, 0);
       controlsRef.current.update();
     }
-  }, [viewAngle, cameraResetCount, camera, targetPositions]);
+  }, [viewAngle, cameraResetCount, camera, targetPositions, modelCenterY]);
 
   // Handle window/container resize to prevent off-center shifts
   useEffect(() => {
     const handleResize = () => {
       if (controlsRef.current) {
-        controlsRef.current.target.set(0, 0.4, 0);
+        controlsRef.current.target.set(0, modelCenterY, 0);
         controlsRef.current.update();
       }
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [modelCenterY]);
 
   return (
     <OrbitControls
@@ -687,7 +693,7 @@ function CameraRig({ viewAngle, cameraResetCount, autoRotate }) {
       autoRotateSpeed={2.5}
       enableDamping
       dampingFactor={0.08}
-      minDistance={1.0}
+      minDistance={0.8}
       maxDistance={4.5}
       maxPolarAngle={Math.PI / 1.7}
       minPolarAngle={Math.PI / 6}
@@ -696,20 +702,62 @@ function CameraRig({ viewAngle, cameraResetCount, autoRotate }) {
 }
 
 // ── Shared Multi-Mesh Surface Decal Geometry Builder ──
-function buildDecalGeometry(modelGroup, posVec, orientEuler, sizeVec) {
+function buildDecalGeometry(modelGroup, posVec, orientEuler, sizeVec, angle = 0) {
   if (!modelGroup) return null;
-  const p = Array.isArray(posVec) ? new THREE.Vector3(...posVec) : (posVec || new THREE.Vector3());
-  const rotEuler = Array.isArray(orientEuler)
+  const p = Array.isArray(posVec) ? new THREE.Vector3(...posVec) : (posVec ? posVec.clone() : new THREE.Vector3());
+  let rotEuler = Array.isArray(orientEuler)
     ? new THREE.Euler(...orientEuler)
     : orientEuler instanceof THREE.Euler
-      ? orientEuler
+      ? orientEuler.clone()
       : new THREE.Euler(orientEuler?.x || 0, orientEuler?.y || 0, orientEuler?.z || 0);
 
-  const decalBox = new THREE.Box3().setFromCenterAndSize(p, sizeVec.clone().multiplyScalar(2.0));
+  // Check if decal is back-facing (near PI or -PI)
+  const isBack = Math.abs(rotEuler.y - Math.PI) < 0.8 || Math.abs(rotEuler.y + Math.PI) < 0.8;
+
+  // 1. Automatic Surface Snapping:
+  // Raycast straight into the physical model at (p.x, p.y) to find the exact surface Z and surface normal
+  const ray = new THREE.Raycaster(
+    new THREE.Vector3(p.x, p.y, isBack ? -3.0 : 3.0),
+    new THREE.Vector3(0, 0, isBack ? 1 : -1)
+  );
+
+  const hits = ray.intersectObjects(modelGroup.children, true).filter(
+    (h) => h.object?.isMesh &&
+           !h.object.userData?.isTextDecal &&
+           !h.object.userData?.isLogoDecal &&
+           !h.object.name?.startsWith('E_') &&
+           (h.object.geometry?.attributes?.position?.count || 0) > 40
+  );
+
+  if (hits.length > 0) {
+    const hit = hits[0];
+    p.copy(hit.point);
+    const worldNorm = hit.face.normal.clone().transformDirection(hit.object.matrixWorld).normalize();
+    const dummy = new THREE.Object3D();
+    dummy.position.copy(p);
+    dummy.up.set(0, 1, 0);
+    if (Math.abs(worldNorm.y) > 0.90) {
+      dummy.up.set(0, 0, isBack ? 1 : -1);
+    }
+    dummy.lookAt(p.clone().add(worldNorm));
+    if (angle) {
+      dummy.rotateZ(THREE.MathUtils.degToRad(angle));
+    }
+    rotEuler = dummy.rotation;
+  }
+
+  // 2. Multi-Mesh Decal Projection across all intersecting garment panels
+  const decalBox = new THREE.Box3().setFromCenterAndSize(p, sizeVec);
   const validGeoms = [];
 
   modelGroup.traverse((child) => {
-    if (child.isMesh && !child.userData?.isTextDecal && !child.userData?.isLogoDecal) {
+    if (
+      child.isMesh &&
+      !child.userData?.isTextDecal &&
+      !child.userData?.isLogoDecal &&
+      !child.name?.startsWith('E_') && // exclude accessory drawstrings
+      (child.geometry?.attributes?.position?.count || 0) > 40
+    ) {
       if (!child.geometry) return;
       if (!child.geometry.boundingBox) child.geometry.computeBoundingBox();
       const childBox = child.geometry.boundingBox.clone().applyMatrix4(child.matrixWorld);
@@ -719,9 +767,7 @@ function buildDecalGeometry(modelGroup, posVec, orientEuler, sizeVec) {
           if (dGeom && dGeom.attributes.position && dGeom.attributes.position.count > 0) {
             validGeoms.push(dGeom);
           }
-        } catch (e) {
-          // ignore meshes that fail projection
-        }
+        } catch (e) {}
       }
     }
   });
@@ -791,9 +837,11 @@ function TextDecalPlane({ item, modelGroupRef }) {
   }, [item.text, item.font, item.color, item.strokeColor, item.strokeWidth, item.type]);
 
   const isNum = item.type === 'number';
-  const planeWidth = (isNum ? 0.32 : 0.65) * (item.scale || 1.0);
-  const planeHeight = (isNum ? 0.32 : 0.18) * (item.scale || 1.0);
-  const projDepth = Math.max(0.25, planeWidth * 0.5);
+  const baseWidth = isNum ? 0.28 : 0.44;
+  const baseHeight = isNum ? 0.28 : 0.13;
+  const planeWidth = baseWidth * (item.scale || 1.0);
+  const planeHeight = baseHeight * (item.scale || 1.0);
+  const projDepth = 0.08;
   const sizeVec = useMemo(() => new THREE.Vector3(planeWidth, planeHeight, projDepth), [planeWidth, planeHeight, projDepth]);
 
   // Current active position and rotation (live while dragging, else from item)
@@ -818,8 +866,14 @@ function TextDecalPlane({ item, modelGroupRef }) {
   // Build true conforming 3D DecalGeometry on underlying mesh surface(s)
   const decalGeom = useMemo(() => {
     if (!modelGroupRef?.current) return null;
-    return buildDecalGeometry(modelGroupRef.current, currentPos, currentRotation, sizeVec);
-  }, [modelGroupRef, currentPos, currentRotation, sizeVec, modelRevision]);
+    return buildDecalGeometry(
+      modelGroupRef.current,
+      currentPos,
+      currentRotation,
+      sizeVec,
+      item.angle || 0
+    );
+  }, [modelGroupRef, currentPos, currentRotation, sizeVec, modelRevision, item.angle]);
 
   // Surface raycasting directly onto model geometry
   const projectToModelSurface = (clientX, clientY) => {
@@ -831,7 +885,13 @@ function TextDecalPlane({ item, modelGroupRef }) {
     raycaster.setFromCamera(new THREE.Vector2(ndcX, ndcY), camera);
     const intersects = raycaster.intersectObjects(modelGroupRef.current.children, true);
 
-    const hit = intersects.find((h) => h.object?.isMesh && !h.object.userData?.isTextDecal && !h.object.userData?.isLogoDecal);
+    const hit = intersects.find(
+      (h) => h.object?.isMesh && 
+             !h.object.userData?.isTextDecal && 
+             !h.object.userData?.isLogoDecal &&
+             !h.object.name?.startsWith('E_') &&
+             (h.object.geometry?.attributes?.position?.count || 0) > 40
+    );
     if (!hit) return null;
 
     const worldNormal = hit.face.normal.clone().transformDirection(hit.object.matrixWorld).normalize();
@@ -894,7 +954,7 @@ function TextDecalPlane({ item, modelGroupRef }) {
               Math.round(lh.baseRot[1] * 1000) / 1000,
               Math.round(lh.baseRot[2] * 1000) / 1000
             ],
-            targetMeshId: lh.meshId
+            targetMeshId: null
           });
           liveHitRef.current = null;
         }
@@ -910,57 +970,36 @@ function TextDecalPlane({ item, modelGroupRef }) {
     };
   }, [camera, gl, modelGroupRef, item.id, item.angle, updateTextItem, setIsDragging3D]);
 
-  if (!item.visible) return null;
+  if (!item.visible || !decalGeom) return null;
 
   return (
     <group position={[0, 0, 0]}>
-      {decalGeom ? (
-        <mesh
-          geometry={decalGeom}
-          userData={{ isTextDecal: true }}
-          onPointerDown={handlePointerDown}
-          onPointerOver={(e) => {
-            e.stopPropagation();
-            gl.domElement.style.cursor = 'grab';
-          }}
-          onPointerOut={() => {
-            if (!isDraggingRef.current) gl.domElement.style.cursor = 'default';
-          }}
-        >
-          <meshStandardMaterial
-            map={texture}
-            transparent={true}
-            opacity={1.0}
-            depthTest={true}
-            depthWrite={false}
-            polygonOffset={true}
-            polygonOffsetFactor={-4}
-            polygonOffsetUnits={-4}
-            roughness={0.6}
-            metalness={0.1}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
-      ) : (
-        <mesh
-          position={currentPos}
-          rotation={currentRotation}
-          userData={{ isTextDecal: true }}
-          onPointerDown={handlePointerDown}
-        >
-          <planeGeometry args={[planeWidth, planeHeight]} />
-          <meshBasicMaterial
-            map={texture}
-            transparent={true}
-            depthTest={true}
-            depthWrite={false}
-            polygonOffset={true}
-            polygonOffsetFactor={-4}
-            polygonOffsetUnits={-4}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
-      )}
+      <mesh
+        geometry={decalGeom}
+        userData={{ isTextDecal: true }}
+        onPointerDown={handlePointerDown}
+        onPointerOver={(e) => {
+          e.stopPropagation();
+          gl.domElement.style.cursor = 'grab';
+        }}
+        onPointerOut={() => {
+          if (!isDraggingRef.current) gl.domElement.style.cursor = 'default';
+        }}
+      >
+        <meshStandardMaterial
+          map={texture}
+          transparent={true}
+          opacity={1.0}
+          depthTest={true}
+          depthWrite={false}
+          polygonOffset={true}
+          polygonOffsetFactor={-4}
+          polygonOffsetUnits={-4}
+          roughness={0.6}
+          metalness={0.05}
+          side={THREE.DoubleSide}
+        />
+      </mesh>
     </group>
   );
 }
@@ -981,26 +1020,41 @@ function LogoDecalPlane({ item, modelGroupRef }) {
   const dummyObj = useMemo(() => new THREE.Object3D(), []);
   const raycaster = useMemo(() => new THREE.Raycaster(), []);
   const [aspectRatio, setAspectRatio] = useState(1);
+  const [texture, setTexture] = useState(null);
   const [liveHit, setLiveHit] = useState(null);
   const liveHitRef = useRef(null);
 
-  // Load logo texture
-  const texture = useMemo(() => {
-    if (!item.url) return null;
+  // Load logo texture reliably with proper state updates
+  useEffect(() => {
+    if (!item.url) {
+      setTexture(null);
+      return;
+    }
+    let isCancelled = false;
     const loader = new THREE.TextureLoader();
-    const tex = loader.load(item.url, (loadedTex) => {
-      if (loadedTex.image?.width && loadedTex.image?.height) {
-        setAspectRatio(loadedTex.image.width / loadedTex.image.height);
-      }
-    });
-    tex.colorSpace = THREE.SRGBColorSpace;
-    return tex;
+    loader.load(
+      item.url,
+      (loadedTex) => {
+        if (isCancelled) return;
+        loadedTex.colorSpace = THREE.SRGBColorSpace;
+        loadedTex.needsUpdate = true;
+        if (loadedTex.image?.width && loadedTex.image?.height) {
+          setAspectRatio(loadedTex.image.width / loadedTex.image.height);
+        }
+        setTexture(loadedTex);
+      },
+      undefined,
+      (err) => console.error('Logo texture load error:', err)
+    );
+    return () => {
+      isCancelled = true;
+    };
   }, [item.url]);
 
-  const baseSize = 0.35 * (item.scale || 1.0);
+  const baseSize = 0.32 * (item.scale || 1.0);
   const planeWidth = aspectRatio >= 1 ? baseSize : baseSize * aspectRatio;
   const planeHeight = aspectRatio >= 1 ? baseSize / aspectRatio : baseSize;
-  const projDepth = Math.max(0.25, baseSize * 0.6);
+  const projDepth = 0.08;
   const sizeVec = useMemo(() => new THREE.Vector3(planeWidth, planeHeight, projDepth), [planeWidth, planeHeight, projDepth]);
 
   // Current active position and rotation (live while dragging, else from item)
@@ -1025,8 +1079,14 @@ function LogoDecalPlane({ item, modelGroupRef }) {
   // Build true conforming 3D DecalGeometry across model mesh surface(s)
   const decalGeom = useMemo(() => {
     if (!modelGroupRef?.current || !texture) return null;
-    return buildDecalGeometry(modelGroupRef.current, currentPos, currentRotation, sizeVec);
-  }, [modelGroupRef, currentPos, currentRotation, sizeVec, texture, modelRevision]);
+    return buildDecalGeometry(
+      modelGroupRef.current,
+      currentPos,
+      currentRotation,
+      sizeVec,
+      item.angle || 0
+    );
+  }, [modelGroupRef, currentPos, currentRotation, sizeVec, texture, modelRevision, item.angle]);
 
   // Surface raycasting directly onto model geometry
   const projectToModelSurface = (clientX, clientY) => {
@@ -1038,7 +1098,13 @@ function LogoDecalPlane({ item, modelGroupRef }) {
     raycaster.setFromCamera(new THREE.Vector2(ndcX, ndcY), camera);
     const intersects = raycaster.intersectObjects(modelGroupRef.current.children, true);
 
-    const hit = intersects.find((h) => h.object?.isMesh && !h.object.userData?.isTextDecal && !h.object.userData?.isLogoDecal);
+    const hit = intersects.find(
+      (h) => h.object?.isMesh && 
+             !h.object.userData?.isTextDecal && 
+             !h.object.userData?.isLogoDecal &&
+             !h.object.name?.startsWith('E_') &&
+             (h.object.geometry?.attributes?.position?.count || 0) > 40
+    );
     if (!hit) return null;
 
     const worldNormal = hit.face.normal.clone().transformDirection(hit.object.matrixWorld).normalize();
@@ -1101,7 +1167,7 @@ function LogoDecalPlane({ item, modelGroupRef }) {
               Math.round(lh.baseRot[1] * 1000) / 1000,
               Math.round(lh.baseRot[2] * 1000) / 1000
             ],
-            targetMeshId: lh.meshId
+            targetMeshId: null
           });
           liveHitRef.current = null;
         }
@@ -1117,57 +1183,36 @@ function LogoDecalPlane({ item, modelGroupRef }) {
     };
   }, [camera, gl, modelGroupRef, item.id, item.angle, updateLogo, setIsDragging3D]);
 
-  if (!item.visible || !texture) return null;
+  if (!item.visible || !texture || !decalGeom) return null;
 
   return (
     <group position={[0, 0, 0]}>
-      {decalGeom ? (
-        <mesh
-          geometry={decalGeom}
-          userData={{ isLogoDecal: true }}
-          onPointerDown={handlePointerDown}
-          onPointerOver={(e) => {
-            e.stopPropagation();
-            gl.domElement.style.cursor = 'grab';
-          }}
-          onPointerOut={() => {
-            if (!isDraggingRef.current) gl.domElement.style.cursor = 'default';
-          }}
-        >
-          <meshStandardMaterial
-            map={texture}
-            transparent={true}
-            opacity={1.0}
-            depthTest={true}
-            depthWrite={false}
-            polygonOffset={true}
-            polygonOffsetFactor={-4}
-            polygonOffsetUnits={-4}
-            roughness={0.6}
-            metalness={0.1}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
-      ) : (
-        <mesh
-          position={currentPos}
-          rotation={currentRotation}
-          userData={{ isLogoDecal: true }}
-          onPointerDown={handlePointerDown}
-        >
-          <planeGeometry args={[planeWidth, planeHeight]} />
-          <meshBasicMaterial
-            map={texture}
-            transparent={true}
-            depthTest={true}
-            depthWrite={false}
-            polygonOffset={true}
-            polygonOffsetFactor={-4}
-            polygonOffsetUnits={-4}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
-      )}
+      <mesh
+        geometry={decalGeom}
+        userData={{ isLogoDecal: true }}
+        onPointerDown={handlePointerDown}
+        onPointerOver={(e) => {
+          e.stopPropagation();
+          gl.domElement.style.cursor = 'grab';
+        }}
+        onPointerOut={() => {
+          if (!isDraggingRef.current) gl.domElement.style.cursor = 'default';
+        }}
+      >
+        <meshStandardMaterial
+          map={texture}
+          transparent={true}
+          opacity={1.0}
+          depthTest={true}
+          depthWrite={false}
+          polygonOffset={true}
+          polygonOffsetFactor={-4}
+          polygonOffsetUnits={-4}
+          roughness={0.6}
+          metalness={0.1}
+          side={THREE.DoubleSide}
+        />
+      </mesh>
     </group>
   );
 }
@@ -1256,7 +1301,7 @@ export default function Sportswear3DCanvas({ className = '' }) {
           toneMapping: THREE.ACESFilmicToneMapping,
           toneMappingExposure: 1.1
         }}
-        camera={{ position: [0, 0.4, 2.3], fov: 42 }}
+        camera={{ position: [0, 0.2, 1.8], fov: 42 }}
         className="w-full h-full cursor-grab active:cursor-grabbing"
       >
         <CameraRig viewAngle={viewAngle} cameraResetCount={cameraResetCount} autoRotate={autoRotate} />
