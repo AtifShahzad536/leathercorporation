@@ -283,11 +283,11 @@ function CameraRig({ viewAngle, cameraResetCount }) {
     left: [-2.3, 0.4, 0],
     right: [2.3, 0.4, 0],
     top: [0, 2.5, 0.3],
-    perspective: [1.6, 0.7, 1.8]
+    perspective: [0.8, 0.55, 2.1]
   }), []);
 
   useEffect(() => {
-    const targetPos = targetPositions[viewAngle] || targetPositions.front;
+    const targetPos = targetPositions[viewAngle] || targetPositions.perspective;
     camera.position.set(...targetPos);
     camera.lookAt(0, 0.4, 0);
     if (controlsRef.current) {
@@ -295,6 +295,18 @@ function CameraRig({ viewAngle, cameraResetCount }) {
       controlsRef.current.update();
     }
   }, [viewAngle, cameraResetCount, camera, targetPositions]);
+
+  // Handle window/container resize to prevent off-center shifts
+  useEffect(() => {
+    const handleResize = () => {
+      if (controlsRef.current) {
+        controlsRef.current.target.set(0, 0.4, 0);
+        controlsRef.current.update();
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <OrbitControls
@@ -340,18 +352,16 @@ export default function Sportswear3DCanvas({ className = '' }) {
   return (
     <div
       ref={containerRef}
-      className={`relative w-full h-full min-h-0 overflow-hidden select-none bg-gradient-to-b from-[#F8FAFC] via-[#F1F5F9] to-[#E2E8F0] ${
-        isFullscreen ? 'fixed inset-0 z-[300] h-screen w-screen' : ''
-      } ${className}`}
+      className={`relative w-full h-full min-h-0 overflow-hidden select-none bg-gradient-to-b from-[#F8FAFC] via-[#F1F5F9] to-[#E2E8F0] ${className}`}
     >
       {/* Minimal Top-Right Status & Fullscreen Exit */}
       {isFullscreen && (
         <div className="absolute top-4 right-4 z-20">
           <button
             onClick={toggleFullscreen}
-            className="px-3.5 py-2 bg-white/90 hover:bg-white text-slate-800 rounded border border-slate-200 text-xs font-medium backdrop-blur-md transition flex items-center gap-1.5 cursor-pointer shadow-md"
+            className="px-3 py-1.5 bg-white/95 hover:bg-white text-slate-800 rounded border border-slate-200 text-xs font-medium transition flex items-center gap-1.5 cursor-pointer shadow-xs"
           >
-            <Minimize2 size={14} /> Exit Fullscreen
+            <Minimize2 size={13} /> Exit Fullscreen
           </button>
         </div>
       )}

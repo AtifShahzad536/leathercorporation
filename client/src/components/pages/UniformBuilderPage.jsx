@@ -348,11 +348,13 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
       <main className="flex-1 min-h-0 flex flex-row overflow-hidden relative">
         
         {/* PANEL 1: LEFT DOCK (Camera Angles + Garment Parts) */}
-        <div className={`h-full flex-shrink-0 z-10 ${
-          mobileTab === 'dock' ? 'fixed inset-x-0 bottom-12 top-12 z-30 flex w-full' : 'hidden md:flex w-56'
-        }`}>
-          <StudioLeftPanel />
-        </div>
+        {!isFullscreen && (
+          <div className={`h-full flex-shrink-0 z-10 ${
+            mobileTab === 'dock' ? 'fixed inset-x-0 bottom-12 top-12 z-30 flex w-full' : 'hidden md:flex w-56'
+          }`}>
+            <StudioLeftPanel />
+          </div>
+        )}
 
         {/* PANEL 2: CENTER 3D STAGE (Clean Studio Backdrop) */}
         <div className={`flex-1 h-full min-w-0 relative flex flex-col bg-gradient-to-b from-[#F8FAFC] via-[#F1F5F9] to-[#E2E8F0] overflow-hidden ${
@@ -370,14 +372,16 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
         </div>
 
         {/* PANEL 3: RIGHT PROPERTIES INSPECTOR */}
-        <div className={`h-full flex-shrink-0 z-10 ${
-          mobileTab === 'inspector' ? 'fixed inset-x-0 bottom-12 top-12 z-30 flex w-full' : 'hidden md:flex w-80 lg:w-96 xl:w-[420px]'
-        }`}>
-          <StudioControlPanel
-            onSaveDesign={handleOpenQuoteModal}
-            isSubmitting={submitting}
-          />
-        </div>
+        {!isFullscreen && (
+          <div className={`h-full flex-shrink-0 z-10 ${
+            mobileTab === 'inspector' ? 'fixed inset-x-0 bottom-12 top-12 z-30 flex w-full' : 'hidden md:flex w-80 lg:w-96 xl:w-[420px]'
+          }`}>
+            <StudioControlPanel
+              onSaveDesign={handleOpenQuoteModal}
+              isSubmitting={submitting}
+            />
+          </div>
+        )}
 
       </main>
 
