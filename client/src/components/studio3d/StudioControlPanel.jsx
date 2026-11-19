@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { 
   Palette, Layers, Sparkles, Type, Upload, Ruler, 
   RotateCcw, Undo2, Redo2, Check, ArrowRight, ShieldCheck, 
-  Trash2, ChevronDown, Sliders, ExternalLink, HelpCircle, CheckCircle2
+  Trash2, ChevronDown, Sliders, ExternalLink, HelpCircle, CheckCircle2,
+  Move, Plus, Eye, EyeOff, RotateCw
 } from 'lucide-react';
 import { 
   useStudioStore, 
@@ -28,6 +29,16 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
     patternScale,
     nameNumber,
     logos,
+    textItems,
+    selectedTextId,
+    setSelectedTextId,
+    addCustomText,
+    updateTextItem,
+    removeTextItem,
+    snapTextToMesh,
+    show3DGizmo,
+    setShow3DGizmo,
+    meshCenters,
     rosterCount,
     selectedSizes,
     decorationMethod,
@@ -93,6 +104,8 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
   const activeTargetLabel = selectedPart 
     ? (selectedPart.id !== selectedPart.label ? `${selectedPart.label} (${selectedPart.id})` : selectedPart.label)
     : (selectedMeshId ? selectedMeshId.replace(/^mesh_/, '').replace(/[_-]/g, ' ') : 'Entire Model');
+
+  const activeTextItem = (textItems || []).find(i => i.id === selectedTextId) || textItems?.[0];
 
   return (
     <aside className="w-full h-full flex flex-col bg-white border-l border-slate-200 text-slate-800 select-none overflow-hidden">
@@ -402,96 +415,325 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
           </div>
         )}
 
-        {/* ════ TAB 4: LETTERING & NUMBERS ════ */}
+        {/* ════ TAB 4: LETTERING & 3D DRAGGABLE TEXT ════ */}
         {activeTab === 'typography' && (
           <div className="space-y-4">
-            <div className="space-y-3">
-              <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Team Name (Front Chest)
-                </label>
-                <input
-                  type="text"
-                  value={nameNumber.teamName}
-                  onChange={(e) => setNameNumber({ teamName: e.target.value })}
-                  placeholder="e.g. WILDCATS"
-                  className="w-full px-3 py-1.5 text-xs border border-slate-300 rounded bg-white text-slate-800 font-medium uppercase focus:border-[var(--accent)] focus:outline-none"
-                />
+
+            {/* 1. Selected Part Placement Callout */}
+            {selectedMeshId ? (
+              <div className="p-3 bg-orange-50 border border-orange-200 rounded-lg flex items-center justify-between gap-2 shadow-2xs">
+                <div className="truncate">
+                  <span className="text-[10px] text-orange-700 font-normal block">
+                    Active Selected Part:
+                  </span>
+                  <h4 className="text-xs font-semibold text-slate-800 truncate" title={activeTargetLabel}>
+                    {activeTargetLabel}
+                  </h4>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => snapTextToMesh(selectedTextId, selectedMeshId)}
+                  className="px-2.5 py-1.5 bg-[#F26522] hover:bg-[#E05310] text-white rounded text-xs font-medium flex items-center gap-1.5 cursor-pointer shadow-xs transition flex-shrink-0"
+                  title="Snap this text directly onto the selected part"
+                >
+                  <Move size={12} />
+                  <span>Place on Part</span>
+                </button>
+              </div>
+            ) : (
+              <div className="p-2.5 bg-slate-50 border border-slate-200 rounded text-xs text-slate-500 font-normal flex items-center gap-2">
+                <HelpCircle size={14} className="text-slate-400 flex-shrink-0" />
+                <span>Tip: Select any part from the left panel to snap text onto it.</span>
+              </div>
+            )}
+
+            {/* 2. Text Layers Switcher */}
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-slate-700">
+                  Text Layers ({textItems.length})
+                </span>
+                <button
+                  type="button"
+                  onClick={() => addCustomText('CUSTOM TEXT', selectedMeshId)}
+                  className="text-[11px] font-medium text-[#F26522] hover:underline flex items-center gap-1 cursor-pointer"
+                >
+                  <Plus size={12} /> Add Custom Text
+                </button>
               </div>
 
-              <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Player Name (Back Nameplate)
-                </label>
-                <input
-                  type="text"
-                  value={nameNumber.playerName}
-                  onChange={(e) => setNameNumber({ playerName: e.target.value })}
-                  placeholder="e.g. WILLIAMS"
-                  className="w-full px-3 py-1.5 text-xs border border-slate-300 rounded bg-white text-slate-800 font-medium uppercase focus:border-[var(--accent)] focus:outline-none"
-                />
+              <div className="grid grid-cols-3 gap-1">
+                {textItems.map((item) => {
+                  const isCurrent = (selectedTextId || textItems[0]?.id) === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => setSelectedTextId(item.id)}
+                      className={`px-2 py-1.5 rounded text-xs truncate transition cursor-pointer border text-center ${
+                        isCurrent
+                          ? 'bg-orange-50/90 border-orange-300 text-orange-950 font-medium shadow-xs ring-1 ring-orange-200'
+                          : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50 font-normal'
+                      }`}
+                      title={item.label || item.text}
+                    >
+                      {item.type === 'team_name' ? 'Team Name' : item.type === 'number' ? 'Number' : item.type === 'player_name' ? 'Player Name' : (item.text || 'Custom')}
+                    </button>
+                  );
+                })}
               </div>
+            </div>
 
-              <div className="grid grid-cols-2 gap-2">
+            {/* 3. Active Text Element Editor */}
+            {activeTextItem && (
+              <div className="p-3 bg-slate-50 rounded border border-slate-200 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-medium text-slate-800 truncate pr-2">
+                    Edit: {activeTextItem.label || activeTextItem.text}
+                  </span>
+                  <div className="flex items-center gap-1.5 flex-shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => updateTextItem(activeTextItem.id, { visible: !activeTextItem.visible })}
+                      title={activeTextItem.visible ? 'Hide from 3D Model' : 'Show on 3D Model'}
+                      className="p-1 rounded text-slate-500 hover:text-slate-800 hover:bg-slate-200/60 cursor-pointer transition"
+                    >
+                      {activeTextItem.visible ? <Eye size={13} className="text-emerald-600" /> : <EyeOff size={13} />}
+                    </button>
+                    {activeTextItem.type === 'custom' && (
+                      <button
+                        type="button"
+                        onClick={() => removeTextItem(activeTextItem.id)}
+                        title="Delete this custom text"
+                        className="p-1 rounded text-red-500 hover:text-red-700 hover:bg-red-50 cursor-pointer transition"
+                      >
+                        <Trash2 size={13} />
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Text String Input */}
                 <div>
-                  <label className="block text-xs font-medium text-slate-700 mb-1">
-                    Back Number
+                  <label className="block text-[11px] font-medium text-slate-600 mb-1">
+                    Text Content:
                   </label>
                   <input
                     type="text"
-                    maxLength={3}
-                    value={nameNumber.playerNumber}
-                    onChange={(e) => setNameNumber({ playerNumber: e.target.value })}
-                    className="w-full px-3 py-1.5 text-base border border-slate-300 rounded bg-white text-slate-800 font-medium text-center focus:border-[var(--accent)] focus:outline-none"
+                    value={activeTextItem.text}
+                    onChange={(e) => updateTextItem(activeTextItem.id, { text: e.target.value })}
+                    className="w-full px-3 py-1.5 text-xs border border-slate-300 rounded bg-white text-slate-800 font-medium uppercase focus:border-[var(--accent)] focus:outline-none"
+                    placeholder="ENTER TEXT"
                   />
                 </div>
 
+                {/* Font Selector */}
                 <div>
-                  <label className="block text-xs font-medium text-slate-700 mb-1">
-                    Lettering Font
+                  <label className="block text-[11px] font-medium text-slate-600 mb-1">
+                    Athletic Font:
                   </label>
                   <select
-                    value={nameNumber.font}
-                    onChange={(e) => setNameNumber({ font: e.target.value })}
-                    className="w-full px-2.5 py-2 text-xs border border-slate-300 rounded bg-white text-slate-800 font-medium focus:border-[var(--accent)] focus:outline-none cursor-pointer"
+                    value={activeTextItem.font || 'Impact'}
+                    onChange={(e) => updateTextItem(activeTextItem.id, { font: e.target.value })}
+                    className="w-full px-2.5 py-1.5 text-xs border border-slate-300 rounded bg-white text-slate-800 font-medium focus:border-[var(--accent)] focus:outline-none cursor-pointer"
                   >
                     {FONTS_LIST.map(f => (
-                      <option key={f.id} value={f.id} className="text-slate-800">{f.name}</option>
+                      <option key={f.id} value={f.id}>{f.name}</option>
                     ))}
                   </select>
                 </div>
-              </div>
 
-              <div className="p-3 bg-slate-50 rounded border border-slate-200 flex items-center justify-between gap-4">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-normal text-slate-600">Text Fill</span>
+                {/* Colors (Fill & Outline) */}
+                <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-200">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-normal text-slate-600">Fill:</span>
+                    <div className="flex items-center gap-1.5">
+                      <input
+                        type="color"
+                        value={activeTextItem.color || '#F5A623'}
+                        onChange={(e) => updateTextItem(activeTextItem.id, { color: e.target.value })}
+                        className="w-6 h-6 rounded border border-slate-300 p-0 cursor-pointer bg-white"
+                      />
+                      <span className="text-[10px] font-mono uppercase text-slate-700">{activeTextItem.color || '#F5A623'}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-normal text-slate-600">Stroke:</span>
+                    <div className="flex items-center gap-1.5">
+                      <input
+                        type="color"
+                        value={activeTextItem.strokeColor || '#000000'}
+                        onChange={(e) => updateTextItem(activeTextItem.id, { strokeColor: e.target.value })}
+                        className="w-6 h-6 rounded border border-slate-300 p-0 cursor-pointer bg-white"
+                      />
+                      <span className="text-[10px] font-mono uppercase text-slate-700">{activeTextItem.strokeColor || '#000000'}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Stroke Thickness Slider */}
+                <div>
+                  <div className="flex items-center justify-between text-[11px] mb-1">
+                    <span className="text-slate-600 font-normal">Outline Thickness:</span>
+                    <span className="font-mono text-slate-800 font-medium">{activeTextItem.strokeWidth || 2}px</span>
+                  </div>
                   <input
-                    type="color"
-                    value={nameNumber.textColor}
-                    onChange={(e) => setNameNumber({ textColor: e.target.value })}
-                    className="w-6 h-6 rounded border border-slate-300 p-0 cursor-pointer bg-white"
+                    type="range"
+                    min="0"
+                    max="6"
+                    step="1"
+                    value={activeTextItem.strokeWidth ?? 2}
+                    onChange={(e) => updateTextItem(activeTextItem.id, { strokeWidth: parseInt(e.target.value) })}
+                    className="w-full accent-[var(--accent)] cursor-pointer"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* 4. 3D Position & Drag Controls */}
+            {activeTextItem && (
+              <div className="p-3 bg-slate-50 rounded border border-slate-200 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-medium text-slate-800">
+                    3D Drag & Drop Position
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setShow3DGizmo(!show3DGizmo)}
+                    className={`px-2 py-0.5 rounded text-[11px] font-normal border transition cursor-pointer ${
+                      show3DGizmo
+                        ? 'bg-orange-500 text-white border-orange-600 shadow-2xs'
+                        : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100'
+                    }`}
+                  >
+                    {show3DGizmo ? '3D Arrows: ON' : '3D Arrows: OFF'}
+                  </button>
+                </div>
+
+                <div className="p-2 bg-emerald-50/80 border border-emerald-200 rounded text-[11px] text-emerald-800 flex items-center gap-1.5 font-normal">
+                  <span>🖱️ <strong>Direct Drag:</strong> Click and drag the text directly on the 3D model with your mouse!</span>
+                </div>
+
+                {/* Quick Presets */}
+                <div>
+                  <span className="text-[10px] text-slate-500 font-normal block mb-1">
+                    Quick Placement Presets:
+                  </span>
+                  <div className="grid grid-cols-3 gap-1">
+                    <button
+                      type="button"
+                      onClick={() => updateTextItem(activeTextItem.id, { position: [0, 0.42, 0.22], rotation: [0, 0, 0] })}
+                      className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700 cursor-pointer"
+                    >
+                      Front Chest
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => updateTextItem(activeTextItem.id, { position: [0, 0.18, 0.23], rotation: [0, 0, 0] })}
+                      className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700 cursor-pointer"
+                    >
+                      Front Center
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => updateTextItem(activeTextItem.id, { position: [0, 0.42, -0.22], rotation: [0, Math.PI, 0] })}
+                      className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700 cursor-pointer"
+                    >
+                      Back Name
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => updateTextItem(activeTextItem.id, { position: [-0.10, 0.22, 0.20], rotation: [0, 0, 0] })}
+                      className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700 cursor-pointer"
+                    >
+                      Left Leg
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => updateTextItem(activeTextItem.id, { position: [0.10, 0.22, 0.20], rotation: [0, 0, 0] })}
+                      className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700 cursor-pointer"
+                    >
+                      Right Leg
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => updateTextItem(activeTextItem.id, { position: [0, 0.48, 0.16], rotation: [0, 0, 0] })}
+                      className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700 cursor-pointer"
+                    >
+                      Waistband
+                    </button>
+                  </div>
+                </div>
+
+                {/* X Coordinate Slider (Left / Right) */}
+                <div>
+                  <div className="flex items-center justify-between text-[11px] mb-1">
+                    <span className="text-slate-600 font-normal">Horizontal (Left ↔ Right):</span>
+                    <span className="font-mono text-slate-800 font-medium">{(activeTextItem.position?.[0] ?? 0).toFixed(2)}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="-0.4"
+                    max="0.4"
+                    step="0.01"
+                    value={activeTextItem.position?.[0] ?? 0}
+                    onChange={(e) => {
+                      const pos = [...(activeTextItem.position || [0, 0.3, 0.2])];
+                      pos[0] = parseFloat(e.target.value);
+                      updateTextItem(activeTextItem.id, { position: pos });
+                    }}
+                    className="w-full accent-[var(--accent)] cursor-pointer"
                   />
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-normal text-slate-600">Outline Stroke</span>
+                {/* Y Coordinate Slider (Up / Down) */}
+                <div>
+                  <div className="flex items-center justify-between text-[11px] mb-1">
+                    <span className="text-slate-600 font-normal">Vertical (Down ↕ Up):</span>
+                    <span className="font-mono text-slate-800 font-medium">{(activeTextItem.position?.[1] ?? 0.3).toFixed(2)}</span>
+                  </div>
                   <input
-                    type="color"
-                    value={nameNumber.strokeColor}
-                    onChange={(e) => setNameNumber({ strokeColor: e.target.value })}
-                    className="w-6 h-6 rounded border border-slate-300 p-0 cursor-pointer bg-white"
+                    type="range"
+                    min="-0.2"
+                    max="0.75"
+                    step="0.01"
+                    value={activeTextItem.position?.[1] ?? 0.3}
+                    onChange={(e) => {
+                      const pos = [...(activeTextItem.position || [0, 0.3, 0.2])];
+                      pos[1] = parseFloat(e.target.value);
+                      updateTextItem(activeTextItem.id, { position: pos });
+                    }}
+                    className="w-full accent-[var(--accent)] cursor-pointer"
+                  />
+                </div>
+
+                {/* Scale / Size Slider */}
+                <div>
+                  <div className="flex items-center justify-between text-[11px] mb-1">
+                    <span className="text-slate-600 font-normal">Scale / Font Size:</span>
+                    <span className="font-mono text-slate-800 font-medium">{(activeTextItem.scale || 1.0).toFixed(1)}x</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0.5"
+                    max="2.5"
+                    step="0.1"
+                    value={activeTextItem.scale || 1.0}
+                    onChange={(e) => updateTextItem(activeTextItem.id, { scale: parseFloat(e.target.value) })}
+                    className="w-full accent-[var(--accent)] cursor-pointer"
                   />
                 </div>
               </div>
+            )}
 
-              <button
-                onClick={() => setIs2DEditorOpen(true)}
-                className="w-full py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-medium rounded shadow-xs transition cursor-pointer flex items-center justify-center gap-1.5"
-              >
-                <ExternalLink size={13} />
-                <span>Open 2D Graphic Canvas</span>
-              </button>
-            </div>
+            <button
+              onClick={() => setIs2DEditorOpen(true)}
+              className="w-full py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-medium rounded shadow-xs transition cursor-pointer flex items-center justify-center gap-1.5"
+            >
+              <ExternalLink size={13} />
+              <span>Open 2D Graphic Canvas</span>
+            </button>
           </div>
         )}
 

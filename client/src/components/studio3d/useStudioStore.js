@@ -122,6 +122,59 @@ export const useStudioStore = create((set, get) => ({
     hasBackNumber: true
   },
 
+  // 3D Text & Lettering Items (Positioned, Draggable in 3D Viewport)
+  textItems: [
+    {
+      id: 'team_name',
+      type: 'team_name',
+      label: 'Team Name (Front)',
+      text: 'HAMLO SPORTS',
+      font: 'Impact',
+      color: '#F5A623',
+      strokeColor: '#000000',
+      strokeWidth: 2,
+      position: [0, 0.42, 0.22],
+      rotation: [0, 0, 0],
+      scale: 1.0,
+      targetMeshId: null,
+      visible: true
+    },
+    {
+      id: 'player_number',
+      type: 'number',
+      label: 'Player Number',
+      text: '26',
+      font: 'Impact',
+      color: '#F5A623',
+      strokeColor: '#000000',
+      strokeWidth: 3,
+      position: [0, 0.16, 0.23],
+      rotation: [0, 0, 0],
+      scale: 1.0,
+      targetMeshId: null,
+      visible: true
+    },
+    {
+      id: 'player_name',
+      type: 'player_name',
+      label: 'Player Name (Back)',
+      text: 'CHAMPION',
+      font: 'Impact',
+      color: '#F5A623',
+      strokeColor: '#000000',
+      strokeWidth: 2,
+      position: [0, 0.42, -0.22],
+      rotation: [0, Math.PI, 0],
+      scale: 1.0,
+      targetMeshId: null,
+      visible: true
+    }
+  ],
+  selectedTextId: 'team_name',
+  isDragging3D: false,
+  show3DGizmo: false,
+  meshCenters: {}, // { [meshId]: { center: [x,y,z], size: [x,y,z], surfacePosition: [x,y,z] } }
+
   // Logos & Decals
   logos: [], // [{ id, url, name, placement: 'chest'|'back'|'left_sleeve'|'right_sleeve', x, y, scale, rotation }]
 
@@ -158,7 +211,8 @@ export const useStudioStore = create((set, get) => ({
       patternColor: state.patternColor,
       patternScale: state.patternScale,
       nameNumber: { ...state.nameNumber },
-      logos: [...state.logos]
+      logos: [...state.logos],
+      textItems: (state.textItems || []).map(t => ({ ...t, position: [...t.position], rotation: [...t.rotation] }))
     };
     const newHistory = state.history.slice(0, state.historyIndex + 1);
     newHistory.push(snapshot);
@@ -427,10 +481,144 @@ export const useStudioStore = create((set, get) => ({
     set({ patternScale });
   },
 
-  setNameNumber: (partial) => {
-    set((state) => ({
-      nameNumber: { ...state.nameNumber, ...partial }
+  setMeshCenters: (meshCenters) => set({ meshCenters }),
+  setSelectedTextId: (id) => set({ selectedTextId: id }),
+  setIsDragging3D: (isDragging) => set({ isDragging3D: isDragging }),
+  setShow3DGizmo: (show) => set((s) => ({ show3DGizmo: typeof show === 'boolean' ? show : !s.show3DGizmo })),
+
+  addCustomText: (initialText = 'CUSTOM TEXT', meshId = null, initialPos = null) => {
+    get().saveSnapshot();
+    const id = 'text_' + Date.now();
+    const state = get();
+    
+    // Auto-calculate position if meshId provided
+    let pos = initialPos;
+    if (!pos && meshId && state.meshCenters[meshId]?.surfacePosition) {
+      pos = [...state.meshCenters[meshId].surfacePosition];
+    }
+    if (!pos) {
+      pos = [0, 0.28, 0.22];
+    }
+
+    const newItem = {
+      id,
+      type: 'custom',
+      label: initialText.length > 15 ? initialText.slice(0, 15) + '…' : initialText,
+      text: initialText,
+      font: state.nameNumber?.font || 'Impact',
+      color: state.nameNumber?.textColor || state.secondaryColor || '#F5A623',
+      strokeColor: state.nameNumber?.strokeColor || '#000000',
+      strokeWidth: 2,
+      position: pos,
+      rotation: [0, (pos[2] < 0 ? Math.PI : 0), 0],
+      scale: 1.0,
+      targetMeshId: meshId,
+      visible: true
+    };
+
+    set((s) => ({
+      textItems: [...(s.textItems || []), newItem],
+      selectedTextId: id
     }));
+    return id;
+  },
+
+  updateTextItem: (id, updates) => {
+    set((state) => {
+      const items = (state.textItems || []).map((item) => {
+        if (item.id === id) {
+          const updated = { ...item, ...updates };
+          // Keep legacy nameNumber object in sync for quotes and cart
+          if (id === 'team_name' && updates.text !== undefined) {
+            state.nameNumber.teamName = updates.text;
+          }
+          if (id === 'player_name' && updates.text !== undefined) {
+            state.nameNumber.playerName = updates.text;
+          }
+          if (id === 'player_number' && updates.text !== undefined) {
+            state.nameNumber.playerNumber = updates.text;
+          }
+          return updated;
+        }
+        return item;
+      });
+      return { textItems: items };
+    });
+  },
+
+  removeTextItem: (id) => {
+    get().saveSnapshot();
+    set((state) => {
+      const filtered = (state.textItems || []).filter((item) => item.id !== id);
+      return {
+        textItems: filtered,
+        selectedTextId: state.selectedTextId === id ? (filtered[0]?.id || null) : state.selectedTextId
+      };
+    });
+  },
+
+  snapTextToMesh: (textId, meshId) => {
+    if (!textId || !meshId) return;
+    get().saveSnapshot();
+    const state = get();
+    const info = state.meshCenters[meshId];
+    if (!info) return;
+
+    const surfPos = info.surfacePosition || [0, 0.3, 0.22];
+    const isRear = surfPos[2] < 0;
+
+    state.updateTextItem(textId, {
+      position: [surfPos[0], surfPos[1], surfPos[2]],
+      rotation: [0, isRear ? Math.PI : 0, 0],
+      targetMeshId: meshId
+    });
+  },
+
+  setNameNumber: (partial) => {
+    set((state) => {
+      const newNN = { ...state.nameNumber, ...partial };
+      const items = (state.textItems || []).map((item) => {
+        if (item.id === 'team_name') {
+          return {
+            ...item,
+            text: newNN.teamName !== undefined ? newNN.teamName : item.text,
+            font: newNN.font || item.font,
+            color: newNN.textColor || item.color,
+            strokeColor: newNN.strokeColor || item.strokeColor,
+            strokeWidth: newNN.strokeWidth || item.strokeWidth,
+            visible: newNN.hasFrontName !== undefined ? newNN.hasFrontName : item.visible
+          };
+        }
+        if (item.id === 'player_number') {
+          return {
+            ...item,
+            text: newNN.playerNumber !== undefined ? newNN.playerNumber : item.text,
+            font: newNN.font || item.font,
+            color: newNN.textColor || item.color,
+            strokeColor: newNN.strokeColor || item.strokeColor,
+            strokeWidth: (newNN.strokeWidth || 2) + 1,
+            visible: newNN.hasFrontNumber !== undefined ? newNN.hasFrontNumber : item.visible
+          };
+        }
+        if (item.id === 'player_name') {
+          return {
+            ...item,
+            text: newNN.playerName !== undefined ? newNN.playerName : item.text,
+            font: newNN.font || item.font,
+            color: newNN.textColor || item.color,
+            strokeColor: newNN.strokeColor || item.strokeColor,
+            strokeWidth: newNN.strokeWidth || item.strokeWidth,
+            visible: newNN.hasBackName !== undefined ? newNN.hasBackName : item.visible
+          };
+        }
+        return item;
+      });
+
+      return {
+        nameNumber: newNN,
+        textItems: items
+      };
+    });
   },
 
   addLogo: (logo) => {

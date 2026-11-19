@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useMemo, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls, useGLTF, Environment, ContactShadows, Float, Html, Center } from '@react-three/drei';
+import { OrbitControls, useGLTF, Environment, ContactShadows, Float, Html, Center, TransformControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { useStudioStore, FABRIC_PRESETS } from './useStudioStore';
 import { getFabricBumpTexture, getPatternTexture } from './FabricTextures';
@@ -24,10 +24,11 @@ function ProceduralJerseyModel({ onSelectMesh, selectedMeshId, hoveredMeshId, on
     nameNumber,
     logos,
     isWireframe,
-    setDetectedMeshes
+    setDetectedMeshes,
+    setMeshCenters
   } = useStudioStore();
 
-  // Populate detected meshes for procedural jersey
+  // Populate detected meshes and 3D surface centers for procedural jersey
   useEffect(() => {
     setDetectedMeshes([
       { id: 'mesh_front_body', label: 'Front Torso', region: 'front_body', defaultColor: primaryColor },
@@ -38,7 +39,17 @@ function ProceduralJerseyModel({ onSelectMesh, selectedMeshId, hoveredMeshId, on
       { id: 'mesh_cuffs', label: 'Sleeve Cuffs', region: 'cuffs', defaultColor: accentColor },
       { id: 'mesh_side_panels', label: 'Side Vent Panels', region: 'side_panels', defaultColor: secondaryColor }
     ]);
-  }, [setDetectedMeshes, primaryColor, secondaryColor, accentColor]);
+
+    setMeshCenters({
+      mesh_front_body: { center: [0, 0.45, 0.08], surfacePosition: [0, 0.45, 0.22] },
+      mesh_back_body: { center: [0, 0.45, -0.08], surfacePosition: [0, 0.45, -0.22] },
+      mesh_left_sleeve: { center: [-0.48, 0.72, 0], surfacePosition: [-0.48, 0.72, 0.18] },
+      mesh_right_sleeve: { center: [0.48, 0.72, 0], surfacePosition: [0.48, 0.72, 0.18] },
+      mesh_collar: { center: [0, 0.89, 0], surfacePosition: [0, 0.89, 0.20] },
+      mesh_cuffs: { center: [-0.48, 0.55, 0], surfacePosition: [-0.48, 0.55, 0.18] },
+      mesh_side_panels: { center: [-0.32, 0.45, 0], surfacePosition: [-0.32, 0.45, 0.22] }
+    });
+  }, [setDetectedMeshes, setMeshCenters, primaryColor, secondaryColor, accentColor]);
 
   const [decalFrontTex, setDecalFrontTex] = useState(null);
   const [decalBackTex, setDecalBackTex] = useState(null);
@@ -331,7 +342,8 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
     meshCustomizations,
     activeFabric,
     isWireframe,
-    setDetectedMeshes
+    setDetectedMeshes,
+    setMeshCenters
   } = useStudioStore();
 
   // Create an isolated clone where EVERY mesh has its own unique, cloned material instance
@@ -349,10 +361,12 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
     return clone;
   }, [scene]);
 
-  // Dynamically detect all meshes from 3D scene graph and publish to store ONCE per model
+  // Dynamically detect all meshes and compute 3D surface centers for text snapping ONCE per model
   useEffect(() => {
     if (!clonedScene) return;
     const detected = [];
+    const centers = {};
+
     clonedScene.traverse((child) => {
       if (child.isMesh) {
         const meshId = child.name || child.uuid;
@@ -367,13 +381,37 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
           region: child.name,
           defaultColor: matColor
         });
+
+        child.geometry.computeBoundingBox();
+        const bb = child.geometry.boundingBox.clone();
+        child.updateWorldMatrix(true, false);
+        bb.applyMatrix4(child.matrixWorld);
+
+        const center = new THREE.Vector3();
+        bb.getCenter(center);
+        const size = new THREE.Vector3();
+        bb.getSize(size);
+
+        const isRear = center.z < 0;
+        const zOffset = isRear ? -size.z * 0.5 - 0.04 : size.z * 0.5 + 0.04;
+
+        centers[meshId] = {
+          center: [center.x, center.y + 0.2, center.z],
+          size: [size.x, size.y, size.z],
+          surfacePosition: [
+            Math.round(center.x * 1000) / 1000,
+            Math.round((center.y + 0.2) * 1000) / 1000,
+            Math.round((center.z + zOffset) * 1000) / 1000
+          ]
+        };
       }
     });
 
     if (detected.length > 0) {
       setDetectedMeshes(detected);
     }
-  }, [clonedScene, activeModel, setDetectedMeshes]);
+    setMeshCenters(centers);
+  }, [clonedScene, activeModel, setDetectedMeshes, setMeshCenters]);
 
   // Apply per-mesh custom styling (strictly isolated per mesh)
   useEffect(() => {
@@ -425,6 +463,7 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
 function CameraRig({ viewAngle, cameraResetCount, autoRotate }) {
   const { camera } = useThree();
   const controlsRef = useRef();
+  const { isDragging3D } = useStudioStore();
 
   const targetPositions = useMemo(() => ({
     front: [0, 0.4, 2.3],
@@ -460,7 +499,8 @@ function CameraRig({ viewAngle, cameraResetCount, autoRotate }) {
   return (
     <OrbitControls
       ref={controlsRef}
-      autoRotate={autoRotate}
+      enabled={!isDragging3D}
+      autoRotate={autoRotate && !isDragging3D}
       autoRotateSpeed={2.5}
       enableDamping
       dampingFactor={0.08}
@@ -469,6 +509,194 @@ function CameraRig({ viewAngle, cameraResetCount, autoRotate }) {
       maxPolarAngle={Math.PI / 1.7}
       minPolarAngle={Math.PI / 6}
     />
+  );
+}
+
+// ── Interactive 3D Draggable Text Item Component ──
+function TextDecalPlane({ item }) {
+  const meshRef = useRef();
+  const { camera, gl } = useThree();
+  const {
+    selectedTextId,
+    setSelectedTextId,
+    updateTextItem,
+    setIsDragging3D,
+    show3DGizmo
+  } = useStudioStore();
+
+  const isSelected = selectedTextId === item.id;
+  const isDraggingRef = useRef(false);
+  const dragPlane = useMemo(() => new THREE.Plane(), []);
+  const planeIntersect = useMemo(() => new THREE.Vector3(), []);
+  const offset = useMemo(() => new THREE.Vector3(), []);
+
+  // Generate crisp dynamic text texture from HTML5 Canvas
+  const texture = useMemo(() => {
+    const canvas = document.createElement('canvas');
+    const isNum = item.type === 'number';
+    canvas.width = isNum ? 512 : 1024;
+    canvas.height = isNum ? 512 : 256;
+    const ctx = canvas.getContext('2d');
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    const cx = canvas.width / 2;
+    const cy = canvas.height / 2;
+    const fontSize = isNum ? 340 : 120;
+    const fontFam = item.font || 'Impact';
+
+    ctx.font = `900 ${fontSize}px "${fontFam}", sans-serif`;
+
+    // Outline Stroke
+    if (item.strokeWidth > 0 && item.strokeColor) {
+      ctx.strokeStyle = item.strokeColor;
+      ctx.lineWidth = item.strokeWidth * (isNum ? 6 : 4);
+      ctx.lineJoin = 'round';
+      ctx.strokeText(item.text || '', cx, cy);
+    }
+
+    // Text Fill
+    ctx.fillStyle = item.color || '#F5A623';
+    ctx.fillText(item.text || '', cx, cy);
+
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.needsUpdate = true;
+    return tex;
+  }, [item.text, item.font, item.color, item.strokeColor, item.strokeWidth, item.type]);
+
+  const isNum = item.type === 'number';
+  const planeWidth = (isNum ? 0.32 : 0.65) * (item.scale || 1.0);
+  const planeHeight = (isNum ? 0.32 : 0.18) * (item.scale || 1.0);
+
+  // Direct Pointer Dragging in 3D
+  const handlePointerDown = (e) => {
+    e.stopPropagation();
+    setSelectedTextId(item.id);
+    isDraggingRef.current = true;
+    setIsDragging3D(true);
+
+    if (meshRef.current) {
+      const normal = new THREE.Vector3();
+      camera.getWorldDirection(normal).negate();
+      dragPlane.setFromNormalAndCoplanarPoint(normal, meshRef.current.position);
+
+      if (e.ray.intersectPlane(dragPlane, planeIntersect)) {
+        offset.copy(meshRef.current.position).sub(planeIntersect);
+      }
+    }
+    gl.domElement.style.cursor = 'grabbing';
+  };
+
+  const handlePointerMove = (e) => {
+    if (!isDraggingRef.current || !meshRef.current) return;
+    e.stopPropagation();
+    if (e.ray.intersectPlane(dragPlane, planeIntersect)) {
+      const targetPos = planeIntersect.add(offset);
+      meshRef.current.position.copy(targetPos);
+      updateTextItem(item.id, {
+        position: [
+          Math.round(targetPos.x * 1000) / 1000,
+          Math.round(targetPos.y * 1000) / 1000,
+          Math.round(targetPos.z * 1000) / 1000
+        ]
+      });
+    }
+  };
+
+  const handlePointerUp = (e) => {
+    if (isDraggingRef.current) {
+      if (e) e.stopPropagation();
+      isDraggingRef.current = false;
+      setIsDragging3D(false);
+      gl.domElement.style.cursor = 'grab';
+    }
+  };
+
+  useEffect(() => {
+    const handleGlobalUp = () => {
+      if (isDraggingRef.current) {
+        isDraggingRef.current = false;
+        setIsDragging3D(false);
+        if (gl?.domElement) gl.domElement.style.cursor = 'default';
+      }
+    };
+    window.addEventListener('pointerup', handleGlobalUp);
+    return () => window.removeEventListener('pointerup', handleGlobalUp);
+  }, [gl, setIsDragging3D]);
+
+  if (!item.visible) return null;
+
+  return (
+    <>
+      <mesh
+        ref={meshRef}
+        position={item.position}
+        rotation={item.rotation || [0, 0, 0]}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerOver={(e) => {
+          e.stopPropagation();
+          gl.domElement.style.cursor = 'grab';
+        }}
+        onPointerOut={() => {
+          if (!isDraggingRef.current) gl.domElement.style.cursor = 'default';
+        }}
+      >
+        <planeGeometry args={[planeWidth, planeHeight]} />
+        <meshBasicMaterial
+          map={texture}
+          transparent={true}
+          opacity={1.0}
+          depthWrite={false}
+          side={THREE.DoubleSide}
+        />
+        {/* Selected glowing outline indicator */}
+        {isSelected && (
+          <lineSegments>
+            <edgesGeometry args={[new THREE.PlaneGeometry(planeWidth + 0.02, planeHeight + 0.02)]} />
+            <lineBasicMaterial color="#F26522" linewidth={2} />
+          </lineSegments>
+        )}
+      </mesh>
+
+      {/* Optional 3D Transform Gizmo */}
+      {show3DGizmo && isSelected && meshRef.current && (
+        <TransformControls
+          object={meshRef}
+          mode="translate"
+          size={0.5}
+          onMouseDown={() => setIsDragging3D(true)}
+          onMouseUp={() => {
+            setIsDragging3D(false);
+            if (meshRef.current) {
+              updateTextItem(item.id, {
+                position: [
+                  Math.round(meshRef.current.position.x * 1000) / 1000,
+                  Math.round(meshRef.current.position.y * 1000) / 1000,
+                  Math.round(meshRef.current.position.z * 1000) / 1000
+                ]
+              });
+            }
+          }}
+        />
+      )}
+    </>
+  );
+}
+
+// ── Interactive 3D Text Layer Container ──
+function Interactive3DTextLayer() {
+  const { textItems } = useStudioStore();
+  return (
+    <group position={[0, 0, 0]}>
+      {(textItems || []).map((item) => (
+        <TextDecalPlane key={item.id} item={item} />
+      ))}
+    </group>
   );
 }
 
@@ -565,6 +793,9 @@ export default function Sportswear3DCanvas({ className = '' }) {
                 onHoverMesh={setHoveredMesh}
               />
             )}
+
+            {/* 3D Interactive Draggable & Positionable Text Layer */}
+            <Interactive3DTextLayer />
           </group>
 
           {/* Realistic Floor Contact Shadow */}
