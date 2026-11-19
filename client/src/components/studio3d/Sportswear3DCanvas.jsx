@@ -272,8 +272,8 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
   );
 }
 
-// ── Camera Controller for Smooth Orbit Interpolation ──
-function CameraRig({ viewAngle, cameraResetCount }) {
+// ── Camera Controller for Smooth Orbit Interpolation & 360 Turntable ──
+function CameraRig({ viewAngle, cameraResetCount, autoRotate }) {
   const { camera } = useThree();
   const controlsRef = useRef();
 
@@ -311,6 +311,8 @@ function CameraRig({ viewAngle, cameraResetCount }) {
   return (
     <OrbitControls
       ref={controlsRef}
+      autoRotate={autoRotate}
+      autoRotateSpeed={2.5}
       enableDamping
       dampingFactor={0.08}
       minDistance={1.0}
@@ -383,7 +385,7 @@ export default function Sportswear3DCanvas({ className = '' }) {
         camera={{ position: [0, 0.4, 2.3], fov: 42 }}
         className="w-full h-full cursor-grab active:cursor-grabbing"
       >
-        <CameraRig viewAngle={viewAngle} cameraResetCount={cameraResetCount} />
+        <CameraRig viewAngle={viewAngle} cameraResetCount={cameraResetCount} autoRotate={autoRotate} />
 
         {/* Ambient & Studio 3-Point Lighting */}
         <ambientLight intensity={0.9} />
@@ -404,7 +406,7 @@ export default function Sportswear3DCanvas({ className = '' }) {
             </div>
           </Html>
         }>
-          <group rotation={[0, autoRotate ? undefined : 0, 0]}>
+          <group position={[0, 0, 0]}>
             {activeModel?.modelUrl ? (
               <CustomGlbModel
                 url={activeModel.modelUrl}
