@@ -118,8 +118,8 @@ function ProceduralJerseyModel({ onSelectMesh, selectedMeshId, hoveredMeshId, on
         bumpScale: fabricCfg.bumpScale,
         map,
         wireframe: isWireframe,
-        emissive: isSelected ? new THREE.Color('#F26522') : (isHovered ? new THREE.Color('#1E1B6E') : new THREE.Color('#000000')),
-        emissiveIntensity: isSelected ? 0.35 : (isHovered ? 0.2 : 0)
+        emissive: new THREE.Color('#000000'),
+        emissiveIntensity: 0
       };
     };
 
@@ -546,8 +546,8 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
           child.material.bumpMap = bumpMap;
           child.material.bumpScale = fabricCfg.bumpScale;
           child.material.wireframe = isWireframe;
-          child.material.emissive.set(isSelected ? '#F26522' : (isHovered ? '#1E1B6E' : '#000000'));
-          child.material.emissiveIntensity = isSelected ? 0.35 : (isHovered ? 0.2 : 0);
+          child.material.emissive.set('#000000');
+          child.material.emissiveIntensity = 0;
           child.material.needsUpdate = true;
         }
       }
