@@ -681,6 +681,18 @@ function TextDecalPlane({ item, modelGroupRef }) {
   const planeWidth = (isNum ? 0.32 : 0.65) * (item.scale || 1.0);
   const planeHeight = (isNum ? 0.32 : 0.18) * (item.scale || 1.0);
 
+  // Combine surface normal alignment with user in-plane rotation angle
+  const finalRotation = useMemo(() => {
+    const d = new THREE.Object3D();
+    if (item.rotation) {
+      d.rotation.set(item.rotation[0], item.rotation[1], item.rotation[2]);
+    }
+    if (item.angle) {
+      d.rotateZ(THREE.MathUtils.degToRad(item.angle));
+    }
+    return [d.rotation.x, d.rotation.y, d.rotation.z];
+  }, [item.rotation, item.angle]);
+
   // Surface raycasting directly onto model geometry
   const projectToModelSurface = (clientX, clientY) => {
     if (!modelGroupRef?.current || !gl?.domElement) return null;
@@ -692,7 +704,7 @@ function TextDecalPlane({ item, modelGroupRef }) {
     const intersects = raycaster.intersectObjects(modelGroupRef.current.children, true);
 
     // Find first valid mesh that is part of the apparel/model (not a decal)
-    const hit = intersects.find((h) => h.object?.isMesh && !h.object.userData?.isTextDecal);
+    const hit = intersects.find((h) => h.object?.isMesh && !h.object.userData?.isTextDecal && !h.object.userData?.isLogoDecal);
     if (!hit) return null;
 
     const worldNormal = hit.face.normal.clone().transformDirection(hit.object.matrixWorld).normalize();
@@ -705,9 +717,16 @@ function TextDecalPlane({ item, modelGroupRef }) {
     }
     dummyObj.lookAt(pos.clone().add(worldNormal));
 
+    const baseRot = [dummyObj.rotation.x, dummyObj.rotation.y, dummyObj.rotation.z];
+
+    if (item.angle) {
+      dummyObj.rotateZ(THREE.MathUtils.degToRad(item.angle));
+    }
+
     return {
       pos,
-      rot: dummyObj.rotation,
+      rotWithAngle: dummyObj.rotation,
+      baseRot,
       meshId: hit.object.name || hit.object.uuid
     };
   };
@@ -728,7 +747,7 @@ function TextDecalPlane({ item, modelGroupRef }) {
       if (hit) {
         if (meshRef.current) {
           meshRef.current.position.copy(hit.pos);
-          meshRef.current.rotation.copy(hit.rot);
+          meshRef.current.rotation.copy(hit.rotWithAngle);
         }
         updateTextItem(item.id, {
           position: [
@@ -737,9 +756,9 @@ function TextDecalPlane({ item, modelGroupRef }) {
             Math.round(hit.pos.z * 1000) / 1000
           ],
           rotation: [
-            Math.round(hit.rot.x * 1000) / 1000,
-            Math.round(hit.rot.y * 1000) / 1000,
-            Math.round(hit.rot.z * 1000) / 1000
+            Math.round(hit.baseRot[0] * 1000) / 1000,
+            Math.round(hit.baseRot[1] * 1000) / 1000,
+            Math.round(hit.baseRot[2] * 1000) / 1000
           ],
           targetMeshId: hit.meshId
         });
@@ -760,7 +779,7 @@ function TextDecalPlane({ item, modelGroupRef }) {
       window.removeEventListener('pointermove', handleGlobalMove);
       window.removeEventListener('pointerup', handleGlobalUp);
     };
-  }, [camera, gl, modelGroupRef, item.id, updateTextItem, setIsDragging3D]);
+  }, [camera, gl, modelGroupRef, item.id, item.angle, updateTextItem, setIsDragging3D]);
 
   if (!item.visible) return null;
 
@@ -769,7 +788,7 @@ function TextDecalPlane({ item, modelGroupRef }) {
       <mesh
         ref={meshRef}
         position={item.position}
-        rotation={item.rotation || [0, 0, 0]}
+        rotation={finalRotation}
         userData={{ isTextDecal: true }}
         onPointerDown={handlePointerDown}
         onPointerOver={(e) => {
@@ -820,6 +839,172 @@ function TextDecalPlane({ item, modelGroupRef }) {
   );
 }
 
+// ── Interactive 3D Draggable Logo / Emblem Component ──
+function LogoDecalPlane({ item, modelGroupRef }) {
+  const meshRef = useRef();
+  const { camera, gl } = useThree();
+  const {
+    selectedLogoId,
+    setSelectedLogoId,
+    updateLogo,
+    setIsDragging3D
+  } = useStudioStore();
+
+  const isSelected = selectedLogoId === item.id;
+  const isDraggingRef = useRef(false);
+  const dummyObj = useMemo(() => new THREE.Object3D(), []);
+  const raycaster = useMemo(() => new THREE.Raycaster(), []);
+  const [aspectRatio, setAspectRatio] = useState(1);
+
+  // Load logo texture
+  const texture = useMemo(() => {
+    if (!item.url) return null;
+    const loader = new THREE.TextureLoader();
+    const tex = loader.load(item.url, (loadedTex) => {
+      if (loadedTex.image?.width && loadedTex.image?.height) {
+        setAspectRatio(loadedTex.image.width / loadedTex.image.height);
+      }
+    });
+    tex.colorSpace = THREE.SRGBColorSpace;
+    return tex;
+  }, [item.url]);
+
+  const baseSize = 0.35 * (item.scale || 1.0);
+  const planeWidth = aspectRatio >= 1 ? baseSize : baseSize * aspectRatio;
+  const planeHeight = aspectRatio >= 1 ? baseSize / aspectRatio : baseSize;
+
+  // Combine surface normal alignment with user in-plane rotation angle
+  const finalRotation = useMemo(() => {
+    const d = new THREE.Object3D();
+    if (item.rotation) {
+      d.rotation.set(item.rotation[0], item.rotation[1], item.rotation[2]);
+    }
+    if (item.angle) {
+      d.rotateZ(THREE.MathUtils.degToRad(item.angle));
+    }
+    return [d.rotation.x, d.rotation.y, d.rotation.z];
+  }, [item.rotation, item.angle]);
+
+  // Surface raycasting directly onto model geometry
+  const projectToModelSurface = (clientX, clientY) => {
+    if (!modelGroupRef?.current || !gl?.domElement) return null;
+    const rect = gl.domElement.getBoundingClientRect();
+    const ndcX = ((clientX - rect.left) / rect.width) * 2 - 1;
+    const ndcY = -((clientY - rect.top) / rect.height) * 2 + 1;
+
+    raycaster.setFromCamera(new THREE.Vector2(ndcX, ndcY), camera);
+    const intersects = raycaster.intersectObjects(modelGroupRef.current.children, true);
+
+    const hit = intersects.find((h) => h.object?.isMesh && !h.object.userData?.isTextDecal && !h.object.userData?.isLogoDecal);
+    if (!hit) return null;
+
+    const worldNormal = hit.face.normal.clone().transformDirection(hit.object.matrixWorld).normalize();
+    const pos = hit.point.clone().addScaledVector(worldNormal, 0.0035);
+
+    dummyObj.position.copy(pos);
+    dummyObj.up.set(0, 1, 0);
+    if (Math.abs(worldNormal.y) > 0.90) {
+      dummyObj.up.set(0, 0, -1);
+    }
+    dummyObj.lookAt(pos.clone().add(worldNormal));
+
+    const baseRot = [dummyObj.rotation.x, dummyObj.rotation.y, dummyObj.rotation.z];
+
+    if (item.angle) {
+      dummyObj.rotateZ(THREE.MathUtils.degToRad(item.angle));
+    }
+
+    return {
+      pos,
+      rotWithAngle: dummyObj.rotation,
+      baseRot,
+      meshId: hit.object.name || hit.object.uuid
+    };
+  };
+
+  const handlePointerDown = (e) => {
+    e.stopPropagation();
+    setSelectedLogoId(item.id);
+    isDraggingRef.current = true;
+    setIsDragging3D(true);
+    gl.domElement.style.cursor = 'grabbing';
+  };
+
+  useEffect(() => {
+    const handleGlobalMove = (e) => {
+      if (!isDraggingRef.current) return;
+      const hit = projectToModelSurface(e.clientX, e.clientY);
+      if (hit) {
+        if (meshRef.current) {
+          meshRef.current.position.copy(hit.pos);
+          meshRef.current.rotation.copy(hit.rotWithAngle);
+        }
+        updateLogo(item.id, {
+          position: [
+            Math.round(hit.pos.x * 1000) / 1000,
+            Math.round(hit.pos.y * 1000) / 1000,
+            Math.round(hit.pos.z * 1000) / 1000
+          ],
+          rotation: [
+            Math.round(hit.baseRot[0] * 1000) / 1000,
+            Math.round(hit.baseRot[1] * 1000) / 1000,
+            Math.round(hit.baseRot[2] * 1000) / 1000
+          ],
+          targetMeshId: hit.meshId
+        });
+      }
+    };
+
+    const handleGlobalUp = () => {
+      if (isDraggingRef.current) {
+        isDraggingRef.current = false;
+        setIsDragging3D(false);
+        if (gl?.domElement) gl.domElement.style.cursor = 'grab';
+      }
+    };
+
+    window.addEventListener('pointermove', handleGlobalMove);
+    window.addEventListener('pointerup', handleGlobalUp);
+    return () => {
+      window.removeEventListener('pointermove', handleGlobalMove);
+      window.removeEventListener('pointerup', handleGlobalUp);
+    };
+  }, [camera, gl, modelGroupRef, item.id, item.angle, updateLogo, setIsDragging3D]);
+
+  if (!item.visible || !texture) return null;
+
+  return (
+    <mesh
+      ref={meshRef}
+      position={item.position || [0, 0.2, 0.15]}
+      rotation={finalRotation}
+      userData={{ isLogoDecal: true }}
+      onPointerDown={handlePointerDown}
+      onPointerOver={(e) => {
+        e.stopPropagation();
+        gl.domElement.style.cursor = 'grab';
+      }}
+      onPointerOut={() => {
+        if (!isDraggingRef.current) gl.domElement.style.cursor = 'default';
+      }}
+    >
+      <planeGeometry args={[planeWidth, planeHeight]} />
+      <meshBasicMaterial
+        map={texture}
+        transparent={true}
+        opacity={1.0}
+        depthTest={true}
+        depthWrite={false}
+        polygonOffset={true}
+        polygonOffsetFactor={-3}
+        polygonOffsetUnits={-3}
+        side={THREE.FrontSide}
+        toneMapped={false}
+      />
+    </mesh>
+  );
+}
+
 // ── Interactive 3D Text Layer Container ──
 function Interactive3DTextLayer({ modelGroupRef }) {
   const { textItems } = useStudioStore();
@@ -827,6 +1012,18 @@ function Interactive3DTextLayer({ modelGroupRef }) {
     <group position={[0, 0, 0]}>
       {(textItems || []).map((item) => (
         <TextDecalPlane key={item.id} item={item} modelGroupRef={modelGroupRef} />
+      ))}
+    </group>
+  );
+}
+
+// ── Interactive 3D Logos Layer Container ──
+function Interactive3DLogosLayer({ modelGroupRef }) {
+  const { logos } = useStudioStore();
+  return (
+    <group position={[0, 0, 0]}>
+      {(logos || []).map((logo) => (
+        <LogoDecalPlane key={logo.id} item={logo} modelGroupRef={modelGroupRef} />
       ))}
     </group>
   );
@@ -928,6 +1125,9 @@ export default function Sportswear3DCanvas({ className = '' }) {
 
           {/* 3D Interactive Draggable & Positionable Text Layer (Surface Clamped) */}
           <Interactive3DTextLayer modelGroupRef={modelGroupRef} />
+
+          {/* 3D Interactive Draggable & Positionable Logos Layer (Surface Clamped) */}
+          <Interactive3DLogosLayer modelGroupRef={modelGroupRef} />
 
           {/* Realistic Floor Contact Shadow */}
           <ContactShadows

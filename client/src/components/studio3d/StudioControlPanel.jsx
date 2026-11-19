@@ -29,6 +29,8 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
     patternScale,
     nameNumber,
     logos,
+    selectedLogoId,
+    setSelectedLogoId,
     textItems,
     selectedTextId,
     setSelectedTextId,
@@ -37,6 +39,11 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
     removeTextItem,
     snapTextToMesh,
     applyPlacementPreset,
+    addLogo,
+    updateLogo,
+    removeLogo,
+    snapLogoToMesh,
+    applyLogoPlacementPreset,
     show3DGizmo,
     setShow3DGizmo,
     meshCenters,
@@ -59,8 +66,6 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
     setPatternColor,
     setPatternScale,
     setNameNumber,
-    addLogo,
-    removeLogo,
     setIs2DEditorOpen,
     setRosterCount,
     setSelectedSizes,
@@ -92,10 +97,11 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
       addLogo({
         url: event.target.result,
         name: file.name,
-        placement: 'chest'
+        placement: selectedMeshId ? activeTargetLabel : 'Chest'
       });
     };
     reader.readAsDataURL(file);
+    e.target.value = '';
   };
 
   const calculatedUnitPrice = (44.99 * (rosterCount >= 100 ? 0.8 : rosterCount >= 50 ? 0.88 : rosterCount >= 25 ? 0.92 : 1) + (decorationMethod === 'twill' ? 10 : decorationMethod === 'both' ? 6 : 0));
@@ -107,6 +113,7 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
     : (selectedMeshId ? selectedMeshId.replace(/^mesh_/, '').replace(/[_-]/g, ' ') : 'Entire Model');
 
   const activeTextItem = (textItems || []).find(i => i.id === selectedTextId) || textItems?.[0];
+  const activeLogo = (logos || []).find(l => l.id === selectedLogoId) || logos?.[0];
 
   return (
     <aside className="w-full h-full flex flex-col bg-white border-l border-slate-200 text-slate-800 select-none overflow-hidden">
@@ -713,15 +720,59 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
                 <div>
                   <div className="flex items-center justify-between text-[11px] mb-1">
                     <span className="text-slate-600 font-normal">Scale / Font Size:</span>
-                    <span className="font-mono text-slate-800 font-medium">{(activeTextItem.scale || 1.0).toFixed(1)}x</span>
+                    <span className="font-mono text-slate-800 font-medium">{(activeTextItem.scale || 0.6).toFixed(2)}x</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => updateTextItem(activeTextItem.id, { scale: Math.max(0.2, (activeTextItem.scale || 0.6) - 0.05) })}
+                      className="w-6 h-6 flex items-center justify-center bg-slate-100 hover:bg-slate-200 rounded text-xs font-bold text-slate-700 cursor-pointer"
+                    >
+                      -
+                    </button>
+                    <input
+                      type="range"
+                      min="0.2"
+                      max="2.2"
+                      step="0.05"
+                      value={activeTextItem.scale || 0.6}
+                      onChange={(e) => updateTextItem(activeTextItem.id, { scale: parseFloat(e.target.value) })}
+                      className="flex-1 accent-[var(--accent)] cursor-pointer"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => updateTextItem(activeTextItem.id, { scale: Math.min(2.2, (activeTextItem.scale || 0.6) + 0.05) })}
+                      className="w-6 h-6 flex items-center justify-center bg-slate-100 hover:bg-slate-200 rounded text-xs font-bold text-slate-700 cursor-pointer"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                {/* In-Plane Rotation Angle Slider */}
+                <div>
+                  <div className="flex items-center justify-between text-[11px] mb-1">
+                    <span className="text-slate-600 font-normal">Rotation Angle:</span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-slate-800 font-medium">{activeTextItem.angle || 0}°</span>
+                      {(activeTextItem.angle || 0) !== 0 && (
+                        <button
+                          type="button"
+                          onClick={() => updateTextItem(activeTextItem.id, { angle: 0 })}
+                          className="text-[10px] text-slate-500 hover:text-slate-800 underline cursor-pointer"
+                        >
+                          Reset 0°
+                        </button>
+                      )}
+                    </div>
                   </div>
                   <input
                     type="range"
-                    min="0.5"
-                    max="2.5"
-                    step="0.1"
-                    value={activeTextItem.scale || 1.0}
-                    onChange={(e) => updateTextItem(activeTextItem.id, { scale: parseFloat(e.target.value) })}
+                    min="-180"
+                    max="180"
+                    step="5"
+                    value={activeTextItem.angle || 0}
+                    onChange={(e) => updateTextItem(activeTextItem.id, { angle: parseInt(e.target.value, 10) })}
                     className="w-full accent-[var(--accent)] cursor-pointer"
                   />
                 </div>
@@ -741,8 +792,39 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
         {/* ════ TAB 5: LOGOS & ARTWORK ════ */}
         {activeTab === 'logos' && (
           <div className="space-y-4">
-            <div className="border-2 border-dashed border-slate-300 rounded p-5 text-center hover:border-slate-400 transition-colors bg-slate-50/50">
-              <Upload size={22} className="mx-auto text-slate-400 mb-1.5" />
+            {/* 1. Selected Part Placement Callout */}
+            {selectedMeshId ? (
+              <div className="p-3 bg-orange-50 border border-orange-200 rounded-lg flex items-center justify-between gap-2 shadow-2xs">
+                <div className="truncate">
+                  <span className="text-[10px] text-orange-700 font-normal block">
+                    Active Selected Part:
+                  </span>
+                  <h4 className="text-xs font-semibold text-slate-800 truncate" title={activeTargetLabel}>
+                    {activeTargetLabel}
+                  </h4>
+                </div>
+                {activeLogo && (
+                  <button
+                    type="button"
+                    onClick={() => snapLogoToMesh(activeLogo.id, selectedMeshId)}
+                    className="px-2.5 py-1.5 bg-[#F26522] hover:bg-[#E05310] text-white rounded text-xs font-medium flex items-center gap-1.5 cursor-pointer shadow-xs transition flex-shrink-0"
+                    title="Snap logo directly onto the selected part"
+                  >
+                    <Move size={12} />
+                    <span>Place on Part</span>
+                  </button>
+                )}
+              </div>
+            ) : (
+              <div className="p-2.5 bg-slate-50 border border-slate-200 rounded text-xs text-slate-500 font-normal flex items-center gap-2">
+                <HelpCircle size={14} className="text-slate-400 flex-shrink-0" />
+                <span>Tip: Select any part from the left panel to snap your logo onto that specific region.</span>
+              </div>
+            )}
+
+            {/* 2. File Upload Box */}
+            <div className="border-2 border-dashed border-slate-300 rounded p-4 text-center hover:border-slate-400 transition-colors bg-slate-50/50">
+              <Upload size={22} className="mx-auto text-slate-400 mb-1" />
               <p className="text-xs font-medium text-slate-700 mb-0.5">
                 Upload Team Crest or Sponsor Logo
               </p>
@@ -750,33 +832,243 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
                 PNG, SVG, or JPG (transparent background recommended)
               </span>
               <label className="px-4 py-1.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-medium rounded transition cursor-pointer inline-block shadow-xs">
-                Choose File
+                Choose Logo File
                 <input type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
               </label>
             </div>
 
-            {/* Uploaded Logos List */}
+            {/* 3. Attached Emblems Switcher */}
             {logos.length > 0 && (
               <div className="space-y-1.5">
-                <span className="text-xs font-medium text-slate-600 block">
+                <span className="text-xs font-medium text-slate-700 block">
                   Attached Emblems ({logos.length})
                 </span>
-                {logos.map((logo) => (
-                  <div key={logo.id} className="p-2.5 bg-slate-50 rounded border border-slate-200 flex items-center justify-between gap-2">
-                    <img src={logo.url} alt="Logo" className="w-8 h-8 object-contain rounded bg-white border border-slate-200 p-0.5" />
-                    <div className="flex-1 min-w-0">
-                      <span className="text-xs font-medium text-slate-800 truncate block">{logo.name || 'Emblem'}</span>
-                      <span className="text-[10px] text-slate-500 capitalize">{logo.placement || 'Chest'}</span>
-                    </div>
+                <div className="space-y-1.5">
+                  {logos.map((logo) => {
+                    const isCurrent = (activeLogo?.id) === logo.id;
+                    return (
+                      <div
+                        key={logo.id}
+                        onClick={() => setSelectedLogoId(logo.id)}
+                        className={`p-2 rounded border transition cursor-pointer flex items-center justify-between gap-2 ${
+                          isCurrent
+                            ? 'bg-orange-50/90 border-orange-300 ring-1 ring-orange-200 shadow-2xs'
+                            : 'bg-white border-slate-200 hover:bg-slate-50'
+                        }`}
+                      >
+                        <img
+                          src={logo.url}
+                          alt="Logo"
+                          className="w-8 h-8 object-contain rounded bg-white border border-slate-200 p-0.5 flex-shrink-0"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <span className="text-xs font-medium text-slate-800 truncate block">
+                            {logo.name || 'Emblem'}
+                          </span>
+                          <span className="text-[10px] text-slate-500 capitalize">
+                            {logo.targetMeshId ? `Part: ${logo.targetMeshId}` : (logo.placement || 'Front')}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              updateLogo(logo.id, { visible: !logo.visible });
+                            }}
+                            className="p-1 text-slate-400 hover:text-slate-700 cursor-pointer"
+                            title={logo.visible ? 'Hide emblem' : 'Show emblem'}
+                          >
+                            {logo.visible ? <Eye size={13} className="text-emerald-600" /> : <EyeOff size={13} />}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              removeLogo(logo.id);
+                            }}
+                            className="p-1 text-slate-400 hover:text-red-600 cursor-pointer"
+                            title="Remove emblem"
+                          >
+                            <Trash2 size={13} />
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* 4. Active Logo Controls (Resize, Rotate, Drag, Presets) */}
+            {activeLogo && (
+              <div className="p-3 bg-slate-50 rounded border border-slate-200 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-medium text-slate-800">
+                    Logo 3D Controls
+                  </span>
+                  <span className="text-[11px] text-orange-700 font-medium">
+                    {activeLogo.name || 'Active Logo'}
+                  </span>
+                </div>
+
+                <div className="p-2 bg-emerald-50/80 border border-emerald-200 rounded text-[11px] text-emerald-800 flex items-center gap-1.5 font-normal">
+                  <span>🖱️ <strong>Direct 3D Drag:</strong> Click & drag the logo anywhere on the 3D model with your mouse, even across different parts!</span>
+                </div>
+
+                {/* Scale / Size Slider (Chota / Bara) */}
+                <div>
+                  <div className="flex items-center justify-between text-[11px] mb-1">
+                    <span className="text-slate-600 font-normal">Logo Size / Scale:</span>
+                    <span className="font-mono text-slate-800 font-medium">{(activeLogo.scale || 0.45).toFixed(2)}x</span>
+                  </div>
+                  <div className="flex items-center gap-2">
                     <button
-                      onClick={() => removeLogo(logo.id)}
-                      className="p-1 text-slate-400 hover:text-red-600 transition cursor-pointer"
-                      title="Remove Logo"
+                      type="button"
+                      onClick={() => updateLogo(activeLogo.id, { scale: Math.max(0.1, (activeLogo.scale || 0.45) - 0.05) })}
+                      className="w-6 h-6 flex items-center justify-center bg-white hover:bg-slate-200 border border-slate-200 rounded text-xs font-bold text-slate-700 cursor-pointer"
                     >
-                      <Trash2 size={14} />
+                      -
+                    </button>
+                    <input
+                      type="range"
+                      min="0.1"
+                      max="1.8"
+                      step="0.05"
+                      value={activeLogo.scale || 0.45}
+                      onChange={(e) => updateLogo(activeLogo.id, { scale: parseFloat(e.target.value) })}
+                      className="flex-1 accent-[var(--accent)] cursor-pointer"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => updateLogo(activeLogo.id, { scale: Math.min(1.8, (activeLogo.scale || 0.45) + 0.05) })}
+                      className="w-6 h-6 flex items-center justify-center bg-white hover:bg-slate-200 border border-slate-200 rounded text-xs font-bold text-slate-700 cursor-pointer"
+                    >
+                      +
                     </button>
                   </div>
-                ))}
+                </div>
+
+                {/* Rotation Angle Slider */}
+                <div>
+                  <div className="flex items-center justify-between text-[11px] mb-1">
+                    <span className="text-slate-600 font-normal">Rotation Angle:</span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-slate-800 font-medium">{activeLogo.angle || 0}°</span>
+                      {(activeLogo.angle || 0) !== 0 && (
+                        <button
+                          type="button"
+                          onClick={() => updateLogo(activeLogo.id, { angle: 0 })}
+                          className="text-[10px] text-slate-500 hover:text-slate-800 underline cursor-pointer"
+                        >
+                          Reset 0°
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  <input
+                    type="range"
+                    min="-180"
+                    max="180"
+                    step="5"
+                    value={activeLogo.angle || 0}
+                    onChange={(e) => updateLogo(activeLogo.id, { angle: parseInt(e.target.value, 10) })}
+                    className="w-full accent-[var(--accent)] cursor-pointer"
+                  />
+                </div>
+
+                {/* Quick Placement Presets */}
+                <div>
+                  <span className="text-[10px] text-slate-500 font-normal block mb-1">
+                    Quick Placement Presets:
+                  </span>
+                  <div className="grid grid-cols-3 gap-1">
+                    <button
+                      type="button"
+                      onClick={() => applyLogoPlacementPreset(activeLogo.id, 'chest_left')}
+                      className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700 cursor-pointer"
+                    >
+                      Left Chest/Leg
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => applyLogoPlacementPreset(activeLogo.id, 'front_center')}
+                      className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700 cursor-pointer"
+                    >
+                      Front Center
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => applyLogoPlacementPreset(activeLogo.id, 'chest_right')}
+                      className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700 cursor-pointer"
+                    >
+                      Right Chest/Leg
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => applyLogoPlacementPreset(activeLogo.id, 'back_center')}
+                      className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700 cursor-pointer"
+                    >
+                      Back Center
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => applyLogoPlacementPreset(activeLogo.id, 'left_side')}
+                      className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700 cursor-pointer"
+                    >
+                      Left Side
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => applyLogoPlacementPreset(activeLogo.id, 'right_side')}
+                      className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700 cursor-pointer"
+                    >
+                      Right Side
+                    </button>
+                  </div>
+                </div>
+
+                {/* Horizontal Coordinate Slider */}
+                <div>
+                  <div className="flex items-center justify-between text-[11px] mb-1">
+                    <span className="text-slate-600 font-normal">Horizontal (Left ↔ Right):</span>
+                    <span className="font-mono text-slate-800 font-medium">{(activeLogo.position?.[0] ?? 0).toFixed(2)}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="-0.4"
+                    max="0.4"
+                    step="0.01"
+                    value={activeLogo.position?.[0] ?? 0}
+                    onChange={(e) => {
+                      const pos = [...(activeLogo.position || [0, 0.2, 0.15])];
+                      pos[0] = parseFloat(e.target.value);
+                      updateLogo(activeLogo.id, { position: pos });
+                    }}
+                    className="w-full accent-[var(--accent)] cursor-pointer"
+                  />
+                </div>
+
+                {/* Vertical Coordinate Slider */}
+                <div>
+                  <div className="flex items-center justify-between text-[11px] mb-1">
+                    <span className="text-slate-600 font-normal">Vertical (Down ↕ Up):</span>
+                    <span className="font-mono text-slate-800 font-medium">{(activeLogo.position?.[1] ?? 0.2).toFixed(2)}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="-0.2"
+                    max="0.75"
+                    step="0.01"
+                    value={activeLogo.position?.[1] ?? 0.2}
+                    onChange={(e) => {
+                      const pos = [...(activeLogo.position || [0, 0.2, 0.15])];
+                      pos[1] = parseFloat(e.target.value);
+                      updateLogo(activeLogo.id, { position: pos });
+                    }}
+                    className="w-full accent-[var(--accent)] cursor-pointer"
+                  />
+                </div>
               </div>
             )}
 

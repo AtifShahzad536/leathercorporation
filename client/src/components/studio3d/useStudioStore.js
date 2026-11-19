@@ -135,6 +135,7 @@ export const useStudioStore = create((set, get) => ({
       strokeWidth: 2,
       position: [0, 0.1, 0.1],
       rotation: [0, 0, 0],
+      angle: 0,
       scale: 0.6,
       targetMeshId: null,
       visible: true
@@ -150,6 +151,7 @@ export const useStudioStore = create((set, get) => ({
       strokeWidth: 3,
       position: [0, 0.05, 0.1],
       rotation: [0, 0, 0],
+      angle: 0,
       scale: 0.5,
       targetMeshId: null,
       visible: false
@@ -165,6 +167,7 @@ export const useStudioStore = create((set, get) => ({
       strokeWidth: 2,
       position: [0, 0.1, -0.1],
       rotation: [0, Math.PI, 0],
+      angle: 0,
       scale: 0.6,
       targetMeshId: null,
       visible: false
@@ -182,7 +185,8 @@ export const useStudioStore = create((set, get) => ({
   },
 
   // Logos & Decals
-  logos: [], // [{ id, url, name, placement: 'chest'|'back'|'left_sleeve'|'right_sleeve', x, y, scale, rotation }]
+  logos: [], // [{ id, url, name, placement, position, rotation, angle, scale, targetMeshId, visible }]
+  selectedLogoId: null,
 
   // Camera & View
   viewAngle: 'front', // 'front' | 'back' | 'left' | 'right' | 'top' | 'perspective'
@@ -217,8 +221,16 @@ export const useStudioStore = create((set, get) => ({
       patternColor: state.patternColor,
       patternScale: state.patternScale,
       nameNumber: { ...state.nameNumber },
-      logos: [...state.logos],
-      textItems: (state.textItems || []).map(t => ({ ...t, position: [...t.position], rotation: [...t.rotation] }))
+      logos: (state.logos || []).map(l => ({
+        ...l,
+        position: l.position ? [...l.position] : [0, 0.2, 0.15],
+        rotation: l.rotation ? [...l.rotation] : [0, 0, 0]
+      })),
+      textItems: (state.textItems || []).map(t => ({
+        ...t,
+        position: [...t.position],
+        rotation: [...t.rotation]
+      }))
     };
     const newHistory = state.history.slice(0, state.historyIndex + 1);
     newHistory.push(snapshot);
@@ -535,6 +547,7 @@ export const useStudioStore = create((set, get) => ({
         Math.round(rot[1] * 1000) / 1000,
         Math.round(rot[2] * 1000) / 1000
       ],
+      angle: 0,
       scale: partScale,
       targetMeshId: meshId,
       visible: true
@@ -604,6 +617,7 @@ export const useStudioStore = create((set, get) => ({
         Math.round(rot[1] * 1000) / 1000,
         Math.round(rot[2] * 1000) / 1000
       ],
+      angle: 0,
       scale: partScale,
       targetMeshId: meshId,
       visible: true
@@ -719,24 +733,167 @@ export const useStudioStore = create((set, get) => ({
     });
   },
 
+  setSelectedLogoId: (id) => set({ selectedLogoId: id }),
+
   addLogo: (logo) => {
     get().saveSnapshot();
-    set((state) => ({
-      logos: [...state.logos, { id: 'logo_' + Date.now(), scale: 1, rotation: 0, x: 0.5, y: 0.35, placement: 'chest', ...logo }]
+    const id = 'logo_' + Date.now();
+    const state = get();
+    const meshId = state.selectedMeshId;
+
+    let pos = null;
+    let rot = [0, 0, 0];
+    let autoScale = 0.45;
+
+    // 1. If a mesh is currently selected, snap directly onto that mesh's surface!
+    if (meshId && state.meshCenters[meshId]?.surfacePosition) {
+      const info = state.meshCenters[meshId];
+      pos = [...info.surfacePosition];
+      rot = info.rotation ? [...info.rotation] : [0, (pos[2] < 0 ? Math.PI : 0), 0];
+      if (info.size) {
+        autoScale = Math.min(0.65, Math.max(0.18, info.size[0] * 0.6));
+      }
+    }
+
+    // 2. Fallback to model front surface center
+    if (!pos) {
+      const b = state.modelBounds || { center: [0, 0.2, 0], size: [0.5, 0.6, 0.3], max: [0.25, 0.5, 0.15] };
+      pos = [0, b.center[1] + (b.size[1] * 0.1), b.max[2] + 0.003];
+      autoScale = Math.min(0.6, Math.max(0.2, b.size[0] * 0.5));
+    }
+
+    const newLogo = {
+      id,
+      url: logo.url,
+      name: logo.name || 'Emblem',
+      placement: logo.placement || (meshId ? 'custom_part' : 'chest'),
+      position: [
+        Math.round(pos[0] * 1000) / 1000,
+        Math.round(pos[1] * 1000) / 1000,
+        Math.round(pos[2] * 1000) / 1000
+      ],
+      rotation: [
+        Math.round(rot[0] * 1000) / 1000,
+        Math.round(rot[1] * 1000) / 1000,
+        Math.round(rot[2] * 1000) / 1000
+      ],
+      angle: 0,
+      scale: autoScale,
+      targetMeshId: meshId || null,
+      visible: true
+    };
+
+    set((s) => ({
+      logos: [...s.logos, newLogo],
+      selectedLogoId: id
     }));
+    return id;
   },
 
   updateLogo: (id, partial) => {
     set((state) => ({
-      logos: state.logos.map(l => l.id === id ? { ...l, ...partial } : l)
+      logos: state.logos.map((l) => (l.id === id ? { ...l, ...partial } : l))
     }));
   },
 
   removeLogo: (id) => {
     get().saveSnapshot();
-    set((state) => ({
-      logos: state.logos.filter(l => l.id !== id)
-    }));
+    set((state) => {
+      const filtered = state.logos.filter((l) => l.id !== id);
+      return {
+        logos: filtered,
+        selectedLogoId: state.selectedLogoId === id ? (filtered[0]?.id || null) : state.selectedLogoId
+      };
+    });
+  },
+
+  snapLogoToMesh: (logoId, meshId) => {
+    if (!logoId || !meshId) return;
+    get().saveSnapshot();
+    const state = get();
+    const info = state.meshCenters[meshId];
+    if (!info) return;
+
+    const surfPos = info.surfacePosition || [0, 0.2, 0.15];
+    const rot = info.rotation || [0, surfPos[2] < 0 ? Math.PI : 0, 0];
+    const mSize = info.size || [0.4, 0.4, 0.4];
+    const partScale = Math.min(0.65, Math.max(0.18, mSize[0] * 0.6));
+
+    state.updateLogo(logoId, {
+      position: [
+        Math.round(surfPos[0] * 1000) / 1000,
+        Math.round(surfPos[1] * 1000) / 1000,
+        Math.round(surfPos[2] * 1000) / 1000
+      ],
+      rotation: [
+        Math.round(rot[0] * 1000) / 1000,
+        Math.round(rot[1] * 1000) / 1000,
+        Math.round(rot[2] * 1000) / 1000
+      ],
+      scale: partScale,
+      targetMeshId: meshId,
+      visible: true
+    });
+  },
+
+  applyLogoPlacementPreset: (logoId, presetKey) => {
+    if (!logoId) return;
+    get().saveSnapshot();
+    const state = get();
+    const b = state.modelBounds || {
+      center: [0, 0.2, 0],
+      size: [0.5, 0.6, 0.3],
+      min: [-0.25, -0.1, -0.15],
+      max: [0.25, 0.5, 0.15]
+    };
+
+    let pos = [0, b.center[1] + (b.size[1] * 0.12), b.max[2] + 0.003];
+    let rot = [0, 0, 0];
+    const autoScale = Math.min(0.65, Math.max(0.2, b.size[0] * 0.5));
+
+    switch (presetKey) {
+      case 'front_center':
+        pos = [0, b.center[1], b.max[2] + 0.003];
+        rot = [0, 0, 0];
+        break;
+      case 'chest_left':
+        pos = [-(b.size[0] * 0.22), b.center[1] + (b.size[1] * 0.15), b.max[2] + 0.003];
+        rot = [0, 0, 0];
+        break;
+      case 'chest_right':
+        pos = [(b.size[0] * 0.22), b.center[1] + (b.size[1] * 0.15), b.max[2] + 0.003];
+        rot = [0, 0, 0];
+        break;
+      case 'back_center':
+        pos = [0, b.center[1] + (b.size[1] * 0.12), b.min[2] - 0.003];
+        rot = [0, Math.PI, 0];
+        break;
+      case 'left_side':
+        pos = [b.min[0] + (b.size[0] * 0.15), b.center[1] - (b.size[1] * 0.05), b.max[2] + 0.002];
+        rot = [0, 0, 0];
+        break;
+      case 'right_side':
+        pos = [b.max[0] - (b.size[0] * 0.15), b.center[1] - (b.size[1] * 0.05), b.max[2] + 0.002];
+        rot = [0, 0, 0];
+        break;
+      default:
+        break;
+    }
+
+    state.updateLogo(logoId, {
+      position: [
+        Math.round(pos[0] * 1000) / 1000,
+        Math.round(pos[1] * 1000) / 1000,
+        Math.round(pos[2] * 1000) / 1000
+      ],
+      rotation: [
+        Math.round(rot[0] * 1000) / 1000,
+        Math.round(rot[1] * 1000) / 1000,
+        Math.round(rot[2] * 1000) / 1000
+      ],
+      scale: autoScale,
+      visible: true
+    });
   },
 
   setViewAngle: (angle) => {
