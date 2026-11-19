@@ -39,6 +39,9 @@ function RenderScene({ scene, selectedMeshId, isolateSelected }) {
     if (!scene) return;
     scene.traverse((child) => {
       if (child.isMesh) {
+        if (!child.userData.origMaterial) {
+          child.userData.origMaterial = child.material ? child.material.clone() : new THREE.MeshStandardMaterial({ color: 0x0a192f });
+        }
         const isSelected = (child.name || child.uuid) === selectedMeshId;
 
         if (isolateSelected && selectedMeshId) {
@@ -55,6 +58,8 @@ function RenderScene({ scene, selectedMeshId, isolateSelected }) {
             roughness: 0.3,
             wireframe: false
           });
+        } else {
+          child.material = child.userData.origMaterial;
         }
       }
     });

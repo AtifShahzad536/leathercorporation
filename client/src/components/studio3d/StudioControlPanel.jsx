@@ -69,7 +69,7 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
   const currentTab = TABS.find(t => t.id === activeTab) || TABS[0];
 
   const currentMeshColor = selectedMeshId 
-    ? (meshCustomizations[selectedMeshId]?.color || primaryColor)
+    ? (meshCustomizations[selectedMeshId]?.color || '#0A192F')
     : primaryColor;
 
   const handleLogoUpload = (e) => {
@@ -182,7 +182,7 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
                     value={currentMeshColor}
                     onChange={(e) => {
                       if (selectedMeshId) setMeshColor(selectedMeshId, e.target.value);
-                      else setPrimaryColor(e.target.value);
+                      else setAllMeshesColor(e.target.value);
                     }}
                     className="w-7 h-7 rounded border border-slate-300 p-0 cursor-pointer bg-white"
                   />
@@ -191,15 +191,50 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
                     value={currentMeshColor}
                     onChange={(e) => {
                       if (selectedMeshId) setMeshColor(selectedMeshId, e.target.value);
-                      else setPrimaryColor(e.target.value);
+                      else setAllMeshesColor(e.target.value);
                     }}
                     className="w-20 px-2 py-0.5 text-xs font-mono font-medium text-slate-800 uppercase border border-slate-200 rounded bg-white text-center"
                   />
                 </div>
               </div>
 
+              {/* Active Palette Quick Picks for Selected Part */}
+              {selectedMeshId && (
+                <div className="pt-1 border-t border-slate-200">
+                  <span className="text-[10px] text-slate-500 font-normal block mb-1.5">
+                    Match Team Theme Palette:
+                  </span>
+                  <div className="grid grid-cols-3 gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => setMeshColor(selectedMeshId, globalPalette.primary)}
+                      className="p-1.5 rounded border border-slate-200 bg-white hover:bg-slate-50 flex items-center gap-1.5 text-left cursor-pointer transition text-[11px]"
+                    >
+                      <span className="w-3.5 h-3.5 rounded-full border border-slate-300 flex-shrink-0" style={{ backgroundColor: globalPalette.primary }} />
+                      <span className="truncate text-slate-700">Primary</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setMeshColor(selectedMeshId, globalPalette.secondary)}
+                      className="p-1.5 rounded border border-slate-200 bg-white hover:bg-slate-50 flex items-center gap-1.5 text-left cursor-pointer transition text-[11px]"
+                    >
+                      <span className="w-3.5 h-3.5 rounded-full border border-slate-300 flex-shrink-0" style={{ backgroundColor: globalPalette.secondary }} />
+                      <span className="truncate text-slate-700">Secondary</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setMeshColor(selectedMeshId, globalPalette.accent)}
+                      className="p-1.5 rounded border border-slate-200 bg-white hover:bg-slate-50 flex items-center gap-1.5 text-left cursor-pointer transition text-[11px]"
+                    >
+                      <span className="w-3.5 h-3.5 rounded-full border border-slate-300 flex-shrink-0" style={{ backgroundColor: globalPalette.accent }} />
+                      <span className="truncate text-slate-700">Accent</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
               {/* Quick Swatches */}
-              <div className="pt-1">
+              <div className="pt-1 border-t border-slate-200">
                 <span className="text-[10px] text-slate-500 font-normal block mb-1.5">
                   Popular Team Colors:
                 </span>
@@ -213,7 +248,7 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
                       key={hex}
                       onClick={() => {
                         if (selectedMeshId) setMeshColor(selectedMeshId, hex);
-                        else setPrimaryColor(hex);
+                        else setAllMeshesColor(hex);
                       }}
                       style={{ backgroundColor: hex }}
                       className={`w-6 h-6 rounded border transition-transform cursor-pointer shadow-2xs hover:scale-110 ${
@@ -228,9 +263,14 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
 
             {/* Curated Team Palettes */}
             <div>
-              <span className="text-xs font-medium text-slate-700 block mb-1.5">
-                Curated Team Color Combinations
-              </span>
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-xs font-medium text-slate-700">
+                  Curated Team Colorways
+                </span>
+                <span className="text-[10px] text-slate-400 font-normal">
+                  Applies full team theme
+                </span>
+              </div>
               <div className="grid grid-cols-1 gap-1.5">
                 {COLOR_PALETTES.map((pal, idx) => (
                   <button

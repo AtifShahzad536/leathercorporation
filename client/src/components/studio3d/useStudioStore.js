@@ -184,28 +184,35 @@ export const useStudioStore = create((set, get) => ({
 
   setActiveModel: (model) => {
     set({ activeModel: model, selectedMeshId: null });
+    const state = get();
+    const primary = state.primaryColor || '#0A192F';
+    const secondary = state.secondaryColor || '#F5A623';
+    const accent = state.accentColor || '#FFFFFF';
+
     if (model?.meshes && Array.isArray(model.meshes) && model.meshes.length > 0) {
       const parts = model.meshes.map((m, idx) => ({
         id: m.meshId,
         label: m.name || `Part ${idx + 1}`,
         region: m.region || 'torso',
-        defaultColor: m.defaultColor || get().primaryColor
+        defaultColor: m.defaultColor || (idx === 0 ? primary : (idx === 1 ? secondary : accent))
       }));
       set({ detectedMeshes: parts });
 
       const initCustom = {};
-      model.meshes.forEach(m => {
-        initCustom[m.meshId] = {
-          color: m.defaultColor || get().primaryColor,
-          fabric: m.defaultFabric || get().activeFabric,
-          roughness: m.defaultRoughness ?? 0.6,
-          metalness: m.defaultMetalness ?? 0.05,
+      parts.forEach(m => {
+        initCustom[m.id] = {
+          color: m.defaultColor,
+          fabric: model.defaultFabric || state.activeFabric,
+          roughness: 0.6,
+          metalness: 0.05,
           pattern: 'solid',
-          patternColor: get().secondaryColor,
+          patternColor: secondary,
           patternScale: 1.0
         };
       });
       set({ meshCustomizations: initCustom });
+    } else {
+      set({ detectedMeshes: [], meshCustomizations: {} });
     }
     get().saveSnapshot();
   },
@@ -215,15 +222,43 @@ export const useStudioStore = create((set, get) => ({
     const state = get();
     const updatedCustom = { ...state.meshCustomizations };
     let hasChanges = false;
+    const primary = state.primaryColor || '#0A192F';
+    const secondary = state.secondaryColor || '#F5A623';
+    const accent = state.accentColor || '#FFFFFF';
+
     meshes.forEach((m, idx) => {
-      if (!updatedCustom[m.id]) {
+      if (!updatedCustom[m.id] || !updatedCustom[m.id].color) {
+        // Compute smart initial color based on mesh name/region
+        const lower = (m.id + ' ' + (m.label || '') + ' ' + (m.region || '')).toLowerCase();
+        let assignedColor = primary;
+
+        if (
+          lower.includes('eyelet') || lower.includes('button') || lower.includes('string') || 
+          lower.includes('cord') || lower.includes('stripe') || lower.includes('piping') || 
+          lower.includes('accent') || lower.includes('e_1') || lower.includes('e_2') ||
+          lower.includes('e 1') || lower.includes('e 2')
+        ) {
+          assignedColor = accent;
+        } else if (
+          lower.includes('sleeve') || lower.includes('arm') || lower.includes('collar') || 
+          lower.includes('neck') || lower.includes('rib') || lower.includes('cuff') || 
+          lower.includes('waist') || lower.includes('belt') || lower.includes('side') || 
+          lower.includes('vent') || lower.includes('visor') || lower.includes('brim') ||
+          lower.includes('d_1') || lower.includes('d_2') || lower.includes('b_2') || lower.includes('b_3') ||
+          lower.includes('d 1') || lower.includes('d 2') || lower.includes('b 2') || lower.includes('b 3')
+        ) {
+          assignedColor = secondary;
+        } else if (meshes.length > 2 && idx > 0) {
+          assignedColor = idx % 2 === 1 ? secondary : accent;
+        }
+
         updatedCustom[m.id] = {
-          color: m.defaultColor || (idx === 0 ? state.primaryColor : state.secondaryColor),
+          color: m.defaultColor && m.defaultColor !== '#ffffff' ? m.defaultColor : assignedColor,
           fabric: state.activeFabric,
           roughness: 0.6,
           metalness: 0.05,
           pattern: 'solid',
-          patternColor: state.secondaryColor,
+          patternColor: secondary,
           patternScale: 1.0
         };
         hasChanges = true;
@@ -238,25 +273,36 @@ export const useStudioStore = create((set, get) => ({
   setHoveredMesh: (meshId) => set({ hoveredMeshId: meshId }),
 
   setMeshColor: (meshId, color) => {
+    if (!meshId) return;
     get().saveSnapshot();
     set((state) => {
-      const updated = { ...state.meshCustomizations };
-      if (!updated[meshId]) updated[meshId] = {};
-      updated[meshId] = { ...updated[meshId], color };
-      return { meshCustomizations: updated };
+      const existing = state.meshCustomizations[meshId] || {};
+      return {
+        meshCustomizations: {
+          ...state.meshCustomizations,
+          [meshId]: {
+            ...existing,
+            color
+          }
+        }
+      };
     });
   },
 
   setAllMeshesColor: (color) => {
     get().saveSnapshot();
     set((state) => {
-      const updated = { ...state.meshCustomizations };
-      Object.keys(updated).forEach(k => {
-        updated[k] = { ...updated[k], color };
-      });
-      (state.detectedMeshes || []).forEach(m => {
-        if (!updated[m.id]) updated[m.id] = { color };
-        else updated[m.id] = { ...updated[m.id], color };
+      const updated = {};
+      const allParts = state.detectedMeshes && state.detectedMeshes.length > 0 
+        ? state.detectedMeshes 
+        : Object.keys(state.meshCustomizations).map(id => ({ id }));
+
+      allParts.forEach(m => {
+        const id = m.id || m;
+        updated[id] = {
+          ...(state.meshCustomizations[id] || {}),
+          color
+        };
       });
       return { meshCustomizations: updated, primaryColor: color };
     });
@@ -265,16 +311,40 @@ export const useStudioStore = create((set, get) => ({
   setGlobalPalette: (palette) => {
     get().saveSnapshot();
     set((state) => {
+      const meshes = state.detectedMeshes || [];
       const updated = { ...state.meshCustomizations };
-      // Map primary to body/torso, secondary to sleeves/trim, accent to details
-      Object.keys(updated).forEach(k => {
-        const lower = k.toLowerCase();
-        if (lower.includes('sleeve') || lower.includes('arm') || lower.includes('collar') || lower.includes('trim') || lower.includes('cuff')) {
-          updated[k] = { ...updated[k], color: palette.secondary };
-        } else if (lower.includes('button') || lower.includes('stripe') || lower.includes('piping') || lower.includes('accent')) {
-          updated[k] = { ...updated[k], color: palette.accent };
-        } else {
-          updated[k] = { ...updated[k], color: palette.primary };
+
+      meshes.forEach((m, idx) => {
+        const id = m.id;
+        const lower = (id + ' ' + (m.label || '') + ' ' + (m.region || '')).toLowerCase();
+
+        // 1. Accent details: drawstrings, eyelets, buttons, stripes, trim, cords
+        if (
+          lower.includes('eyelet') || lower.includes('button') || lower.includes('string') || 
+          lower.includes('cord') || lower.includes('stripe') || lower.includes('piping') || 
+          lower.includes('accent') || lower.includes('e_1') || lower.includes('e_2') ||
+          lower.includes('e 1') || lower.includes('e 2')
+        ) {
+          updated[id] = { ...(updated[id] || {}), color: palette.accent };
+        }
+        // 2. Secondary contrast: waistband, sleeves, collar, cuffs, side panels, visor
+        else if (
+          lower.includes('sleeve') || lower.includes('arm') || lower.includes('collar') || 
+          lower.includes('neck') || lower.includes('rib') || lower.includes('cuff') || 
+          lower.includes('waist') || lower.includes('belt') || lower.includes('side') || 
+          lower.includes('vent') || lower.includes('visor') || lower.includes('brim') ||
+          lower.includes('d_1') || lower.includes('d_2') || lower.includes('b_2') || lower.includes('b_3') ||
+          lower.includes('d 1') || lower.includes('d 2') || lower.includes('b 2') || lower.includes('b 3')
+        ) {
+          updated[id] = { ...(updated[id] || {}), color: palette.secondary };
+        }
+        // 3. Fallback for generic multi-mesh models without keyword matches
+        else if (meshes.length > 3 && idx >= 2) {
+          updated[id] = { ...(updated[id] || {}), color: idx % 2 === 0 ? palette.secondary : palette.accent };
+        }
+        // 4. Primary base (torso, main body, legs, crown)
+        else {
+          updated[id] = { ...(updated[id] || {}), color: palette.primary };
         }
       });
 
@@ -294,35 +364,20 @@ export const useStudioStore = create((set, get) => ({
   },
 
   setPrimaryColor: (color) => {
-    get().saveSnapshot();
-    set((state) => {
-      const updated = { ...state.meshCustomizations };
-      Object.keys(updated).forEach(k => {
-        const lower = k.toLowerCase();
-        if (!lower.includes('sleeve') && !lower.includes('collar') && !lower.includes('cuff') && !lower.includes('stripe')) {
-          updated[k] = { ...updated[k], color };
-        }
-      });
-      return { primaryColor: color, meshCustomizations: updated };
-    });
+    const state = get();
+    if (state.selectedMeshId) {
+      state.setMeshColor(state.selectedMeshId, color);
+      return;
+    }
+    state.setAllMeshesColor(color);
   },
 
   setSecondaryColor: (color) => {
     get().saveSnapshot();
-    set((state) => {
-      const updated = { ...state.meshCustomizations };
-      Object.keys(updated).forEach(k => {
-        const lower = k.toLowerCase();
-        if (lower.includes('sleeve') || lower.includes('collar') || lower.includes('cuff') || lower.includes('stripe')) {
-          updated[k] = { ...updated[k], color };
-        }
-      });
-      return {
-        secondaryColor: color,
-        meshCustomizations: updated,
-        nameNumber: { ...state.nameNumber, textColor: color }
-      };
-    });
+    set((state) => ({
+      secondaryColor: color,
+      nameNumber: { ...state.nameNumber, textColor: color }
+    }));
   },
 
   setActiveFabric: (fabricId) => {

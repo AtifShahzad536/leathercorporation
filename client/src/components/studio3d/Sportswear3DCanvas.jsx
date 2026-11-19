@@ -329,16 +329,27 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
   const {
     activeModel,
     meshCustomizations,
-    primaryColor,
-    secondaryColor,
     activeFabric,
     isWireframe,
     setDetectedMeshes
   } = useStudioStore();
 
-  const clonedScene = useMemo(() => scene.clone(true), [scene]);
+  // Create an isolated clone where EVERY mesh has its own unique, cloned material instance
+  const clonedScene = useMemo(() => {
+    if (!scene) return null;
+    const clone = scene.clone(true);
+    clone.traverse((child) => {
+      if (child.isMesh) {
+        // Crucial: ensure each mesh has its own independent material instance
+        child.material = child.material ? child.material.clone() : new THREE.MeshStandardMaterial();
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
+    return clone;
+  }, [scene]);
 
-  // Dynamically detect all meshes from 3D scene graph and publish to store
+  // Dynamically detect all meshes from 3D scene graph and publish to store ONCE per model
   useEffect(() => {
     if (!clonedScene) return;
     const detected = [];
@@ -348,7 +359,7 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
         const label = formatMeshLabel(child, detected.length, activeModel?.meshes);
         const matColor = child.material?.color 
           ? '#' + child.material.color.getHexString() 
-          : (detected.length === 0 ? primaryColor : secondaryColor);
+          : '#0A192F';
 
         detected.push({
           id: meshId,
@@ -362,9 +373,11 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
     if (detected.length > 0) {
       setDetectedMeshes(detected);
     }
-  }, [clonedScene, activeModel, setDetectedMeshes, primaryColor, secondaryColor]);
+  }, [clonedScene, activeModel, setDetectedMeshes]);
 
+  // Apply per-mesh custom styling (strictly isolated per mesh)
   useEffect(() => {
+    if (!clonedScene) return;
     const bumpMap = getFabricBumpTexture(activeFabric);
     const fabricCfg = FABRIC_PRESETS[activeFabric] || FABRIC_PRESETS.micro_interlock;
 
@@ -372,25 +385,25 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
       if (child.isMesh) {
         const meshId = child.name || child.uuid;
         const cfg = meshCustomizations[meshId] || {};
-        const color = cfg.color || (meshId.toLowerCase().includes('sleeve') ? secondaryColor : primaryColor);
+        // Strictly read from this mesh's custom settings
+        const color = cfg.color || '#0A192F';
         const isSelected = selectedMeshId === meshId;
         const isHovered = hoveredMeshId === meshId;
 
-        child.material = new THREE.MeshStandardMaterial({
-          color: new THREE.Color(color),
-          roughness: cfg.roughness ?? fabricCfg.roughness,
-          metalness: cfg.metalness ?? fabricCfg.metalness,
-          bumpMap,
-          bumpScale: fabricCfg.bumpScale,
-          wireframe: isWireframe,
-          emissive: isSelected ? new THREE.Color('#F26522') : (isHovered ? new THREE.Color('#1E1B6E') : new THREE.Color('#000000')),
-          emissiveIntensity: isSelected ? 0.35 : (isHovered ? 0.2 : 0)
-        });
-        child.castShadow = true;
-        child.receiveShadow = true;
+        if (child.material) {
+          child.material.color.set(color);
+          child.material.roughness = cfg.roughness ?? fabricCfg.roughness;
+          child.material.metalness = cfg.metalness ?? fabricCfg.metalness;
+          child.material.bumpMap = bumpMap;
+          child.material.bumpScale = fabricCfg.bumpScale;
+          child.material.wireframe = isWireframe;
+          child.material.emissive.set(isSelected ? '#F26522' : (isHovered ? '#1E1B6E' : '#000000'));
+          child.material.emissiveIntensity = isSelected ? 0.35 : (isHovered ? 0.2 : 0);
+          child.material.needsUpdate = true;
+        }
       }
     });
-  }, [clonedScene, meshCustomizations, primaryColor, secondaryColor, activeFabric, isWireframe, selectedMeshId, hoveredMeshId]);
+  }, [clonedScene, meshCustomizations, activeFabric, isWireframe, selectedMeshId, hoveredMeshId]);
 
   return (
     <primitive

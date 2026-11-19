@@ -116,7 +116,7 @@ export default function StudioLeftPanel() {
           {garmentParts.map((part) => {
             const isSelected = selectedMeshId === part.id;
             const isHovered = hoveredMeshId === part.id;
-            const currentColor = meshCustomizations[part.id]?.color || part.defaultColor || primaryColor;
+            const currentColor = meshCustomizations[part.id]?.color || part.defaultColor || '#0A192F';
 
             return (
               <button
