@@ -32,6 +32,13 @@ const AboutPage = lazy(() => import('./components/about/AboutPage'));
 const InquiryPage = lazy(() => import('./components/inquiry/InquiryPage'));
 const SportsCategoryHubPage = lazy(() => import('./components/templates/SportsCategoryHubPage'));
 const ProductDetailLandingTemplate = lazy(() => import('./components/templates/ProductDetailLandingTemplate'));
+const LegalPolicyPage = lazy(() => import('./components/pages/LegalPolicyPage'));
+const SizingChartPage = lazy(() => import('./components/pages/SizingChartPage'));
+const ReviewsPage = lazy(() => import('./components/pages/ReviewsPage'));
+const RegisterClubPage = lazy(() => import('./components/pages/RegisterClubPage'));
+const HowToOrderPage = lazy(() => import('./components/pages/HowToOrderPage'));
+const TeamNameGeneratorPage = lazy(() => import('./components/pages/TeamNameGeneratorPage'));
+const PortfolioPage = lazy(() => import('./components/pages/PortfolioPage'));
 
 function MainApp() {
   const [currentPage, setCurrentPage] = useState('home'); 
@@ -41,6 +48,7 @@ function MainApp() {
   const [exploreTab, setExploreTab] = useState('care');
   const [aboutTab, setAboutTab] = useState('story');
   const [stylesFilter, setStylesFilter] = useState('ALL');
+  const [policyTab, setPolicyTab] = useState('privacy');
   const [activeProductDetail, setActiveProductDetail] = useState(null);
 
   // Sync state with URL pathname & hash
@@ -168,7 +176,45 @@ function MainApp() {
     } else if (routeString.startsWith('about')) {
       setCurrentPage('about');
       document.title = 'About HAMLO SPORTS | Sialkot Manufacturing Heritage';
-    } else if (routeString.startsWith('inquiry') || routeString.startsWith('checkout')) {
+    } else if (routeString.startsWith('privacy-policy')) {
+      setPolicyTab('privacy');
+      setCurrentPage('legal-policy');
+      document.title = 'Privacy & Data Protection Policy | HAMLO SPORTS';
+    } else if (routeString.startsWith('terms-conditions') || routeString.startsWith('terms')) {
+      setPolicyTab('terms');
+      setCurrentPage('legal-policy');
+      document.title = 'Terms & Conditions of Sale | HAMLO SPORTS';
+    } else if (routeString.startsWith('refund-policy') || routeString.startsWith('return-policy')) {
+      setPolicyTab('refund');
+      setCurrentPage('legal-policy');
+      document.title = '100% Free Remake & Refund Policy | HAMLO SPORTS';
+    } else if (routeString.startsWith('shipping-policy') || routeString.startsWith('shipping')) {
+      setPolicyTab('shipping');
+      setCurrentPage('legal-policy');
+      document.title = 'Nationwide Shipping & Delivery Policy | HAMLO SPORTS';
+    } else if (routeString.startsWith('disclaimer')) {
+      setPolicyTab('disclaimer');
+      setCurrentPage('legal-policy');
+      document.title = 'Legal Disclaimer & Intellectual Property | HAMLO SPORTS';
+    } else if (routeString.startsWith('sizing-chart') || routeString.startsWith('size-chart') || routeString === 'sizes') {
+      setCurrentPage('sizing-chart');
+      document.title = 'Sports Uniform Sizing Chart & Measuring Guide | HAMLO SPORTS';
+    } else if (routeString.startsWith('reviews') || routeString.startsWith('hamco-sports-reviews') || routeString.startsWith('customer-reviews')) {
+      setCurrentPage('reviews');
+      document.title = 'Customer Reviews & Team Testimonials | HAMLO SPORTS';
+    } else if (routeString.startsWith('register-club') || routeString.startsWith('register-team')) {
+      setCurrentPage('register-club');
+      document.title = 'Register Your Club & Unlock Permanent Volume Discounts | HAMLO SPORTS';
+    } else if (routeString.startsWith('start-custom-orders') || routeString.startsWith('how-to-order') || routeString.startsWith('custom-orders')) {
+      setCurrentPage('how-to-order');
+      document.title = 'Get a Free Quote & Start Your Custom Order | HAMLO SPORTS';
+    } else if (routeString.startsWith('team-name-generator')) {
+      setCurrentPage('team-name-generator');
+      document.title = 'Free Team Name & Mascot Generator | 12 Sports | HAMLO SPORTS';
+    } else if (routeString.startsWith('portfolio') || routeString.startsWith('gallery')) {
+      setCurrentPage('portfolio');
+      document.title = 'Custom Team Uniform Designs by Sport | Portfolio | HAMLO SPORTS';
+    } else if (routeString.startsWith('inquiry') || routeString.startsWith('checkout') || routeString.startsWith('request-a-quote') || routeString.startsWith('contact')) {
       setCurrentPage('inquiry');
       document.title = 'Request a 12-Hour 3D Team Mockup & B2B Quote | HAMLO SPORTS';
       const searchStr = routeString.includes('?') ? routeString.split('?')[1] : '';
@@ -248,6 +294,36 @@ function MainApp() {
     } else if (page === 'about') {
       window.history.pushState({}, '', '/about/');
       document.title = 'About HAMLO SPORTS | Sialkot Manufacturing';
+    } else if (page === 'legal-policy') {
+      const tab = param1 || 'privacy';
+      setPolicyTab(tab);
+      const pathMap = {
+        privacy: '/privacy-policy/',
+        terms: '/terms-conditions/',
+        refund: '/refund-policy/',
+        shipping: '/shipping-policy/',
+        disclaimer: '/disclaimer/'
+      };
+      window.history.pushState({}, '', pathMap[tab] || '/privacy-policy/');
+      document.title = 'Legal & Order Policies | HAMLO SPORTS';
+    } else if (page === 'sizing-chart') {
+      window.history.pushState({}, '', '/sizing-chart/');
+      document.title = 'Sports Uniform Sizing Chart | HAMLO SPORTS';
+    } else if (page === 'reviews') {
+      window.history.pushState({}, '', '/reviews/');
+      document.title = 'Customer Reviews & Team Testimonials | HAMLO SPORTS';
+    } else if (page === 'register-club') {
+      window.history.pushState({}, '', '/register-club/');
+      document.title = 'Register Your Club & Unlock Volume Discounts | HAMLO SPORTS';
+    } else if (page === 'how-to-order') {
+      window.history.pushState({}, '', '/start-custom-orders/');
+      document.title = 'How to Start Custom Orders | HAMLO SPORTS';
+    } else if (page === 'team-name-generator') {
+      window.history.pushState({}, '', '/team-name-generator/');
+      document.title = 'Free Team Name Generator | HAMLO SPORTS';
+    } else if (page === 'portfolio') {
+      window.history.pushState({}, '', '/portfolio/');
+      document.title = 'Custom Team Uniform Designs by Sport | HAMLO SPORTS';
     } else if (page === 'inquiry' || page === 'checkout') {
       const productSlug = typeof param1 === 'object' ? (param1.slug || param1.name) : param1;
       setInquiryProductSlug(productSlug || '');
@@ -342,6 +418,50 @@ function MainApp() {
             initialProductSlug={inquiryProductSlug}
             onNavigateHome={() => navigateTo('home')}
             onNavigateProducts={() => navigateTo('sports-hub')}
+          />
+        )}
+
+        {currentPage === 'legal-policy' && (
+          <LegalPolicyPage
+            initialTab={policyTab}
+            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
+          />
+        )}
+
+        {currentPage === 'sizing-chart' && (
+          <SizingChartPage
+            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
+          />
+        )}
+
+        {currentPage === 'reviews' && (
+          <ReviewsPage
+            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
+          />
+        )}
+
+        {currentPage === 'register-club' && (
+          <RegisterClubPage
+            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
+          />
+        )}
+
+        {currentPage === 'how-to-order' && (
+          <HowToOrderPage
+            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
+          />
+        )}
+
+        {currentPage === 'team-name-generator' && (
+          <TeamNameGeneratorPage
+            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
+          />
+        )}
+
+        {currentPage === 'portfolio' && (
+          <PortfolioPage
+            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
+            onNavigateProduct={(prod) => navigateTo('product-detail', prod)}
           />
         )}
       </Suspense>

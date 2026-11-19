@@ -54,3 +54,5 @@ admin/public/uploads/*
 *.sw?
 .DS_Store
 Thumbs.db
+
+scratch/

@@ -24,8 +24,8 @@ const IconX = () => (
 const footerLinks = {
   Products: ['Baseball Uniforms', 'Basketball Jerseys', 'Football Uniforms', 'Soccer Kits', 'Esports Apparel', 'Ice Hockey Sweaters'],
   'Apparel Cuts': ['Full Button Jerseys', '2-Button Pullovers', 'V-Neck Game Sets', 'Sublimated Hoodies', 'Cage Jackets'],
-  Explore: ['About HAMLO SPORTS', 'Sublimation Lab', 'Factory Compliance', 'Export Certifications', 'Fabric Care Guide'],
-  'Partner With Us': ['OEM Factory Direct', 'B2B Wholesale Quotes', '12-Hour 3D Mockup', 'School & Club Orders', 'Contact Sales Desk'],
+  Explore: ['About HAMLO SPORTS', 'Customer Reviews', 'Sizing Chart Guide', 'Team Name Generator', 'Designs Portfolio', 'Factory Compliance'],
+  'Partner With Us': ['Register Your Club', 'Start Custom Orders', '12-Hour 3D Mockup', 'School & Club Orders', 'Contact Sales Desk'],
 };
 
 const Footer = ({ onNavigate = () => {} }) => {
@@ -90,10 +90,16 @@ const Footer = ({ onNavigate = () => {} }) => {
                           onNavigate('styles');
                         } else if (section === 'Explore') {
                           if (link.includes('About')) onNavigate('about');
-                          else if (link.includes('Sustainability') || link.includes('Standards')) onNavigate('compliance');
+                          else if (link.includes('Reviews')) onNavigate('reviews');
+                          else if (link.includes('Sizing')) onNavigate('sizing-chart');
+                          else if (link.includes('Generator')) onNavigate('team-name-generator');
+                          else if (link.includes('Portfolio')) onNavigate('portfolio');
+                          else if (link.includes('Compliance')) onNavigate('compliance');
                           else onNavigate('explore');
                         } else if (section === 'Partner With Us') {
-                          if (link.includes('Contact')) onNavigate('about');
+                          if (link.includes('Register')) onNavigate('register-club');
+                          else if (link.includes('Start Custom')) onNavigate('how-to-order');
+                          else if (link.includes('Contact')) onNavigate('inquiry');
                           else onNavigate('inquiry');
                         }
                       }}
@@ -133,22 +139,24 @@ const Footer = ({ onNavigate = () => {} }) => {
       <div className="border-t border-white/10">
         <div className="w-[96%] max-w-[1800px] mx-auto py-5 flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="text-xs text-white/75 tracking-wide">
-            © {new Date().getFullYear()} HAMLO SPORTS. All rights reserved.
+            © {new Date().getFullYear()} HAMLO SPORTS. All rights reserved. Sialkot Export Manufacturing Direct.
           </p>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-6 flex-wrap">
             {[
-              { label: 'Privacy Policy', path: '/privacy-policy' },
-              { label: 'Cookie Policy', path: '/cookie-policy' },
-              { label: 'Terms of Service', path: '/terms-of-service' },
-            ].map(({ label, path }) => (
+              { label: 'Privacy Policy', tab: 'privacy' },
+              { label: 'Terms & Conditions', tab: 'terms' },
+              { label: 'Refund & Remake Policy', tab: 'refund' },
+              { label: 'Shipping & Delivery', tab: 'shipping' },
+              { label: 'Legal Disclaimer', tab: 'disclaimer' },
+            ].map(({ label, tab }) => (
               <a
                 key={label}
-                href={path}
+                href={`/${tab === 'privacy' ? 'privacy-policy' : tab === 'terms' ? 'terms-conditions' : tab === 'refund' ? 'refund-policy' : tab === 'shipping' ? 'shipping-policy' : 'disclaimer'}/`}
                 onClick={(e) => {
                   e.preventDefault();
-                  onNavigate('compliance');
+                  onNavigate('legal-policy', tab);
                 }}
-                className="text-xs text-white/75 hover:text-white transition-colors tracking-wide underline-offset-2 hover:underline"
+                className="text-xs text-white/75 hover:text-white transition-colors tracking-wide underline-offset-2 hover:underline cursor-pointer"
               >
                 {label}
               </a>
