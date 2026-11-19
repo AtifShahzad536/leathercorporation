@@ -34,6 +34,10 @@ const productSchema = new mongoose.Schema({
   isNew: { type: Boolean, default: false },
   rating: { type: Number, default: 4.8 },
   viewCount: { type: Number, default: 0 },
+  faqs: [{
+    q: { type: String, required: true },
+    a: { type: String, required: true },
+  }],
 }, { timestamps: true, suppressReservedKeysWarning: true });
 
 productSchema.index({ name: 'text', description: 'text', sport: 'text' });

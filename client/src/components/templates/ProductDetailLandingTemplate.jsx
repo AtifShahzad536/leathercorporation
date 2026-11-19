@@ -2,13 +2,20 @@ import React, { useState, useEffect, useMemo } from 'react';
 import {
   Check, ArrowRight, ShieldCheck, Clock, Calculator,
   HelpCircle, Sparkles, Award, Phone, Mail, FileText, ChevronRight,
-  Layers, Package, AlertCircle, MessageSquare
+  Layers, Package, AlertCircle, MessageSquare, Info
 } from 'lucide-react';
 import SEO from '../common/SEO';
 import TrustBar from '../common/TrustBar';
 import ProgressiveImage from '../common/ProgressiveImage';
 import { useCMS } from '../../context/CMSContext';
 import { fullCatalog296 } from '../../data/fullCatalog296';
+import productFaqs296 from '../../data/productFaqs296.json';
+import { 
+  getSportPricingTable, 
+  getSportDecorationData, 
+  getPlayoffSchedule, 
+  getCareInstructions 
+} from '../../data/sportEditorialGuides';
 
 /**
  * 15-Block Product Detail Landing Page
@@ -30,6 +37,12 @@ export default function ProductDetailLandingTemplate({
 
   // Dynamic Sport Category normalization
   const normSport = (sport || product?.sport || product?.category || 'BASEBALL').toUpperCase();
+
+  // Sport editorial guides, pricing comparison and decoration matrices
+  const sportPricing = useMemo(() => getSportPricingTable(normSport), [normSport]);
+  const decorationData = useMemo(() => getSportDecorationData(normSport, product?.price || basePrice), [normSport, product, basePrice]);
+  const playoffSchedule = useMemo(() => getPlayoffSchedule(), []);
+  const careInstructions = useMemo(() => getCareInstructions(normSport), [normSport]);
 
   // Fetch live products from backend MongoDB database for this sport, with fallback to fullCatalog296
   const [dbProducts, setDbProducts] = useState([]);
@@ -260,34 +273,45 @@ export default function ProductDetailLandingTemplate({
     return selected;
   }, [sportProducts, product, productName]);
 
-  // 6. Specific FAQs (Block 14)
+  // 6. Specific FAQs (Block 14) — Loaded dynamically per product with anti-spam rephrased content
   const [openFaq, setOpenFaq] = useState(null);
-  const faqs = [
-    {
-      q: `What is the exact turnaround time for this ${sport} uniform set?`,
-      a: `Free 3D digital mockups are delivered within 12 hours. Once your design proof and roster size sheet are approved, standard factory production is 10 to 12 working days, followed by 3 to 5 business days express DHL/FedEx shipping directly to your doorstep.`
-    },
-    {
-      q: `Are player names, numbers, and sponsor logos included in the base price?`,
-      a: `Yes! Full dye-sublimation includes unlimited team colors, high-resolution club crests, individual player names, numbers, and sponsor logos at zero additional setup charge.`
-    },
-    {
-      q: `What if a new player joins our team mid-season? Can we re-order just 1 jersey?`,
-      a: `Yes. We save your vector artwork, color pantones, and pattern templates permanently. You can re-order 1 single replacement or new player set at your team's volume rate.`
-    },
-    {
-      q: `What if there is an error in spelling, number, or sizing upon delivery?`,
-      a: `Our 100% Free Remake Policy covers you. If our production team made an error that deviates from your approved proof, we will remake the affected uniforms immediately and air-freight them at no cost.`
-    },
-    {
-      q: `Do you ship to the USA with duties pre-cleared (DDP)?`,
-      a: `Yes. All shipments to the USA are handled under DDP (Delivered Duty Paid) terms. You never have to worry about surprise customs clearance fees or import paperwork.`
-    },
-    {
-      q: `Do you accept official School or University Purchase Orders (POs)?`,
-      a: `Yes. We routinely work with public school districts, athletic directors, collegiate clubs, and military recreational departments. Net 30 terms are available on official POs.`
+  const faqs = useMemo(() => {
+    // 1. If product from MongoDB has its own faqs array
+    if (product?.faqs && Array.isArray(product.faqs) && product.faqs.length > 0) {
+      return product.faqs;
     }
-  ];
+    // 2. If matched from productFaqs296.json by slug
+    if (product?.slug && productFaqs296[product.slug]?.faqs?.length > 0) {
+      return productFaqs296[product.slug].faqs;
+    }
+    // 3. Fallback default FAQs if not found
+    return [
+      {
+        q: `What is the exact turnaround time for this ${sport} uniform set?`,
+        a: `Free 3D digital mockups are delivered within 12 hours. Once your design proof and roster size sheet are approved, standard factory production is 10 to 12 working days, followed by 3 to 5 business days express DHL/FedEx shipping directly to your doorstep.`
+      },
+      {
+        q: `Are player names, numbers, and sponsor logos included in the base price?`,
+        a: `Yes! Full dye-sublimation includes unlimited team colors, high-resolution club crests, individual player names, numbers, and sponsor logos at zero additional setup charge.`
+      },
+      {
+        q: `What if a new player joins our team mid-season? Can we re-order just 1 jersey?`,
+        a: `Yes. We save your vector artwork, color pantones, and pattern templates permanently. You can re-order 1 single replacement or new player set at your team's volume rate.`
+      },
+      {
+        q: `What if there is an error in spelling, number, or sizing upon delivery?`,
+        a: `Our 100% Free Remake Policy covers you. If our production team made an error that deviates from your approved proof, we will remake the affected uniforms immediately and air-freight them at no cost.`
+      },
+      {
+        q: `Do you ship to the USA with duties pre-cleared (DDP)?`,
+        a: `Yes. All shipments to the USA are handled under DDP (Delivered Duty Paid) terms. You never have to worry about surprise customs clearance fees or import paperwork.`
+      },
+      {
+        q: `Do you accept official School or University Purchase Orders (POs)?`,
+        a: `Yes. We routinely work with public school districts, athletic directors, collegiate clubs, and military recreational departments. Net 30 terms are available on official POs.`
+      }
+    ];
+  }, [product, sport]);
 
   // 7. Inspiration Gallery (Block 15 - POPULAR DESIGN CONCEPTS)
   // Dynamically populated from actual sport jerseys and uniforms
@@ -688,6 +712,49 @@ export default function ProductDetailLandingTemplate({
           </div>
         </section>
 
+        {/* ── BLOCK 9B: CHOOSE YOUR DECORATION: SUBLIMATED, TACKLE TWILL, OR BOTH ── */}
+        <section className="w-[96%] max-w-[1800px] mx-auto my-12 sm:my-16">
+          <div className="bg-white rounded-[3px] border border-[var(--secondary)]/10 p-6 sm:p-10 shadow-lg">
+            <div className="mb-6">
+              <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--accent)]">
+                PREMIUM EMBELLISHMENT
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black uppercase text-[var(--secondary)] mt-1 mb-2">
+                {decorationData.heading}
+              </h2>
+              <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-4xl">
+                {decorationData.intro}
+              </p>
+            </div>
+
+            <div className="overflow-x-auto mb-6 border border-neutral-200 rounded-[3px]">
+              <table className="w-full text-left border-collapse text-xs sm:text-sm">
+                <thead>
+                  <tr className="bg-[var(--secondary)] text-white text-[10.5px] uppercase tracking-wider">
+                    <th className="py-3 px-4 w-1/4">DECORATION OPTIONS</th>
+                    <th className="py-3 px-4 w-3/8">SUBLIMATED</th>
+                    <th className="py-3 px-4 w-3/8">TACKLE TWILL</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-neutral-200">
+                  {decorationData.rows.map((row, rIdx) => (
+                    <tr key={rIdx} className={rIdx % 2 === 1 ? 'bg-neutral-50/50' : ''}>
+                      <td className="py-3.5 px-4 font-bold text-[var(--secondary)]">{row.property}</td>
+                      <td className="py-3.5 px-4 text-neutral-700">{row.sublimated}</td>
+                      <td className="py-3.5 px-4 font-semibold text-[var(--secondary)]">{row.twill}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="space-y-2 text-xs text-neutral-600 leading-relaxed border-t border-neutral-100 pt-4">
+              <p>{decorationData.explanation1}</p>
+              <p>{decorationData.explanation2}</p>
+            </div>
+          </div>
+        </section>
+
         {/* ── BLOCK 10: 3 SIZE CHARTS (MEN, WOMEN, YOUTH - PAGE 6 SPEC) ─────────── */}
         <section className="w-[96%] max-w-[1800px] mx-auto my-12 sm:my-16">
           <div className="text-center mb-8">
@@ -810,6 +877,150 @@ export default function ProductDetailLandingTemplate({
               </div>
             </div>
           </div>
+        </section>
+
+        {/* ── BLOCK 12B: COMPREHENSIVE TEAM UNIFORM BUYER'S & EDITORIAL GUIDE ─── */}
+        <section className="w-[96%] max-w-[1800px] mx-auto my-12 sm:my-16 space-y-10">
+          
+          {/* Volume Mix & Match Notice */}
+          <div className="p-5 bg-amber-50/80 border border-amber-200 rounded-[3px] text-xs text-amber-950 leading-relaxed flex items-start gap-3">
+            <Info size={18} className="text-[var(--accent)] flex-shrink-0 mt-0.5" />
+            <div>
+              <strong className="block uppercase tracking-wider font-black text-amber-900 mb-1">
+                Mix & Match Uniform Order Policy
+              </strong>
+              <span>{sportPricing.note}</span>
+            </div>
+          </div>
+
+          {/* Youth Club & High School Programs */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            <div className="p-6 sm:p-8 bg-white rounded-[3px] border-l-4 border-l-[var(--accent)] border border-[var(--secondary)]/10 shadow-sm flex flex-col justify-between">
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--accent)] block mb-1">
+                  YOUTH ASSOCIATIONS & TRAVEL CLUBS
+                </span>
+                <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-3">
+                  Youth Club {normSport} Uniforms & Jerseys
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
+                  Youth clubs, academies, and community associations can group multiple age divisions into a single HAMLO SPORTS production order—even if each division features unique color schemes or team artwork. Ordering 15 jerseys across three age divisions totals 45 match sweaters, qualifying your entire organization for the 25–50 tier at $44.99 each ($2,024.55 total).
+                </p>
+                <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                  Youth cuts span YXS through YXL, while adult XS to 4XL fit seamlessly on the same invoice for coaching staff and senior rosters. We recommend checking chest, waist, and hip measurements against our Youth Size Matrix prior to collecting orders from parents.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-6 sm:p-8 bg-white rounded-[3px] border-l-4 border-l-[var(--secondary)] border border-[var(--secondary)]/10 shadow-sm flex flex-col justify-between">
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--secondary)] block mb-1">
+                  VARSITY, JV & ATHLETIC DIRECTORS
+                </span>
+                <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-3">
+                  High School {normSport} Programs & Purchase Orders
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
+                  Varsity and JV athletic programs can bundle primary home kits, road away jerseys, training pullovers, and sideline warmups onto a single HAMLO SPORTS order so all rosters maximize bulk pricing together. We gladly accept official school district and booster club Purchase Orders (POs) with standard Net 30 terms.
+                </p>
+                <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                  A standard high school program package includes home and away match jerseys, sublimated socks, and reversible scrimmage tops for daily practice. Submit your official school pantone colors and vector crest, and our design team will render high-definition 3D proofs within 12 hours.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Beer League & Adult Rec */}
+          <div className="p-6 sm:p-8 bg-white rounded-[3px] border-l-4 border-l-emerald-600 border border-[var(--secondary)]/10 shadow-sm">
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-600 block mb-1">
+              ADULT REC & MEN'S LEAGUES
+            </span>
+            <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-3">
+              Adult Rec & Men's League {normSport} Kits
+            </h3>
+            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
+              A single HAMLO SPORTS quote can cover your individual rec team or an entire adult league. The cumulative count across all participating teams determines the tier pricing, even when every club features its own custom artwork and striping. A 14-skater rec roster ordering custom game jerseys at $49.99 each totals $699.86 with all sublimated graphics and numbers included.
+            </p>
+            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+              Adding stitched tackle-twill player names and numbers (+ $10/jersey) brings the total to $839.86. If an 8-team adult league orders 15 jerseys per team (120 total), everyone drops into the top 101+ tier at $39.99 per jersey ($4,798.80 total).
+            </p>
+          </div>
+
+          {/* Specialized Cuts & Full Kit Bundles */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            <div className="p-6 sm:p-8 bg-white rounded-[3px] border border-[var(--secondary)]/10 shadow-sm">
+              <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-3">
+                Specialized Cuts, Women's Patterns & Captain Letters
+              </h3>
+              <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
+                Oversized goalie and pad cuts are tailored with expanded arm and chest gussets to fit over body armor at zero additional price premium. HAMLO SPORTS manufactures anatomically graded patterns for men, women, and youth athletes on the same order, ideal for co-ed leagues and competitive girls' athletic programs.
+              </p>
+              <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                Captain 'C' and alternate 'A' markers are precision-positioned on the chest—available in seamless dye-sublimation or multi-layer tackle twill embroidery. Authentic sewn-in reinforced fight straps (tie-downs) can be included upon request.
+              </p>
+            </div>
+
+            <div className="p-6 sm:p-8 bg-white rounded-[3px] border border-[var(--secondary)]/10 shadow-sm">
+              <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-3">
+                Practice Gear, Warmups and Full Package Sets
+              </h3>
+              <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
+                A turnkey HAMLO SPORTS team kit combines home and away match jerseys, custom dye-sublimated socks, and heavy-duty pants or shells into one coordinated design aesthetic. Single-layer practice sweaters begin at $49.99 (1–24 pieces), while dual-layer reversible practice jerseys offer home/away scrimmages in one garment from $89.99.
+              </p>
+              <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                Custom pant shells start at $44.99, shielding breezers in team colors and emblems. Complete your club identity with our winter sideline parkas ($69.99) and moisture-wicking team travel hoodies ($46.99).
+              </p>
+            </div>
+          </div>
+
+          {/* When to Order Before Playoffs (Timeline Schedule Table) */}
+          <div className="p-6 sm:p-8 bg-[var(--secondary)] text-white rounded-[3px] shadow-xl border border-white/10">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--accent)] block mb-1">
+                  PRODUCTION & TOURNAMENT DEADLINES
+                </span>
+                <h3 className="text-2xl sm:text-3xl font-black uppercase text-white">
+                  When to Order Before Tournaments & Playoffs
+                </h3>
+              </div>
+              <p className="text-xs text-white/70 max-w-md">
+                Approve your design with HAMLO SPORTS at least 33 days before your tournament or playoff date. Standard production takes 2 to 3 weeks, express air shipping takes 3 to 5 days, keeping a week margin for late roster additions.
+              </p>
+            </div>
+
+            <div className="overflow-x-auto mb-6 bg-white/5 rounded border border-white/10">
+              <table className="w-full text-left border-collapse text-xs sm:text-sm">
+                <thead>
+                  <tr className="bg-white/10 text-white text-[11px] uppercase tracking-wider">
+                    <th className="py-3.5 px-4 font-black">Tournament or Playoff Date</th>
+                    <th className="py-3.5 px-4 font-black text-[var(--accent)]">Approve Your Design By</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/10 font-medium">
+                  {playoffSchedule.map((sched, sIdx) => (
+                    <tr key={sIdx} className="hover:bg-white/5">
+                      <td className="py-3 px-4 font-bold text-white">{sched.tournamentDate}</td>
+                      <td className="py-3 px-4 text-emerald-400 font-bold">{sched.approveByDate}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+              <span className="text-xs text-white/80">
+                The quote form asks for your in-hands date. Already past your approve-by date? Free rush production available upon request.
+              </span>
+              <a 
+                href="#quote-section" 
+                className="px-6 py-2.5 bg-[var(--accent)] hover:bg-white hover:text-[var(--secondary)] text-white text-xs font-black uppercase tracking-wider rounded-[3px] transition cursor-pointer flex-shrink-0"
+              >
+                Get Free 3D Proof &rarr;
+              </a>
+            </div>
+          </div>
+
         </section>
 
         {/* ── BLOCK 13: UPSELLS / RELATED PRODUCTS (PAGE 7 SPEC) ────────────────── */}

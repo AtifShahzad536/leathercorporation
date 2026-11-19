@@ -11,13 +11,19 @@ async function syncPrices() {
     const fcUrl = 'file:///' + path.resolve(__dirname, '../../../client/src/data/fullCatalog296.js').replace(/\\/g, '/');
     const { fullCatalog296 } = await import(fcUrl);
 
-    console.log(`📦 Loaded ${fullCatalog296.length} products with 4-tier pricing.`);
+    const faqsPath = path.resolve(__dirname, '../../../client/src/data/productFaqs296.json');
+    const fs = require('fs');
+    const allFaqs = fs.existsSync(faqsPath) ? JSON.parse(fs.readFileSync(faqsPath, 'utf8')) : {};
+
+    console.log(`📦 Loaded ${fullCatalog296.length} products with 4-tier pricing and ${Object.keys(allFaqs).length} FAQ entries.`);
 
     let updatedCount = 0;
     let createdCount = 0;
 
     for (const p of fullCatalog296) {
       const filter = { slug: p.slug };
+      const productFaqs = allFaqs[p.slug]?.faqs || [];
+
       const updateData = {
         name: p.name,
         slug: p.slug,
@@ -32,6 +38,7 @@ async function syncPrices() {
         badge: p.badge || 'PRO SPEC',
         sizes: p.sizes || ['YS', 'YM', 'YL', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'],
         features: p.features || [],
+        faqs: productFaqs,
         rating: p.rating || 4.8,
         isActive: true,
       };

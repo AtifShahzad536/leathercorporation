@@ -81,6 +81,7 @@ export default function ProductsManager() {
       badge: 'PRO SPEC',
       image: '',
       isActive: true,
+      faqs: [],
     });
     setShowModal(true);
   };
@@ -107,6 +108,7 @@ export default function ProductsManager() {
       badge: p.badge || '',
       image: p.images?.[0]?.url || '',
       isActive: p.isActive !== undefined ? p.isActive : true,
+      faqs: Array.isArray(p.faqs) && p.faqs.length > 0 ? p.faqs.map(f => ({ q: f.q || '', a: f.a || '' })) : [],
     });
     setShowModal(true);
   };
@@ -135,6 +137,7 @@ export default function ProductsManager() {
       ],
       slug: form.slug || form.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
       images: form.image ? [{ url: form.image, alt: form.name }] : [],
+      faqs: Array.isArray(form.faqs) ? form.faqs.filter(f => f.q && f.q.trim()) : [],
     };
 
     try {
@@ -236,7 +239,14 @@ export default function ProductsManager() {
                       className="w-10 h-10 rounded object-cover bg-slate-100 flex-shrink-0"
                     />
                     <div>
-                      <div className="text-slate-900 line-clamp-1">{p.name}</div>
+                      <div className="text-slate-900 line-clamp-1 flex items-center gap-1.5">
+                        <span>{p.name}</span>
+                        {p.faqs && p.faqs.length > 0 && (
+                          <span className="px-1.5 py-0.5 bg-indigo-50 border border-indigo-200 text-indigo-700 text-[9px] font-bold rounded flex-shrink-0">
+                            {p.faqs.length} FAQs
+                          </span>
+                        )}
+                      </div>
                       <span className="text-[10px] text-slate-400 font-mono">/{p.slug}</span>
                     </div>
                   </td>
@@ -452,6 +462,77 @@ export default function ProductsManager() {
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
                   className="w-full border border-slate-300 rounded-lg p-2.5 text-xs focus:border-[#F26522] focus:outline-none"
                 />
+              </div>
+
+              {/* Product-Specific FAQs Manager */}
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <label className="block text-xs font-black uppercase text-slate-900 tracking-wider">
+                      Product-Specific FAQs ({form.faqs?.length || 0})
+                    </label>
+                    <span className="text-[10px] text-slate-500 font-medium">Anti-spam customized Q&As for this uniform</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setForm({
+                        ...form,
+                        faqs: [...(form.faqs || []), { q: '', a: '' }]
+                      });
+                    }}
+                    className="px-2.5 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-[11px] font-bold uppercase tracking-wider cursor-pointer"
+                  >
+                    + Add FAQ
+                  </button>
+                </div>
+
+                <div className="space-y-2.5 max-h-60 overflow-y-auto pr-1">
+                  {form.faqs?.map((faq, fIdx) => (
+                    <div key={fIdx} className="bg-white p-2.5 rounded-lg border border-slate-200 space-y-1.5">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[10px] font-bold text-slate-400">Question #{fIdx + 1}</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newFaqs = form.faqs.filter((_, i) => i !== fIdx);
+                            setForm({ ...form, faqs: newFaqs });
+                          }}
+                          className="text-red-500 hover:text-red-700 text-[10px] font-bold uppercase cursor-pointer"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                      <input
+                        type="text"
+                        value={faq.q}
+                        placeholder="Question..."
+                        onChange={(e) => {
+                          const updated = [...form.faqs];
+                          updated[fIdx] = { ...updated[fIdx], q: e.target.value };
+                          setForm({ ...form, faqs: updated });
+                        }}
+                        className="w-full border border-slate-300 rounded p-1.5 text-xs font-semibold focus:border-[#F26522] focus:outline-none"
+                      />
+                      <textarea
+                        rows="2"
+                        value={faq.a}
+                        placeholder="Detailed answer..."
+                        onChange={(e) => {
+                          const updated = [...form.faqs];
+                          updated[fIdx] = { ...updated[fIdx], a: e.target.value };
+                          setForm({ ...form, faqs: updated });
+                        }}
+                        className="w-full border border-slate-300 rounded p-1.5 text-xs focus:border-[#F26522] focus:outline-none leading-relaxed"
+                      />
+                    </div>
+                  ))}
+                  {(!form.faqs || form.faqs.length === 0) && (
+                    <div className="text-center py-4 text-xs text-slate-400 italic bg-white rounded border border-dashed border-slate-200">
+                      No FAQs configured for this product. Click "+ Add FAQ" above to add one.
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">

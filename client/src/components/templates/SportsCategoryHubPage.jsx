@@ -550,10 +550,10 @@ export default function SportsCategoryHubPage({
                 Youth Club {activeSport} Jerseys
               </h3>
               <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
-                A youth club or association can put several age groups on one HAMLO SPORTS quote, each with its own design, and the combined quantity sets one price tier for all of them. Three age groups of 15 players make 45 game jerseys, which lands in the 25 to 50 tier at $44.99 each: $2,024.55 in total.
+                Youth clubs, academies, and community associations can group multiple age divisions into a single HAMLO SPORTS production order—even if each division features unique color schemes or team artwork. Ordering 15 jerseys across three age divisions totals 45 match sweaters, qualifying your entire organization for the 25–50 tier at $44.99 each ($2,024.55 total).
               </p>
               <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
-                Youth sizes run YS to YXL, and adult sizes XS to 4XL go on the same order, so coaches and older players are covered in one shipment. Not sure what size a 7-year-old needs? Measure their chest, waist and hips and match them to the Youth tab of the size chart on this page before you collect money from families.
+                Youth cuts span YXS through YXL, while adult XS to 4XL fit seamlessly on the same invoice for coaching staff and senior rosters. We recommend checking chest, waist, and hip measurements against our Youth Size Matrix prior to collecting orders from parents.
               </p>
             </div>
           </div>
@@ -567,10 +567,10 @@ export default function SportsCategoryHubPage({
                 High School {activeSport} Uniforms
               </h3>
               <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
-                High school programs can put home and away sets, practice jerseys and warm-ups on one HAMLO SPORTS quote, so the whole program reaches its price tier together. Official school purchase orders (POs) accepted with Net 30 terms.
+                Varsity and JV athletic programs can bundle primary home kits, road away jerseys, training pullovers, and sideline warmups onto a single HAMLO SPORTS order so all rosters maximize bulk pricing together. We gladly accept official school district and booster club Purchase Orders (POs) with standard Net 30 terms.
               </p>
               <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
-                A common setup is home and away game jerseys with matching socks, plus reversible practice jerseys for drills. If your school colors or crest are already set, send them with your quote and the mockup starts from your exact artwork.
+                A standard high school program package includes home and away match jerseys, sublimated socks, and reversible scrimmage tops for daily practice. Submit your official school pantone colors and vector crest, and our design team will render high-definition 3D proofs within 12 hours.
               </p>
             </div>
           </div>
@@ -585,10 +585,10 @@ export default function SportsCategoryHubPage({
             Beer League & Adult Rec {activeSport} Jerseys
           </h3>
           <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
-            One HAMLO SPORTS quote can cover your beer-league team or every team in your league, and the combined total of every team on the order sets the price tier, even when each team has its own design. A 14-player beer-league team ordering game jerseys at $49.99 per player pays $699.86 in total, with free US shipping.
+            A single HAMLO SPORTS quote can cover your individual rec team or an entire adult league. The cumulative count across all participating teams determines the tier pricing, even when every club features its own custom artwork and striping. A 14-skater rec roster ordering custom game jerseys at $49.99 each totals $699.86 with all sublimated graphics and numbers included.
           </p>
           <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
-            Add a tackle twill name and number to all 14 jerseys and the order comes to $839.86. A league running 8 teams of 15 players orders 120 jerseys, pushing every team into the 101+ tier at $39.99 per jersey: $4,798.80 for the whole league. For styles and the jersey setup that fits your league, read our gear guides.
+            Adding stitched tackle-twill player names and numbers (+ $10/jersey) brings the total to $839.86. If an 8-team adult league orders 15 jerseys per team (120 total), everyone drops into the top 101+ tier at $39.99 per jersey ($4,798.80 total).
           </p>
         </div>
 
@@ -599,10 +599,10 @@ export default function SportsCategoryHubPage({
               Goalie Cut, Women's Cut and Captain Letters
             </h3>
             <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
-              Goalie-cut jerseys are available and cost the same as skater jerseys. Uniforms come in men's, women's, and youth cuts. A goalie cut is a larger cut that fits over a goalie's chest protector, so your goalies wear the same design as the rest of the roster.
+              Oversized goalie and pad cuts are tailored with expanded arm and chest gussets to fit over body armor at zero additional price premium. HAMLO SPORTS manufactures anatomically graded patterns for men, women, and youth athletes on the same order, ideal for co-ed leagues and competitive girls' athletic programs.
             </p>
             <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
-              Women's and youth cuts sit on the same order as men's cuts, which suits coed rec teams and girls' programs. Captain "C" and "A" letters are placed on the left chest, sublimated or in tackle twill; twill letters are priced on your quote. Hockey jerseys come with or without a sewn-in fight strap. Tell us which you need on your quote.
+              Captain 'C' and alternate 'A' markers are precision-positioned on the chest—available in seamless dye-sublimation or multi-layer tackle twill embroidery. Authentic sewn-in reinforced fight straps (tie-downs) can be included upon request.
             </p>
           </div>
 
@@ -611,10 +611,10 @@ export default function SportsCategoryHubPage({
               Practice Jerseys, Pant Shells and Full Kits
             </h3>
             <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
-              A complete HAMLO SPORTS kit puts game jerseys, custom match socks and pant shells on one quote, so every piece shares one design and counts toward the same tier. For game day, start with the Game Day Home Jersey and Game Day Away Jersey.
+              A turnkey HAMLO SPORTS team kit combines home and away match jerseys, custom dye-sublimated socks, and heavy-duty pants or shells into one coordinated design aesthetic. Single-layer practice sweaters begin at $49.99 (1–24 pieces), while dual-layer reversible practice jerseys offer home/away scrimmages in one garment from $89.99.
             </p>
             <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
-              For drills, our custom practice jerseys start at $49.99 per player (1 to 24 pieces), and reversible jerseys give you two colors in one jersey from $89.99 per player (1 to 24). Custom shells cover your pants in team colors from $44.99 per player (1 to 24). Team warmups, custom parkas at $69.99, and hoodies at $46.99 round out the order.
+              Custom pant shells start at $44.99, shielding breezers in team colors and emblems. Complete your club identity with our winter sideline parkas ($69.99) and moisture-wicking team travel hoodies ($46.99).
             </p>
           </div>
         </div>
