@@ -7,6 +7,7 @@ import SizeChartModal from '../products/SizeChartModal';
 
 export default function ExplorePage({
   initialTab = 'fabrics',
+  onTabChange = () => { },
   onNavigateHome = () => { },
   onNavigateProducts = () => { },
   onNavigateInquiry = () => { }
@@ -38,7 +39,9 @@ export default function ExplorePage({
 
   const handleTabClick = (tabKey) => {
     setActiveTab(tabKey);
-    window.location.hash = `explore?tab=${tabKey}`;
+    onTabChange(tabKey);
+    const url = tabKey !== 'fabrics' ? `/explore/?tab=${tabKey}` : '/explore/';
+    window.history.pushState({}, '', url);
   };
 
   const fabricSpecs = [

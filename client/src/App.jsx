@@ -46,12 +46,34 @@ const FieldHockeyPage = lazy(() => import('./components/pages/FieldHockeyPage'))
 const SportsGlovesPage = lazy(() => import('./components/pages/SportsGlovesPage'));
 const LeadTimeGuidePage = lazy(() => import('./components/pages/LeadTimeGuidePage'));
 
+const mapExploreTab = (tab) => {
+  if (!tab) return 'fabrics';
+  const l = tab.toLowerCase();
+  if (l.includes('lookbook') || l.includes('2026')) return 'lookbook';
+  if (l.includes('sublimat') || l.includes('tech')) return 'sublimation';
+  if (l.includes('embroid') || l.includes('twill') || l.includes('tackle')) return 'embroidery';
+  if (l.includes('size') || l.includes('fit') || l.includes('guide')) return 'guide';
+  return 'fabrics';
+};
+
+const mapAboutTab = (tab) => {
+  if (!tab) return 'story';
+  const l = tab.toLowerCase();
+  if (l.includes('tannery') || l.includes('lab') || l.includes('tech') || l.includes('sublimat')) return 'tech';
+  if (l.includes('oeko') || l.includes('sustainab') || l.includes('certified')) return 'sustainability';
+  if (l.includes('export') || l.includes('global')) return 'exports';
+  if (l.includes('press') || l.includes('news')) return 'press';
+  if (l.includes('ethics') || l.includes('sourc') || l.includes('factory ethics')) return 'ethics';
+  if (l.includes('contact') || l.includes('headquarter')) return 'contact';
+  return 'story';
+};
+
 function MainApp() {
   const [currentPage, setCurrentPage] = useState('home'); 
   const [activeSport, setActiveSport] = useState('BASEBALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [inquiryProductSlug, setInquiryProductSlug] = useState('');
-  const [exploreTab, setExploreTab] = useState('care');
+  const [exploreTab, setExploreTab] = useState('fabrics');
   const [aboutTab, setAboutTab] = useState('story');
   const [stylesFilter, setStylesFilter] = useState('ALL');
   const [policyTab, setPolicyTab] = useState('privacy');
@@ -163,8 +185,10 @@ function MainApp() {
     if (routeString.startsWith('styles')) {
       setCurrentPage('styles');
       document.title = 'Sportswear Styles & Apparel Cuts | HAMLO SPORTS';
-      const searchStr = routeString.includes('?') ? routeString.split('?')[1] : '';
-      const params = new URLSearchParams(searchStr);
+      const searchStr = window.location.search || (routeString.includes('?') ? routeString.split('?')[1] : '');
+      const hashStr = window.location.hash || '';
+      const combined = `${searchStr}&${hashStr.replace('#', '')}`;
+      const params = new URLSearchParams(combined);
       if (params.get('style')) {
         setStylesFilter(decodeURIComponent(params.get('style')));
       } else {
@@ -173,6 +197,22 @@ function MainApp() {
     } else if (routeString.startsWith('explore')) {
       setCurrentPage('explore');
       document.title = 'Explore Performance Materials & Technologies | HAMLO SPORTS';
+      const searchStr = window.location.search || (routeString.includes('?') ? routeString.split('?')[1] : '');
+      const hashStr = window.location.hash || '';
+      const combined = `${searchStr}&${hashStr.replace('#', '')}`;
+      const params = new URLSearchParams(combined);
+      const tabParam = params.get('tab');
+      if (tabParam) {
+        const resolved = mapExploreTab(tabParam);
+        if (resolved === 'guide') {
+          setCurrentPage('sizing-chart');
+          document.title = 'Sports Uniform Sizing Chart & Measuring Guide | HAMLO SPORTS';
+          return;
+        }
+        setExploreTab(resolved);
+      } else {
+        setExploreTab('fabrics');
+      }
     } else if (routeString.startsWith('compliance')) {
       setCurrentPage('compliance');
       document.title = 'Compliance & Ethical Factory Standards | HAMLO SPORTS';
@@ -182,6 +222,16 @@ function MainApp() {
     } else if (routeString.startsWith('about')) {
       setCurrentPage('about');
       document.title = 'About HAMLO SPORTS | Sialkot Manufacturing Heritage';
+      const searchStr = window.location.search || (routeString.includes('?') ? routeString.split('?')[1] : '');
+      const hashStr = window.location.hash || '';
+      const combined = `${searchStr}&${hashStr.replace('#', '')}`;
+      const params = new URLSearchParams(combined);
+      const tabParam = params.get('tab');
+      if (tabParam) {
+        setAboutTab(mapAboutTab(tabParam));
+      } else {
+        setAboutTab('story');
+      }
     } else if (routeString.startsWith('privacy-policy')) {
       setPolicyTab('privacy');
       setCurrentPage('legal-policy');
@@ -304,10 +354,20 @@ function MainApp() {
     } else if (page === 'styles') {
       const styleParam = param1 || 'ALL';
       setStylesFilter(styleParam);
-      window.history.pushState({}, '', '/styles/');
+      const url = styleParam && styleParam !== 'ALL' ? `/styles/?style=${encodeURIComponent(styleParam)}` : '/styles/';
+      window.history.pushState({}, '', url);
       document.title = 'Sportswear Styles & Cuts | HAMLO SPORTS';
     } else if (page === 'explore') {
-      window.history.pushState({}, '', '/explore/');
+      const tab = mapExploreTab(param1);
+      if (tab === 'guide') {
+        window.history.pushState({}, '', '/sizing-chart/');
+        document.title = 'Sports Uniform Sizing Chart | HAMLO SPORTS';
+        setCurrentPage('sizing-chart');
+        return;
+      }
+      setExploreTab(tab);
+      const url = tab && tab !== 'fabrics' ? `/explore/?tab=${tab}` : '/explore/';
+      window.history.pushState({}, '', url);
       document.title = 'Explore Performance Materials | HAMLO SPORTS';
     } else if (page === 'compliance') {
       window.history.pushState({}, '', '/compliance/');
@@ -316,7 +376,10 @@ function MainApp() {
       window.history.pushState({}, '', '/certification/');
       document.title = 'Export Quality Certifications | HAMLO SPORTS';
     } else if (page === 'about') {
-      window.history.pushState({}, '', '/about/');
+      const tab = mapAboutTab(param1);
+      setAboutTab(tab);
+      const url = tab && tab !== 'story' ? `/about/?tab=${tab}` : '/about/';
+      window.history.pushState({}, '', url);
       document.title = 'About HAMLO SPORTS | Sialkot Manufacturing';
     } else if (page === 'legal-policy') {
       const tab = param1 || 'privacy';
@@ -417,6 +480,7 @@ function MainApp() {
         {currentPage === 'styles' && (
           <StylesPage
             initialStyle={stylesFilter}
+            onFilterChange={(f) => setStylesFilter(f)}
             onNavigateHome={() => navigateTo('home')}
             onNavigateProducts={(cat) => navigateTo('sports-hub', cat)}
             onNavigateInquiry={(p) => navigateTo('inquiry', p)}
@@ -426,6 +490,7 @@ function MainApp() {
         {currentPage === 'explore' && (
           <ExplorePage
             initialTab={exploreTab}
+            onTabChange={(tab) => setExploreTab(tab)}
             onNavigateHome={() => navigateTo('home')}
             onNavigateProducts={() => navigateTo('sports-hub')}
             onNavigateInquiry={(p) => navigateTo('inquiry', p)}
@@ -449,6 +514,7 @@ function MainApp() {
         {currentPage === 'about' && (
           <AboutPage
             initialTab={aboutTab}
+            onTabChange={(tab) => setAboutTab(tab)}
             onNavigateHome={() => navigateTo('home')}
             onNavigateProducts={() => navigateTo('sports-hub')}
             onNavigateInquiry={(p) => navigateTo('inquiry', p)}

@@ -7,6 +7,7 @@ import {
 
 export default function AboutPage({ 
   initialTab = 'story',
+  onTabChange = () => {},
   onNavigateHome = () => {}, 
   onNavigateProducts = () => {}, 
   onNavigateInquiry = () => {} 
@@ -17,13 +18,13 @@ export default function AboutPage({
   const mapTabKey = (tab) => {
     if (!tab) return 'story';
     const lower = tab.toLowerCase();
-    if (lower.includes('about') || lower.includes('story') || lower.includes('heritage') || lower.includes('factory')) return 'story';
-    if (lower.includes('sublimat') || lower.includes('tannery') || lower.includes('craft') || lower.includes('tech')) return 'tech';
-    if (lower.includes('sustainab') || lower.includes('oeko') || lower.includes('csr') || lower.includes('enviroment')) return 'sustainability';
+    if (lower.includes('ethics') || lower.includes('ethical') || lower.includes('sourc') || lower.includes('charity')) return 'ethics';
+    if (lower.includes('sublimat') || lower.includes('tannery') || lower.includes('craft') || lower.includes('tech') || lower.includes('lab')) return 'tech';
+    if (lower.includes('sustainab') || lower.includes('oeko') || lower.includes('certified') || lower.includes('csr') || lower.includes('enviroment')) return 'sustainability';
     if (lower.includes('export') || lower.includes('global')) return 'exports';
     if (lower.includes('press') || lower.includes('news')) return 'press';
-    if (lower.includes('sourc') || lower.includes('ethical') || lower.includes('charity')) return 'ethics';
     if (lower.includes('contact') || lower.includes('headquarter')) return 'contact';
+    if (lower.includes('about') || lower.includes('story') || lower.includes('heritage') || lower.includes('factory')) return 'story';
     return lower;
   };
 
@@ -34,7 +35,9 @@ export default function AboutPage({
 
   const handleTabClick = (tabKey) => {
     setActiveTab(tabKey);
-    window.location.hash = `about?tab=${tabKey}`;
+    onTabChange(tabKey);
+    const url = tabKey !== 'story' ? `/about/?tab=${tabKey}` : '/about/';
+    window.history.pushState({}, '', url);
   };
 
   const milestones = [
@@ -116,6 +119,7 @@ export default function AboutPage({
             { key: 'story', label: 'OUR STORY & TIMELINE' },
             { key: 'tech', label: 'SUBLIMATION LAB' },
             { key: 'sustainability', label: 'SUSTAINABILITY' },
+            { key: 'ethics', label: 'FACTORY ETHICS' },
             { key: 'exports', label: 'GLOBAL EXPORTS' },
             { key: 'press', label: 'PRESS & NEWS' },
             { key: 'contact', label: 'CONTACT FACTORY' }
@@ -200,6 +204,52 @@ export default function AboutPage({
             <p className="text-xs text-[var(--secondary)]/75 leading-relaxed max-w-3xl">
               Dye-sublimation produces zero hazardous effluent runoff compared to legacy wet-dye processes. We use OEKO-TEX certified water-based inks and offer recycled polyester (rPET) options derived from post-consumer recycled plastic bottles.
             </p>
+          </div>
+        )}
+
+        {/* TAB 4: FACTORY ETHICS */}
+        {activeTab === 'ethics' && (
+          <div className="bg-white p-8 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm space-y-6">
+            <div className="max-w-3xl">
+              <span className="text-[10px] font-mono text-[var(--accent)] font-bold tracking-widest uppercase">Ethical Manufacturing Principles</span>
+              <h3 className="text-2xl font-black uppercase text-[var(--secondary)] mt-1">Fair Labor, Worker Welfare & Zero Child Labor</h3>
+              <p className="text-xs text-[var(--secondary)]/75 leading-relaxed mt-2">
+                HAMLO SPORTS operates on uncompromising ethical principles across our Sialkot manufacturing facilities. We ensure fair living wages, 48-hour maximum work weeks, comprehensive healthcare coverage, and modern climate-controlled working conditions for all master cutters, sublimation technicians, and stitching staff.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+              <div className="p-5 bg-neutral-50 rounded-[4px] border border-neutral-200">
+                <ShieldCheck className="text-[var(--accent)] mb-2" size={24} />
+                <h4 className="font-bold text-sm uppercase text-[var(--secondary)]">Zero Child Labor</h4>
+                <p className="text-xs text-neutral-600 mt-1">Strict 18+ age verification with government biometric ID validation before facility onboarding.</p>
+              </div>
+              <div className="p-5 bg-neutral-50 rounded-[4px] border border-neutral-200">
+                <HeartHandshake className="text-[var(--accent)] mb-2" size={24} />
+                <h4 className="font-bold text-sm uppercase text-[var(--secondary)]">Fair Living Wages</h4>
+                <p className="text-xs text-neutral-600 mt-1">Wages significantly above regional statutory minimums with performance incentives and social security.</p>
+              </div>
+              <div className="p-5 bg-neutral-50 rounded-[4px] border border-neutral-200">
+                <CheckCircle className="text-[var(--accent)] mb-2" size={24} />
+                <h4 className="font-bold text-sm uppercase text-[var(--secondary)]">Workplace Safety</h4>
+                <p className="text-xs text-neutral-600 mt-1">High-efficiency ventilation, eye-protection PPE, fire suppression systems, and clean drinking water filtration.</p>
+              </div>
+              <div className="p-5 bg-neutral-50 rounded-[4px] border border-neutral-200">
+                <Award className="text-[var(--accent)] mb-2" size={24} />
+                <h4 className="font-bold text-sm uppercase text-[var(--secondary)]">Global Audit Ready</h4>
+                <p className="text-xs text-neutral-600 mt-1">Full traceability and audit-ready supply chain meeting US high school, NCAA, and club league procurement standards.</p>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-neutral-100 flex items-center justify-between flex-wrap gap-4">
+              <span className="text-xs text-neutral-500">Need formal compliance certificates or factory audit sheets for your school district or athletic department?</span>
+              <button
+                onClick={() => onNavigateInquiry('Factory Ethics & Compliance Audit Documentation')}
+                className="px-6 py-2.5 bg-[var(--secondary)] hover:bg-[var(--accent)] text-white font-bold text-xs uppercase tracking-wider rounded-[3px] shadow transition cursor-pointer"
+              >
+                Request Audit Documentation
+              </button>
+            </div>
           </div>
         )}
 

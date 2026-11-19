@@ -71,6 +71,7 @@ export const leatherStylesData = [
 
 export default function StylesPage({ 
   initialStyle = 'ALL',
+  onFilterChange = () => {},
   onNavigateHome = () => {}, 
   onNavigateProducts = () => {}, 
   onNavigateInquiry = () => {} 
@@ -94,7 +95,9 @@ export default function StylesPage({
 
   const handleFilterClick = (filterKey) => {
     setActiveFilter(filterKey);
-    window.location.hash = filterKey !== 'ALL' ? `styles?style=${filterKey}` : 'styles';
+    onFilterChange(filterKey);
+    const url = filterKey !== 'ALL' ? `/styles/?style=${encodeURIComponent(filterKey)}` : '/styles/';
+    window.history.pushState({}, '', url);
   };
 
   const displayedStyles = activeFilter === 'ALL' 
