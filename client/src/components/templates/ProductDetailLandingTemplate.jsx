@@ -103,36 +103,44 @@ export default function ProductDetailLandingTemplate({
   // Safe active image index
   const safeActiveImageIdx = activeImageIdx < displayImages.length ? activeImageIdx : 0;
 
-  // 1. Dynamic Volume Price Table (Block 7) based on this specific product's price
+  // 1. Dynamic Volume Price Table (Block 7) based on this specific product's exact published tiers
   const parsedPrice = parseFloat(String(product?.price || basePrice).replace(/[^0-9.]/g, '')) || 49.99;
 
   const volumeTiers = useMemo(() => {
-    const t1Jersey = parsedPrice;
-    let t2Jersey = Math.max(12, Math.round((t1Jersey * 0.90) * 100) / 100);
-    let t3Jersey = Math.max(10, Math.round((t1Jersey * 0.85) * 100) / 100);
-    let t4Jersey = Math.max(8, Math.round((t1Jersey * 0.78) * 100) / 100);
-
-    // Exact sport-specific calibrations (Ice Hockey benchmark)
-    if (Math.abs(t1Jersey - 49.99) < 1) {
-      t2Jersey = 44.99; t3Jersey = 42.99; t4Jersey = 39.99;
-    } else if (Math.abs(t1Jersey - 89.99) < 1) {
-      t2Jersey = 84.99; t3Jersey = 82.99; t4Jersey = 79.99;
-    } else if (Math.abs(t1Jersey - 44.99) < 1) {
-      t2Jersey = 42.99; t3Jersey = 39.99; t4Jersey = 36.99;
-    }
+    // If product has exact 4-tier volume prices from DB / catalog:
+    const t1Jersey = product?.tierPrices?.tier1 ?? product?.volumeTiers?.[0]?.price ?? parsedPrice;
+    const t2Jersey = product?.tierPrices?.tier2 ?? product?.volumeTiers?.[1]?.price ?? (
+      // fallback calculation
+      Math.abs(t1Jersey - 49.99) < 1 ? 44.99 :
+      Math.abs(t1Jersey - 89.99) < 1 ? 84.99 :
+      Math.abs(t1Jersey - 44.99) < 1 ? 42.99 :
+      Math.max(12, Math.round((t1Jersey * 0.90) * 100) / 100)
+    );
+    const t3Jersey = product?.tierPrices?.tier3 ?? product?.volumeTiers?.[2]?.price ?? (
+      Math.abs(t1Jersey - 49.99) < 1 ? 42.99 :
+      Math.abs(t1Jersey - 89.99) < 1 ? 82.99 :
+      Math.abs(t1Jersey - 44.99) < 1 ? 41.99 :
+      Math.max(10, Math.round((t1Jersey * 0.85) * 100) / 100)
+    );
+    const t4Jersey = product?.tierPrices?.tier4 ?? product?.volumeTiers?.[3]?.price ?? (
+      Math.abs(t1Jersey - 49.99) < 1 ? 39.99 :
+      Math.abs(t1Jersey - 89.99) < 1 ? 79.99 :
+      Math.abs(t1Jersey - 44.99) < 1 ? 36.99 :
+      Math.max(8, Math.round((t1Jersey * 0.78) * 100) / 100)
+    );
 
     const t1Set = Math.round((t1Jersey * 1.75) * 100) / 100;
-    const t2Set = Math.round((t1Set * 0.93) * 100) / 100;
-    const t3Set = Math.round((t1Set * 0.88) * 100) / 100;
-    const t4Set = Math.round((t1Set * 0.82) * 100) / 100;
+    const t2Set = Math.round((t2Jersey * 1.75) * 100) / 100;
+    const t3Set = Math.round((t3Jersey * 1.75) * 100) / 100;
+    const t4Set = Math.round((t4Jersey * 1.75) * 100) / 100;
 
     return [
       { qty: '1 to 24', jersey: `$${t1Jersey.toFixed(2)}`, set: `$${t1Set.toFixed(2)}`, save: 'Base price', note: '-' },
-      { qty: '25 to 50', jersey: `$${t2Jersey.toFixed(2)}`, set: `$${t2Set.toFixed(2)}`, save: `Save $${(t1Jersey - t2Jersey).toFixed(2)} / each`, note: '-' },
-      { qty: '51 to 100', jersey: `$${t3Jersey.toFixed(2)}`, set: `$${t3Set.toFixed(2)}`, save: `Save $${(t1Jersey - t3Jersey).toFixed(2)} / each`, note: '-' },
-      { qty: '101+', jersey: `$${t4Jersey.toFixed(2)}`, set: `$${t4Set.toFixed(2)}`, save: `Save $${(t1Jersey - t4Jersey).toFixed(2)} / each`, note: 'Best Value' }
+      { qty: '25 to 50', jersey: `$${t2Jersey.toFixed(2)}`, set: `$${t2Set.toFixed(2)}`, save: t1Jersey > t2Jersey ? `Save $${(t1Jersey - t2Jersey).toFixed(2)} / each` : 'Standard', note: '-' },
+      { qty: '51 to 100', jersey: `$${t3Jersey.toFixed(2)}`, set: `$${t3Set.toFixed(2)}`, save: t1Jersey > t3Jersey ? `Save $${(t1Jersey - t3Jersey).toFixed(2)} / each` : 'Standard', note: '-' },
+      { qty: '101+', jersey: `$${t4Jersey.toFixed(2)}`, set: `$${t4Set.toFixed(2)}`, save: t1Jersey > t4Jersey ? `Save $${(t1Jersey - t4Jersey).toFixed(2)} / each` : 'Standard', note: 'Best Value' }
     ];
-  }, [parsedPrice]);
+  }, [parsedPrice, product]);
 
   // 2. Dynamic In-Page Price Calculator (Block 18)
   const [calcQty, setCalcQty] = useState(25);

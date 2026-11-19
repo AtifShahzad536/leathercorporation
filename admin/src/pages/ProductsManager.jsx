@@ -18,7 +18,11 @@ export default function ProductsManager() {
     slug: '',
     sport: 'Baseball',
     category: 'Jerseys',
-    price: 39.99,
+    price: 44.99,
+    tier1: 44.99,
+    tier2: 42.99,
+    tier3: 41.99,
+    tier4: 39.99,
     description: '',
     fabric: '180-220 GSM Polyester',
     badge: 'PRO SPEC',
@@ -67,7 +71,11 @@ export default function ProductsManager() {
       slug: '',
       sport: 'Baseball',
       category: 'Jerseys',
-      price: 39.99,
+      price: 44.99,
+      tier1: 44.99,
+      tier2: 42.99,
+      tier3: 41.99,
+      tier4: 39.99,
       description: '',
       fabric: '180-220 GSM Performance Polyester',
       badge: 'PRO SPEC',
@@ -79,26 +87,52 @@ export default function ProductsManager() {
 
   const handleOpenEdit = (p) => {
     setEditingProduct(p);
+    const t1 = p.tierPrices?.tier1 ?? p.volumeTiers?.[0]?.price ?? p.price ?? 44.99;
+    const t2 = p.tierPrices?.tier2 ?? p.volumeTiers?.[1]?.price ?? t1;
+    const t3 = p.tierPrices?.tier3 ?? p.volumeTiers?.[2]?.price ?? t2;
+    const t4 = p.tierPrices?.tier4 ?? p.volumeTiers?.[3]?.price ?? t3;
+
     setForm({
       name: p.name,
       slug: p.slug,
       sport: p.sport,
       category: p.category,
-      price: p.price,
+      price: t1,
+      tier1: t1,
+      tier2: t2,
+      tier3: t3,
+      tier4: t4,
       description: p.description || '',
       fabric: p.fabric || '',
       badge: p.badge || '',
       image: p.images?.[0]?.url || '',
-      isActive: p.isActive,
+      isActive: p.isActive !== undefined ? p.isActive : true,
     });
     setShowModal(true);
   };
 
   const handleSave = async (e) => {
     e.preventDefault();
+    const t1 = parseFloat(form.tier1) || parseFloat(form.price) || 0;
+    const t2 = parseFloat(form.tier2) || t1;
+    const t3 = parseFloat(form.tier3) || t2;
+    const t4 = parseFloat(form.tier4) || t3;
+
     const payload = {
       ...form,
-      price: parseFloat(form.price),
+      price: t1,
+      tierPrices: {
+        tier1: t1,
+        tier2: t2,
+        tier3: t3,
+        tier4: t4,
+      },
+      volumeTiers: [
+        { minQty: 1, maxQty: 24, label: '1 to 24', price: t1 },
+        { minQty: 25, maxQty: 50, label: '25 to 50', price: t2 },
+        { minQty: 51, maxQty: 100, label: '51 to 100', price: t3 },
+        { minQty: 101, maxQty: 99999, label: '101+', price: t4 },
+      ],
       slug: form.slug || form.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
       images: form.image ? [{ url: form.image, alt: form.name }] : [],
     };
@@ -185,7 +219,8 @@ export default function ProductsManager() {
               <tr>
                 <th className="py-3 px-5">Product Name</th>
                 <th className="py-3 px-5">Sport</th>
-                <th className="py-3 px-5">Starting Price</th>
+                <th className="py-3 px-5">Base Price (1–24)</th>
+                <th className="py-3 px-5">Volume Tiers (25–50 / 51–100 / 101+)</th>
                 <th className="py-3 px-5">Badge</th>
                 <th className="py-3 px-5">Status</th>
                 <th className="py-3 px-5 text-right">Actions</th>
@@ -211,7 +246,20 @@ export default function ProductsManager() {
                     </span>
                   </td>
                   <td className="py-3 px-5 font-mono font-bold text-slate-900">
-                    ${p.price}
+                    ${p.tierPrices?.tier1 || p.price}
+                  </td>
+                  <td className="py-3 px-5">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-100 text-slate-700">
+                        25–50: ${p.tierPrices?.tier2 ?? p.volumeTiers?.[1]?.price ?? '—'}
+                      </span>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-50 text-blue-700">
+                        51–100: ${p.tierPrices?.tier3 ?? p.volumeTiers?.[2]?.price ?? '—'}
+                      </span>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-black bg-emerald-50 text-emerald-700">
+                        101+: ${p.tierPrices?.tier4 ?? p.volumeTiers?.[3]?.price ?? '—'}
+                      </span>
+                    </div>
                   </td>
                   <td className="py-3 px-5">
                     <span className="text-[10px] text-[#F26522] font-black uppercase">
@@ -227,12 +275,14 @@ export default function ProductsManager() {
                     <button
                       onClick={() => handleOpenEdit(p)}
                       className="p-1.5 rounded hover:bg-slate-200 text-slate-600 cursor-pointer"
+                      title="Edit Uniform & Prices"
                     >
                       <Edit size={14} />
                     </button>
                     <button
                       onClick={() => handleDelete(p._id)}
                       className="p-1.5 rounded hover:bg-red-100 text-red-600 cursor-pointer"
+                      title="Delete Product"
                     >
                       <Trash2 size={14} />
                     </button>
@@ -241,7 +291,7 @@ export default function ProductsManager() {
               ))}
               {products.length === 0 && (
                 <tr>
-                  <td colSpan="6" className="py-8 text-center text-slate-400">
+                  <td colSpan="7" className="py-8 text-center text-slate-400">
                     No products found matching query.
                   </td>
                 </tr>
@@ -293,7 +343,7 @@ export default function ProductsManager() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Sport</label>
+                  <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Sport Category</label>
                   <select
                     value={form.sport}
                     onChange={(e) => setForm({ ...form, sport: e.target.value })}
@@ -303,15 +353,73 @@ export default function ProductsManager() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Starting Price ($)</label>
+                  <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Badge Tag</label>
                   <input
-                    type="number"
-                    step="0.01"
-                    required
-                    value={form.price}
-                    onChange={(e) => setForm({ ...form, price: e.target.value })}
+                    type="text"
+                    value={form.badge}
+                    onChange={(e) => setForm({ ...form, badge: e.target.value })}
+                    placeholder="e.g. PRO SPEC, FACTORY DIRECT"
                     className="w-full border border-slate-300 rounded-lg p-2.5 text-xs focus:border-[#F26522] focus:outline-none"
                   />
+                </div>
+              </div>
+
+              {/* 4-Tier Volume Pricing Matrix */}
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-3">
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-black uppercase text-slate-900 tracking-wider">
+                    Volume Tier Pricing Matrix (USD)
+                  </label>
+                  <span className="text-[10px] text-slate-500 font-medium">Auto-applied on quotes & catalog</span>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">Tier 1: 1–24 Qty ($)</label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      required
+                      value={form.tier1}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setForm({ ...form, tier1: val, price: val });
+                      }}
+                      className="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs font-mono font-bold focus:border-[#F26522] focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">Tier 2: 25–50 Qty ($)</label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      required
+                      value={form.tier2}
+                      onChange={(e) => setForm({ ...form, tier2: e.target.value })}
+                      className="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs font-mono font-bold focus:border-[#F26522] focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">Tier 3: 51–100 Qty ($)</label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      required
+                      value={form.tier3}
+                      onChange={(e) => setForm({ ...form, tier3: e.target.value })}
+                      className="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs font-mono font-bold focus:border-[#F26522] focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase text-emerald-700 mb-1">Tier 4: 101+ Qty ($)</label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      required
+                      value={form.tier4}
+                      onChange={(e) => setForm({ ...form, tier4: e.target.value })}
+                      className="w-full bg-white border border-emerald-300 rounded-lg p-2 text-xs font-mono font-bold text-emerald-800 focus:border-emerald-500 focus:outline-none"
+                    />
+                  </div>
                 </div>
               </div>
 

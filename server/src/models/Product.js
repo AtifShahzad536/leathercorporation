@@ -6,6 +6,18 @@ const productSchema = new mongoose.Schema({
   sport: { type: String, required: true, index: true },
   category: { type: String, required: true },
   price: { type: Number, required: true },
+  tierPrices: {
+    tier1: { type: Number, default: 0 },
+    tier2: { type: Number, default: 0 },
+    tier3: { type: Number, default: 0 },
+    tier4: { type: Number, default: 0 },
+  },
+  volumeTiers: [{
+    minQty: { type: Number },
+    maxQty: { type: Number },
+    label: { type: String },
+    price: { type: Number }
+  }],
   images: [{
     url: { type: String, required: true },
     publicId: String,
