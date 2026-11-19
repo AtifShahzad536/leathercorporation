@@ -105,30 +105,30 @@ export default function InquiriesManager() {
       {/* ── TOP HEADER ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-slate-900 uppercase tracking-tight">
+          <h1 className="text-xl font-semibold text-slate-900 tracking-tight">
             Customer Inquiries & Custom Quotes Desk
           </h1>
-          <p className="text-xs text-slate-500 font-medium mt-1">
-            Real-Time Messages from Website Forms, Contact Page & Live Chat Widget
+          <p className="text-xs text-slate-500 font-normal mt-0.5">
+            Real-time inquiries from website forms, contact requests, and 3D customizer submissions.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
           <button
             onClick={fetchInquiries}
-            className="px-3.5 py-2 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg text-xs font-bold shadow-xs cursor-pointer flex items-center gap-2"
+            className="px-3.5 py-2 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg text-xs font-medium shadow-xs cursor-pointer flex items-center gap-2"
           >
-            <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
+            <RefreshCw size={13} className={loading ? 'animate-spin' : ''} />
             <span>Refresh Leads</span>
           </button>
         </div>
       </div>
 
       {/* ── FILTER CHIPS & SEARCH BAR ── */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-3">
         
         {/* Status Filter Tabs */}
-        <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
+        <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
           {[
             { id: 'all', label: 'All Inquiries', count: counts.all },
             { id: 'new', label: 'New', count: counts.new, color: 'text-emerald-600' },
@@ -139,14 +139,14 @@ export default function InquiriesManager() {
             <button
               key={tab.id}
               onClick={() => setStatusFilter(tab.id)}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap cursor-pointer transition flex items-center gap-2 ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap cursor-pointer transition flex items-center gap-1.5 ${
                 statusFilter === tab.id 
                   ? 'bg-[#1E1B6E] text-white shadow-xs' 
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
               <span>{tab.label}</span>
-              <span className={`text-[10px] font-mono font-black px-1.5 py-0.2 rounded ${
+              <span className={`text-[10px] font-medium px-1.5 py-0.2 rounded ${
                 statusFilter === tab.id ? 'bg-[#F26522] text-white' : 'bg-slate-200 text-slate-700'
               }`}>
                 {tab.count}

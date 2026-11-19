@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useMemo, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls, useGLTF, Environment, ContactShadows, Float, Html } from '@react-three/drei';
+import { OrbitControls, useGLTF, Environment, ContactShadows, Float, Html, Center } from '@react-three/drei';
 import * as THREE from 'three';
 import { useStudioStore, FABRIC_PRESETS } from './useStudioStore';
 import { getFabricBumpTexture, getPatternTexture } from './FabricTextures';
@@ -215,9 +215,42 @@ function ProceduralJerseyModel({ onSelectMesh, selectedMeshId, hoveredMeshId, on
   );
 }
 
+// URL resolver to ensure GLB assets always point to backend storage
+export function resolveModelUrl(url) {
+  if (!url) return '';
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('blob:') || url.startsWith('data:')) {
+    return url;
+  }
+  const apiBase = (typeof window !== 'undefined' && window.location.hostname === 'localhost')
+    ? 'http://localhost:5000'
+    : '';
+  return `${apiBase}${url.startsWith('/') ? '' : '/'}${url}`;
+}
+
+// Error Boundary for Custom 3D Models
+class ModelErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(err) {
+    console.warn('Custom 3D model failed to load, falling back to procedural jersey:', err?.message);
+  }
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback || null;
+    }
+    return this.props.children;
+  }
+}
+
 // ── Uploaded Custom GLTF/GLB Model Renderer ──
 function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHoverMesh }) {
-  const { scene } = useGLTF(url);
+  const resolvedUrl = useMemo(() => resolveModelUrl(url), [url]);
+  const { scene } = useGLTF(resolvedUrl);
   const {
     meshCustomizations,
     primaryColor,
@@ -396,25 +429,18 @@ export default function Sportswear3DCanvas({ className = '' }) {
         <Environment preset={environmentPreset || 'city'} />
 
         {/* Garment Geometry */}
-        <Suspense fallback={
-          <Html center>
-            <div className="flex flex-col items-center gap-2 p-3 bg-white/95 rounded shadow-lg border border-neutral-200">
-              <div className="w-6 h-6 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" />
-              <span className="text-[11px] font-bold text-[var(--secondary)] uppercase tracking-wider">
-                Loading 3D Garment Mesh...
-              </span>
-            </div>
-          </Html>
-        }>
+        <Suspense fallback={null}>
           <group position={[0, 0, 0]}>
             {activeModel?.modelUrl ? (
-              <CustomGlbModel
-                url={activeModel.modelUrl}
-                onSelectMesh={setSelectedMesh}
-                selectedMeshId={selectedMeshId}
-                hoveredMeshId={hoveredMeshId}
-                onHoverMesh={setHoveredMesh}
-              />
+              <Center position={[0, 0.2, 0]}>
+                <CustomGlbModel
+                  url={activeModel.modelUrl}
+                  onSelectMesh={setSelectedMesh}
+                  selectedMeshId={selectedMeshId}
+                  hoveredMeshId={hoveredMeshId}
+                  onHoverMesh={setHoveredMesh}
+                />
+              </Center>
             ) : (
               <ProceduralJerseyModel
                 onSelectMesh={setSelectedMesh}
