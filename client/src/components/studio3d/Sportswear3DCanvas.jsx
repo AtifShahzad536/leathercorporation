@@ -340,93 +340,26 @@ export default function Sportswear3DCanvas({ className = '' }) {
   return (
     <div
       ref={containerRef}
-      className={`relative w-full rounded-[4px] bg-gradient-to-b from-[#F3F4F6] to-[#E5E7EB] overflow-hidden border border-neutral-300 shadow-inner select-none ${
-        isFullscreen ? 'fixed inset-0 z-[300] h-screen w-screen rounded-none' : 'aspect-[4/3] sm:aspect-[16/11] min-h-[460px]'
+      className={`relative w-full h-full min-h-0 overflow-hidden select-none bg-gradient-to-b from-[#141B2D] via-[#0D1220] to-[#080A12] ${
+        isFullscreen ? 'fixed inset-0 z-[300] h-screen w-screen' : ''
       } ${className}`}
     >
-      {/* ── TOP HUD TOOLBAR ── */}
-      <div className="absolute top-3 left-3 right-3 z-20 flex items-center justify-between pointer-events-none">
-        
-        {/* Left: Active Mesh Tag & Status */}
-        <div className="pointer-events-auto flex items-center gap-2">
-          <div className="px-3 py-1.5 rounded-[3px] bg-white/90 backdrop-blur-md border border-neutral-200 shadow-sm flex items-center gap-2 text-xs font-bold text-[var(--secondary)]">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="uppercase tracking-wider">
-              {selectedMeshId ? `Mesh: ${selectedMeshId.replace(/^mesh_/, '').replace(/_/g, ' ')}` : 'Full Uniform View'}
-            </span>
-          </div>
-
-          {selectedMeshId && (
-            <button
-              onClick={() => setSelectedMesh(null)}
-              className="px-2 py-1 text-[10px] font-bold uppercase rounded bg-neutral-200 text-neutral-700 hover:bg-neutral-300 cursor-pointer transition shadow-xs"
-            >
-              Deselect
-            </button>
-          )}
-        </div>
-
-        {/* Right: Quick Studio Controls */}
-        <div className="pointer-events-auto flex items-center gap-1.5 bg-white/90 backdrop-blur-md p-1 rounded-[3px] border border-neutral-200 shadow-sm">
-          <button
-            onClick={toggleAutoRotate}
-            title="Toggle 360 Turntable Auto-Rotation"
-            className={`p-1.5 rounded text-xs font-bold transition cursor-pointer ${
-              autoRotate ? 'bg-[var(--accent)] text-white shadow-xs' : 'text-neutral-700 hover:bg-neutral-200'
-            }`}
-          >
-            <RotateCw size={14} className={autoRotate ? 'animate-spin' : ''} />
-          </button>
-
-          <button
-            onClick={toggleWireframe}
-            title="Toggle Wireframe CAD Mode"
-            className="p-1.5 rounded text-xs font-bold text-neutral-700 hover:bg-neutral-200 transition cursor-pointer"
-          >
-            <Layers size={14} />
-          </button>
-
+      {/* Minimal Top-Right Status & Fullscreen Exit */}
+      {isFullscreen && (
+        <div className="absolute top-4 right-4 z-20">
           <button
             onClick={toggleFullscreen}
-            title="Toggle Fullscreen Canvas"
-            className="p-1.5 rounded text-xs font-bold text-neutral-700 hover:bg-neutral-200 transition cursor-pointer"
+            className="px-3.5 py-2 bg-neutral-900/80 hover:bg-neutral-900 text-white rounded-[4px] text-xs font-bold uppercase backdrop-blur-md transition flex items-center gap-1.5 cursor-pointer shadow-lg"
           >
-            {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
+            <Minimize2 size={14} /> Exit Fullscreen
           </button>
         </div>
-      </div>
+      )}
 
-      {/* ── BOTTOM HUD: CAMERA QUICK VIEWS ── */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 pointer-events-auto flex items-center gap-1 bg-white/90 backdrop-blur-md p-1 rounded-full border border-neutral-300 shadow-lg">
-        {[
-          { id: 'front', label: 'Front' },
-          { id: 'back', label: 'Back' },
-          { id: 'left', label: 'Left' },
-          { id: 'right', label: 'Right' },
-          { id: 'perspective', label: '3D Angle' }
-        ].map(view => (
-          <button
-            key={view.id}
-            onClick={() => setViewAngle(view.id)}
-            className={`px-3 py-1 text-[11px] font-black uppercase rounded-full transition cursor-pointer ${
-              viewAngle === view.id
-                ? 'bg-[var(--secondary)] text-white shadow-xs'
-                : 'text-neutral-600 hover:text-black hover:bg-neutral-100'
-            }`}
-          >
-            {view.label}
-          </button>
-        ))}
-      </div>
-
-      {/* ── WATERMARK & ATTRIBUTION ── */}
-      <div className="absolute bottom-3 right-3 z-10 pointer-events-none text-right hidden sm:block">
-        <span className="text-[9px] font-mono tracking-widest text-neutral-500 uppercase block font-bold">
-          HAMLO 3D STUDIO v3.0
-        </span>
-        <span className="text-[8px] text-neutral-400 uppercase tracking-wider block font-medium">
-          Three.js • Sialkot Atelier
-        </span>
+      {/* Subtle Bottom Viewport Status Indicator */}
+      <div className="absolute bottom-3 left-4 z-10 pointer-events-none opacity-50 flex items-center gap-2 text-[10px] font-mono tracking-widest text-white/70 uppercase">
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+        <span>360° Real-Time 3D Viewport • Three.js</span>
       </div>
 
       {/* ── THREE.JS WEBGL RENDER CANVAS ── */}

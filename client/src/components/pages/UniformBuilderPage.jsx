@@ -3,17 +3,19 @@ import axios from 'axios';
 import { 
   Sparkles, Check, ArrowRight, ShieldCheck, Clock, RotateCw, 
   Layers, Palette, Type, Upload, Send, Award, Phone, Mail, 
-  MessageSquare, Copy, Download, Share2, CheckCircle2 
+  MessageSquare, Copy, Download, Share2, CheckCircle2,
+  Undo2, Redo2, RotateCcw, Maximize2, Minimize2, ChevronDown,
+  Eye, Compass, Sliders, Settings2
 } from 'lucide-react';
 import SEO from '../common/SEO';
-import TrustBar from '../common/TrustBar';
 import { useCMS } from '../../context/CMSContext';
 import Sportswear3DCanvas from '../studio3d/Sportswear3DCanvas';
+import StudioLeftPanel from '../studio3d/StudioLeftPanel';
 import StudioControlPanel from '../studio3d/StudioControlPanel';
 import Artwork2DEditorModal from '../studio3d/Artwork2DEditorModal';
 import { useStudioStore } from '../studio3d/useStudioStore';
 
-const SPORTS_LIST = [
+export const SPORTS_LIST = [
   { id: 'baseball', name: 'Baseball', icon: '⚾', cuts: ['Full Button Jersey', 'Two-Button Henley', 'V-Neck Pullover', 'Sleeveless Vest'] },
   { id: 'basketball', name: 'Basketball', icon: '🏀', cuts: ['Standard Tank', 'Reversible Jersey', 'Wide-Shoulder Cut', 'Collegiate Pro Fit'] },
   { id: 'football', name: 'Football', icon: '🏈', cuts: ['Cuffed Sleeve Game Jersey', 'Full Pad Compression Fit', 'Practice Mesh Jersey'] },
@@ -35,6 +37,9 @@ export default function UniformBuilderPage({ onNavigateInquiry = () => {} }) {
   const [selectedSport, setSelectedSport] = useState(SPORTS_LIST[0]);
   const [selectedCut, setSelectedCut] = useState(SPORTS_LIST[0].cuts[0]);
 
+  // Mobile layout switcher: 'dock' | 'stage' | 'inspector'
+  const [mobileTab, setMobileTab] = useState('stage');
+
   // Submission Form State
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
   const [contactName, setContactName] = useState('');
@@ -53,7 +58,16 @@ export default function UniformBuilderPage({ onNavigateInquiry = () => {} }) {
     decorationMethod,
     exportConfig,
     is2DEditorOpen,
-    setIs2DEditorOpen
+    setIs2DEditorOpen,
+    autoRotate,
+    toggleAutoRotate,
+    isWireframe,
+    toggleWireframe,
+    isFullscreen,
+    toggleFullscreen,
+    undo,
+    redo,
+    resetDesign
   } = useStudioStore();
 
   // Fetch available published 3D models for this sport from API
@@ -65,7 +79,7 @@ export default function UniformBuilderPage({ onNavigateInquiry = () => {} }) {
         if (isMounted && res.data.success && res.data.data.length > 0) {
           setActiveModel(res.data.data[0]);
         } else if (isMounted) {
-          setActiveModel(null); // Fallback to built-in parametric 3D model
+          setActiveModel(null); // Fallback to parametric 3D model
         }
       } catch (err) {
         if (isMounted) setActiveModel(null);
@@ -185,7 +199,7 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
   };
 
   return (
-    <div className="w-full bg-[var(--primary)] text-[var(--secondary)] min-h-screen">
+    <div className="w-full h-full flex flex-col overflow-hidden bg-[#0A0E1A] text-white select-none relative">
       <SEO
         title="3D Custom Sports Jersey Builder | Studio Customizer | HAMLO SPORTS"
         description="Design custom sports uniforms online with professional real-time Three.js 3D visualization, PBR fabrics, 2D Konva graphic editor, and 12-hour factory proof from Sialkot."
@@ -193,176 +207,227 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
         keywords="3d custom sports jersey builder, 3d uniform customizer, custom team uniforms factory direct Sialkot, sublimation 3d studio"
       />
 
-      {/* Hero Header */}
-      <section className="bg-[var(--secondary)] text-white py-10 sm:py-14 border-b border-white/10">
-        <div className="w-[96%] max-w-[1800px] mx-auto text-center flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[var(--accent)] mb-2">
-            <Sparkles size={14} />
-            <span>REAL THREE.JS 3D CUSTOMIZATION STUDIO • FACTORY DIRECT SIALKOT</span>
+      {/* ── 1. IDE TOP COMMAND RIBBON (FIXED HEIGHT, NO SCROLL) ── */}
+      <header className="h-12 md:h-13 bg-[#111625] border-b border-white/10 px-3 sm:px-4 flex items-center justify-between gap-2 text-white flex-shrink-0 z-20">
+        
+        {/* Left: Studio Branding & Dropdown Selectors */}
+        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <div className="hidden sm:flex items-center gap-2 pr-3 border-r border-white/10">
+            <div className="w-2.5 h-2.5 rounded-full bg-[var(--accent)] animate-pulse" />
+            <span className="font-black text-xs uppercase tracking-wider text-white">
+              3D STUDIO <span className="text-[var(--accent)] text-[10px] font-mono">IDE</span>
+            </span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white mb-3">
-            3D SPORTSWEAR CUSTOMIZATION STUDIO
-          </h1>
+          {/* Sport Discipline Dropdown */}
+          <div className="relative">
+            <select
+              value={selectedSport.id}
+              onChange={(e) => {
+                const sp = SPORTS_LIST.find(s => s.id === e.target.value);
+                if (sp) handleSportChange(sp);
+              }}
+              className="bg-[#1A2238] hover:bg-[#202945] text-white font-bold text-xs pl-2.5 pr-7 py-1.5 rounded-[4px] border border-white/15 focus:border-[var(--accent)] focus:outline-none cursor-pointer transition shadow-xs appearance-none"
+            >
+              {SPORTS_LIST.map(sport => (
+                <option key={sport.id} value={sport.id} className="bg-[#111625] text-white py-1">
+                  {sport.icon} {sport.name}
+                </option>
+              ))}
+            </select>
+            <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 text-white/50 pointer-events-none" />
+          </div>
 
-          <p className="text-xs sm:text-sm text-white/80 max-w-2xl font-light leading-relaxed mb-6">
-            Configure real-time 3D garments with mesh detection, tactile PBR fabrics, 2D graphic canvas editing, player rosters, and Pantone color accuracy.
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-3 text-[11px] font-semibold text-white/80">
-            <span className="px-3 py-1 rounded-[3px] bg-white/10 border border-white/15 flex items-center gap-1.5">
-              <Check size={14} className="text-[var(--accent)]" /> Low 15-Set Team Minimum
-            </span>
-            <span className="px-3 py-1 rounded-[3px] bg-white/10 border border-white/15 flex items-center gap-1.5">
-              <Clock size={14} className="text-[var(--accent)]" /> Free 12-Hour 3D Proof
-            </span>
-            <span className="px-3 py-1 rounded-[3px] bg-white/10 border border-white/15 flex items-center gap-1.5">
-              <ShieldCheck size={14} className="text-[var(--accent)]" /> DDP Doorstep US Delivery
-            </span>
+          {/* Silhouette Cut Dropdown */}
+          <div className="relative">
+            <select
+              value={selectedCut}
+              onChange={(e) => setSelectedCut(e.target.value)}
+              className="bg-[#1A2238] hover:bg-[#202945] text-white font-bold text-xs pl-2.5 pr-7 py-1.5 rounded-[4px] border border-white/15 focus:border-[var(--accent)] focus:outline-none cursor-pointer transition shadow-xs appearance-none max-w-[130px] sm:max-w-[210px] truncate"
+            >
+              {selectedSport.cuts.map(cut => (
+                <option key={cut} value={cut} className="bg-[#111625] text-white py-1">
+                  {cut}
+                </option>
+              ))}
+            </select>
+            <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 text-white/50 pointer-events-none" />
           </div>
         </div>
-      </section>
 
-      <TrustBar />
-
-      {/* Success Confirmation Banner if Design Submitted */}
-      {submittedDesign && (
-        <section className="w-[96%] max-w-[1800px] mx-auto my-6 p-6 sm:p-8 bg-emerald-50 border border-emerald-300 rounded-[5px] text-emerald-950 flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg">
-          <div className="space-y-1.5">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={24} className="text-emerald-600 flex-shrink-0" />
-              <h3 className="text-xl font-black uppercase tracking-tight">
-                3D Custom Design Saved Successfully!
-              </h3>
-            </div>
-            <p className="text-xs text-emerald-900/80 max-w-2xl leading-relaxed">
-              Your 3D CAD design has been registered under Design Code: <strong>{submittedDesign.code}</strong>. Our Sialkot pattern engineering team will generate your complimentary 3D production proof within 12 business hours.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3 flex-wrap flex-shrink-0">
+        {/* Center: Action Tools (Undo/Redo/Reset + 360/Wireframe/2D Studio/Fullscreen) */}
+        <div className="hidden lg:flex items-center gap-2">
+          <div className="flex items-center gap-0.5 bg-[#1A2238] p-0.5 rounded-[4px] border border-white/10">
             <button
-              onClick={handleCopyCode}
-              className="px-4 py-2.5 bg-white border border-emerald-300 text-emerald-900 font-bold text-xs uppercase rounded-[3px] shadow-xs flex items-center gap-1.5 hover:bg-emerald-100 transition cursor-pointer"
+              onClick={undo}
+              title="Undo (Ctrl+Z)"
+              className="p-1 rounded hover:bg-white/10 text-white/70 hover:text-white transition cursor-pointer"
             >
-              <Copy size={13} /> {copiedCode ? 'Copied Code!' : 'Copy Design Code'}
+              <Undo2 size={13} />
             </button>
-            <a
-              href={`https://wa.me/923105464116?text=${encodeURIComponent(`Hello HAMLO SPORTS! I just designed a custom uniform on your 3D Studio [Design Code: ${submittedDesign.code}]. Please share my production proof.`)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-black text-xs uppercase rounded-[3px] shadow transition cursor-pointer flex items-center gap-1.5"
+            <button
+              onClick={redo}
+              title="Redo"
+              className="p-1 rounded hover:bg-white/10 text-white/70 hover:text-white transition cursor-pointer"
             >
-              <MessageSquare size={14} /> WhatsApp Fast Track
-            </a>
-          </div>
-        </section>
-      )}
-
-      {/* Sport & Cut Quick Switcher Bar */}
-      <section className="w-[96%] max-w-[1800px] mx-auto mt-8 mb-4">
-        <div className="bg-white p-4 rounded-[5px] border border-[var(--secondary)]/15 shadow-sm space-y-4">
-          
-          {/* Sports Icon Scrollable Rail */}
-          <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 block mb-2">
-              Select Sport Discipline (15 Pro Codes)
-            </span>
-            <div className="flex items-center gap-2 overflow-x-auto pb-1">
-              {SPORTS_LIST.map(sport => {
-                const isSelected = selectedSport.id === sport.id;
-                return (
-                  <button
-                    key={sport.id}
-                    onClick={() => handleSportChange(sport)}
-                    className={`px-3.5 py-2 rounded-[3px] border text-xs font-black uppercase whitespace-nowrap transition flex items-center gap-2 cursor-pointer ${
-                      isSelected
-                        ? 'bg-[var(--secondary)] text-white border-[var(--secondary)] shadow-sm'
-                        : 'bg-neutral-50 text-neutral-700 border-neutral-200 hover:bg-neutral-100'
-                    }`}
-                  >
-                    <span>{sport.icon}</span>
-                    <span>{sport.name}</span>
-                  </button>
-                );
-              })}
-            </div>
+              <Redo2 size={13} />
+            </button>
+            <button
+              onClick={resetDesign}
+              title="Reset to Factory Baseline"
+              className="p-1 rounded hover:bg-white/10 text-white/70 hover:text-red-400 transition cursor-pointer"
+            >
+              <RotateCcw size={13} />
+            </button>
           </div>
 
-          {/* Cuts Available for Selected Sport */}
-          <div className="pt-3 border-t border-neutral-100 flex items-center gap-3 flex-wrap">
-            <span className="text-[11px] font-bold text-neutral-500 uppercase">
-              Available Silhouette Cuts:
-            </span>
-            <div className="flex items-center gap-2 flex-wrap">
-              {selectedSport.cuts.map(cut => {
-                const isSelected = selectedCut === cut;
-                return (
-                  <button
-                    key={cut}
-                    onClick={() => setSelectedCut(cut)}
-                    className={`px-3 py-1.5 text-xs font-bold rounded-[3px] transition cursor-pointer ${
-                      isSelected
-                        ? 'bg-[var(--accent)] text-white font-black shadow-xs'
-                        : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
-                    }`}
-                  >
-                    {cut}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+          <div className="w-[1px] h-5 bg-white/10" />
 
+          <div className="flex items-center gap-1 bg-[#1A2238] p-0.5 rounded-[4px] border border-white/10">
+            <button
+              onClick={toggleAutoRotate}
+              title="Toggle 360° Turntable Rotation"
+              className={`px-2 py-1 rounded text-[11px] font-bold transition flex items-center gap-1 cursor-pointer ${
+                autoRotate ? 'bg-[var(--accent)] text-white shadow-xs' : 'text-white/70 hover:bg-white/10 hover:text-white'
+              }`}
+            >
+              <RotateCw size={12} className={autoRotate ? 'animate-spin' : ''} />
+              <span>360°</span>
+            </button>
+
+            <button
+              onClick={toggleWireframe}
+              title="Toggle Wireframe CAD Mode"
+              className={`px-2 py-1 rounded text-[11px] font-bold transition flex items-center gap-1 cursor-pointer ${
+                isWireframe ? 'bg-[var(--accent)] text-white shadow-xs' : 'text-white/70 hover:bg-white/10 hover:text-white'
+              }`}
+            >
+              <Layers size={12} />
+              <span>Wireframe</span>
+            </button>
+
+            <button
+              onClick={() => setIs2DEditorOpen(true)}
+              title="Open 2D Vector Graphic Studio"
+              className="px-2 py-1 rounded text-[11px] font-bold text-white/80 hover:bg-white/10 hover:text-white transition flex items-center gap-1 cursor-pointer"
+            >
+              <Palette size={12} className="text-[var(--accent)]" />
+              <span>2D Studio</span>
+            </button>
+
+            <button
+              onClick={toggleFullscreen}
+              title="Toggle Fullscreen Viewport"
+              className="p-1 rounded hover:bg-white/10 text-white/70 hover:text-white transition cursor-pointer"
+            >
+              {isFullscreen ? <Minimize2 size={13} /> : <Maximize2 size={13} />}
+            </button>
+          </div>
         </div>
-      </section>
 
-      {/* Main 3D Customizer Interface */}
-      <section className="w-[96%] max-w-[1800px] mx-auto my-6 sm:my-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
-          {/* 3D Visualizer Canvas (Left 7 Cols) */}
-          <div className="lg:col-span-7 sticky top-24 space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--accent)]">
-                  Three.js Real-Time Viewport
-                </span>
-                <h2 className="text-xl font-black uppercase text-[var(--secondary)]">
-                  {selectedSport.name} — {selectedCut}
-                </h2>
-              </div>
-              <span className="text-xs text-neutral-500 font-medium">
-                Drag to rotate • Pinch / Scroll to zoom
-              </span>
+        {/* Right: Live Price & Primary CTA */}
+        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <div className="hidden sm:flex flex-col text-right">
+            <div className="flex items-baseline gap-1 justify-end">
+              <span className="text-xs font-black text-[var(--accent)]">${unitRate.toFixed(2)}</span>
+              <span className="text-[10px] text-white/50 font-medium">/set</span>
             </div>
-
-            <Sportswear3DCanvas />
+            <span className="text-[9px] font-mono text-emerald-400 font-semibold">{rosterCount} sets MOQ</span>
           </div>
 
-          {/* Studio Control Dock (Right 5 Cols) */}
-          <div className="lg:col-span-5">
-            <StudioControlPanel
-              onSaveDesign={handleOpenQuoteModal}
-              isSubmitting={submitting}
-            />
-          </div>
-
+          <button
+            onClick={handleOpenQuoteModal}
+            className="px-3 sm:px-4 py-1.5 bg-[var(--accent)] hover:brightness-110 text-white font-black text-[11px] sm:text-xs uppercase tracking-wider rounded-[4px] shadow-md transition cursor-pointer flex items-center gap-1.5"
+          >
+            <Sparkles size={12} />
+            <span>Get 3D Proof</span>
+          </button>
         </div>
-      </section>
+      </header>
 
-      {/* 2D Konva Graphic Canvas Editor Modal */}
+      {/* ── 2. MAIN 3-PANEL IDE STAGE (ZERO WINDOW SCROLL, EXACT 100% CONTAINER FIT) ── */}
+      <main className="flex-1 min-h-0 flex flex-row overflow-hidden relative">
+        
+        {/* PANEL 1: LEFT DOCK (Camera Angles + Garment Regions Explorer) */}
+        <div className={`h-full flex-shrink-0 z-10 ${
+          mobileTab === 'dock' ? 'fixed inset-x-0 bottom-12 top-12 z-30 flex w-full' : 'hidden md:flex w-56'
+        }`}>
+          <StudioLeftPanel />
+        </div>
+
+        {/* PANEL 2: CENTER 3D STAGE (High-End Three.js WebGL Viewport) */}
+        <div className={`flex-1 h-full min-w-0 relative flex flex-col bg-gradient-to-b from-[#141B2D] via-[#0D1220] to-[#080A12] overflow-hidden ${
+          mobileTab !== 'stage' && 'hidden md:flex'
+        }`}>
+          
+          {/* Subtle Stage Top Banner */}
+          <div className="absolute top-3 left-4 z-10 pointer-events-none flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <h2 className="text-xs font-black uppercase text-white/90 tracking-wider">
+              {selectedSport.name} <span className="text-white/40">•</span> {selectedCut}
+            </h2>
+          </div>
+
+          <Sportswear3DCanvas />
+        </div>
+
+        {/* PANEL 3: RIGHT PROPERTIES INSPECTOR (Tabbed Customization Engine) */}
+        <div className={`h-full flex-shrink-0 z-10 ${
+          mobileTab === 'inspector' ? 'fixed inset-x-0 bottom-12 top-12 z-30 flex w-full' : 'hidden md:flex w-80 lg:w-96 xl:w-[420px]'
+        }`}>
+          <StudioControlPanel
+            onSaveDesign={handleOpenQuoteModal}
+            isSubmitting={submitting}
+          />
+        </div>
+
+      </main>
+
+      {/* ── MOBILE QUICK VIEW SWITCHER DOCK (VISIBLE ONLY ON SMALL SCREENS) ── */}
+      <div className="md:hidden h-12 bg-[#0E1322] border-t border-white/10 flex items-center justify-around px-2 flex-shrink-0 z-20">
+        <button
+          onClick={() => setMobileTab('dock')}
+          className={`flex-1 py-1.5 flex flex-col items-center gap-0.5 text-[10px] font-bold uppercase transition ${
+            mobileTab === 'dock' ? 'text-[var(--accent)] font-black' : 'text-white/60'
+          }`}
+        >
+          <Compass size={14} />
+          <span>Parts & Views</span>
+        </button>
+
+        <button
+          onClick={() => setMobileTab('stage')}
+          className={`flex-1 py-1.5 flex flex-col items-center gap-0.5 text-[10px] font-bold uppercase transition ${
+            mobileTab === 'stage' ? 'text-[var(--accent)] font-black' : 'text-white/60'
+          }`}
+        >
+          <Eye size={14} />
+          <span>3D Stage</span>
+        </button>
+
+        <button
+          onClick={() => setMobileTab('inspector')}
+          className={`flex-1 py-1.5 flex flex-col items-center gap-0.5 text-[10px] font-bold uppercase transition ${
+            mobileTab === 'inspector' ? 'text-[var(--accent)] font-black' : 'text-white/60'
+          }`}
+        >
+          <Sliders size={14} />
+          <span>Inspector</span>
+        </button>
+      </div>
+
+      {/* ── 3. 2D VECTOR GRAPHIC STUDIO MODAL ── */}
       <Artwork2DEditorModal
         isOpen={is2DEditorOpen}
         onClose={() => setIs2DEditorOpen(false)}
       />
 
-      {/* Quote & 3D Proof Request Modal */}
+      {/* ── 4. QUOTE & 3D PROOF MODAL ── */}
       {quoteModalOpen && (
         <div className="fixed inset-0 z-[400] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="w-full max-w-lg bg-white rounded-[5px] shadow-2xl border border-neutral-300 overflow-hidden">
+          <div className="w-full max-w-lg bg-[#0E1322] text-white rounded-[6px] shadow-2xl border border-white/15 overflow-hidden">
             
-            <div className="px-6 py-4 bg-[var(--secondary)] text-white flex items-center justify-between border-b border-white/10">
+            <div className="px-6 py-4 bg-[#141A2D] text-white flex items-center justify-between border-b border-white/10">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] block">
                   Factory Direct Sialkot • 12-Hour Proof
@@ -380,13 +445,13 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
             </div>
 
             <form onSubmit={handleSubmit3DOrder} className="p-6 space-y-4">
-              <div className="p-3 bg-neutral-50 rounded border border-neutral-200 text-xs text-neutral-600 flex justify-between">
-                <span>Selected: <strong>{selectedSport.name} ({selectedCut})</strong></span>
-                <span>Roster: <strong>{rosterCount} sets (${totalEstimate.toFixed(2)})</strong></span>
+              <div className="p-3 bg-[#141B2D] rounded border border-white/10 text-xs text-white/80 flex justify-between">
+                <span>Selected: <strong className="text-white">{selectedSport.name} ({selectedCut})</strong></span>
+                <span>Roster: <strong className="text-[var(--accent)]">{rosterCount} sets (${totalEstimate.toFixed(2)})</strong></span>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
+                <label className="block text-xs font-bold text-white/70 uppercase mb-1">
                   Full Name / Coach Name *
                 </label>
                 <input
@@ -395,12 +460,12 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
                   value={contactName}
                   onChange={(e) => setContactName(e.target.value)}
                   placeholder="e.g. Coach Marcus Davis"
-                  className="w-full px-3 py-2 text-xs border border-neutral-300 rounded font-semibold focus:border-[var(--accent)] focus:outline-none"
+                  className="w-full px-3 py-2 text-xs bg-[#141B2D] border border-white/15 rounded text-white font-semibold focus:border-[var(--accent)] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
+                <label className="block text-xs font-bold text-white/70 uppercase mb-1">
                   Team / School / Club Name
                 </label>
                 <input
@@ -408,13 +473,13 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
                   value={organization}
                   onChange={(e) => setOrganization(e.target.value)}
                   placeholder="e.g. West Coast Baseball Academy"
-                  className="w-full px-3 py-2 text-xs border border-neutral-300 rounded font-semibold focus:border-[var(--accent)] focus:outline-none"
+                  className="w-full px-3 py-2 text-xs bg-[#141B2D] border border-white/15 rounded text-white font-semibold focus:border-[var(--accent)] focus:outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
+                  <label className="block text-xs font-bold text-white/70 uppercase mb-1">
                     Email Address *
                   </label>
                   <input
@@ -423,12 +488,12 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
                     value={contactEmail}
                     onChange={(e) => setContactEmail(e.target.value)}
                     placeholder="coach@teamdomain.com"
-                    className="w-full px-3 py-2 text-xs border border-neutral-300 rounded font-semibold focus:border-[var(--accent)] focus:outline-none"
+                    className="w-full px-3 py-2 text-xs bg-[#141B2D] border border-white/15 rounded text-white font-semibold focus:border-[var(--accent)] focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
+                  <label className="block text-xs font-bold text-white/70 uppercase mb-1">
                     WhatsApp / Phone *
                   </label>
                   <input
@@ -436,7 +501,7 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
                     value={contactPhone}
                     onChange={(e) => setContactPhone(e.target.value)}
                     placeholder="+1 (555) 000-0000"
-                    className="w-full px-3 py-2 text-xs border border-neutral-300 rounded font-semibold focus:border-[var(--accent)] focus:outline-none"
+                    className="w-full px-3 py-2 text-xs bg-[#141B2D] border border-white/15 rounded text-white font-semibold focus:border-[var(--accent)] focus:outline-none"
                   />
                 </div>
               </div>
@@ -452,7 +517,7 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
                 </button>
               </div>
 
-              <span className="text-[10px] text-neutral-500 text-center block">
+              <span className="text-[10px] text-white/50 text-center block">
                 Zero commitment. Official 3D production proof sent to your email & WhatsApp within 12 hours.
               </span>
             </form>
@@ -461,46 +526,52 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
         </div>
       )}
 
-      {/* SEO Content Block: Why 3D Uniform Builders Win */}
-      <section className="w-[96%] max-w-[1800px] mx-auto my-14 sm:my-20 p-8 sm:p-12 bg-white rounded-[5px] border border-[var(--secondary)]/10 shadow-sm space-y-6">
-        <div>
-          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--accent)]">
-            FACTORY-DIRECT AMERICAN TEAMWEAR
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-black uppercase text-[var(--secondary)] mt-1">
-            Why Coaches Choose Hamlo Sports Wear's 3D Jersey Customizer
-          </h2>
+      {/* ── 5. SUCCESS CONFIRMATION MODAL OVERLAY ── */}
+      {submittedDesign && (
+        <div className="fixed inset-0 z-[500] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-lg bg-[#111625] text-white rounded-[6px] border border-white/20 p-6 space-y-5 shadow-2xl">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0">
+                <CheckCircle2 size={24} />
+              </div>
+              <div>
+                <h3 className="text-lg font-black uppercase text-white">3D Design Saved Successfully!</h3>
+                <p className="text-xs text-white/70">
+                  Design Code: <strong className="text-emerald-400 font-mono text-sm">{submittedDesign.code}</strong>
+                </p>
+              </div>
+            </div>
+
+            <p className="text-xs text-white/80 leading-relaxed bg-[#1A2238] p-3 rounded border border-white/10">
+              Your custom <strong>{submittedDesign.sport} ({submittedDesign.cut})</strong> design has been assigned to our Sialkot pattern team. You will receive your official 3D production mockup within 12 business hours.
+            </p>
+
+            <div className="flex items-center justify-end gap-3 pt-2 flex-wrap">
+              <button
+                onClick={handleCopyCode}
+                className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase rounded-[4px] transition cursor-pointer flex items-center gap-1.5"
+              >
+                <Copy size={13} /> {copiedCode ? 'Copied!' : 'Copy Code'}
+              </button>
+              <a
+                href={`https://wa.me/923105464116?text=${encodeURIComponent(`Hello HAMLO SPORTS! I just designed a custom uniform on your 3D Studio [Design Code: ${submittedDesign.code}]. Please share my production proof.`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs uppercase rounded-[4px] transition cursor-pointer flex items-center gap-1.5"
+              >
+                <MessageSquare size={13} /> WhatsApp Fast Track
+              </a>
+              <button
+                onClick={() => setSubmittedDesign(null)}
+                className="px-4 py-2 bg-[var(--accent)] hover:brightness-110 text-white font-bold text-xs uppercase rounded-[4px] transition cursor-pointer"
+              >
+                Back to Studio
+              </button>
+            </div>
+          </div>
         </div>
+      )}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-neutral-600 leading-relaxed">
-          <div className="p-4 bg-neutral-50 rounded border border-neutral-200">
-            <h3 className="font-black text-sm uppercase text-[var(--secondary)] mb-2 flex items-center gap-1.5">
-              <Award size={15} className="text-[var(--accent)]" /> Direct From Sialkot Makers
-            </h3>
-            <p>
-              Unlike US dealers who act as middlemen and markup imported goods by 150%, Hamlo Sports Wear operates direct export production in Sialkot, Pakistan. You configure your custom sportswear in 3D and deal directly with the actual manufacturing facility.
-            </p>
-          </div>
-
-          <div className="p-4 bg-neutral-50 rounded border border-neutral-200">
-            <h3 className="font-black text-sm uppercase text-[var(--secondary)] mb-2 flex items-center gap-1.5">
-              <Clock size={15} className="text-[var(--accent)]" /> Rapid 8–12 Day Production
-            </h3>
-            <p>
-              While domestic brokers take 4 to 6 weeks, our direct factory pipeline builds your custom sublimated jerseys and tackle-twill lettered uniforms in just 8 to 12 working days, followed by 3 to 5 days express air shipping to your door anywhere in the USA.
-            </p>
-          </div>
-
-          <div className="p-4 bg-neutral-50 rounded border border-neutral-200">
-            <h3 className="font-black text-sm uppercase text-[var(--secondary)] mb-2 flex items-center gap-1.5">
-              <ShieldCheck size={15} className="text-[var(--accent)]" /> Low 15-Set Team MOQ
-            </h3>
-            <p>
-              We specialize in youth travel clubs, high school varsity programs, and adult rec leagues. With our low 15-set team minimum, you unlock full pro-grade customization—including unlimited colors, numbers, and sponsor logos—without bloated inventory requirements.
-            </p>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

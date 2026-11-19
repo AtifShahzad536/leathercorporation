@@ -462,7 +462,7 @@ function MainApp() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[var(--primary)]">
+    <div className={`flex flex-col bg-[var(--primary)] ${currentPage === 'builder' ? 'h-screen overflow-hidden' : 'min-h-screen'}`}>
       <Navbar onNavigate={navigateTo} />
 
       {/* ── SUBPAGES SUSPENSE CONTAINER (LAZY LOADED) ── */}
@@ -601,9 +601,11 @@ function MainApp() {
         )}
 
         {currentPage === 'builder' && (
-          <UniformBuilderPage
-            onNavigateInquiry={(p) => navigateTo('inquiry', p)}
-          />
+          <div className="flex-1 min-h-0 flex flex-col overflow-hidden">
+            <UniformBuilderPage
+              onNavigateInquiry={(p) => navigateTo('inquiry', p)}
+            />
+          </div>
         )}
 
         {currentPage === 'cricket' && (
@@ -660,9 +662,9 @@ function MainApp() {
         </main>
       )}
 
-      <Footer onNavigate={navigateTo} />
-      <CookieConsent />
-      <LiveChatWidget onNavigateInquiry={(item) => navigateTo('inquiry', item)} />
+      {currentPage !== 'builder' && <Footer onNavigate={navigateTo} />}
+      {currentPage !== 'builder' && <CookieConsent />}
+      {currentPage !== 'builder' && <LiveChatWidget onNavigateInquiry={(item) => navigateTo('inquiry', item)} />}
 
       <CartDrawer
         onNavigateInquiry={(productTitle) => navigateTo('inquiry', productTitle)}

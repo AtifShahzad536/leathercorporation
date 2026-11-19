@@ -368,6 +368,13 @@ export const useStudioStore = create((set, get) => ({
     }));
   },
 
+  resetCamera: () => {
+    set((state) => ({
+      viewAngle: 'perspective',
+      cameraResetCount: state.cameraResetCount + 1
+    }));
+  },
+
   setEnvironmentPreset: (env) => set({ environmentPreset: env }),
   toggleAutoRotate: () => set((state) => ({ autoRotate: !state.autoRotate })),
   toggleWireframe: () => set((state) => ({ isWireframe: !state.isWireframe })),
