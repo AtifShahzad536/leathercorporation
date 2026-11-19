@@ -340,25 +340,25 @@ export default function Sportswear3DCanvas({ className = '' }) {
   return (
     <div
       ref={containerRef}
-      className={`relative w-full h-full min-h-0 overflow-hidden select-none bg-gradient-to-b from-[#141B2D] via-[#0D1220] to-[#080A12] ${isFullscreen ? 'fixed inset-0 z-[300] h-screen w-screen' : ''
-        } ${className}`}
+      className={`relative w-full h-full min-h-0 overflow-hidden select-none bg-gradient-to-b from-[#F8FAFC] via-[#F1F5F9] to-[#E2E8F0] ${
+        isFullscreen ? 'fixed inset-0 z-[300] h-screen w-screen' : ''
+      } ${className}`}
     >
       {/* Minimal Top-Right Status & Fullscreen Exit */}
       {isFullscreen && (
         <div className="absolute top-4 right-4 z-20">
           <button
             onClick={toggleFullscreen}
-            className="px-3.5 py-2 bg-neutral-900/80 hover:bg-neutral-900 text-white rounded-[4px] text-xs font-bold uppercase backdrop-blur-md transition flex items-center gap-1.5 cursor-pointer shadow-lg"
+            className="px-3.5 py-2 bg-white/90 hover:bg-white text-slate-800 rounded border border-slate-200 text-xs font-medium backdrop-blur-md transition flex items-center gap-1.5 cursor-pointer shadow-md"
           >
             <Minimize2 size={14} /> Exit Fullscreen
           </button>
         </div>
       )}
 
-      {/* Subtle Bottom Viewport Status Indicator */}
-      <div className="absolute bottom-3 left-4 z-10 pointer-events-none opacity-50 flex items-center gap-2 text-[10px] font-mono tracking-widest text-white/70 uppercase">
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-        <span>360° Real-Time 3D Viewport • Three.js</span>
+      {/* Subtle Bottom Viewport Helper */}
+      <div className="absolute bottom-3 left-4 z-10 pointer-events-none opacity-60 flex items-center gap-2 text-xs font-normal text-slate-500">
+        <span>360° Interactive Viewport</span>
       </div>
 
       {/* ── THREE.JS WEBGL RENDER CANVAS ── */}
@@ -416,10 +416,11 @@ export default function Sportswear3DCanvas({ className = '' }) {
           {/* Realistic Floor Contact Shadow */}
           <ContactShadows
             position={[0, -0.65, 0]}
-            opacity={0.45}
-            scale={2.4}
-            blur={1.8}
-            far={1.2}
+            opacity={0.3}
+            scale={2.6}
+            blur={2.0}
+            far={1.4}
+            color="#64748B"
           />
         </Suspense>
       </Canvas>

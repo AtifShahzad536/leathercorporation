@@ -245,19 +245,19 @@ export default function Artwork2DEditorModal({ isOpen, onClose }) {
       <div className="w-full max-w-4xl bg-white rounded-[5px] shadow-2xl border border-neutral-300 flex flex-col max-h-[92vh] overflow-hidden">
 
         {/* Modal Top Header */}
-        <div className="px-6 py-4 bg-[var(--secondary)] text-white flex items-center justify-between border-b border-white/10">
+        <div className="px-6 py-4 bg-slate-50 text-slate-800 flex items-center justify-between border-b border-slate-200">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] block">
-              Konva 2D Graphic Studio
+            <span className="text-[10px] font-medium text-[var(--accent)] block">
+              2D Graphic Studio
             </span>
-            <h3 className="text-base font-black uppercase text-white tracking-tight">
-              Garment Artwork & Decal Layout Editor
+            <h3 className="text-sm font-semibold text-slate-900">
+              Garment Artwork & Decal Layout
             </h3>
           </div>
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-full hover:bg-white/10 text-white/70 hover:text-white transition cursor-pointer"
+            className="p-1.5 rounded-full hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition cursor-pointer"
           >
             <X size={18} />
           </button>
@@ -267,13 +267,13 @@ export default function Artwork2DEditorModal({ isOpen, onClose }) {
         <div className="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-y-auto">
 
           {/* Left Canvas Preview Area (8 Cols) */}
-          <div className="md:col-span-8 p-6 bg-neutral-100 flex flex-col items-center justify-center border-r border-neutral-200">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-2">
+          <div className="md:col-span-8 p-6 bg-slate-100 flex flex-col items-center justify-center border-r border-slate-200">
+            <span className="text-[11px] font-normal text-slate-500 mb-2">
               Front Chest & Torso Print Area (Drag, Rotate, Resize Handles)
             </span>
 
             {/* Konva Stage Container with Jersey Outline */}
-            <div className="relative bg-white border border-neutral-300 shadow-md rounded-[4px] overflow-hidden">
+            <div className="relative bg-white border border-slate-300 shadow-sm rounded overflow-hidden">
               <Stage
                 width={520}
                 height={520}
@@ -326,18 +326,18 @@ export default function Artwork2DEditorModal({ isOpen, onClose }) {
           {/* Right Control Tools Dock (4 Cols) */}
           <div className="md:col-span-4 p-6 bg-white space-y-5">
             <div>
-              <h4 className="text-xs font-black uppercase tracking-wider text-[var(--secondary)] mb-3">
+              <h4 className="text-xs font-medium text-slate-700 mb-2.5">
                 Artwork Tools
               </h4>
               <div className="grid grid-cols-2 gap-2">
                 <button
                   onClick={handleAddText}
-                  className="px-3 py-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-bold uppercase rounded-[3px] flex items-center justify-center gap-1.5 transition cursor-pointer"
+                  className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-medium rounded flex items-center justify-center gap-1.5 transition cursor-pointer border border-slate-200"
                 >
                   <Type size={14} className="text-[var(--accent)]" /> Add Text
                 </button>
 
-                <label className="px-3 py-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-bold uppercase rounded-[3px] flex items-center justify-center gap-1.5 transition cursor-pointer">
+                <label className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-medium rounded flex items-center justify-center gap-1.5 transition cursor-pointer border border-slate-200">
                   <ImageIcon size={14} className="text-[var(--accent)]" /> Upload Logo
                   <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
                 </label>
@@ -346,13 +346,13 @@ export default function Artwork2DEditorModal({ isOpen, onClose }) {
 
             {/* Selected Element Properties Inspector */}
             {selectedElement && selectedElement.type === 'text' && (
-              <div className="p-4 bg-neutral-50 rounded-[4px] border border-neutral-200 space-y-3">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--accent)] block">
-                  Text Element Inspector
+              <div className="p-4 bg-slate-50 rounded border border-slate-200 space-y-3">
+                <span className="text-[11px] font-medium text-slate-700 block">
+                  Text Properties
                 </span>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-neutral-600 mb-1">Text Content</label>
+                  <label className="block text-xs font-normal text-slate-600 mb-1">Text Content</label>
                   <input
                     type="text"
                     value={selectedElement.text}
@@ -360,19 +360,19 @@ export default function Artwork2DEditorModal({ isOpen, onClose }) {
                       const updated = { ...selectedElement, text: e.target.value };
                       setElements(elements.map(el => el.id === selectedId ? updated : el));
                     }}
-                    className="w-full px-2.5 py-1.5 text-xs border border-neutral-300 rounded font-bold uppercase"
+                    className="w-full px-2.5 py-1.5 text-xs border border-slate-300 rounded font-normal bg-white text-slate-800"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-neutral-600 mb-1">Font Family</label>
+                  <label className="block text-xs font-normal text-slate-600 mb-1">Font Family</label>
                   <select
                     value={selectedElement.fontFamily}
                     onChange={(e) => {
                       const updated = { ...selectedElement, fontFamily: e.target.value };
                       setElements(elements.map(el => el.id === selectedId ? updated : el));
                     }}
-                    className="w-full px-2.5 py-1.5 text-xs border border-neutral-300 rounded font-bold"
+                    className="w-full px-2.5 py-1.5 text-xs border border-slate-300 rounded font-normal bg-white text-slate-800"
                   >
                     {FONTS_LIST.map(f => (
                       <option key={f.id} value={f.id}>{f.name}</option>
@@ -382,7 +382,7 @@ export default function Artwork2DEditorModal({ isOpen, onClose }) {
 
                 <div className="flex items-center gap-3">
                   <div className="flex-1">
-                    <label className="block text-[11px] font-bold text-neutral-600 mb-1">Fill Color</label>
+                    <label className="block text-xs font-normal text-slate-600 mb-1">Fill Color</label>
                     <input
                       type="color"
                       value={selectedElement.fill}
@@ -390,12 +390,12 @@ export default function Artwork2DEditorModal({ isOpen, onClose }) {
                         const updated = { ...selectedElement, fill: e.target.value };
                         setElements(elements.map(el => el.id === selectedId ? updated : el));
                       }}
-                      className="w-full h-8 p-0 border border-neutral-300 rounded cursor-pointer"
+                      className="w-full h-8 p-0 border border-slate-300 rounded cursor-pointer bg-white"
                     />
                   </div>
 
                   <div className="flex-1">
-                    <label className="block text-[11px] font-bold text-neutral-600 mb-1">Stroke</label>
+                    <label className="block text-xs font-normal text-slate-600 mb-1">Stroke</label>
                     <input
                       type="color"
                       value={selectedElement.stroke}
@@ -403,14 +403,14 @@ export default function Artwork2DEditorModal({ isOpen, onClose }) {
                         const updated = { ...selectedElement, stroke: e.target.value };
                         setElements(elements.map(el => el.id === selectedId ? updated : el));
                       }}
-                      className="w-full h-8 p-0 border border-neutral-300 rounded cursor-pointer"
+                      className="w-full h-8 p-0 border border-slate-300 rounded cursor-pointer bg-white"
                     />
                   </div>
                 </div>
 
                 <button
                   onClick={handleDeleteSelected}
-                  className="w-full py-2 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold uppercase rounded-[3px] flex items-center justify-center gap-1.5 transition cursor-pointer mt-2"
+                  className="w-full py-2 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-medium rounded flex items-center justify-center gap-1.5 transition cursor-pointer mt-2 border border-red-200"
                 >
                   <Trash2 size={13} /> Delete Text
                 </button>
@@ -419,18 +419,19 @@ export default function Artwork2DEditorModal({ isOpen, onClose }) {
 
             {/* Elements Layer List */}
             <div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-500 block mb-2">
-                Active Canvas Layers ({elements.length})
+              <span className="text-xs font-medium text-slate-600 block mb-2">
+                Active Layers ({elements.length})
               </span>
               <div className="space-y-1.5 max-h-40 overflow-y-auto">
                 {elements.map((el) => (
                   <div
                     key={el.id}
                     onClick={() => setSelectedId(el.id)}
-                    className={`px-3 py-2 rounded text-xs font-bold flex items-center justify-between cursor-pointer border transition ${selectedId === el.id
-                      ? 'bg-[var(--secondary)] text-white border-[var(--secondary)]'
-                      : 'bg-neutral-50 text-neutral-700 border-neutral-200 hover:bg-neutral-100'
-                      }`}
+                    className={`px-3 py-2 rounded text-xs flex items-center justify-between cursor-pointer border transition ${
+                      selectedId === el.id
+                        ? 'bg-slate-900 text-white border-slate-900 font-medium'
+                        : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 font-normal'
+                    }`}
                   >
                     <span>{el.type === 'text' ? `Text: ${el.text}` : 'Uploaded Logo Image'}</span>
                     <Move size={12} className="opacity-60" />
@@ -443,23 +444,23 @@ export default function Artwork2DEditorModal({ isOpen, onClose }) {
         </div>
 
         {/* Modal Bottom Footer */}
-        <div className="px-6 py-3.5 bg-neutral-100 border-t border-neutral-200 flex items-center justify-between">
-          <span className="text-xs text-neutral-500 font-medium">
+        <div className="px-6 py-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
+          <span className="text-xs text-slate-500 font-normal">
             Artwork is automatically mapped to 3D garment UV textures.
           </span>
 
           <div className="flex items-center gap-2">
             <button
               onClick={onClose}
-              className="px-4 py-2 border border-neutral-300 hover:bg-neutral-200 text-neutral-700 font-bold text-xs uppercase tracking-wider rounded-[3px] transition cursor-pointer"
+              className="px-4 py-2 border border-slate-300 hover:bg-slate-100 text-slate-700 font-normal text-xs rounded transition cursor-pointer"
             >
               Cancel
             </button>
             <button
               onClick={handleApplyTo3D}
-              className="px-6 py-2 bg-[var(--accent)] hover:brightness-110 text-white font-black text-xs uppercase tracking-wider rounded-[3px] shadow transition cursor-pointer flex items-center gap-1.5"
+              className="px-5 py-2 bg-[var(--accent)] hover:brightness-105 text-white font-medium text-xs rounded shadow-xs transition cursor-pointer flex items-center gap-1.5"
             >
-              <Check size={14} /> Apply Artwork to 3D Model
+              <Check size={14} /> Apply to 3D Viewport
             </button>
           </div>
         </div>

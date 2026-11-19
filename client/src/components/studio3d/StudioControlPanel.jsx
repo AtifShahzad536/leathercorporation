@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   Palette, Layers, Sparkles, Type, Upload, Ruler, 
-  RotateCcw, Undo2, Redo2, Check, ArrowRight, ArrowLeft, ShieldCheck, 
+  RotateCcw, Undo2, Redo2, Check, ArrowRight, ShieldCheck, 
   Trash2, ChevronDown, Sliders, ExternalLink, HelpCircle, CheckCircle2
 } from 'lucide-react';
 import { 
@@ -62,7 +62,7 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
     { id: 'patterns', label: 'Patterns', icon: Sparkles, title: 'Sublimated Technical Dye Patterns' },
     { id: 'typography', label: 'Lettering', icon: Type, title: 'Team Typography & Numbering' },
     { id: 'logos', label: 'Logos', icon: Upload, title: 'Custom Emblems & 2D Studio' },
-    { id: 'roster', label: 'Quote', icon: Ruler, title: 'Team Roster & Factory Direct Pricing' }
+    { id: 'roster', label: 'Quote', icon: Ruler, title: 'Team Roster & Pricing' }
   ];
 
   const currentTab = TABS.find(t => t.id === activeTab) || TABS[0];
@@ -89,10 +89,10 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
   const calculatedTotalPrice = calculatedUnitPrice * rosterCount;
 
   return (
-    <aside className="w-full h-full flex flex-col bg-[#0E1322] border-l border-white/10 text-white select-none overflow-hidden">
+    <aside className="w-full h-full flex flex-col bg-white border-l border-slate-200 text-slate-800 select-none overflow-hidden">
       
-      {/* ── 1. IDE PROPERTY TABS (6 COMPACT TABS WITH ICONS) ── */}
-      <div className="bg-[#141A2D] p-1.5 border-b border-white/10 flex-shrink-0">
+      {/* ── 1. PROPERTY TABS (6 CLEAN SEGMENTED TABS) ── */}
+      <div className="bg-slate-100 p-1 border-b border-slate-200 flex-shrink-0">
         <div className="grid grid-cols-6 gap-1">
           {TABS.map((tab) => {
             const Icon = tab.icon;
@@ -102,14 +102,14 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 title={tab.title}
-                className={`flex flex-col items-center justify-center py-2 px-1 rounded-[4px] transition cursor-pointer text-center ${
+                className={`flex flex-col items-center justify-center py-1.5 px-1 rounded transition cursor-pointer text-center ${
                   isActive
-                    ? 'bg-[var(--accent)] text-white shadow-xs font-black'
-                    : 'bg-[#0E1322] hover:bg-[#1C253E] text-white/60 hover:text-white border border-white/5'
+                    ? 'bg-white text-slate-900 shadow-xs font-medium border border-slate-200/80'
+                    : 'bg-transparent hover:bg-slate-200/60 text-slate-600 hover:text-slate-900 font-normal'
                 }`}
               >
-                <Icon size={14} className={isActive ? 'text-white' : 'text-white/50'} />
-                <span className="text-[9px] font-bold uppercase tracking-tight mt-0.5 truncate w-full">
+                <Icon size={14} className={isActive ? 'text-[var(--accent)]' : 'text-slate-400'} />
+                <span className="text-[10px] mt-0.5 truncate w-full">
                   {tab.label}
                 </span>
               </button>
@@ -119,16 +119,16 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
       </div>
 
       {/* ── 2. SUB-HEADER: ACTIVE TAB TITLE ── */}
-      <div className="px-4 py-2 bg-[#101627] border-b border-white/10 flex items-center justify-between flex-shrink-0">
-        <span className="text-[10px] font-black uppercase tracking-wider text-[var(--accent)] truncate">
+      <div className="px-4 py-2 bg-slate-50 border-b border-slate-200 flex items-center justify-between flex-shrink-0">
+        <span className="text-xs font-medium text-slate-700 truncate">
           {currentTab.title}
         </span>
-        <span className="text-[9px] font-mono text-white/40 uppercase">
-          Studio IDE
+        <span className="text-[11px] text-slate-400 font-normal">
+          Customizer
         </span>
       </div>
 
-      {/* ── 3. SCROLLABLE TAB WORKSPACE (INNER SCROLL ONLY) ── */}
+      {/* ── 3. SCROLLABLE TAB WORKSPACE (LIGHT THEME, CLEAN NORMAL FONTS) ── */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         
         {/* ════ TAB 1: COLORS ════ */}
@@ -136,29 +136,29 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
           <div className="space-y-4">
             
             {/* Active Editing Target */}
-            <div className="p-3 bg-[#141B2D] rounded-[4px] border border-white/10 space-y-2.5">
+            <div className="p-3 bg-slate-50 rounded border border-slate-200 space-y-2.5">
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-white/40 block">
-                    Editing Region
+                  <span className="text-[10px] text-slate-500 font-normal block">
+                    Active Target:
                   </span>
-                  <h4 className="text-xs font-black uppercase text-white truncate">
-                    {selectedMeshId ? selectedMeshId.replace(/^mesh_/, '').replace(/_/g, ' ') : 'Full Uniform Base'}
+                  <h4 className="text-xs font-medium text-slate-800 capitalize truncate">
+                    {selectedMeshId ? selectedMeshId.replace(/^mesh_/, '').replace(/_/g, ' ') : 'Entire Uniform Base'}
                   </h4>
                 </div>
 
                 <button
                   onClick={() => setAllMeshesColor(currentMeshColor)}
-                  className="px-2.5 py-1 bg-white/10 hover:bg-white/20 text-white text-[9px] font-black uppercase rounded border border-white/15 transition cursor-pointer"
+                  className="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-700 text-xs font-normal rounded border border-slate-200 transition cursor-pointer shadow-2xs"
                 >
-                  Apply All Parts
+                  Apply to All Parts
                 </button>
               </div>
 
               {/* Color Picker & Hex value */}
-              <div className="flex items-center justify-between pt-2 border-t border-white/10">
-                <span className="text-xs font-bold text-white/70 uppercase">
-                  Custom HEX:
+              <div className="flex items-center justify-between pt-2 border-t border-slate-200">
+                <span className="text-xs font-normal text-slate-600">
+                  Custom Hex Color:
                 </span>
                 <div className="flex items-center gap-2">
                   <input
@@ -168,7 +168,7 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
                       if (selectedMeshId) setMeshColor(selectedMeshId, e.target.value);
                       else setPrimaryColor(e.target.value);
                     }}
-                    className="w-7 h-7 rounded border border-white/20 p-0 cursor-pointer shadow-xs bg-transparent"
+                    className="w-7 h-7 rounded border border-slate-300 p-0 cursor-pointer bg-white"
                   />
                   <input
                     type="text"
@@ -177,15 +177,15 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
                       if (selectedMeshId) setMeshColor(selectedMeshId, e.target.value);
                       else setPrimaryColor(e.target.value);
                     }}
-                    className="w-20 px-2 py-0.5 text-xs font-mono font-bold text-white uppercase border border-white/15 rounded bg-[#0E1322]"
+                    className="w-20 px-2 py-0.5 text-xs font-mono font-medium text-slate-800 uppercase border border-slate-200 rounded bg-white text-center"
                   />
                 </div>
               </div>
 
               {/* Quick Swatches */}
               <div className="pt-1">
-                <span className="text-[9px] font-bold uppercase tracking-wider text-white/40 block mb-1">
-                  Athletic Swatches
+                <span className="text-[10px] text-slate-500 font-normal block mb-1.5">
+                  Popular Team Colors:
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {[
@@ -200,8 +200,8 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
                         else setPrimaryColor(hex);
                       }}
                       style={{ backgroundColor: hex }}
-                      className={`w-6 h-6 rounded-[3px] border transition-transform cursor-pointer shadow-2xs hover:scale-110 ${
-                        currentMeshColor.toLowerCase() === hex.toLowerCase() ? 'ring-2 ring-[var(--accent)] border-white scale-105' : 'border-white/20'
+                      className={`w-6 h-6 rounded border transition-transform cursor-pointer shadow-2xs hover:scale-110 ${
+                        currentMeshColor.toLowerCase() === hex.toLowerCase() ? 'ring-2 ring-[var(--accent)] border-white scale-105' : 'border-slate-300'
                       }`}
                       title={hex}
                     />
@@ -210,27 +210,27 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
               </div>
             </div>
 
-            {/* Curated Collegiate Team Combinations */}
+            {/* Curated Team Palettes */}
             <div>
-              <span className="text-[10px] font-black uppercase tracking-wider text-white/60 block mb-1.5">
-                Collegiate Team Combinations
+              <span className="text-xs font-medium text-slate-700 block mb-1.5">
+                Curated Team Color Combinations
               </span>
               <div className="grid grid-cols-1 gap-1.5">
                 {COLOR_PALETTES.map((pal, idx) => (
                   <button
                     key={idx}
                     onClick={() => setGlobalPalette(pal)}
-                    className={`p-2.5 rounded-[4px] border flex items-center justify-between gap-2 text-left transition cursor-pointer ${
+                    className={`p-2.5 rounded border flex items-center justify-between gap-2 text-left transition cursor-pointer ${
                       globalPalette.name === pal.name
-                        ? 'border-[var(--accent)] bg-orange-500/10 font-bold'
-                        : 'border-white/5 bg-[#141B2D] hover:bg-[#1C253E] text-white/80'
+                        ? 'border-orange-400 bg-orange-50/60 font-medium text-slate-900 shadow-2xs'
+                        : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-normal'
                     }`}
                   >
                     <span className="text-xs truncate">{pal.name}</span>
                     <div className="flex items-center gap-1 flex-shrink-0">
-                      <span className="w-3.5 h-3.5 rounded-full border border-black/30" style={{ backgroundColor: pal.primary }} />
-                      <span className="w-3.5 h-3.5 rounded-full border border-black/30" style={{ backgroundColor: pal.secondary }} />
-                      <span className="w-3.5 h-3.5 rounded-full border border-black/30" style={{ backgroundColor: pal.accent }} />
+                      <span className="w-3.5 h-3.5 rounded-full border border-slate-300 shadow-2xs" style={{ backgroundColor: pal.primary }} />
+                      <span className="w-3.5 h-3.5 rounded-full border border-slate-300 shadow-2xs" style={{ backgroundColor: pal.secondary }} />
+                      <span className="w-3.5 h-3.5 rounded-full border border-slate-300 shadow-2xs" style={{ backgroundColor: pal.accent }} />
                     </div>
                   </button>
                 ))}
@@ -243,8 +243,8 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
         {/* ════ TAB 2: FABRICS ════ */}
         {activeTab === 'fabrics' && (
           <div className="space-y-3">
-            <div className="p-2.5 bg-blue-500/10 rounded border border-blue-500/20 text-[11px] text-blue-200 leading-snug">
-              ✨ <strong>PBR Normal Map Simulation:</strong> Automatically configures weave roughness, micro-perforations, and specular light bounce.
+            <div className="p-2.5 bg-blue-50 rounded border border-blue-200 text-xs text-blue-900 font-normal leading-relaxed">
+              Tactile fabric weave simulation with realistic surface roughness and light response.
             </div>
 
             <div className="grid grid-cols-1 gap-2">
@@ -254,25 +254,25 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
                   <div
                     key={fab.id}
                     onClick={() => setActiveFabric(fab.id)}
-                    className={`p-3 rounded-[4px] border transition cursor-pointer flex flex-col justify-between ${
+                    className={`p-3 rounded border transition cursor-pointer flex flex-col justify-between ${
                       isSelected
-                        ? 'border-[var(--accent)] bg-orange-500/10 font-bold'
-                        : 'border-white/5 bg-[#141B2D] hover:bg-[#1C253E]'
+                        ? 'border-orange-400 bg-orange-50/60 shadow-2xs'
+                        : 'border-slate-200 bg-white hover:bg-slate-50'
                     }`}
                   >
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-[9px] font-black uppercase tracking-wider text-[var(--accent)] bg-black/40 px-1.5 py-0.5 rounded border border-orange-500/30">
+                        <span className="text-[10px] text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200 font-medium">
                           {fab.gsm}
                         </span>
-                        {isSelected && <CheckCircle2 size={14} className="text-[var(--accent)]" />}
+                        {isSelected && <CheckCircle2 size={15} className="text-[var(--accent)]" />}
                       </div>
 
-                      <h4 className="text-xs font-black uppercase text-white mb-0.5">
+                      <h4 className="text-xs font-medium text-slate-900 mb-0.5">
                         {fab.name}
                       </h4>
 
-                      <p className="text-[10px] text-white/60 leading-tight">
+                      <p className="text-[11px] text-slate-500 font-normal leading-tight">
                         {fab.description}
                       </p>
                     </div>
@@ -293,34 +293,34 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
                   <button
                     key={pat.id}
                     onClick={() => setActivePattern(pat.id)}
-                    className={`p-3 rounded-[4px] border text-left transition cursor-pointer flex flex-col justify-between ${
+                    className={`p-3 rounded border text-left transition cursor-pointer flex flex-col justify-between ${
                       isSelected
-                        ? 'border-[var(--accent)] bg-orange-500/10 font-bold'
-                        : 'border-white/5 bg-[#141B2D] hover:bg-[#1C253E] text-white/80'
+                        ? 'border-orange-400 bg-orange-50/60 shadow-2xs'
+                        : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-0.5">
-                      <span className="text-xs font-bold text-white">{pat.name}</span>
-                      {isSelected && <Check size={13} className="text-[var(--accent)] font-black" />}
+                      <span className="text-xs font-medium text-slate-900">{pat.name}</span>
+                      {isSelected && <Check size={14} className="text-[var(--accent)]" />}
                     </div>
-                    <p className="text-[10px] text-white/50 leading-tight">{pat.desc}</p>
+                    <p className="text-[11px] text-slate-500 font-normal leading-tight">{pat.desc}</p>
                   </button>
                 );
               })}
             </div>
 
             {activePattern !== 'solid' && (
-              <div className="p-3 bg-[#141B2D] rounded-[4px] border border-white/10 space-y-3">
+              <div className="p-3 bg-slate-50 rounded border border-slate-200 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-white/70 uppercase">Pattern Accent Color</span>
+                  <span className="text-xs font-normal text-slate-600">Pattern Accent Color:</span>
                   <div className="flex items-center gap-2">
                     <input
                       type="color"
                       value={patternColor}
                       onChange={(e) => setPatternColor(e.target.value)}
-                      className="w-7 h-7 rounded border border-white/20 p-0 cursor-pointer bg-transparent"
+                      className="w-7 h-7 rounded border border-slate-300 p-0 cursor-pointer bg-white"
                     />
-                    <span className="font-mono text-xs font-bold text-white uppercase">
+                    <span className="font-mono text-xs font-medium text-slate-700 uppercase">
                       {patternColor}
                     </span>
                   </div>
@@ -328,8 +328,8 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
 
                 <div>
                   <div className="flex items-center justify-between text-xs mb-1">
-                    <span className="font-bold text-white/60 uppercase text-[10px]">Pattern Density Scale</span>
-                    <span className="font-mono text-xs text-[var(--accent)] font-bold">{patternScale.toFixed(1)}x</span>
+                    <span className="text-slate-600 font-normal">Pattern Density:</span>
+                    <span className="font-mono text-xs text-[var(--accent)] font-medium">{patternScale.toFixed(1)}x</span>
                   </div>
                   <input
                     type="range"
@@ -351,20 +351,20 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
           <div className="space-y-4">
             <div className="space-y-3">
               <div>
-                <label className="block text-[10px] font-black text-white/60 uppercase mb-1">
-                  Team Name (Chest Front)
+                <label className="block text-xs font-medium text-slate-700 mb-1">
+                  Team Name (Front Chest)
                 </label>
                 <input
                   type="text"
                   value={nameNumber.teamName}
                   onChange={(e) => setNameNumber({ teamName: e.target.value })}
                   placeholder="e.g. WILDCATS"
-                  className="w-full px-3 py-1.5 text-xs border border-white/15 rounded bg-[#141B2D] text-white font-black uppercase focus:border-[var(--accent)] focus:outline-none"
+                  className="w-full px-3 py-1.5 text-xs border border-slate-300 rounded bg-white text-slate-800 font-medium uppercase focus:border-[var(--accent)] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-black text-white/60 uppercase mb-1">
+                <label className="block text-xs font-medium text-slate-700 mb-1">
                   Player Name (Back Nameplate)
                 </label>
                 <input
@@ -372,13 +372,13 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
                   value={nameNumber.playerName}
                   onChange={(e) => setNameNumber({ playerName: e.target.value })}
                   placeholder="e.g. WILLIAMS"
-                  className="w-full px-3 py-1.5 text-xs border border-white/15 rounded bg-[#141B2D] text-white font-black uppercase focus:border-[var(--accent)] focus:outline-none"
+                  className="w-full px-3 py-1.5 text-xs border border-slate-300 rounded bg-white text-slate-800 font-medium uppercase focus:border-[var(--accent)] focus:outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="block text-[10px] font-black text-white/60 uppercase mb-1">
+                  <label className="block text-xs font-medium text-slate-700 mb-1">
                     Back Number
                   </label>
                   <input
@@ -386,54 +386,54 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
                     maxLength={3}
                     value={nameNumber.playerNumber}
                     onChange={(e) => setNameNumber({ playerNumber: e.target.value })}
-                    className="w-full px-3 py-1.5 text-base border border-white/15 rounded bg-[#141B2D] text-white font-black text-center focus:border-[var(--accent)] focus:outline-none"
+                    className="w-full px-3 py-1.5 text-base border border-slate-300 rounded bg-white text-slate-800 font-medium text-center focus:border-[var(--accent)] focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-black text-white/60 uppercase mb-1">
-                    Font Family
+                  <label className="block text-xs font-medium text-slate-700 mb-1">
+                    Lettering Font
                   </label>
                   <select
                     value={nameNumber.font}
                     onChange={(e) => setNameNumber({ font: e.target.value })}
-                    className="w-full px-2.5 py-2 text-xs border border-white/15 rounded bg-[#141B2D] text-white font-bold focus:border-[var(--accent)] focus:outline-none cursor-pointer"
+                    className="w-full px-2.5 py-2 text-xs border border-slate-300 rounded bg-white text-slate-800 font-medium focus:border-[var(--accent)] focus:outline-none cursor-pointer"
                   >
                     {FONTS_LIST.map(f => (
-                      <option key={f.id} value={f.id} className="bg-[#0E1322] text-white">{f.name}</option>
+                      <option key={f.id} value={f.id} className="text-slate-800">{f.name}</option>
                     ))}
                   </select>
                 </div>
               </div>
 
-              <div className="p-3 bg-[#141B2D] rounded-[4px] border border-white/10 flex items-center justify-between gap-4">
+              <div className="p-3 bg-slate-50 rounded border border-slate-200 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-bold text-white/70 uppercase">Text Color</span>
+                  <span className="text-xs font-normal text-slate-600">Text Fill</span>
                   <input
                     type="color"
                     value={nameNumber.textColor}
                     onChange={(e) => setNameNumber({ textColor: e.target.value })}
-                    className="w-6 h-6 rounded border border-white/20 p-0 cursor-pointer bg-transparent"
+                    className="w-6 h-6 rounded border border-slate-300 p-0 cursor-pointer bg-white"
                   />
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-bold text-white/70 uppercase">Stroke Outline</span>
+                  <span className="text-xs font-normal text-slate-600">Outline Stroke</span>
                   <input
                     type="color"
                     value={nameNumber.strokeColor}
                     onChange={(e) => setNameNumber({ strokeColor: e.target.value })}
-                    className="w-6 h-6 rounded border border-white/20 p-0 cursor-pointer bg-transparent"
+                    className="w-6 h-6 rounded border border-slate-300 p-0 cursor-pointer bg-white"
                   />
                 </div>
               </div>
 
               <button
                 onClick={() => setIs2DEditorOpen(true)}
-                className="w-full py-2 bg-gradient-to-r from-orange-600 to-amber-600 hover:brightness-110 text-white text-xs font-black uppercase rounded shadow-xs transition cursor-pointer flex items-center justify-center gap-1.5"
+                className="w-full py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-medium rounded shadow-xs transition cursor-pointer flex items-center justify-center gap-1.5"
               >
                 <ExternalLink size={13} />
-                <span>Launch 2D Graphic Canvas Editor</span>
+                <span>Open 2D Graphic Canvas</span>
               </button>
             </div>
           </div>
@@ -442,16 +442,16 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
         {/* ════ TAB 5: LOGOS & ARTWORK ════ */}
         {activeTab === 'logos' && (
           <div className="space-y-4">
-            <div className="border-2 border-dashed border-white/15 rounded-[4px] p-5 text-center hover:border-[var(--accent)] transition-colors bg-[#141B2D]/50">
-              <Upload size={24} className="mx-auto text-[var(--accent)] mb-1.5" />
-              <p className="text-xs font-black uppercase text-white mb-0.5">
-                Upload Crest or Sponsor Logo
+            <div className="border-2 border-dashed border-slate-300 rounded p-5 text-center hover:border-slate-400 transition-colors bg-slate-50/50">
+              <Upload size={22} className="mx-auto text-slate-400 mb-1.5" />
+              <p className="text-xs font-medium text-slate-700 mb-0.5">
+                Upload Team Crest or Sponsor Logo
               </p>
-              <span className="text-[9px] text-white/40 block mb-2.5">
-                PNG, SVG, or JPG (up to 20MB)
+              <span className="text-[11px] text-slate-400 block mb-2.5">
+                PNG, SVG, or JPG (transparent background recommended)
               </span>
-              <label className="px-4 py-1.5 bg-[var(--accent)] hover:brightness-110 text-white text-[10px] font-black uppercase rounded transition cursor-pointer inline-block shadow-xs">
-                Select Image File
+              <label className="px-4 py-1.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-medium rounded transition cursor-pointer inline-block shadow-xs">
+                Choose File
                 <input type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
               </label>
             </div>
@@ -459,19 +459,19 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
             {/* Uploaded Logos List */}
             {logos.length > 0 && (
               <div className="space-y-1.5">
-                <span className="text-[10px] font-black uppercase tracking-wider text-white/50 block">
-                  Active Attached Emblems ({logos.length})
+                <span className="text-xs font-medium text-slate-600 block">
+                  Attached Emblems ({logos.length})
                 </span>
                 {logos.map((logo) => (
-                  <div key={logo.id} className="p-2.5 bg-[#141B2D] rounded-[4px] border border-white/10 flex items-center justify-between gap-2">
-                    <img src={logo.url} alt="Logo" className="w-8 h-8 object-contain rounded bg-white p-0.5" />
+                  <div key={logo.id} className="p-2.5 bg-slate-50 rounded border border-slate-200 flex items-center justify-between gap-2">
+                    <img src={logo.url} alt="Logo" className="w-8 h-8 object-contain rounded bg-white border border-slate-200 p-0.5" />
                     <div className="flex-1 min-w-0">
-                      <span className="text-xs font-bold text-white truncate block">{logo.name || 'Emblem'}</span>
-                      <span className="text-[9px] text-white/40 uppercase">{logo.placement || 'Chest'}</span>
+                      <span className="text-xs font-medium text-slate-800 truncate block">{logo.name || 'Emblem'}</span>
+                      <span className="text-[10px] text-slate-500 capitalize">{logo.placement || 'Chest'}</span>
                     </div>
                     <button
                       onClick={() => removeLogo(logo.id)}
-                      className="p-1 text-white/40 hover:text-red-400 transition cursor-pointer"
+                      className="p-1 text-slate-400 hover:text-red-600 transition cursor-pointer"
                       title="Remove Logo"
                     >
                       <Trash2 size={14} />
@@ -483,9 +483,9 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
 
             <button
               onClick={() => setIs2DEditorOpen(true)}
-              className="w-full py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-black uppercase rounded border border-white/15 flex items-center justify-center gap-1.5 transition cursor-pointer"
+              className="w-full py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-medium rounded border border-slate-200 flex items-center justify-center gap-1.5 transition cursor-pointer shadow-2xs"
             >
-              <ExternalLink size={13} className="text-[var(--accent)]" />
+              <ExternalLink size={13} className="text-slate-500" />
               <span>Position Emblems in 2D Studio</span>
             </button>
           </div>
@@ -495,9 +495,9 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
         {activeTab === 'roster' && (
           <div className="space-y-4">
             <div>
-              <div className="flex items-center justify-between text-xs font-bold mb-1">
-                <span className="uppercase text-white/60 text-[10px]">Roster Quantity:</span>
-                <span className="text-sm font-black text-[var(--accent)]">{rosterCount} Sets</span>
+              <div className="flex items-center justify-between text-xs font-medium mb-1">
+                <span className="text-slate-600">Roster Quantity:</span>
+                <span className="text-sm font-semibold text-[var(--accent)]">{rosterCount} Sets</span>
               </div>
               <input
                 type="range"
@@ -508,32 +508,32 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
                 onChange={(e) => setRosterCount(parseInt(e.target.value, 10))}
                 className="w-full accent-[var(--accent)] cursor-pointer"
               />
-              <div className="flex justify-between text-[9px] text-white/40 font-bold mt-1">
+              <div className="flex justify-between text-[10px] text-slate-500 font-normal mt-1">
                 <span>15 (MOQ)</span>
-                <span>50 sets (8% OFF)</span>
-                <span>100 sets (12% OFF)</span>
-                <span>200+ (20% OFF)</span>
+                <span>50 sets (8% off)</span>
+                <span>100 sets (12% off)</span>
+                <span>200+ (20% off)</span>
               </div>
             </div>
 
             {/* Decoration Method */}
             <div>
-              <label className="block text-[10px] font-black text-white/60 uppercase mb-1">
-                Decoration Application
+              <label className="block text-xs font-medium text-slate-700 mb-1">
+                Lettering & Decoration Method
               </label>
               <div className="grid grid-cols-3 gap-1.5">
                 {[
-                  { id: 'sublimation', label: 'All-Over Dye' },
+                  { id: 'sublimation', label: 'Dye Sublimation' },
                   { id: 'twill', label: 'Tackle Twill' },
                   { id: 'both', label: 'Hybrid Pro' }
                 ].map(d => (
                   <button
                     key={d.id}
                     onClick={() => setDecorationMethod(d.id)}
-                    className={`py-1.5 px-1 text-center text-[10px] font-black uppercase rounded border transition cursor-pointer ${
+                    className={`py-1.5 px-1 text-center text-xs font-normal rounded border transition cursor-pointer ${
                       decorationMethod === d.id
-                        ? 'border-[var(--accent)] bg-[var(--accent)] text-white shadow-xs'
-                        : 'border-white/10 text-white/70 hover:bg-white/5'
+                        ? 'border-orange-400 bg-orange-50 font-medium text-orange-950 shadow-2xs'
+                        : 'border-slate-200 text-slate-700 hover:bg-slate-50'
                     }`}
                   >
                     {d.label}
@@ -544,13 +544,13 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
 
             {/* Size Breakdown Inputs */}
             <div>
-              <label className="block text-[10px] font-black text-white/60 uppercase mb-1">
-                Size Breakdown (Roster Estimate)
+              <label className="block text-xs font-medium text-slate-700 mb-1">
+                Size Breakdown (Estimate)
               </label>
               <div className="grid grid-cols-5 gap-1 text-center">
                 {['YL', 'S', 'M', 'L', 'XL'].map(sz => (
-                  <div key={sz} className="p-1.5 bg-[#141B2D] rounded border border-white/10">
-                    <span className="text-[9px] font-bold text-white/50 block mb-0.5">{sz}</span>
+                  <div key={sz} className="p-1.5 bg-slate-50 rounded border border-slate-200">
+                    <span className="text-[10px] font-medium text-slate-500 block mb-0.5">{sz}</span>
                     <input
                       type="number"
                       min="0"
@@ -561,7 +561,7 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
                           [sz]: parseInt(e.target.value, 10) || 0
                         });
                       }}
-                      className="w-full text-center text-xs font-black border border-white/15 rounded py-0.5 bg-[#0E1322] text-white"
+                      className="w-full text-center text-xs font-medium border border-slate-300 rounded py-0.5 bg-white text-slate-800"
                     />
                   </div>
                 ))}
@@ -574,16 +574,16 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
       </div>
 
       {/* ── 4. FIXED BOTTOM ESTIMATE & SUBMIT CTA ── */}
-      <div className="p-3.5 bg-[#141A2D] border-t border-white/10 flex items-center justify-between gap-3 flex-shrink-0">
+      <div className="p-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-3 flex-shrink-0">
         <div>
-          <span className="text-[9px] font-bold uppercase tracking-wider text-white/40 block">
-            Factory Rate (Sialkot Direct)
+          <span className="text-[10px] text-slate-500 font-normal block">
+            Factory Direct Estimate
           </span>
           <div className="flex items-baseline gap-1.5">
-            <span className="text-xl font-black text-[var(--accent)]">
+            <span className="text-xl font-semibold text-slate-900">
               ${calculatedUnitPrice.toFixed(2)}
             </span>
-            <span className="text-[10px] text-white/60 font-semibold">
+            <span className="text-xs text-slate-500 font-normal">
               / set (${calculatedTotalPrice.toFixed(2)} total)
             </span>
           </div>
@@ -592,7 +592,7 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
         <button
           onClick={onSaveDesign}
           disabled={isSubmitting}
-          className="px-5 py-2.5 bg-[var(--accent)] hover:brightness-110 text-white font-black text-xs uppercase tracking-wider rounded-[4px] shadow-lg transition cursor-pointer flex items-center gap-1.5 flex-shrink-0"
+          className="px-5 py-2.5 bg-[var(--accent)] hover:brightness-105 text-white font-medium text-xs rounded shadow-xs transition cursor-pointer flex items-center gap-1.5 flex-shrink-0"
         >
           {isSubmitting ? 'Saving...' : 'Get Free Proof'}
           <ArrowRight size={13} />
