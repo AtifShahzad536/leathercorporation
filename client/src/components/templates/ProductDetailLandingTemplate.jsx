@@ -10,6 +10,7 @@ import ProgressiveImage from '../common/ProgressiveImage';
 import { useCMS } from '../../context/CMSContext';
 import { fullCatalog296 } from '../../data/fullCatalog296';
 import productFaqs296 from '../../data/productFaqs296.json';
+import productFullText296 from '../../data/productFullText296.json';
 import { 
   getSportPricingTable, 
   getSportDecorationData, 
@@ -43,6 +44,44 @@ export default function ProductDetailLandingTemplate({
   const decorationData = useMemo(() => getSportDecorationData(normSport, product?.price || basePrice), [normSport, product, basePrice]);
   const playoffSchedule = useMemo(() => getPlayoffSchedule(), []);
   const careInstructions = useMemo(() => getCareInstructions(normSport), [normSport]);
+
+  // Dynamic Product Full Text (Descriptions, Feature Bullets, Fabric Specs)
+  const productData = useMemo(() => {
+    const slug = product?.slug;
+    return (slug && productFullText296[slug]) ? productFullText296[slug] : null;
+  }, [product]);
+
+  const productDescription = useMemo(() => {
+    return product?.description || productData?.description || `${productName} manufactured factory-direct in Sialkot, Pakistan.`;
+  }, [product, productData, productName]);
+
+  const productFeatures = useMemo(() => {
+    if (product?.features && Array.isArray(product.features) && product.features.length > 0) {
+      return product.features;
+    }
+    if (productData?.highlights && Array.isArray(productData.highlights) && productData.highlights.length > 0) {
+      return productData.highlights;
+    }
+    return [
+      '100% Full dye-sublimation: colors, crests, and pinstripes never crack or peel',
+      'Custom team lettering & player back numbers included at zero setup fee',
+      'Technical moisture-wicking athletic polyester wicks perspiration away instantaneously',
+      'Reinforced flat-lock seams eliminate friction and underarm skin chafing',
+      'Inclusive sizing spectrum spanning Youth YS through Adult 4XL',
+      'Zero minimum order limits; volume pricing scaled for team rosters',
+      'Rapid 12-hour 3D digital mockup turnaround before production begins'
+    ];
+  }, [product, productData]);
+
+  const productFabricSpecs = useMemo(() => {
+    if (productData?.fabricSpecs) return productData.fabricSpecs;
+    return {
+      fabric: product?.fabric || 'Performance Poly Interlock',
+      weight: '180 - 220 GSM',
+      stitch: '4-Thread Flat-Lock',
+      care: 'Machine Wash Cold, Hang Dry'
+    };
+  }, [product, productData]);
 
   // Fetch live products from backend MongoDB database for this sport, with fallback to fullCatalog296
   const [dbProducts, setDbProducts] = useState([]);
@@ -280,7 +319,11 @@ export default function ProductDetailLandingTemplate({
     if (product?.faqs && Array.isArray(product.faqs) && product.faqs.length > 0) {
       return product.faqs;
     }
-    // 2. If matched from productFaqs296.json by slug
+    // 2. If matched from productFullText296 or productFaqs296 by slug
+    const fFromFull = product?.slug && productFullText296[product.slug]?.faqs;
+    if (fFromFull && fFromFull.length > 0) {
+      return fFromFull;
+    }
     if (product?.slug && productFaqs296[product.slug]?.faqs?.length > 0) {
       return productFaqs296[product.slug].faqs;
     }
@@ -488,22 +531,14 @@ export default function ProductDetailLandingTemplate({
                   </span>
                 </div>
 
-                {/* 60-90 words Intro Paragraph (Page 8 & 13 Content Spec) */}
+                {/* Benefit-Driven Narrative Intro Paragraph */}
                 <p className="text-xs sm:text-sm text-[var(--secondary)]/80 leading-relaxed font-light mb-6">
-                  Engineered specifically for youth travel, high school varsity, and competitive league clubs demanding professional grade durability. Tailored from 180-220 GSM moisture-wicking interlock athletic polyester with reinforced flat-lock coverstitching. Design proofs are approved in multi-angle 3D before factory production commences.
+                  {productDescription}
                 </p>
 
-                {/* Exactly 7 Benefit-Driven Feature Bullets (Page 4 Spec) */}
+                {/* Exactly 6-8 Benefit-Driven Feature Bullets */}
                 <div className="space-y-2 mb-6">
-                  {[
-                    '100% Full dye-sublimation: colors, crests, and pinstripes never crack or peel',
-                    'Custom team lettering & player back numbers included at zero setup fee',
-                    '180-220 GSM technical polyester wicks perspiration away instantaneously',
-                    'Reinforced flat-lock seams eliminate friction and underarm skin chafing',
-                    'Elastic comfort waistband with concealed interior drawstring cords',
-                    'Complete size run available from Youth YS up to Adult 4XL',
-                    'Rapid 12-hour 3D digital mockup turnaround before payment'
-                  ].map((bullet, idx) => (
+                  {productFeatures.map((bullet, idx) => (
                     <div key={idx} className="flex items-center gap-2 text-xs font-medium text-[var(--secondary)]/85">
                       <Check size={14} className="text-emerald-600 flex-shrink-0" />
                       <span>{bullet}</span>
@@ -517,10 +552,10 @@ export default function ProductDetailLandingTemplate({
                     <Layers size={13} className="text-[var(--accent)]" /> Factory Fabric Specifications
                   </h2>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10.5px] text-neutral-600">
-                    <div><span className="font-bold text-[var(--secondary)] block">Fabric:</span> Micro-Interlock Poly</div>
-                    <div><span className="font-bold text-[var(--secondary)] block">Weight:</span> 180 - 220 GSM</div>
-                    <div><span className="font-bold text-[var(--secondary)] block">Stitch:</span> 4-Thread Overlock</div>
-                    <div><span className="font-bold text-[var(--secondary)] block">Care:</span> Machine Wash Cold</div>
+                    <div><span className="font-bold text-[var(--secondary)] block">Fabric:</span> {productFabricSpecs.fabric}</div>
+                    <div><span className="font-bold text-[var(--secondary)] block">Weight:</span> {productFabricSpecs.weight}</div>
+                    <div><span className="font-bold text-[var(--secondary)] block">Stitch:</span> {productFabricSpecs.stitch}</div>
+                    <div><span className="font-bold text-[var(--secondary)] block">Care:</span> {productFabricSpecs.care}</div>
                   </div>
                 </div>
 

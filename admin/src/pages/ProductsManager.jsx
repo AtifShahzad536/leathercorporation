@@ -81,6 +81,7 @@ export default function ProductsManager() {
       badge: 'PRO SPEC',
       image: '',
       isActive: true,
+      features: '',
       faqs: [],
     });
     setShowModal(true);
@@ -108,6 +109,7 @@ export default function ProductsManager() {
       badge: p.badge || '',
       image: p.images?.[0]?.url || '',
       isActive: p.isActive !== undefined ? p.isActive : true,
+      features: Array.isArray(p.features) ? p.features.join('\n') : (p.features || ''),
       faqs: Array.isArray(p.faqs) && p.faqs.length > 0 ? p.faqs.map(f => ({ q: f.q || '', a: f.a || '' })) : [],
     });
     setShowModal(true);
@@ -137,6 +139,7 @@ export default function ProductsManager() {
       ],
       slug: form.slug || form.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
       images: form.image ? [{ url: form.image, alt: form.name }] : [],
+      features: typeof form.features === 'string' ? form.features.split('\n').map(s => s.trim()).filter(Boolean) : (form.features || []),
       faqs: Array.isArray(form.faqs) ? form.faqs.filter(f => f.q && f.q.trim()) : [],
     };
 
@@ -461,6 +464,19 @@ export default function ProductsManager() {
                   value={form.description}
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
                   className="w-full border border-slate-300 rounded-lg p-2.5 text-xs focus:border-[#F26522] focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase text-slate-600 mb-1">
+                  Feature Bullets (One per line)
+                </label>
+                <textarea
+                  rows="4"
+                  value={form.features}
+                  onChange={(e) => setForm({ ...form, features: e.target.value })}
+                  placeholder="e.g. 100% Full dye-sublimation&#10;~165 GSM moisture-wicking poly..."
+                  className="w-full border border-slate-300 rounded-lg p-2.5 text-xs font-mono focus:border-[#F26522] focus:outline-none"
                 />
               </div>
 
