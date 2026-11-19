@@ -55,23 +55,28 @@ function MainApp() {
 
     if (parts.length >= 2 && (parts[0].startsWith('custom-') || parts[0] === 'product')) {
       const prodSlug = parts[parts.length - 1];
-      const found = fullCatalog296.find(p => p.slug === prodSlug) ||
-                    allProducts.find(p => p.slug === prodSlug || String(p.id) === prodSlug);
+      const cleanSlug = prodSlug.toLowerCase().trim();
+      const parentSport = sportSlugToCategory[parts[0]] || 'BASEBALL';
+
+      const found = fullCatalog296.find(p => p.slug === cleanSlug) ||
+                    fullCatalog296.find(p => p.slug === cleanSlug.replace(/s$/, '') || p.slug.replace(/s$/, '') === cleanSlug) ||
+                    fullCatalog296.find(p => cleanSlug.includes(p.slug) || p.slug.includes(cleanSlug)) ||
+                    allProducts.find(p => p.slug === cleanSlug || String(p.id) === cleanSlug);
 
       if (found) {
         setActiveProductDetail(found);
-        setActiveSport(found.category || 'BASEBALL');
+        setActiveSport(found.category || parentSport);
         document.title = `${found.name} | Custom ${found.sport || found.category} Uniforms | HAMLO SPORTS`;
       } else {
         const readable = prodSlug.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
-        const parentSport = sportSlugToCategory[parts[0]] || 'BASEBALL';
+        const sportFallback = fullCatalog296.find(p => p.category === parentSport) || fullCatalog296[0];
         setActiveProductDetail({
           name: readable,
           slug: prodSlug,
           sport: parentSport.charAt(0).toUpperCase() + parentSport.slice(1).toLowerCase(),
           category: parentSport,
-          price: '$34.99',
-          image: 'https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80'
+          price: sportFallback ? `$${sportFallback.price}` : '$34.99',
+          image: sportFallback ? sportFallback.image : 'https://res.cloudinary.com/xt0lhjd4/image/upload/v1795029834/hamlosports/products/baseball/custom-full-button-baseball-jerseys.png'
         });
         setActiveSport(parentSport);
         document.title = `${readable} | Custom ${parentSport} Uniforms | HAMLO SPORTS`;
@@ -82,21 +87,25 @@ function MainApp() {
 
     if (routeString.startsWith('product/')) {
       const slug = decodeURIComponent(routeString.replace(/^product\//, ''));
-      const found = fullCatalog296.find(p => p.slug === slug) ||
-                    allProducts.find(p => p.slug === slug || String(p.id) === slug || p.name.toLowerCase() === slug.toLowerCase());
+      const cleanSlug = slug.toLowerCase().trim();
+      const found = fullCatalog296.find(p => p.slug === cleanSlug) ||
+                    fullCatalog296.find(p => p.slug === cleanSlug.replace(/s$/, '') || p.slug.replace(/s$/, '') === cleanSlug) ||
+                    fullCatalog296.find(p => cleanSlug.includes(p.slug) || p.slug.includes(cleanSlug)) ||
+                    allProducts.find(p => p.slug === cleanSlug || String(p.id) === cleanSlug || p.name.toLowerCase() === cleanSlug);
       if (found) {
         setActiveProductDetail(found);
         setActiveSport(found.category || 'BASEBALL');
         document.title = `${found.name} | Custom ${found.sport || found.category} Uniforms | HAMLO SPORTS`;
       } else {
         const readable = slug.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
+        const fallbackProd = fullCatalog296[0];
         setActiveProductDetail({
           name: readable,
           slug: slug,
           sport: 'Baseball',
           category: 'BASEBALL',
-          price: '$34.99',
-          image: 'https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80'
+          price: `$${fallbackProd.price}`,
+          image: fallbackProd.image
         });
         document.title = `${readable} | Custom Uniforms | HAMLO SPORTS`;
       }
@@ -261,15 +270,16 @@ function MainApp() {
         {/* ── 1. PRODUCT DETAIL PAGE (HAMCO AUDIT REAL-COST COMPARISON & 3 VIEWS) ── */}
         {currentPage === 'product-detail' && (
           <ProductDetailLandingTemplate
+            product={activeProductDetail}
             productName={activeProductDetail?.name || 'Pro Custom Athletic Game Jersey'}
             sport={activeProductDetail?.sport || activeProductDetail?.category || activeSport || 'Baseball'}
-            basePrice={activeProductDetail?.price ? (String(activeProductDetail.price).startsWith('$') ? activeProductDetail.price : `$${activeProductDetail.price}`) : '$41.99'}
-            images={[
-              activeProductDetail?.image || 'https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80',
-              activeProductDetail?.image || 'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80',
-              activeProductDetail?.image || 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80'
-            ]}
+            basePrice={activeProductDetail?.price ? (String(activeProductDetail.price).startsWith('$') ? activeProductDetail.price : `$${activeProductDetail.price}`) : '$34.99'}
+            images={activeProductDetail?.images && activeProductDetail.images.length > 0
+              ? activeProductDetail.images.map(img => typeof img === 'string' ? img : img.url)
+              : [activeProductDetail?.image].filter(Boolean)
+            }
             onNavigateInquiry={(prod) => navigateTo('inquiry', prod)}
+            onNavigateProduct={(prod) => navigateTo('product-detail', prod)}
           />
         )}
 

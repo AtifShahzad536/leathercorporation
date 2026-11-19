@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Check, ArrowRight, ShieldCheck, Clock, Calculator,
   HelpCircle, Sparkles, Award, Phone, Mail, FileText, ChevronRight,
@@ -8,6 +8,7 @@ import SEO from '../common/SEO';
 import TrustBar from '../common/TrustBar';
 import ProgressiveImage from '../common/ProgressiveImage';
 import { useCMS } from '../../context/CMSContext';
+import { fullCatalog296 } from '../../data/fullCatalog296';
 
 /**
  * 15-Block Product Detail Landing Page
@@ -17,17 +18,90 @@ import { useCMS } from '../../context/CMSContext';
  * In-Page Price Calculator, Related Upsells, 6 Product-Specific FAQs, Inspiration Gallery & Quote Machine.
  */
 export default function ProductDetailLandingTemplate({
+  product = null,
   productName = 'Custom Soccer Standard Uniform Set',
   sport = 'Soccer',
   basePrice = '$79.99',
-  images = [
-    'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80'
-  ],
-  onNavigateInquiry = () => { }
+  images = [],
+  onNavigateInquiry = () => { },
+  onNavigateProduct = () => { }
 }) {
   const [activeImageIdx, setActiveImageIdx] = useState(0);
+
+  // Dynamic Sport Category normalization
+  const normSport = (sport || product?.sport || product?.category || 'BASEBALL').toUpperCase();
+
+  // Fetch live products from backend MongoDB database for this sport, with fallback to fullCatalog296
+  const [dbProducts, setDbProducts] = useState([]);
+  useEffect(() => {
+    let isMounted = true;
+    fetch(`/api/products?sport=${encodeURIComponent(normSport)}&limit=100`)
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (isMounted && data?.data && data.data.length > 0) {
+          setDbProducts(data.data);
+        }
+      })
+      .catch(() => {});
+    return () => { isMounted = false; };
+  }, [normSport]);
+
+  // Master product list for current sport
+  const sportProducts = useMemo(() => {
+    if (dbProducts && dbProducts.length > 0) {
+      return dbProducts.map(p => ({
+        id: p._id || p.id,
+        name: p.name,
+        slug: p.slug,
+        sport: p.sport || normSport,
+        category: p.category || normSport,
+        price: typeof p.price === 'number' ? `$${p.price.toFixed(2)}` : (p.price || '$34.99'),
+        rawPrice: typeof p.price === 'number' ? p.price : parseFloat(String(p.price).replace(/[^0-9.]/g, '')) || 34.99,
+        image: p.images?.[0]?.url || p.images?.[0] || p.image,
+        images: (p.images && p.images.length > 0) ? p.images.map(img => typeof img === 'string' ? img : img.url) : [p.image]
+      })).filter(p => p.image);
+    }
+
+    return fullCatalog296.filter(p => {
+      const s = (p.sport || p.category || '').toUpperCase();
+      if (normSport === 'FOOTBALL') return s.includes('FOOTBALL') && !s.includes('FLAG');
+      if (normSport === 'FLAG FOOTBALL') return s.includes('FLAG');
+      return s.includes(normSport) || normSport.includes(s);
+    }).map(p => ({
+      id: p.id,
+      name: p.name,
+      slug: p.slug,
+      sport: p.sport || normSport,
+      category: p.category || normSport,
+      price: typeof p.price === 'number' ? `$${p.price.toFixed(2)}` : (p.price || '$34.99'),
+      rawPrice: typeof p.price === 'number' ? p.price : parseFloat(String(p.price).replace(/[^0-9.]/g, '')) || 34.99,
+      image: p.image,
+      images: [p.image]
+    }));
+  }, [normSport, dbProducts]);
+
+  // Multi-Angle Gallery Images (100% genuine sport images, zero Unsplash dummy photos)
+  const displayImages = useMemo(() => {
+    const validPropImages = (images || []).filter(img => typeof img === 'string' && img && !img.includes('unsplash.com'));
+    if (validPropImages.length >= 3) return validPropImages;
+
+    const primaryImg = product?.image || validPropImages[0] || sportProducts[0]?.image;
+    const otherSportImgs = sportProducts
+      .filter(p => p.image && p.image !== primaryImg)
+      .map(p => p.image);
+
+    const views = [primaryImg];
+    if (otherSportImgs[0]) views.push(otherSportImgs[0]);
+    if (otherSportImgs[1]) views.push(otherSportImgs[1]);
+
+    while (views.length < 3 && primaryImg) {
+      views.push(primaryImg);
+    }
+    return views.filter(Boolean);
+  }, [images, product, sportProducts]);
+
+  // Safe active image index
+  const safeActiveImageIdx = activeImageIdx < displayImages.length ? activeImageIdx : 0;
 
   // 1. Volume Price Table (Block 7)
   const volumeTiers = [
@@ -96,13 +170,64 @@ export default function ProductDetailLandingTemplate({
     { title: 'Sialkot Factory Direct', desc: 'Zero middlemen broker fees. You deal directly with the export manufacturing facility.' }
   ];
 
-  // 5. Related Upsells (Block 13)
-  const upsells = [
-    { name: 'Custom Sublimated Match Socks', price: 'from $12.99', img: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=300&q=80' },
-    { name: 'Full-Zip Team Travel Hoodie', price: 'from $42.99', img: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=300&q=80' },
-    { name: 'Goalkeeper Padded Match Jersey', price: 'from $44.99', img: 'https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=300&q=80' },
-    { name: 'Heavy-Duty Team Gear Duffle', price: 'from $59.99', img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=300&q=80' }
-  ];
+  // 5. Related Upsells (Block 13 - COMPLETE THE ROSTER)
+  // Dynamically pulled from real sport catalog (socks, hoodies, bags, jackets, pants)
+  const upsells = useMemo(() => {
+    if (!sportProducts || sportProducts.length === 0) return [];
+
+    const otherProducts = sportProducts.filter(p => 
+      p.slug !== product?.slug && p.name !== productName
+    );
+
+    const priorityKeywords = [
+      ['sock'],
+      ['hoodie', 'pullover', 'fleece'],
+      ['jacket', 'parka', 'bomber'],
+      ['bag', 'duffle', 'backpack', 'cinch', 'equipment'],
+      ['pant', 'jogger', 'shell', 'short'],
+      ['warmup', 'beanie', 'compression', 't-shirt']
+    ];
+
+    const selected = [];
+    const usedIds = new Set();
+
+    for (const group of priorityKeywords) {
+      const match = otherProducts.find(p => 
+        !usedIds.has(p.id) && group.some(kw => p.name.toLowerCase().includes(kw))
+      );
+      if (match) {
+        selected.push({
+          id: match.id,
+          name: match.name,
+          price: match.price.startsWith('from') ? match.price : `from ${match.price}`,
+          img: match.image,
+          slug: match.slug,
+          rawProduct: match
+        });
+        usedIds.add(match.id);
+      }
+      if (selected.length === 4) break;
+    }
+
+    if (selected.length < 4) {
+      for (const p of otherProducts) {
+        if (!usedIds.has(p.id)) {
+          selected.push({
+            id: p.id,
+            name: p.name,
+            price: p.price.startsWith('from') ? p.price : `from ${p.price}`,
+            img: p.image,
+            slug: p.slug,
+            rawProduct: p
+          });
+          usedIds.add(p.id);
+        }
+        if (selected.length === 4) break;
+      }
+    }
+
+    return selected;
+  }, [sportProducts, product, productName]);
 
   // 6. Specific FAQs (Block 14)
   const [openFaq, setOpenFaq] = useState(null);
@@ -133,20 +258,61 @@ export default function ProductDetailLandingTemplate({
     }
   ];
 
-  // 7. Inspiration Gallery (Block 15)
+  // 7. Inspiration Gallery (Block 15 - POPULAR DESIGN CONCEPTS)
+  // Dynamically populated from actual sport jerseys and uniforms
   const [activeColorFilter, setActiveColorFilter] = useState('ALL');
-  const inspirationDesigns = [
-    { name: 'Aqua Wave Gradient', color: 'BLUE', img: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Athletic Shoulder Panels', color: 'RED', img: 'https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Vegas Gold Pinstripe', color: 'GOLD', img: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Neon Digital Pixel', color: 'BLACK', img: 'https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Vintage Classic Stripe', color: 'BLUE', img: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Flame Accent Energy', color: 'RED', img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80' }
-  ];
+  const inspirationDesigns = useMemo(() => {
+    if (!sportProducts || sportProducts.length === 0) return [];
 
-  const filteredInspiration = activeColorFilter === 'ALL'
-    ? inspirationDesigns
-    : inspirationDesigns.filter(d => d.color === activeColorFilter);
+    const jerseyKeywords = ['jersey', 'uniform', 'singlet', 'kit', 'set', 'top', 'pinnie', 'game', 'home', 'away'];
+    let jerseys = sportProducts.filter(p => 
+      jerseyKeywords.some(kw => p.name.toLowerCase().includes(kw))
+    );
+
+    if (jerseys.length < 6) {
+      jerseys = sportProducts;
+    }
+
+    const colorCycle = ['BLUE', 'RED', 'GOLD', 'BLACK', 'BLUE', 'RED', 'GOLD', 'BLACK'];
+
+    return jerseys.slice(0, 8).map((p, idx) => {
+      const lower = p.name.toLowerCase();
+      let assignedColor = colorCycle[idx % colorCycle.length];
+      if (lower.includes('blue') || lower.includes('home') || lower.includes('navy')) assignedColor = 'BLUE';
+      else if (lower.includes('red') || lower.includes('away') || lower.includes('scarlet')) assignedColor = 'RED';
+      else if (lower.includes('gold') || lower.includes('yellow') || lower.includes('two-tone')) assignedColor = 'GOLD';
+      else if (lower.includes('black') || lower.includes('dark') || lower.includes('practice') || lower.includes('stealth')) assignedColor = 'BLACK';
+
+      const cleanName = p.name.replace(new RegExp(`Custom\\s+(${sport})?\\s*`, 'i'), '').trim() || p.name;
+
+      return {
+        id: p.id,
+        name: cleanName,
+        fullName: p.name,
+        color: assignedColor,
+        img: p.image,
+        price: p.price,
+        slug: p.slug,
+        rawProduct: p
+      };
+    });
+  }, [sportProducts, sport]);
+
+  const filteredInspiration = useMemo(() => {
+    if (activeColorFilter === 'ALL') return inspirationDesigns;
+    const filtered = inspirationDesigns.filter(d => d.color === activeColorFilter);
+    return filtered.length > 0 ? filtered : inspirationDesigns.slice(0, 4);
+  }, [activeColorFilter, inspirationDesigns]);
+
+  // Helper to add upsell directly to Quote form
+  const handleAddUpsellToQuote = (u) => {
+    setFormData(prev => ({
+      ...prev,
+      teamDetails: `${prev.teamDetails}\n+ Include: ${u.name} (${u.price})`
+    }));
+    const el = document.getElementById('quote-section');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
 
   // 8. Quote Form State
   const [quoteSubmitted, setQuoteSubmitted] = useState(false);
@@ -218,8 +384,8 @@ export default function ProductDetailLandingTemplate({
             <div>
               <div className="relative aspect-[4/5] bg-neutral-100 rounded-[3px] overflow-hidden shadow-xl border border-[var(--secondary)]/10 mb-3">
                 <ProgressiveImage
-                  src={images[activeImageIdx]}
-                  alt={`${productName} - View ${activeImageIdx + 1} - HAMLO SPORTS`}
+                  src={displayImages[safeActiveImageIdx] || product?.image || sportProducts[0]?.image}
+                  alt={`${productName} - View ${safeActiveImageIdx + 1} - HAMLO SPORTS`}
                   className="w-full h-full object-cover"
                   priority={true}
                 />
@@ -230,11 +396,11 @@ export default function ProductDetailLandingTemplate({
 
               {/* Thumbnails with explicit angle labels */}
               <div className="grid grid-cols-3 gap-2 sm:gap-3">
-                {images.map((img, i) => (
+                {displayImages.map((img, i) => (
                   <button
                     key={i}
                     onClick={() => setActiveImageIdx(i)}
-                    className={`aspect-[4/3] rounded-[3px] overflow-hidden border-2 transition cursor-pointer relative ${activeImageIdx === i ? 'border-[var(--accent)] shadow-md' : 'border-neutral-200 opacity-70 hover:opacity-100'
+                    className={`aspect-[4/3] rounded-[3px] overflow-hidden border-2 transition cursor-pointer relative ${safeActiveImageIdx === i ? 'border-[var(--accent)] shadow-md' : 'border-neutral-200 opacity-70 hover:opacity-100'
                       }`}
                   >
                     <img src={img} alt="HAMLO SPORTS Custom Uniform Angle View" className="w-full h-full object-cover" />
@@ -628,16 +794,27 @@ export default function ProductDetailLandingTemplate({
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {upsells.map((u, idx) => (
-              <div key={idx} className="bg-white p-3 rounded-[3px] border border-[var(--secondary)]/10 shadow-xs flex flex-col justify-between">
-                <div className="aspect-[4/3] bg-neutral-100 rounded mb-2 overflow-hidden">
-                  <img src={u.img} alt="HAMLO SPORTS Teamwear Apparel" className="w-full h-full object-cover" />
+              <div key={idx} className="bg-white p-3 rounded-[3px] border border-[var(--secondary)]/10 shadow-xs flex flex-col justify-between group hover:border-[var(--accent)] transition duration-200">
+                <div 
+                  className="aspect-[4/3] bg-neutral-100 rounded mb-2 overflow-hidden cursor-pointer"
+                  onClick={() => u.rawProduct && onNavigateProduct(u.rawProduct)}
+                >
+                  <img src={u.img} alt={`${u.name} - HAMLO SPORTS`} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
                 </div>
-                <h3 className="text-xs font-black uppercase text-[var(--secondary)] line-clamp-1 mb-1">{u.name}</h3>
+                <h3 
+                  className="text-xs font-black uppercase text-[var(--secondary)] line-clamp-1 mb-1 cursor-pointer hover:text-[var(--accent)]"
+                  onClick={() => u.rawProduct && onNavigateProduct(u.rawProduct)}
+                >
+                  {u.name}
+                </h3>
                 <div className="flex items-center justify-between pt-2 border-t border-neutral-100 text-xs">
                   <span className="font-bold text-[var(--secondary)]">{u.price}</span>
-                  <a href="#quote-section" className="text-[10px] font-bold text-[var(--accent)] uppercase hover:underline">
+                  <button 
+                    onClick={() => handleAddUpsellToQuote(u)}
+                    className="text-[10px] font-bold text-[var(--accent)] uppercase hover:underline cursor-pointer"
+                  >
                     Add to Quote &rarr;
-                  </a>
+                  </button>
                 </div>
               </div>
             ))}
@@ -710,12 +887,24 @@ export default function ProductDetailLandingTemplate({
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
               {filteredInspiration.map((design, idx) => (
-                <div key={idx} className="bg-white p-2 rounded-[3px] border border-neutral-200 text-center">
+                <div 
+                  key={idx} 
+                  className="bg-white p-2 rounded-[3px] border border-neutral-200 text-center group hover:border-[var(--accent)] transition cursor-pointer"
+                  onClick={() => design.rawProduct && onNavigateProduct(design.rawProduct)}
+                >
                   <div className="aspect-[4/5] bg-neutral-100 rounded mb-1.5 overflow-hidden">
-                    <img src={design.img} alt="HAMLO SPORTS Sublimated Design Concept" className="w-full h-full object-cover" />
+                    <img 
+                      src={design.img} 
+                      alt={`${design.fullName || design.name} - HAMLO SPORTS Sublimated Design Concept`} 
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" 
+                    />
                   </div>
-                  <strong className="text-[10px] font-black uppercase text-[var(--secondary)] block line-clamp-1">{design.name}</strong>
-                  <span className="text-[8.5px] text-neutral-400 uppercase font-semibold">Front / Back Sublimated</span>
+                  <strong className="text-[10px] font-black uppercase text-[var(--secondary)] block line-clamp-1 group-hover:text-[var(--accent)]">
+                    {design.name}
+                  </strong>
+                  <span className="text-[8.5px] text-neutral-400 uppercase font-semibold">
+                    Front / Back Sublimated
+                  </span>
                 </div>
               ))}
             </div>
