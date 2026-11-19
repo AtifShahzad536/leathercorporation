@@ -155,21 +155,21 @@ const Navbar = ({ onNavigate = () => {} }) => {
   return (
     <>
       {/* ── 1. TOP UTILITY BAR (Edge-to-Edge full width alignment) ─────────── */}
-      <div className="w-full bg-[var(--secondary)] text-white border-b border-white/10 py-1.5 z-[100] relative">
-        <div className="w-[96%] max-w-[1800px] mx-auto flex items-center justify-between gap-4">
+      <div className="w-full bg-[var(--secondary)] text-white border-b border-white/10 py-1.5 z-[100] relative overflow-x-hidden">
+        <div className="w-[96%] max-w-[1800px] mx-auto flex items-center justify-between gap-2 sm:gap-4">
           
           {/* Left Tagline */}
-          <div className="flex items-center gap-2 text-[9.5px] sm:text-[10.5px] font-semibold tracking-wider uppercase text-white/80 whitespace-nowrap">
+          <div className="flex items-center gap-2 text-[9px] sm:text-[10.5px] font-semibold tracking-wider uppercase text-white/80 whitespace-nowrap min-w-0 truncate">
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse flex-shrink-0" />
             <span className="hidden sm:inline">CUSTOM SPORTSWEAR & ATHLETIC UNIFORMS MANUFACTURER • FACTORY DIRECT</span>
-            <span className="sm:hidden">CUSTOM UNIFORMS & SPORTSWEAR</span>
+            <span className="sm:hidden truncate">FACTORY DIRECT SPORTSWEAR</span>
           </div>
 
           {/* Right Utility Links */}
-          <div className="flex items-center gap-3 sm:gap-6 text-[9.5px] sm:text-[10.5px] tracking-wider uppercase font-medium text-white/70 whitespace-nowrap">
+          <div className="flex items-center gap-2.5 sm:gap-5 text-[9px] sm:text-[10.5px] tracking-wider uppercase font-medium text-white/70 whitespace-nowrap flex-shrink-0">
             <button
               onClick={() => onNavigate('inquiry')}
-              className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer"
+              className="flex items-center gap-1 hover:text-white transition-colors cursor-pointer"
             >
               <Sparkles size={11} className="text-[var(--accent)]" />
               <span>Free 3D Mockup</span>
@@ -177,14 +177,14 @@ const Navbar = ({ onNavigate = () => {} }) => {
             <div className="w-[1px] h-3 bg-white/20 hidden sm:block" />
             <button
               onClick={() => onNavigate('inquiry')}
-              className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer"
+              className="hidden sm:flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer"
             >
               <Building2 size={11} className="text-[var(--accent)]" />
               <span className="hidden md:inline">B2B Team Quotes</span>
-              <span className="md:hidden">B2B</span>
+              <span className="md:hidden">B2B Quotes</span>
             </button>
-            <div className="w-[1px] h-3 bg-white/20" />
-            <div className="flex items-center gap-1 hover:text-white transition-colors cursor-pointer">
+            <div className="w-[1px] h-3 bg-white/20 hidden lg:block" />
+            <div className="hidden lg:flex items-center gap-1 hover:text-white transition-colors cursor-pointer">
               <Globe size={11} />
               <span>GLOBAL EXPORT</span>
             </div>
