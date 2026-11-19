@@ -7,6 +7,12 @@ import {
 import TrustBar from '../common/TrustBar';
 import { useCMS } from '../../context/CMSContext';
 import { fullCatalog296 } from '../../data/fullCatalog296';
+import { 
+  getSportPricingTable, 
+  getSportDecorationData, 
+  getPlayoffSchedule, 
+  getCareInstructions 
+} from '../../data/sportEditorialGuides';
 
 export default function SportsCategoryHubPage({
   activeSport = 'BASEBALL',
@@ -115,20 +121,36 @@ export default function SportsCategoryHubPage({
     }));
   }, [sportProducts]);
 
-  // 4. Calculator State
+  // 4. Sport Pricing & Calculator State
+  const sportPricing = useMemo(() => getSportPricingTable(activeSport), [activeSport]);
+  const decorationData = useMemo(() => getSportDecorationData(activeSport), [activeSport]);
+  const playoffSchedule = useMemo(() => getPlayoffSchedule(), []);
+  const careInstructions = useMemo(() => getCareInstructions(activeSport), [activeSport]);
+
   const [calcQty, setCalcQty] = useState(25);
   const [calcProductType, setCalcProductType] = useState('set');
   const getCalcRate = () => {
+    const pkg1 = sportPricing.packages[0];
+    const pkgSet = sportPricing.packages[sportPricing.packages.length - 1];
+
     if (calcProductType === 'set') {
-      if (calcQty >= 101) return { unit: 69.99, total: (calcQty * 69.99).toFixed(2) };
-      if (calcQty >= 51) return { unit: 72.99, total: (calcQty * 72.99).toFixed(2) };
-      if (calcQty >= 25) return { unit: 74.99, total: (calcQty * 74.99).toFixed(2) };
-      return { unit: 79.99, total: (calcQty * 79.99).toFixed(2) };
+      const u1 = parseFloat(pkgSet.t1.replace('$', '')) || 79.99;
+      const u2 = parseFloat(pkgSet.t2.replace('$', '')) || 74.99;
+      const u3 = parseFloat(pkgSet.t3.replace('$', '')) || 72.99;
+      const u4 = parseFloat(pkgSet.t4.replace('$', '')) || 69.99;
+      if (calcQty >= 101) return { unit: u4, total: (calcQty * u4).toFixed(2) };
+      if (calcQty >= 51) return { unit: u3, total: (calcQty * u3).toFixed(2) };
+      if (calcQty >= 25) return { unit: u2, total: (calcQty * u2).toFixed(2) };
+      return { unit: u1, total: (calcQty * u1).toFixed(2) };
     } else {
-      if (calcQty >= 101) return { unit: 29.99, total: (calcQty * 29.99).toFixed(2) };
-      if (calcQty >= 51) return { unit: 37.99, total: (calcQty * 37.99).toFixed(2) };
-      if (calcQty >= 25) return { unit: 39.99, total: (calcQty * 39.99).toFixed(2) };
-      return { unit: 41.99, total: (calcQty * 41.99).toFixed(2) };
+      const u1 = parseFloat(pkg1.t1.replace('$', '')) || 49.99;
+      const u2 = parseFloat(pkg1.t2.replace('$', '')) || 44.99;
+      const u3 = parseFloat(pkg1.t3.replace('$', '')) || 42.99;
+      const u4 = parseFloat(pkg1.t4.replace('$', '')) || 39.99;
+      if (calcQty >= 101) return { unit: u4, total: (calcQty * u4).toFixed(2) };
+      if (calcQty >= 51) return { unit: u3, total: (calcQty * u3).toFixed(2) };
+      if (calcQty >= 25) return { unit: u2, total: (calcQty * u2).toFixed(2) };
+      return { unit: u1, total: (calcQty * u1).toFixed(2) };
     }
   };
   const calcRate = getCalcRate();
@@ -302,17 +324,17 @@ export default function SportsCategoryHubPage({
         </div>
       </section>
 
-      {/* ── 4. FULL SETS WITH PANTS & SOCKS PRICING TABLE ─────────────────── */}
+      {/* ── 4. SPORT-SPECIFIC VOLUME PRICING TABLE ───────────────────────── */}
       <section className="w-[96%] max-w-[1800px] mx-auto my-14 sm:my-20">
         <div className="text-center mb-8">
           <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--accent)]">
             TRANSPARENT VOLUME PACKAGES
           </span>
           <h2 className="text-2xl sm:text-3xl font-black uppercase text-[var(--secondary)] mt-1">
-            FULL SETS WITH PANTS AND SOCKS
+            {sportPricing.title}
           </h2>
           <p className="text-xs text-[var(--secondary)]/60 mt-1">
-            Sublimated names, numbers, and logos included. Pro tackle twill available at +$5/player.
+            {sportPricing.subtitle}
           </p>
         </div>
 
@@ -320,33 +342,70 @@ export default function SportsCategoryHubPage({
           <table className="w-full text-left border-collapse text-xs sm:text-sm">
             <thead>
               <tr className="bg-[var(--secondary)] text-white text-[11px] uppercase tracking-wider">
-                <th className="py-4 px-6">Product Package</th>
-                <th className="py-4 px-4">1 to 24</th>
-                <th className="py-4 px-4">25 to 50</th>
-                <th className="py-4 px-4">51 to 100</th>
-                <th className="py-4 px-4 bg-[var(--accent)] text-white font-black">101+ (Best Tier)</th>
+                <th className="py-4 px-6 w-2/5">PRODUCT</th>
+                <th className="py-4 px-4">1 TO 24</th>
+                <th className="py-4 px-4">25 TO 50</th>
+                <th className="py-4 px-4">51 TO 100</th>
+                <th className="py-4 px-4 bg-[var(--accent)] text-white font-black">101+</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--secondary)]/10 font-medium">
-              <tr className="hover:bg-neutral-50">
-                <td className="py-4 px-6 font-bold text-[var(--secondary)]">V-Neck & Round Neck Game Jerseys</td>
-                <td className="py-4 px-4">$41.99</td>
-                <td className="py-4 px-4">$39.99</td>
-                <td className="py-4 px-4">$37.99</td>
-                <td className="py-4 px-4 font-bold text-[var(--accent)]">$29.99</td>
-              </tr>
-              <tr className="hover:bg-neutral-50 bg-neutral-50/50">
-                <td className="py-4 px-6 font-bold text-[var(--secondary)]">Full Button Uniform Sets (Jersey + Pant + Sock)</td>
-                <td className="py-4 px-4">$92.99</td>
-                <td className="py-4 px-4 text-emerald-600 font-semibold">$89.99</td>
-                <td className="py-4 px-4 text-emerald-600 font-semibold">$84.99</td>
-                <td className="py-4 px-4 font-bold text-[var(--accent)]">$79.99</td>
-              </tr>
+              {sportPricing.packages.map((pkg, pIdx) => (
+                <tr key={pIdx} className={pIdx % 2 === 1 ? 'hover:bg-neutral-50 bg-neutral-50/50' : 'hover:bg-neutral-50'}>
+                  <td className="py-4 px-6 font-bold text-[var(--secondary)]">{pkg.name}</td>
+                  <td className="py-4 px-4">{pkg.t1}</td>
+                  <td className="py-4 px-4">{pkg.t2}</td>
+                  <td className="py-4 px-4">{pkg.t3}</td>
+                  <td className="py-4 px-4 font-bold text-[var(--accent)]">{pkg.t4}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
-          <div className="p-4 bg-neutral-100 text-[11px] text-[var(--secondary)]/70 flex justify-between items-center border-t border-[var(--secondary)]/10">
-            <span>✓ Mix jerseys, pants, and outerwear to reach your higher volume tier</span>
-            <span>✓ Verified 2026 Factory Prices</span>
+          <div className="p-4 bg-neutral-100 text-[11.5px] text-[var(--secondary)]/85 border-t border-[var(--secondary)]/10 leading-relaxed">
+            {sportPricing.note}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4B. DECORATION OPTIONS: SUBLIMATED VS TACKLE TWILL ────────────── */}
+      <section className="w-[96%] max-w-[1800px] mx-auto my-14 sm:my-20">
+        <div className="bg-white rounded-[3px] border border-[var(--secondary)]/10 p-6 sm:p-10 shadow-lg">
+          <div className="mb-6">
+            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--accent)]">
+              PREMIUM FINISHING & EMBROIDERY
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black uppercase text-[var(--secondary)] mt-1 mb-2">
+              {decorationData.heading}
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-4xl">
+              {decorationData.intro}
+            </p>
+          </div>
+
+          <div className="overflow-x-auto mb-6 border border-neutral-200 rounded-[3px]">
+            <table className="w-full text-left border-collapse text-xs sm:text-sm">
+              <thead>
+                <tr className="bg-[var(--secondary)] text-white text-[10.5px] uppercase tracking-wider">
+                  <th className="py-3 px-4 w-1/4">DECORATION OPTIONS</th>
+                  <th className="py-3 px-4 w-3/8">SUBLIMATED</th>
+                  <th className="py-3 px-4 w-3/8">TACKLE TWILL</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-neutral-200">
+                {decorationData.rows.map((row, rIdx) => (
+                  <tr key={rIdx} className={rIdx % 2 === 1 ? 'bg-neutral-50/50' : ''}>
+                    <td className="py-3.5 px-4 font-bold text-[var(--secondary)]">{row.property}</td>
+                    <td className="py-3.5 px-4 text-neutral-700">{row.sublimated}</td>
+                    <td className="py-3.5 px-4 font-semibold text-[var(--secondary)]">{row.twill}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="space-y-2 text-xs text-neutral-600 leading-relaxed border-t border-neutral-100 pt-4">
+            <p>{decorationData.explanation1}</p>
+            <p>{decorationData.explanation2}</p>
           </div>
         </div>
       </section>
@@ -474,43 +533,185 @@ export default function SportsCategoryHubPage({
         </div>
       </section>
 
-      {/* ── 6. LONG EDITORIAL & BUYER GUIDES ───────────────────────────────── */}
-      <section className="w-[96%] max-w-[1800px] mx-auto my-14 sm:my-20 space-y-8">
+      {/* ── 6. COMPREHENSIVE TEAM UNIFORM BUYER'S GUIDE & EDITORIAL ────────── */}
+      <section className="w-[96%] max-w-[1800px] mx-auto my-14 sm:my-20 space-y-10">
         
-        <div className="p-6 sm:p-8 bg-white rounded-[3px] border-l-4 border-l-[var(--accent)] border border-[var(--secondary)]/10 shadow-sm">
-          <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-2">
-            Youth {activeSport} Jerseys For Travel Teams
-          </h3>
-          <p className="text-xs sm:text-sm text-[var(--secondary)]/75 leading-relaxed mb-3">
-            Youth sizes run YS to YXL and adult sizes XS to 4XL, so players of different ages fit into one order. A youth jersey costs the same as an adult jersey. When a new player joins mid-season, order one more jersey at your team's original volume tier rate.
-          </p>
+        {/* Youth Club & High School Programs */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+          <div className="p-6 sm:p-8 bg-white rounded-[3px] border-l-4 border-l-[var(--accent)] border border-[var(--secondary)]/10 shadow-sm flex flex-col justify-between">
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--accent)] block mb-1">
+                YOUTH ASSOCIATIONS & TRAVEL CLUBS
+              </span>
+              <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-3">
+                Youth Club {activeSport} Jerseys
+              </h3>
+              <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
+                A youth club or association can put several age groups on one HAMLO SPORTS quote, each with its own design, and the combined quantity sets one price tier for all of them. Three age groups of 15 players make 45 game jerseys, which lands in the 25 to 50 tier at $44.99 each: $2,024.55 in total.
+              </p>
+              <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                Youth sizes run YS to YXL, and adult sizes XS to 4XL go on the same order, so coaches and older players are covered in one shipment. Not sure what size a 7-year-old needs? Measure their chest, waist and hips and match them to the Youth tab of the size chart on this page before you collect money from families.
+              </p>
+            </div>
+          </div>
+
+          <div className="p-6 sm:p-8 bg-white rounded-[3px] border-l-4 border-l-[var(--secondary)] border border-[var(--secondary)]/10 shadow-sm flex flex-col justify-between">
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--secondary)] block mb-1">
+                VARSITY, JV & ATHLETIC DIRECTORS
+              </span>
+              <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-3">
+                High School {activeSport} Uniforms
+              </h3>
+              <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
+                High school programs can put home and away sets, practice jerseys and warm-ups on one HAMLO SPORTS quote, so the whole program reaches its price tier together. Official school purchase orders (POs) accepted with Net 30 terms.
+              </p>
+              <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                A common setup is home and away game jerseys with matching socks, plus reversible practice jerseys for drills. If your school colors or crest are already set, send them with your quote and the mockup starts from your exact artwork.
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="p-6 sm:p-8 bg-white rounded-[3px] border-l-4 border-l-[var(--secondary)] border border-[var(--secondary)]/10 shadow-sm">
-          <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-2">
-            High School & Athletic Programs
-          </h3>
-          <p className="text-xs sm:text-sm text-[var(--secondary)]/75 leading-relaxed mb-3">
-            Athletic directors running varsity and JV often need home and away jerseys, pants, dugout warm-ups, and varsity jackets for the same season. Put them all on one quote. There are no setup fees or hidden charges, and we accept official school purchase orders (POs).
-          </p>
-        </div>
-
+        {/* Beer League & Adult Rec */}
         <div className="p-6 sm:p-8 bg-white rounded-[3px] border-l-4 border-l-emerald-600 border border-[var(--secondary)]/10 shadow-sm">
-          <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-2">
-            Leagues: Many Teams, One United Order
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-600 block mb-1">
+            ADULT REC & MEN'S LEAGUE
+          </span>
+          <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-3">
+            Beer League & Adult Rec {activeSport} Jerseys
           </h3>
-          <p className="text-xs sm:text-sm text-[var(--secondary)]/75 leading-relaxed mb-3">
-            Put every team in your youth league, rec league, or travel program on one single quote. Each team still gets its own distinct colors and team name. The total across all your teams sets the price tier, down to $29.99 per player at 101+.
+          <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
+            One HAMLO SPORTS quote can cover your beer-league team or every team in your league, and the combined total of every team on the order sets the price tier, even when each team has its own design. A 14-player beer-league team ordering game jerseys at $49.99 per player pays $699.86 in total, with free US shipping.
+          </p>
+          <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+            Add a tackle twill name and number to all 14 jerseys and the order comes to $839.86. A league running 8 teams of 15 players orders 120 jerseys, pushing every team into the 101+ tier at $39.99 per jersey: $4,798.80 for the whole league. For styles and the jersey setup that fits your league, read our gear guides.
           </p>
         </div>
 
-        <div className="p-6 sm:p-8 bg-white rounded-[3px] border-l-4 border-l-amber-500 border border-[var(--secondary)]/10 shadow-sm">
-          <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-2">
-            Sublimated vs Tackle Twill Jerseys
-          </h3>
-          <p className="text-xs sm:text-sm text-[var(--secondary)]/75 leading-relaxed mb-3">
-            Full dye-sublimation dyes your design into the fabric itself. There is no print layer on top to crack or peel, and you can use as many colors, gradients, and pinstripes as you want. Tackle twill embroidery sews raised letters and numbers onto the jersey for an authentic collegiate aesthetic.
-          </p>
+        {/* Goalie, Women's Cut, Captain Letters & Full Kits */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+          <div className="p-6 sm:p-8 bg-white rounded-[3px] border border-[var(--secondary)]/10 shadow-sm">
+            <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-3">
+              Goalie Cut, Women's Cut and Captain Letters
+            </h3>
+            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
+              Goalie-cut jerseys are available and cost the same as skater jerseys. Uniforms come in men's, women's, and youth cuts. A goalie cut is a larger cut that fits over a goalie's chest protector, so your goalies wear the same design as the rest of the roster.
+            </p>
+            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+              Women's and youth cuts sit on the same order as men's cuts, which suits coed rec teams and girls' programs. Captain "C" and "A" letters are placed on the left chest, sublimated or in tackle twill; twill letters are priced on your quote. Hockey jerseys come with or without a sewn-in fight strap. Tell us which you need on your quote.
+            </p>
+          </div>
+
+          <div className="p-6 sm:p-8 bg-white rounded-[3px] border border-[var(--secondary)]/10 shadow-sm">
+            <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-3">
+              Practice Jerseys, Pant Shells and Full Kits
+            </h3>
+            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
+              A complete HAMLO SPORTS kit puts game jerseys, custom match socks and pant shells on one quote, so every piece shares one design and counts toward the same tier. For game day, start with the Game Day Home Jersey and Game Day Away Jersey.
+            </p>
+            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+              For drills, our custom practice jerseys start at $49.99 per player (1 to 24 pieces), and reversible jerseys give you two colors in one jersey from $89.99 per player (1 to 24). Custom shells cover your pants in team colors from $44.99 per player (1 to 24). Team warmups, custom parkas at $69.99, and hoodies at $46.99 round out the order.
+            </p>
+          </div>
+        </div>
+
+        {/* When to Order Before Playoffs (Timeline Schedule Table) */}
+        <div className="p-6 sm:p-8 bg-[var(--secondary)] text-white rounded-[3px] shadow-xl border border-white/10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--accent)] block mb-1">
+                PRODUCTION & TOURNAMENT DEADLINES
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-black uppercase text-white">
+                When to Order Before Playoffs
+              </h3>
+            </div>
+            <p className="text-xs text-white/70 max-w-md">
+              Approve your design with HAMLO SPORTS at least 33 days before your tournament or playoff date. Standard production takes 2 to 3 weeks, express air shipping takes 3 to 5 days, keeping a week margin for late roster additions.
+            </p>
+          </div>
+
+          <div className="overflow-x-auto mb-6 bg-white/5 rounded border border-white/10">
+            <table className="w-full text-left border-collapse text-xs sm:text-sm">
+              <thead>
+                <tr className="bg-white/10 text-white text-[11px] uppercase tracking-wider">
+                  <th className="py-3.5 px-4 font-black">Tournament or Playoff Date</th>
+                  <th className="py-3.5 px-4 font-black text-[var(--accent)]">Approve Your Design By</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10 font-medium">
+                {playoffSchedule.map((sched, sIdx) => (
+                  <tr key={sIdx} className="hover:bg-white/5">
+                    <td className="py-3 px-4 font-bold text-white">{sched.tournamentDate}</td>
+                    <td className="py-3 px-4 text-emerald-400 font-bold">{sched.approveByDate}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+            <span className="text-xs text-white/80">
+              The quote form asks for your in-hands date. Already past your approve-by date? Ask for a free rush on request.
+            </span>
+            <a 
+              href="#quote-form" 
+              className="px-6 py-2.5 bg-[var(--accent)] hover:bg-white hover:text-[var(--secondary)] text-white text-xs font-black uppercase tracking-wider rounded-[3px] transition cursor-pointer flex-shrink-0"
+            >
+              Get My Free Quote &rarr;
+            </a>
+          </div>
+        </div>
+
+        {/* Our Promise & Care Instructions */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+          
+          {/* Our Promise */}
+          <div className="p-6 sm:p-8 bg-white rounded-[3px] border border-[var(--secondary)]/10 shadow-sm">
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--accent)] block mb-1">
+              QUALITY COMMITMENT
+            </span>
+            <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-4">
+              Our Promise to Your {activeSport} Team
+            </h3>
+            <div className="space-y-3 text-xs sm:text-sm text-neutral-600 leading-relaxed">
+              <div className="flex items-start gap-2.5">
+                <Check size={16} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                <span><strong>Nothing is made until you approve it:</strong> A free 3D digital proof within 12 hours and unlimited changes. If we make a mistake, report it within 30 days of delivery and we remake it free.</span>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <Check size={16} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                <span><strong>Same-dye-batch consistency:</strong> Every piece in your order runs in one production pass, so jersey number 1 matches jersey number 22 in dye-shade, fit, and finish. No mismatched blues in the third period.</span>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <Check size={16} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                <span><strong>Direct uniform specialist:</strong> Reach a real HAMLO SPORTS uniform specialist by phone, email, or WhatsApp — never an automated chatbot.</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Care Instructions */}
+          <div className="p-6 sm:p-8 bg-white rounded-[3px] border border-[var(--secondary)]/10 shadow-sm">
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--accent)] block mb-1">
+              LONGEVITY & MAINTENANCE
+            </span>
+            <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-4">
+              Care Instructions for {activeSport} Uniforms
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-neutral-600">
+              {careInstructions.map((ci, cIdx) => (
+                <div key={cIdx} className="p-2.5 bg-neutral-50 rounded border border-neutral-100">
+                  <strong className="block text-[var(--secondary)] mb-1 font-bold">{ci.title}</strong>
+                  <p className="text-[11px] leading-relaxed text-neutral-600">{ci.desc}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-[10.5px] text-neutral-500 mt-3 pt-3 border-t border-neutral-100 leading-relaxed">
+              Sublimated dye is molecularly infused into the polyester fiber, not sitting on the surface like screen print. Names, numbers, and crests will never crack, peel, or fade.
+            </p>
+          </div>
+
         </div>
 
       </section>
@@ -693,12 +894,12 @@ export default function SportsCategoryHubPage({
           <h2 className="text-2xl sm:text-3xl font-black uppercase text-[var(--secondary)] mt-1">
             SIZING, FIT & PLAYER COMFORT
           </h2>
-          <p className="text-xs text-neutral-500 mt-1">
-            Youth YS through Adult 4XL. Custom tailored lengths available at zero charge.
+          <p className="text-xs sm:text-sm text-neutral-600 max-w-2xl mx-auto mt-2 leading-relaxed">
+            Measure each player and check the chart before you order. Proper fit is critical in {activeSport.toLowerCase()} because uniforms must layer comfortably over protective pads without limiting athletic mobility. Our uniforms feature a pad-friendly athletic cut that allows full range of motion while maintaining a clean, professional look on the field or rink.
           </p>
         </div>
 
-        <div className="bg-white rounded-[3px] border border-[var(--secondary)]/10 p-6 sm:p-8 shadow-md overflow-x-auto">
+        <div className="bg-white rounded-[3px] border border-[var(--secondary)]/10 p-6 sm:p-8 shadow-md overflow-x-auto mb-6">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
               <tr className="bg-[var(--secondary)] text-white uppercase text-[10px] tracking-wider">
@@ -718,6 +919,30 @@ export default function SportsCategoryHubPage({
             </tbody>
           </table>
         </div>
+
+        {/* 4 Feature Badges */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="bg-white p-4 rounded-[3px] border border-[var(--secondary)]/10 text-center shadow-xs">
+            <Sparkles size={20} className="text-[var(--accent)] mx-auto mb-1.5" />
+            <strong className="text-xs font-black uppercase text-[var(--secondary)] block">Unlimited</strong>
+            <span className="text-[10px] text-neutral-500 uppercase font-semibold">Color Combinations</span>
+          </div>
+          <div className="bg-white p-4 rounded-[3px] border border-[var(--secondary)]/10 text-center shadow-xs">
+            <Clock size={20} className="text-[var(--accent)] mx-auto mb-1.5" />
+            <strong className="text-xs font-black uppercase text-[var(--secondary)] block">Free 12-Hour</strong>
+            <span className="text-[10px] text-neutral-500 uppercase font-semibold">Design Mockups</span>
+          </div>
+          <div className="bg-white p-4 rounded-[3px] border border-[var(--secondary)]/10 text-center shadow-xs">
+            <Layers size={20} className="text-[var(--accent)] mx-auto mb-1.5" />
+            <strong className="text-xs font-black uppercase text-[var(--secondary)] block">YS to 4XL</strong>
+            <span className="text-[10px] text-neutral-500 uppercase font-semibold">Complete Size Range</span>
+          </div>
+          <div className="bg-white p-4 rounded-[3px] border border-[var(--secondary)]/10 text-center shadow-xs">
+            <Award size={20} className="text-[var(--accent)] mx-auto mb-1.5" />
+            <strong className="text-xs font-black uppercase text-[var(--secondary)] block">Zero Minimum</strong>
+            <span className="text-[10px] text-neutral-500 uppercase font-semibold">Order (No MOQ)</span>
+          </div>
+        </div>
       </section>
 
       {/* ── 10. YOUR ORDER AT A GLANCE TABLE ───────────────────────────────── */}
@@ -728,7 +953,10 @@ export default function SportsCategoryHubPage({
         <div className="bg-white rounded-[3px] border border-[var(--secondary)]/10 overflow-hidden shadow-sm">
           <table className="w-full text-left text-xs">
             <tbody className="divide-y divide-neutral-100">
-              <tr className="bg-neutral-50/50"><td className="py-3 px-4 font-bold text-[var(--secondary)] w-1/3">Price Per Player</td><td className="py-3 px-4 text-neutral-700">Jerseys from $41.99 (1-24) down to $29.99 (101+). Names, numbers, and logos included.</td></tr>
+              <tr className="bg-neutral-50/50">
+                <td className="py-3 px-4 font-bold text-[var(--secondary)] w-1/3">Price Per Player</td>
+                <td className="py-3 px-4 text-neutral-700">Jerseys from {sportPricing.packages[0].t1} (1-24) down to {sportPricing.packages[0].t4} (101+). Names, numbers, and logos included.</td>
+              </tr>
               <tr><td className="py-3 px-4 font-bold text-[var(--secondary)]">Minimum Order</td><td className="py-3 px-4 text-neutral-700">None. Order 1 jersey or 500 sets for a whole league.</td></tr>
               <tr className="bg-neutral-50/50"><td className="py-3 px-4 font-bold text-[var(--secondary)]">Production Timing</td><td className="py-3 px-4 text-neutral-700">Ready 2 to 3 weeks after you approve your design, plus 3 to 5 days express shipping.</td></tr>
               <tr><td className="py-3 px-4 font-bold text-[var(--secondary)]">3D Mockup</td><td className="py-3 px-4 text-neutral-700">Free, within 12 hours, with unlimited changes.</td></tr>

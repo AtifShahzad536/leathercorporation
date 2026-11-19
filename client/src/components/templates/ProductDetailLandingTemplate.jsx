@@ -103,32 +103,55 @@ export default function ProductDetailLandingTemplate({
   // Safe active image index
   const safeActiveImageIdx = activeImageIdx < displayImages.length ? activeImageIdx : 0;
 
-  // 1. Volume Price Table (Block 7)
-  const volumeTiers = [
-    { qty: '1 to 24', jersey: '$44.99', set: '$79.99', save: 'Base price', note: '-' },
-    { qty: '25 to 50', jersey: '$42.99', set: '$74.99', save: 'Save $5 / each', note: '-' },
-    { qty: '51 to 100', jersey: '$39.99', set: '$72.99', save: 'Save $7 / each', note: '-' },
-    { qty: '101+', jersey: '$34.99', set: '$69.99', save: 'Save $10 / each', note: 'Best Value' }
-  ];
+  // 1. Dynamic Volume Price Table (Block 7) based on this specific product's price
+  const parsedPrice = parseFloat(String(product?.price || basePrice).replace(/[^0-9.]/g, '')) || 49.99;
 
-  // 2. In-Page Price Calculator (Beat-Hamco Improvement - Block 18 of Checklist)
+  const volumeTiers = useMemo(() => {
+    const t1Jersey = parsedPrice;
+    let t2Jersey = Math.max(12, Math.round((t1Jersey * 0.90) * 100) / 100);
+    let t3Jersey = Math.max(10, Math.round((t1Jersey * 0.85) * 100) / 100);
+    let t4Jersey = Math.max(8, Math.round((t1Jersey * 0.78) * 100) / 100);
+
+    // Exact sport-specific calibrations (Ice Hockey benchmark)
+    if (Math.abs(t1Jersey - 49.99) < 1) {
+      t2Jersey = 44.99; t3Jersey = 42.99; t4Jersey = 39.99;
+    } else if (Math.abs(t1Jersey - 89.99) < 1) {
+      t2Jersey = 84.99; t3Jersey = 82.99; t4Jersey = 79.99;
+    } else if (Math.abs(t1Jersey - 44.99) < 1) {
+      t2Jersey = 42.99; t3Jersey = 39.99; t4Jersey = 36.99;
+    }
+
+    const t1Set = Math.round((t1Jersey * 1.75) * 100) / 100;
+    const t2Set = Math.round((t1Set * 0.93) * 100) / 100;
+    const t3Set = Math.round((t1Set * 0.88) * 100) / 100;
+    const t4Set = Math.round((t1Set * 0.82) * 100) / 100;
+
+    return [
+      { qty: '1 to 24', jersey: `$${t1Jersey.toFixed(2)}`, set: `$${t1Set.toFixed(2)}`, save: 'Base price', note: '-' },
+      { qty: '25 to 50', jersey: `$${t2Jersey.toFixed(2)}`, set: `$${t2Set.toFixed(2)}`, save: `Save $${(t1Jersey - t2Jersey).toFixed(2)} / each`, note: '-' },
+      { qty: '51 to 100', jersey: `$${t3Jersey.toFixed(2)}`, set: `$${t3Set.toFixed(2)}`, save: `Save $${(t1Jersey - t3Jersey).toFixed(2)} / each`, note: '-' },
+      { qty: '101+', jersey: `$${t4Jersey.toFixed(2)}`, set: `$${t4Set.toFixed(2)}`, save: `Save $${(t1Jersey - t4Jersey).toFixed(2)} / each`, note: 'Best Value' }
+    ];
+  }, [parsedPrice]);
+
+  // 2. Dynamic In-Page Price Calculator (Block 18)
   const [calcQty, setCalcQty] = useState(25);
-  const [calcFormat, setCalcFormat] = useState('set');
+  const [calcFormat, setCalcFormat] = useState('jersey');
   const getCalcRate = () => {
-    let rate = 74.99;
+    let rate = 0;
     if (calcFormat === 'set') {
-      if (calcQty >= 101) rate = 69.99;
-      else if (calcQty >= 51) rate = 72.99;
-      else if (calcQty >= 25) rate = 74.99;
-      else rate = 79.99;
+      if (calcQty >= 101) rate = parseFloat(volumeTiers[3].set.replace('$', ''));
+      else if (calcQty >= 51) rate = parseFloat(volumeTiers[2].set.replace('$', ''));
+      else if (calcQty >= 25) rate = parseFloat(volumeTiers[1].set.replace('$', ''));
+      else rate = parseFloat(volumeTiers[0].set.replace('$', ''));
     } else {
-      if (calcQty >= 101) rate = 34.99;
-      else if (calcQty >= 51) rate = 39.99;
-      else if (calcQty >= 25) rate = 42.99;
-      else rate = 44.99;
+      if (calcQty >= 101) rate = parseFloat(volumeTiers[3].jersey.replace('$', ''));
+      else if (calcQty >= 51) rate = parseFloat(volumeTiers[2].jersey.replace('$', ''));
+      else if (calcQty >= 25) rate = parseFloat(volumeTiers[1].jersey.replace('$', ''));
+      else rate = parseFloat(volumeTiers[0].jersey.replace('$', ''));
     }
     return {
-      unit: rate,
+      unit: rate.toFixed(2),
       total: (calcQty * rate).toFixed(2)
     };
   };
