@@ -571,8 +571,13 @@ export default function Model3DManager() {
                     3D Model Asset (.GLB / .GLTF)
                   </span>
                   {uploading && (
-                    <span className="text-xs text-[#F26522] font-normal animate-pulse">
-                      Uploading to storage...
+                    <span className="text-xs text-[#F26522] font-semibold animate-pulse">
+                      Uploading to Cloudinary CDN...
+                    </span>
+                  )}
+                  {!uploading && form.modelUrl && form.modelUrl.includes('cloudinary') && (
+                    <span className="text-xs text-emerald-600 font-semibold flex items-center gap-1">
+                      <Check size={12} /> Cloudinary CDN Active
                     </span>
                   )}
                 </div>
@@ -582,7 +587,7 @@ export default function Model3DManager() {
                     type="text"
                     value={form.modelUrl}
                     onChange={(e) => setForm({ ...form, modelUrl: e.target.value })}
-                    placeholder="Model file URL (e.g. /uploads/models3d/jersey.glb)"
+                    placeholder="https://res.cloudinary.com/... or /uploads/models3d/jersey.glb"
                     className="flex-1 bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-800 font-mono"
                   />
                   <label className="px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-medium rounded-lg border border-slate-200 transition cursor-pointer flex items-center gap-1.5 flex-shrink-0 shadow-xs">

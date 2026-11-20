@@ -7,6 +7,8 @@ const EmailList = require('../models/EmailList');
 const EmailTemplate = require('../models/EmailTemplate');
 const EmailLog = require('../models/EmailLog');
 const parseExcelFile = require('../utils/parseExcel');
+const createTransporter = require('../config/email');
+const { sendDailyEmails } = require('../cron/emailCron');
 const { protect } = require('../middleware/auth');
 
 const router = express.Router();
@@ -251,6 +253,96 @@ router.get('/stats', protect, async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// POST /api/email/send-batch - Admin trigger: immediately dispatch the next pending batch (10 leads)
+router.post('/send-batch', protect, async (req, res) => {
+  try {
+    const result = await sendDailyEmails();
+    res.json({
+      success: result.success !== false,
+      message: result.message || 'Batch dispatched successfully',
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// POST /api/email/test-send - Admin trigger: send a test email to verify SMTP and deliverability
+router.post('/test-send', protect, async (req, res) => {
+  try {
+    const { to, templateId, customSubject, customBody } = req.body;
+    if (!to) {
+      return res.status(400).json({ success: false, message: 'Recipient email address (to) is required.' });
+    }
+
+    let subject = customSubject || 'HAMLO SPORTS • Test Email Delivery Verification';
+    let html = customBody;
+
+    if (templateId) {
+      const tpl = await EmailTemplate.findById(templateId);
+      if (tpl) {
+        subject = tpl.subject.replace(/{{name}}/gi, 'Valued Partner').replace(/{{company}}/gi, 'Hamlo Athletic');
+        html = tpl.htmlBody.replace(/{{name}}/gi, 'Valued Partner').replace(/{{email}}/gi, to).replace(/{{company}}/gi, 'Hamlo Athletic');
+      }
+    }
+
+    if (!html) {
+      html = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
+          <h2 style="color: #1E1B6E; margin-bottom: 8px;">HAMLO SPORTS Verification</h2>
+          <p style="color: #475569; font-size: 14px; line-height: 1.6;">
+            This is a real-time verification email confirming that your SMTP email server and delivery credentials are configured and functioning correctly.
+          </p>
+          <div style="background: #f8fafc; padding: 12px; border-left: 4px solid #F26522; margin: 16px 0; font-size: 12px; font-family: monospace;">
+            Timestamp: ${new Date().toISOString()}<br/>
+            Delivered To: ${to}<br/>
+            SMTP Gateway: ${process.env.SMTP_HOST || 'smtp.gmail.com'}
+          </div>
+          <p style="color: #64748b; font-size: 12px;">HAMLO SPORTS • Sialkot, Pakistan • High Performance Custom Teamwear</p>
+        </div>
+      `;
+    }
+
+    const transporter = createTransporter();
+    const fromSender = process.env.SMTP_USER 
+      ? `"HAMLO SPORTS" <${process.env.SMTP_USER}>` 
+      : (process.env.EMAIL_FROM || 'sale@hamlosportswear.site');
+
+    await transporter.sendMail({
+      from: fromSender,
+      replyTo: process.env.EMAIL_FROM || 'sale@hamlosportswear.site',
+      to,
+      subject,
+      html,
+    });
+
+    await EmailLog.create({
+      to,
+      subject,
+      templateName: templateId ? 'Template Test' : 'Direct SMTP Test',
+      status: 'sent',
+    });
+
+    res.json({
+      success: true,
+      message: `Test email successfully delivered to ${to}! Check your inbox.`,
+    });
+  } catch (error) {
+    console.error('[Email Test] Send error:', error);
+    await EmailLog.create({
+      to: req.body.to || 'unknown',
+      subject: 'Test Email (Failed)',
+      status: 'failed',
+      error: error.message,
+    });
+
+    res.status(500).json({
+      success: false,
+      message: `Delivery failed: ${error.message}. Please check SMTP credentials in server/.env.`,
+    });
   }
 });
 

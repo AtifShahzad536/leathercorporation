@@ -53,9 +53,13 @@ const Footer = ({ onNavigate = () => {} }) => {
                 <span className="text-[9px] font-bold tracking-[0.25em] uppercase text-[#FB923C]">SPORTS</span>
               </div>
             </div>
-            <p className="text-sm text-white/70 leading-relaxed mb-8 max-w-[320px]">
+            <p className="text-sm text-white/70 leading-relaxed mb-4 max-w-[320px]">
               Direct from Sialkot, Pakistan. HAMLO SPORTS manufactures world-class custom team uniforms, pro-grade dye-sublimation, and performance sportswear engineered for schools, clubs, and professional leagues.
             </p>
+            <div className="space-y-1 mb-6 text-xs text-white/80 font-medium">
+              <div>Sales: <a href="mailto:sale@hamlosportswear.site" className="text-[var(--accent)] hover:underline font-bold">sale@hamlosportswear.site</a></div>
+              <div>WhatsApp / Phone: <a href="https://wa.me/923105464116" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline font-bold">+92 310 5464116</a></div>
+            </div>
             {/* Social Icons */}
             <div className="flex items-center gap-4">
               {[

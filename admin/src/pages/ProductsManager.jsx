@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/client';
 import { Package, Search, Plus, Trash2, Edit, Check, X, ArrowUpDown } from 'lucide-react';
+import MediaUploadField from '../components/MediaUploadField';
 
 export default function ProductsManager() {
   const [products, setProducts] = useState([]);
@@ -443,13 +444,13 @@ export default function ProductsManager() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Image URL (Cloudinary or CDN)</label>
-                <input
-                  type="text"
+                <MediaUploadField
+                  label="Product Primary Image (Cloudinary CDN)"
                   value={form.image}
-                  onChange={(e) => setForm({ ...form, image: e.target.value })}
-                  placeholder="https://res.cloudinary.com/..."
-                  className="w-full border border-slate-300 rounded-lg p-2.5 text-xs focus:border-[#F26522] focus:outline-none"
+                  onChange={(url) => setForm({ ...form, image: url })}
+                  type="image"
+                  placeholder="https://res.cloudinary.com/... or click Browse to upload"
+                  helperText="Upload athlete uniform photo directly to Cloudinary or paste image CDN URL"
                 />
               </div>
 

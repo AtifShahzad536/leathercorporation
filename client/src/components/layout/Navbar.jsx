@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Globe, ChevronDown, Menu, ShoppingBag, Sparkles, Building2 } from 'lucide-react';
+import { Search, Globe, ChevronDown, Menu, ShoppingBag, Sparkles, Building2, Phone, Mail } from 'lucide-react';
 import MobileMenu from './MobileMenu';
 import SearchOverlay from './SearchOverlay';
 import NavbarDropdown from './NavbarDropdown';
@@ -183,11 +183,26 @@ const Navbar = ({ onNavigate = () => {} }) => {
               <span className="hidden md:inline">B2B Team Quotes</span>
               <span className="md:hidden">B2B Quotes</span>
             </button>
+            <div className="w-[1px] h-3 bg-white/20 hidden md:block" />
+            <a
+              href="https://wa.me/923105464116"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:flex items-center gap-1 hover:text-white transition-colors cursor-pointer text-white/90"
+              title="WhatsApp Direct Desk"
+            >
+              <Phone size={11} className="text-[var(--accent)]" />
+              <span>+92 310 5464116</span>
+            </a>
             <div className="w-[1px] h-3 bg-white/20 hidden lg:block" />
-            <div className="hidden lg:flex items-center gap-1 hover:text-white transition-colors cursor-pointer">
-              <Globe size={11} />
-              <span>GLOBAL EXPORT</span>
-            </div>
+            <a
+              href="mailto:sale@hamlosportswear.site"
+              className="hidden lg:flex items-center gap-1 hover:text-white transition-colors cursor-pointer text-white/90"
+              title="Official Sales Desk"
+            >
+              <Mail size={11} className="text-[var(--accent)]" />
+              <span>sale@hamlosportswear.site</span>
+            </a>
           </div>
         </div>
       </div>

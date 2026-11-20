@@ -5,6 +5,19 @@ const CMSContext = createContext();
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
+export const resolveMediaUrl = (url) => {
+  if (!url) return '';
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('blob:') || url.startsWith('data:')) {
+    return url;
+  }
+  // If it's a local upload from backend server, prepend backend origin
+  if (url.startsWith('/uploads/')) {
+    const apiOrigin = API_BASE.replace(/\/api\/?$/, '');
+    return `${apiOrigin}${url}`;
+  }
+  return url;
+};
+
 export const CMSProvider = ({ children }) => {
   const [homeContent, setHomeContent] = useState(null);
   const [loading, setLoading] = useState(true);

@@ -93,7 +93,8 @@ async function processFileUpload(file, folder = 'hamlo-sports') {
 
   // 1. Try Cloudinary
   try {
-    if (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET) {
+    const conf = cloudinary.config();
+    if (conf.cloud_name && conf.api_key && conf.api_secret) {
       const result = await cloudinary.uploader.upload(file.path, {
         folder,
         resource_type: resourceType,

@@ -3,6 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
+const cloudinary = require('../config/cloudinary');
 const Model3D = require('../models/Model3D');
 const CustomDesign = require('../models/CustomDesign');
 const { protect } = require('../middleware/auth');
@@ -81,16 +82,48 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST /api/models3d/upload - Admin: upload 3D model or texture file
-router.post('/upload', protect, upload.single('file'), (req, res) => {
+// POST /api/models3d/upload - Admin: upload 3D model or texture file (Cloudinary CDN with local fallback)
+router.post('/upload', protect, upload.single('file'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ success: false, message: 'No file uploaded' });
     }
 
-    const fileUrl = `/uploads/models3d/${req.file.filename}`;
+    let fileUrl = '';
+    let storageType = 'cloudinary';
+    const ext = path.extname(req.file.originalname).toLowerCase().replace('.', '');
+    const isImage = /^(png|jpg|jpeg|webp|svg)$/.test(ext);
+    const resourceType = isImage ? 'image' : 'raw';
+
+    try {
+      const conf = cloudinary.config();
+      if (conf.cloud_name && conf.api_key && conf.api_secret) {
+        const result = await cloudinary.uploader.upload(req.file.path, {
+          folder: 'hamlo-sports/models3d',
+          resource_type: resourceType,
+          use_filename: true,
+          unique_filename: true,
+        });
+
+        fileUrl = result.secure_url;
+        storageType = 'cloudinary';
+
+        // Clean up temporary local upload file
+        if (fs.existsSync(req.file.path)) {
+          try { fs.unlinkSync(req.file.path); } catch (e) {}
+        }
+      } else {
+        throw new Error('Cloudinary credentials not configured in server/.env');
+      }
+    } catch (cldErr) {
+      console.warn(`⚠️ Cloudinary 3D upload failed (${cldErr.message}). Falling back to local storage.`);
+      fileUrl = `/uploads/models3d/${req.file.filename}`;
+      storageType = 'local';
+    }
+
     res.json({
       success: true,
+      storage: storageType,
       data: {
         filename: req.file.filename,
         originalName: req.file.originalname,

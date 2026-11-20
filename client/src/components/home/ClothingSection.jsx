@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCMS } from "../../context/CMSContext";
+import { useCMS, resolveMediaUrl } from "../../context/CMSContext";
 
 const defaultHotspots = [
   {
@@ -81,7 +81,8 @@ export default function ClothingSection({ onExplore = () => {} }) {
   const { homeContent } = useCMS();
   const clothingData = homeContent?.clothingSection || {};
 
-  const bannerImage = clothingData.bannerImage || "/hamlo-athletes-lineup.png";
+  const rawBanner = clothingData.bannerImage || "/hamlo-athletes-lineup.png";
+  const bannerImage = resolveMediaUrl(rawBanner);
   const tagline = clothingData.tagline || "ATHLETE UNIFORM ANATOMY";
   const heading = clothingData.heading || "PRO-CUT SPORTSWEAR SPOTLIGHT";
   const description = clothingData.description || "Hover over the interactive hotspots to inspect fabric specifications, cuts, and custom uniform tailoring.";

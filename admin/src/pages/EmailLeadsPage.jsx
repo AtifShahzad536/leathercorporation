@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import api from '../api/client';
 import { 
   Upload, FileSpreadsheet, Mail, CheckCircle, Clock, AlertTriangle, 
-  Trash2, Play, Pause, RefreshCw, FileText, Send, Sparkles, ChevronRight
+  Trash2, Play, Pause, RefreshCw, FileText, Send, Sparkles, ChevronRight,
+  Zap, Loader2, Check, X
 } from 'lucide-react';
 
 export default function EmailLeadsPage() {
@@ -14,6 +15,17 @@ export default function EmailLeadsPage() {
   const [uploadMessage, setUploadMessage] = useState(null);
   const [selectedListDetail, setSelectedListDetail] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  // Manual Dispatch State
+  const [sendingBatch, setSendingBatch] = useState(false);
+  const [batchResult, setBatchResult] = useState(null);
+
+  // Send Test Email Modal State
+  const [showTestModal, setShowTestModal] = useState(false);
+  const [testSending, setTestSending] = useState(false);
+  const [testEmail, setTestEmail] = useState('');
+  const [testTemplateId, setTestTemplateId] = useState('');
+  const [testResult, setTestResult] = useState(null);
 
   // New Template state
   const [showTemplateModal, setShowTemplateModal] = useState(false);
@@ -40,6 +52,39 @@ export default function EmailLeadsPage() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const handleSendBatchNow = async () => {
+    setSendingBatch(true);
+    setBatchResult(null);
+    try {
+      const res = await api.post('/email/send-batch');
+      setBatchResult({ type: res.data.success ? 'success' : 'error', text: res.data.message });
+      fetchData();
+    } catch (err) {
+      setBatchResult({ type: 'error', text: err.response?.data?.message || err.message });
+    } finally {
+      setSendingBatch(false);
+    }
+  };
+
+  const handleSendTestEmail = async (e) => {
+    e.preventDefault();
+    if (!testEmail) return;
+    setTestSending(true);
+    setTestResult(null);
+    try {
+      const res = await api.post('/email/test-send', {
+        to: testEmail,
+        templateId: testTemplateId || undefined,
+      });
+      setTestResult({ type: 'success', text: res.data.message });
+      fetchData();
+    } catch (err) {
+      setTestResult({ type: 'error', text: err.response?.data?.message || err.message });
+    } finally {
+      setTestSending(false);
+    }
+  };
 
   const handleFileUpload = async (e) => {
     e.preventDefault();
@@ -121,21 +166,61 @@ export default function EmailLeadsPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            onClick={handleSendBatchNow}
+            disabled={sendingBatch}
+            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-sm cursor-pointer disabled:opacity-50 transition"
+          >
+            {sendingBatch ? (
+              <>
+                <Loader2 size={14} className="animate-spin" />
+                <span>Sending 10 Leads...</span>
+              </>
+            ) : (
+              <>
+                <Zap size={14} />
+                <span>Dispatch Batch Now</span>
+              </>
+            )}
+          </button>
+
+          <button
+            onClick={() => { setShowTestModal(true); setTestResult(null); }}
+            className="px-3.5 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm cursor-pointer transition"
+          >
+            <Mail size={14} /> Send Test Email
+          </button>
+
           <button
             onClick={() => setShowTemplateModal(true)}
-            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-sm cursor-pointer"
+            className="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm cursor-pointer transition"
           >
             <Sparkles size={14} /> New Template
           </button>
+
           <button
             onClick={fetchData}
+            title="Refresh Email Pipeline"
             className="p-2 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg shadow-xs cursor-pointer"
           >
             <RefreshCw size={16} />
           </button>
         </div>
       </div>
+
+      {/* ── BATCH EXECUTION RESULT BANNER ── */}
+      {batchResult && (
+        <div className={`p-4 rounded-xl text-xs font-bold flex items-center justify-between gap-3 shadow-sm ${batchResult.type === 'success' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
+          <div className="flex items-center gap-2">
+            {batchResult.type === 'success' ? <CheckCircle size={16} /> : <AlertTriangle size={16} />}
+            <span>{batchResult.text}</span>
+          </div>
+          <button onClick={() => setBatchResult(null)} className="text-slate-400 hover:text-slate-700">
+            <X size={14} />
+          </button>
+        </div>
+      )}
 
       {/* ── SPECIAL ALERT: SYSTEM CHECKS DAILY IF NEW LIST IS NEEDED ── */}
       {stats?.needsLeadsList && (
@@ -473,6 +558,102 @@ export default function EmailLeadsPage() {
                 </div>
               )}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── SEND TEST EMAIL MODAL ── */}
+      {showTestModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl max-w-md w-full p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-orange-100 text-[#F26522] flex items-center justify-center">
+                  <Mail size={16} />
+                </div>
+                <div>
+                  <h3 className="font-black text-sm uppercase text-slate-900">
+                    Verify & Send Test Email
+                  </h3>
+                  <span className="text-[11px] text-slate-500 font-medium">Live SMTP Delivery Diagnostics</span>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowTestModal(false)}
+                className="text-slate-400 hover:text-slate-700 font-bold text-sm cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {testResult && (
+              <div className={`p-3.5 rounded-lg text-xs font-semibold flex items-center gap-2 ${testResult.type === 'success' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
+                {testResult.type === 'success' ? <CheckCircle size={16} className="flex-shrink-0 text-emerald-600" /> : <AlertTriangle size={16} className="flex-shrink-0 text-red-600" />}
+                <span className="break-all">{testResult.text}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleSendTestEmail} className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold uppercase text-slate-700 mb-1">
+                  Recipient Email Address *
+                </label>
+                <input
+                  type="email"
+                  required
+                  placeholder="e.g. yourname@domain.com"
+                  value={testEmail}
+                  onChange={(e) => setTestEmail(e.target.value)}
+                  className="w-full border border-slate-300 rounded-lg p-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#F26522]"
+                />
+                <span className="text-[10px] text-slate-400 mt-1 block">
+                  A verification email will be dispatched immediately via Gmail SMTP.
+                </span>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase text-slate-700 mb-1">
+                  Email Template
+                </label>
+                <select
+                  value={testTemplateId}
+                  onChange={(e) => setTestTemplateId(e.target.value)}
+                  className="w-full border border-slate-300 rounded-lg p-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#F26522] bg-white"
+                >
+                  <option value="">Standard SMTP Verification Ping</option>
+                  {templates.map(t => (
+                    <option key={t._id} value={t._id}>{t.name}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowTestModal(false)}
+                  className="px-4 py-2 border border-slate-300 rounded-lg text-xs font-bold text-slate-600 cursor-pointer"
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
+                  disabled={testSending || !testEmail}
+                  className="px-6 py-2 bg-[#F26522] hover:bg-[#d95316] text-white rounded-lg text-xs font-black uppercase tracking-wider shadow cursor-pointer disabled:opacity-50 flex items-center gap-2"
+                >
+                  {testSending ? (
+                    <>
+                      <Loader2 size={13} className="animate-spin" />
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send size={13} />
+                      <span>Send Now</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

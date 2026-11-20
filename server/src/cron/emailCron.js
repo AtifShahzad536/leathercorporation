@@ -15,7 +15,7 @@ const sendDailyEmails = async () => {
 
     if (!activeList) {
       console.log('[EMAIL CRON] ⚠️  ALL LISTS COMPLETED OR NONE ACTIVE — SYSTEM STATUS: "NEEDS LEADS LIST"!');
-      return;
+      return { success: false, message: 'All email lists completed or none active. Please upload a new leads list.' };
     }
 
     // 2. Get all active templates for alternating / rotating emails
@@ -23,7 +23,7 @@ const sendDailyEmails = async () => {
 
     if (templates.length === 0) {
       console.log('[EMAIL CRON] ⚠️  No active email templates found. Skipping batch.');
-      return;
+      return { success: false, message: 'No active email templates found. Please create or activate at least one template.' };
     }
 
     // 3. Pick next BATCH_SIZE pending emails
@@ -35,7 +35,7 @@ const sendDailyEmails = async () => {
       activeList.recalcCounts();
       await activeList.save();
       console.log(`[EMAIL CRON] List "${activeList.fileName}" has no pending emails.`);
-      return;
+      return { success: false, message: `List "${activeList.fileName}" has no pending leads.` };
     }
 
     console.log(`[EMAIL CRON] Sending batch of ${pendingEmails.length} emails from "${activeList.fileName}"...`);
@@ -43,10 +43,13 @@ const sendDailyEmails = async () => {
     // 4. Create Nodemailer transporter
     const transporter = createTransporter();
 
+    let batchSent = 0;
+    let batchFailed = 0;
+
     // 5. Send each email, alternating templates
     for (let i = 0; i < pendingEmails.length; i++) {
       const entry = pendingEmails[i];
-      // Rotate templates so 10 users receive alternating templates
+      // Rotate templates so users receive alternating templates
       const template = templates[i % templates.length];
 
       try {
@@ -59,8 +62,13 @@ const sendDailyEmails = async () => {
           .replace(/{{name}}/gi, entry.name || 'Team Director')
           .replace(/{{company}}/gi, entry.company || 'Athletic Program');
 
+        const fromSender = process.env.SMTP_USER 
+          ? `"HAMLO SPORTS" <${process.env.SMTP_USER}>` 
+          : (process.env.EMAIL_FROM || 'sale@hamlosportswear.site');
+
         await transporter.sendMail({
-          from: process.env.EMAIL_FROM || 'HAMLO SPORTS <sale@hamlosportswear.site>',
+          from: fromSender,
+          replyTo: process.env.EMAIL_FROM || 'sale@hamlosportswear.site',
           to: entry.email,
           subject,
           html,
@@ -86,9 +94,11 @@ const sendDailyEmails = async () => {
 
         template.sendCount = (template.sendCount || 0) + 1;
         await template.save();
+        batchSent++;
 
         console.log(`  ✅ [${i + 1}/${pendingEmails.length}] Sent to: ${entry.email} (Template: ${template.name})`);
       } catch (sendError) {
+        batchFailed++;
         const emailDoc = activeList.emails.id(entry._id);
         if (emailDoc) {
           emailDoc.status = 'failed';
@@ -124,8 +134,18 @@ const sendDailyEmails = async () => {
         console.log('═══════════════════════════════════════════════════════');
       }
     }
+
+    return {
+      success: true,
+      sent: batchSent,
+      failed: batchFailed,
+      total: pendingEmails.length,
+      listName: activeList.fileName,
+      message: `Successfully processed batch of ${pendingEmails.length} leads: ${batchSent} sent, ${batchFailed} failed.`,
+    };
   } catch (error) {
     console.error('[EMAIL CRON] Fatal batch error:', error.message);
+    return { success: false, message: error.message };
   }
 };
 
