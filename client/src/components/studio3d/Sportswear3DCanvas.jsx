@@ -701,8 +701,55 @@ function CameraRig({ viewAngle, cameraResetCount, autoRotate }) {
   );
 }
 
+// Helper to cull any inward-facing or inner-lining triangles from DecalGeometry
+function cullDecalInnerTriangles(geom, outwardNormal, minDot = 0.25) {
+  if (!geom || !geom.attributes.position || geom.attributes.position.count === 0) return null;
+  const pos = geom.attributes.position;
+  const norm = geom.attributes.normal;
+  const uv = geom.attributes.uv;
+
+  const newPos = [];
+  const newNorm = [];
+  const newUv = [];
+
+  const n0 = new THREE.Vector3();
+  const n1 = new THREE.Vector3();
+  const n2 = new THREE.Vector3();
+  const triNorm = new THREE.Vector3();
+
+  for (let i = 0; i < pos.count; i += 3) {
+    if (norm) {
+      n0.fromBufferAttribute(norm, i);
+      n1.fromBufferAttribute(norm, i + 1);
+      n2.fromBufferAttribute(norm, i + 2);
+      triNorm.copy(n0).add(n1).add(n2).normalize();
+    } else {
+      const v0 = new THREE.Vector3().fromBufferAttribute(pos, i);
+      const v1 = new THREE.Vector3().fromBufferAttribute(pos, i + 1);
+      const v2 = new THREE.Vector3().fromBufferAttribute(pos, i + 2);
+      triNorm.subVectors(v1, v0).cross(new THREE.Vector3().subVectors(v2, v0)).normalize();
+    }
+
+    // Keep ONLY faces facing outward in the projector direction
+    if (triNorm.dot(outwardNormal) >= minDot) {
+      for (let k = 0; k < 3; k++) {
+        newPos.push(pos.getX(i + k), pos.getY(i + k), pos.getZ(i + k));
+        if (norm) newNorm.push(norm.getX(i + k), norm.getY(i + k), norm.getZ(i + k));
+        if (uv) newUv.push(uv.getX(i + k), uv.getY(i + k));
+      }
+    }
+  }
+
+  if (newPos.length === 0) return null;
+  const result = new THREE.BufferGeometry();
+  result.setAttribute('position', new THREE.Float32BufferAttribute(newPos, 3));
+  if (newNorm.length > 0) result.setAttribute('normal', new THREE.Float32BufferAttribute(newNorm, 3));
+  if (newUv.length > 0) result.setAttribute('uv', new THREE.Float32BufferAttribute(newUv, 2));
+  return result;
+}
+
 // ── Shared Multi-Mesh Surface Decal Geometry Builder ──
-function buildDecalGeometry(modelGroup, posVec, orientEuler, sizeVec, angle = 0) {
+function buildDecalGeometry(modelGroup, posVec, orientEuler, sizeVec, angle = 0, modelBounds = null) {
   if (!modelGroup) return null;
   const p = Array.isArray(posVec) ? new THREE.Vector3(...posVec) : (posVec ? posVec.clone() : new THREE.Vector3());
   let rotEuler = Array.isArray(orientEuler)
@@ -711,20 +758,22 @@ function buildDecalGeometry(modelGroup, posVec, orientEuler, sizeVec, angle = 0)
       ? orientEuler.clone()
       : new THREE.Euler(orientEuler?.x || 0, orientEuler?.y || 0, orientEuler?.z || 0);
 
+  const centerZ = modelBounds?.center?.[2] || 0;
+
   // Check if decal is back-facing (p.z is negative, or rotation around Y or X is near PI)
-  const isBack = p.z < -0.01 ||
+  const isBack = p.z < (centerZ - 0.01) ||
                  Math.abs(rotEuler.y - Math.PI) < 1.2 ||
                  Math.abs(rotEuler.y + Math.PI) < 1.2 ||
                  Math.abs(rotEuler.x - Math.PI) < 1.2;
 
   // 1. Automatic Surface Snapping:
-  // Raycast straight into the physical model at (p.x, p.y) to find the exact surface Z and surface normal
+  // Raycast straight into the physical model at (p.x, p.y) to find the exact exterior surface Z and surface normal
   const ray = new THREE.Raycaster(
     new THREE.Vector3(p.x, p.y, isBack ? -3.0 : 3.0),
     new THREE.Vector3(0, 0, isBack ? 1 : -1)
   );
 
-  const hits = ray.intersectObjects(modelGroup.children, true).filter(
+  const allHits = ray.intersectObjects(modelGroup.children, true).filter(
     (h) => h.object?.isMesh &&
            !h.object.userData?.isTextDecal &&
            !h.object.userData?.isLogoDecal &&
@@ -732,10 +781,29 @@ function buildDecalGeometry(modelGroup, posVec, orientEuler, sizeVec, angle = 0)
            (h.object.geometry?.attributes?.position?.count || 0) > 40
   );
 
-  if (hits.length > 0) {
-    const hit = hits[0];
+  // Exterior-only hit filter: normal must face against ray direction, and point must be on exterior side
+  const exteriorHits = allHits.filter((h) => {
+    const wNorm = h.face.normal.clone().transformDirection(h.object.matrixWorld).normalize();
+    if (isBack) {
+      return wNorm.z < -0.2 && h.point.z <= (centerZ + 0.02);
+    } else {
+      return wNorm.z > 0.2 && h.point.z >= (centerZ - 0.02);
+    }
+  });
+
+  if (exteriorHits.length > 0) {
+    const hit = exteriorHits[0];
     p.copy(hit.point);
     const worldNorm = hit.face.normal.clone().transformDirection(hit.object.matrixWorld).normalize();
+
+    // Dampen sharp fly-seam or zipper crease X tilt near the garment centerline
+    const centerX = modelBounds?.center?.[0] || 0;
+    const centerDist = Math.abs(p.x - centerX);
+    if (centerDist < 0.08) {
+      worldNorm.x *= (centerDist / 0.08);
+      worldNorm.normalize();
+    }
+
     const dummy = new THREE.Object3D();
     dummy.position.copy(p);
 
@@ -758,11 +826,69 @@ function buildDecalGeometry(modelGroup, posVec, orientEuler, sizeVec, angle = 0)
       }
     }
     rotEuler = dummy.rotation;
+  } else {
+    // If no direct hit at this Y (e.g. above front waistband or below hem),
+    // search nearby Y offsets to clamp to the nearest valid exterior surface
+    for (const dy of [-0.015, -0.03, -0.05, 0.015, 0.03]) {
+      const fallbackRay = new THREE.Raycaster(
+        new THREE.Vector3(p.x, p.y + dy, isBack ? -3.0 : 3.0),
+        new THREE.Vector3(0, 0, isBack ? 1 : -1)
+      );
+      const fbHits = fallbackRay.intersectObjects(modelGroup.children, true).filter(
+        (h) => h.object?.isMesh &&
+               !h.object.userData?.isTextDecal &&
+               !h.object.userData?.isLogoDecal &&
+               !h.object.name?.startsWith('E_') &&
+               (h.object.geometry?.attributes?.position?.count || 0) > 40
+      );
+      const fbExterior = fbHits.filter((h) => {
+        const wNorm = h.face.normal.clone().transformDirection(h.object.matrixWorld).normalize();
+        if (isBack) {
+          return wNorm.z < -0.2 && h.point.z <= (centerZ + 0.02);
+        } else {
+          return wNorm.z > 0.2 && h.point.z >= (centerZ - 0.02);
+        }
+      });
+      if (fbExterior.length > 0) {
+        const hit = fbExterior[0];
+        p.copy(hit.point);
+        const worldNorm = hit.face.normal.clone().transformDirection(hit.object.matrixWorld).normalize();
+        const centerX = modelBounds?.center?.[0] || 0;
+        const centerDist = Math.abs(p.x - centerX);
+        if (centerDist < 0.08) {
+          worldNorm.x *= (centerDist / 0.08);
+          worldNorm.normalize();
+        }
+
+        const dummy = new THREE.Object3D();
+        dummy.position.copy(p);
+        if (isBack) {
+          dummy.rotation.set(0, Math.PI, 0);
+          if (Math.abs(worldNorm.z) > 0.1) dummy.rotation.x = -Math.atan2(worldNorm.y, Math.abs(worldNorm.z));
+          if (angle) dummy.rotateZ(THREE.MathUtils.degToRad(-angle));
+        } else {
+          dummy.up.set(0, 1, 0);
+          if (Math.abs(worldNorm.y) > 0.90) dummy.up.set(0, 0, -1);
+          dummy.lookAt(p.clone().add(worldNorm));
+          if (angle) dummy.rotateZ(THREE.MathUtils.degToRad(angle));
+        }
+        rotEuler = dummy.rotation;
+        break;
+      }
+    }
   }
 
-  // 2. Multi-Mesh Decal Projection across all intersecting garment panels
-  const decalBox = new THREE.Box3().setFromCenterAndSize(p, sizeVec);
+  // 2. Outward projection normal & conforming depth bounding box
+  const outwardNormal = new THREE.Vector3(0, 0, 1).applyEuler(rotEuler);
+  const effectiveDepth = Math.max(0.14, Math.min(sizeVec.z || 0.14, 0.24));
+  const effectiveSize = new THREE.Vector3(sizeVec.x, sizeVec.y, effectiveDepth);
+  const decalBox = new THREE.Box3().setFromCenterAndSize(p, effectiveSize);
   const validGeoms = [];
+
+  const centerX = modelBounds?.center?.[0] || 0;
+  const distFromCenter = p.x - centerX;
+  const isLeftSide = distFromCenter < -0.025;
+  const isRightSide = distFromCenter > 0.025;
 
   modelGroup.traverse((child) => {
     if (
@@ -775,11 +901,22 @@ function buildDecalGeometry(modelGroup, posVec, orientEuler, sizeVec, angle = 0)
       if (!child.geometry) return;
       if (!child.geometry.boundingBox) child.geometry.computeBoundingBox();
       const childBox = child.geometry.boundingBox.clone().applyMatrix4(child.matrixWorld);
+
+      // Prevent decal placed on one limb from projecting across onto the opposite limb (e.g. left leg onto right leg)
+      const childCenterX = (childBox.min.x + childBox.max.x) / 2;
+      const childDist = childCenterX - centerX;
+      if (isLeftSide && childDist > 0.03) return;
+      if (isRightSide && childDist < -0.03) return;
+
       if (decalBox.intersectsBox(childBox)) {
         try {
-          const dGeom = new DecalGeometry(child, p, rotEuler, sizeVec);
-          if (dGeom && dGeom.attributes.position && dGeom.attributes.position.count > 0) {
-            validGeoms.push(dGeom);
+          const rawGeom = new DecalGeometry(child, p, rotEuler, effectiveSize);
+          if (rawGeom && rawGeom.attributes.position && rawGeom.attributes.position.count > 0) {
+            // Strictly cull any inward-facing or inner-lining triangles, allowing smooth cylinder wrapping
+            const culledGeom = cullDecalInnerTriangles(rawGeom, outwardNormal, -0.05);
+            if (culledGeom && culledGeom.attributes.position && culledGeom.attributes.position.count > 0) {
+              validGeoms.push(culledGeom);
+            }
           }
         } catch (e) {}
       }
@@ -803,7 +940,8 @@ function TextDecalPlane({ item, modelGroupRef }) {
     setSelectedTextId,
     updateTextItem,
     setIsDragging3D,
-    modelRevision
+    modelRevision,
+    modelBounds
   } = useStudioStore();
 
   const isSelected = selectedTextId === item.id;
@@ -830,7 +968,15 @@ function TextDecalPlane({ item, modelGroupRef }) {
     const fontSize = isNum ? 340 : 120;
     const fontFam = item.font || 'Impact';
 
-    ctx.font = `900 ${fontSize}px "${fontFam}", sans-serif`;
+    // Auto-fit text within canvas with safety margins so outer letters (like 'H' or 'S') never clip
+    const maxTextWidth = canvas.width - 60;
+    let actualFontSize = fontSize;
+    ctx.font = `900 ${actualFontSize}px "${fontFam}", sans-serif`;
+    const metrics = ctx.measureText(item.text || '');
+    if (metrics.width > maxTextWidth) {
+      actualFontSize = Math.floor(fontSize * (maxTextWidth / metrics.width));
+      ctx.font = `900 ${actualFontSize}px "${fontFam}", sans-serif`;
+    }
 
     // Outline Stroke
     if (item.strokeWidth > 0 && item.strokeColor) {
@@ -885,9 +1031,10 @@ function TextDecalPlane({ item, modelGroupRef }) {
       currentPos,
       currentRotation,
       sizeVec,
-      item.angle || 0
+      item.angle || 0,
+      modelBounds
     );
-  }, [modelGroupRef, currentPos, currentRotation, sizeVec, modelRevision, item.angle]);
+  }, [modelGroupRef, currentPos, currentRotation, sizeVec, modelRevision, item.angle, modelBounds]);
 
   // Surface raycasting directly onto model geometry
   const projectToModelSurface = (clientX, clientY) => {
@@ -899,17 +1046,34 @@ function TextDecalPlane({ item, modelGroupRef }) {
     raycaster.setFromCamera(new THREE.Vector2(ndcX, ndcY), camera);
     const intersects = raycaster.intersectObjects(modelGroupRef.current.children, true);
 
-    const hit = intersects.find(
-      (h) => h.object?.isMesh && 
-             !h.object.userData?.isTextDecal && 
-             !h.object.userData?.isLogoDecal &&
-             !h.object.name?.startsWith('E_') &&
-             (h.object.geometry?.attributes?.position?.count || 0) > 40
-    );
+    const centerX = modelBounds?.center?.[0] || 0;
+    const centerZ = modelBounds?.center?.[2] || 0;
+
+    const hit = intersects.find((h) => {
+      if (!h.object?.isMesh || h.object.userData?.isTextDecal || h.object.userData?.isLogoDecal || h.object.name?.startsWith('E_')) {
+        return false;
+      }
+      if ((h.object.geometry?.attributes?.position?.count || 0) <= 40) return false;
+      const wNorm = h.face.normal.clone().transformDirection(h.object.matrixWorld).normalize();
+      // Must face towards camera
+      if (wNorm.dot(raycaster.ray.direction) >= -0.15) return false;
+      // Must face outward from body center (exclude interior lining / inner cavities)
+      const radVec = new THREE.Vector2(h.point.x - centerX, h.point.z - centerZ).normalize();
+      const norm2D = new THREE.Vector2(wNorm.x, wNorm.z);
+      if (radVec.dot(norm2D) < -0.1) return false;
+      return true;
+    });
     if (!hit) return null;
 
     const worldNormal = hit.face.normal.clone().transformDirection(hit.object.matrixWorld).normalize();
     const pos = hit.point.clone();
+
+    // Dampen sharp fly-seam or zipper crease X tilt near the centerline
+    const centerDist = Math.abs(pos.x - centerX);
+    if (centerDist < 0.08) {
+      worldNormal.x *= (centerDist / 0.08);
+      worldNormal.normalize();
+    }
 
     dummyObj.position.copy(pos);
     dummyObj.up.set(0, 1, 0);
@@ -1011,7 +1175,7 @@ function TextDecalPlane({ item, modelGroupRef }) {
           polygonOffsetUnits={-4}
           roughness={0.6}
           metalness={0.05}
-          side={THREE.DoubleSide}
+          side={THREE.FrontSide}
         />
       </mesh>
     </group>
@@ -1026,7 +1190,8 @@ function LogoDecalPlane({ item, modelGroupRef }) {
     setSelectedLogoId,
     updateLogo,
     setIsDragging3D,
-    modelRevision
+    modelRevision,
+    modelBounds
   } = useStudioStore();
 
   const isSelected = selectedLogoId === item.id;
@@ -1098,9 +1263,10 @@ function LogoDecalPlane({ item, modelGroupRef }) {
       currentPos,
       currentRotation,
       sizeVec,
-      item.angle || 0
+      item.angle || 0,
+      modelBounds
     );
-  }, [modelGroupRef, currentPos, currentRotation, sizeVec, texture, modelRevision, item.angle]);
+  }, [modelGroupRef, currentPos, currentRotation, sizeVec, texture, modelRevision, item.angle, modelBounds]);
 
   // Surface raycasting directly onto model geometry
   const projectToModelSurface = (clientX, clientY) => {
@@ -1112,17 +1278,34 @@ function LogoDecalPlane({ item, modelGroupRef }) {
     raycaster.setFromCamera(new THREE.Vector2(ndcX, ndcY), camera);
     const intersects = raycaster.intersectObjects(modelGroupRef.current.children, true);
 
-    const hit = intersects.find(
-      (h) => h.object?.isMesh && 
-             !h.object.userData?.isTextDecal && 
-             !h.object.userData?.isLogoDecal &&
-             !h.object.name?.startsWith('E_') &&
-             (h.object.geometry?.attributes?.position?.count || 0) > 40
-    );
+    const centerX = modelBounds?.center?.[0] || 0;
+    const centerZ = modelBounds?.center?.[2] || 0;
+
+    const hit = intersects.find((h) => {
+      if (!h.object?.isMesh || h.object.userData?.isTextDecal || h.object.userData?.isLogoDecal || h.object.name?.startsWith('E_')) {
+        return false;
+      }
+      if ((h.object.geometry?.attributes?.position?.count || 0) <= 40) return false;
+      const wNorm = h.face.normal.clone().transformDirection(h.object.matrixWorld).normalize();
+      // Must face towards camera
+      if (wNorm.dot(raycaster.ray.direction) >= -0.15) return false;
+      // Must face outward from body center (exclude interior lining / inner cavities)
+      const radVec = new THREE.Vector2(h.point.x - centerX, h.point.z - centerZ).normalize();
+      const norm2D = new THREE.Vector2(wNorm.x, wNorm.z);
+      if (radVec.dot(norm2D) < -0.1) return false;
+      return true;
+    });
     if (!hit) return null;
 
     const worldNormal = hit.face.normal.clone().transformDirection(hit.object.matrixWorld).normalize();
     const pos = hit.point.clone();
+
+    // Dampen sharp fly-seam or zipper crease X tilt near the centerline
+    const centerDist = Math.abs(pos.x - centerX);
+    if (centerDist < 0.08) {
+      worldNormal.x *= (centerDist / 0.08);
+      worldNormal.normalize();
+    }
 
     dummyObj.position.copy(pos);
     dummyObj.up.set(0, 1, 0);
@@ -1224,7 +1407,7 @@ function LogoDecalPlane({ item, modelGroupRef }) {
           polygonOffsetUnits={-4}
           roughness={0.6}
           metalness={0.1}
-          side={THREE.DoubleSide}
+          side={THREE.FrontSide}
         />
       </mesh>
     </group>
