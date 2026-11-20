@@ -519,6 +519,9 @@ export const useStudioStore = create((set, get) => ({
     let rot = [0, 0, 0];
     let partScale = 0.55;
 
+    const b = state.modelBounds || { center: [0, 0.2, 0], size: [0.5, 0.6, 0.3], max: [0.25, 0.5, 0.15], min: [-0.25, -0.1, -0.15] };
+    const isViewingBack = state.viewAngle === 'back';
+
     if (!pos && meshId && state.meshCenters[meshId]?.surfacePosition) {
       pos = [...state.meshCenters[meshId].surfacePosition];
       rot = state.meshCenters[meshId].rotation ? [...state.meshCenters[meshId].rotation] : [0, (pos[2] < 0 ? Math.PI : 0), 0];
@@ -527,9 +530,15 @@ export const useStudioStore = create((set, get) => ({
       }
     }
     if (!pos) {
-      pos = [0, 0.28, 0.22];
-      const b = state.modelBounds || { center: [0, 0.2, 0], size: [0.5, 0.6, 0.3], max: [0.25, 0.5, 0.15] };
-      pos = [0, b.center[1] + (b.size[1] * 0.1), b.max[2] + 0.003];
+      const customCount = (state.textItems || []).filter(t => t.type === 'custom').length;
+      const yOffset = (customCount % 3) * -0.06;
+      if (isViewingBack) {
+        pos = [0, b.center[1] + (b.size[1] * 0.08) + yOffset, (b.min?.[2] || -0.15) - 0.003];
+        rot = [0, Math.PI, 0];
+      } else {
+        pos = [0, b.center[1] - 0.04 + yOffset, (b.max?.[2] || 0.15) + 0.003];
+        rot = [0, 0, 0];
+      }
     }
 
     const newItem = {
@@ -553,7 +562,7 @@ export const useStudioStore = create((set, get) => ({
       ],
       angle: 0,
       scale: partScale,
-      targetMeshId: meshId,
+      targetMeshId: null,
       visible: true
     };
 
@@ -645,30 +654,36 @@ export const useStudioStore = create((set, get) => ({
 
     switch (presetKey) {
       case 'front_chest':
-        pos = [0, b.center[1] + (b.size[1] * 0.12), b.max[2] + 0.003];
+        pos = [0, b.center[1] + (b.size[1] * 0.12), (b.max?.[2] || 0.15) + 0.003];
         rot = [0, 0, 0];
+        state.setViewAngle('front');
         break;
       case 'front_center':
-        pos = [0, b.center[1], b.max[2] + 0.003];
+        pos = [0, b.center[1], (b.max?.[2] || 0.15) + 0.003];
         rot = [0, 0, 0];
+        state.setViewAngle('front');
         break;
       case 'back_name':
-        pos = [0, b.center[1] + (b.size[1] * 0.12), b.min[2] - 0.003];
+        pos = [0, b.center[1] + (b.size[1] * 0.12), (b.min?.[2] || -0.15) - 0.003];
         rot = [0, Math.PI, 0];
+        state.setViewAngle('back');
         break;
       case 'left_leg':
       case 'left_side':
-        pos = [b.min[0] + (b.size[0] * 0.2), b.center[1] - (b.size[1] * 0.1), b.max[2] + 0.002];
+        pos = [b.min[0] + (b.size[0] * 0.2), b.center[1] - (b.size[1] * 0.1), (b.max?.[2] || 0.15) + 0.002];
         rot = [0, 0, 0];
+        state.setViewAngle('front');
         break;
       case 'right_leg':
       case 'right_side':
-        pos = [b.max[0] - (b.size[0] * 0.2), b.center[1] - (b.size[1] * 0.1), b.max[2] + 0.002];
+        pos = [b.max[0] - (b.size[0] * 0.2), b.center[1] - (b.size[1] * 0.1), (b.max?.[2] || 0.15) + 0.002];
         rot = [0, 0, 0];
+        state.setViewAngle('front');
         break;
       case 'waistband':
-        pos = [0, b.max[1] - (b.size[1] * 0.1), b.max[2] + 0.003];
+        pos = [0, b.max[1] - (b.size[1] * 0.1), (b.max?.[2] || 0.15) + 0.003];
         rot = [0, 0, 0];
+        state.setViewAngle('front');
         break;
       default:
         break;
@@ -686,6 +701,7 @@ export const useStudioStore = create((set, get) => ({
         Math.round(rot[2] * 1000) / 1000
       ],
       scale: autoScale,
+      targetMeshId: null,
       visible: true
     });
   },

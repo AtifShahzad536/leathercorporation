@@ -578,7 +578,7 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
           rotation: [Math.round(frontRot[0] * 1000) / 1000, Math.round(frontRot[1] * 1000) / 1000, Math.round(frontRot[2] * 1000) / 1000],
           targetMeshId: null,
           scale: Math.round(autoScale * 0.75 * 100) / 100,
-          visible: false
+          visible: item.visible ?? false
         };
       }
       if (item.id === 'player_name') {
@@ -588,7 +588,7 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
           rotation: [Math.round(backRot[0] * 1000) / 1000, Math.round(backRot[1] * 1000) / 1000, Math.round(backRot[2] * 1000) / 1000],
           targetMeshId: null,
           scale: autoScale,
-          visible: false
+          visible: item.visible ?? false
         };
       }
       return item;
@@ -711,8 +711,11 @@ function buildDecalGeometry(modelGroup, posVec, orientEuler, sizeVec, angle = 0)
       ? orientEuler.clone()
       : new THREE.Euler(orientEuler?.x || 0, orientEuler?.y || 0, orientEuler?.z || 0);
 
-  // Check if decal is back-facing (near PI or -PI)
-  const isBack = Math.abs(rotEuler.y - Math.PI) < 0.8 || Math.abs(rotEuler.y + Math.PI) < 0.8;
+  // Check if decal is back-facing (p.z is negative, or rotation around Y or X is near PI)
+  const isBack = p.z < -0.01 ||
+                 Math.abs(rotEuler.y - Math.PI) < 1.2 ||
+                 Math.abs(rotEuler.y + Math.PI) < 1.2 ||
+                 Math.abs(rotEuler.x - Math.PI) < 1.2;
 
   // 1. Automatic Surface Snapping:
   // Raycast straight into the physical model at (p.x, p.y) to find the exact surface Z and surface normal
@@ -735,13 +738,24 @@ function buildDecalGeometry(modelGroup, posVec, orientEuler, sizeVec, angle = 0)
     const worldNorm = hit.face.normal.clone().transformDirection(hit.object.matrixWorld).normalize();
     const dummy = new THREE.Object3D();
     dummy.position.copy(p);
-    dummy.up.set(0, 1, 0);
-    if (Math.abs(worldNorm.y) > 0.90) {
-      dummy.up.set(0, 0, isBack ? 1 : -1);
-    }
-    dummy.lookAt(p.clone().add(worldNorm));
-    if (angle) {
-      dummy.rotateZ(THREE.MathUtils.degToRad(angle));
+
+    if (isBack) {
+      dummy.rotation.set(0, Math.PI, 0);
+      if (Math.abs(worldNorm.z) > 0.1) {
+        dummy.rotation.x = -Math.atan2(worldNorm.y, Math.abs(worldNorm.z));
+      }
+      if (angle) {
+        dummy.rotateZ(THREE.MathUtils.degToRad(-angle));
+      }
+    } else {
+      dummy.up.set(0, 1, 0);
+      if (Math.abs(worldNorm.y) > 0.90) {
+        dummy.up.set(0, 0, -1);
+      }
+      dummy.lookAt(p.clone().add(worldNorm));
+      if (angle) {
+        dummy.rotateZ(THREE.MathUtils.degToRad(angle));
+      }
     }
     rotEuler = dummy.rotation;
   }

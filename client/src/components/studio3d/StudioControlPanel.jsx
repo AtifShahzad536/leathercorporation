@@ -53,6 +53,8 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
     undo,
     redo,
     resetDesign,
+    viewAngle,
+    setViewAngle,
     setSelectedMesh,
     setMeshColor,
     setAllMeshesColor,
@@ -463,30 +465,84 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
                 </span>
                 <button
                   type="button"
-                  onClick={() => addCustomText('CUSTOM TEXT', selectedMeshId)}
-                  className="text-[11px] font-medium text-[#F26522] hover:underline flex items-center gap-1 cursor-pointer"
+                  onClick={() => {
+                    const newId = addCustomText('CUSTOM TEXT', selectedMeshId);
+                    if (newId) {
+                      setSelectedTextId(newId);
+                      if (viewAngle === 'back') {
+                        setViewAngle('back');
+                      }
+                    }
+                  }}
+                  className="px-2 py-0.5 bg-orange-50 hover:bg-orange-100 text-[#F26522] border border-orange-200 rounded text-[11px] font-medium flex items-center gap-1 cursor-pointer transition shadow-2xs"
                 >
-                  <Plus size={12} /> Add Custom Text
+                  <Plus size={12} /> Add New Text
                 </button>
               </div>
 
-              <div className="grid grid-cols-3 gap-1">
+              <div className="space-y-1 max-h-48 overflow-y-auto pr-0.5">
                 {textItems.map((item) => {
                   const isCurrent = (selectedTextId || textItems[0]?.id) === item.id;
+                  const isItemBack = (item.position?.[2] < -0.01) || item.id === 'player_name' || Math.abs((item.rotation?.[1] || 0) - Math.PI) < 1.0;
                   return (
-                    <button
+                    <div
                       key={item.id}
-                      type="button"
-                      onClick={() => setSelectedTextId(item.id)}
-                      className={`px-2 py-1.5 rounded text-xs truncate transition cursor-pointer border text-center ${
+                      className={`flex items-center justify-between px-2.5 py-1.5 rounded text-xs transition border ${
                         isCurrent
                           ? 'bg-orange-50/90 border-orange-300 text-orange-950 font-medium shadow-xs ring-1 ring-orange-200'
-                          : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50 font-normal'
+                          : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50 font-normal'
                       }`}
-                      title={item.label || item.text}
                     >
-                      {item.type === 'team_name' ? 'Team Name' : item.type === 'number' ? 'Number' : item.type === 'player_name' ? 'Player Name' : (item.text || 'Custom')}
-                    </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedTextId(item.id);
+                          if (!item.visible) {
+                            updateTextItem(item.id, { visible: true });
+                          }
+                          if (isItemBack) {
+                            setViewAngle('back');
+                          } else if (item.id === 'team_name' || item.type === 'team_name') {
+                            setViewAngle('front');
+                          }
+                        }}
+                        className="flex-1 text-left flex items-center gap-1.5 truncate cursor-pointer"
+                        title={item.label || item.text}
+                      >
+                        <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${item.visible ? 'bg-emerald-500' : 'bg-slate-300'}`} />
+                        <span className="truncate">{item.type === 'team_name' ? 'Team Name' : item.type === 'number' ? 'Number' : item.type === 'player_name' ? 'Player Name' : (item.text || 'Custom')}</span>
+                        <span className="text-[9px] px-1 py-0.2 bg-slate-100 text-slate-500 rounded border border-slate-200 ml-auto flex-shrink-0">
+                          {isItemBack ? 'Back' : 'Front'}
+                        </span>
+                      </button>
+
+                      <div className="flex items-center gap-1 ml-2 flex-shrink-0">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            updateTextItem(item.id, { visible: !item.visible });
+                          }}
+                          title={item.visible ? 'Hide from 3D Model' : 'Show on 3D Model'}
+                          className="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 cursor-pointer transition"
+                        >
+                          {item.visible ? <Eye size={12} className="text-emerald-600" /> : <EyeOff size={12} />}
+                        </button>
+                        {item.type === 'custom' && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              removeTextItem(item.id);
+                            }}
+                            title="Delete text layer"
+                            className="p-1 rounded text-red-400 hover:text-red-600 hover:bg-red-50 cursor-pointer transition"
+                          >
+                            <Trash2 size={12} />
+                          </button>
+                        )}
+                      </div>
+                    </div>
                   );
                 })}
               </div>
