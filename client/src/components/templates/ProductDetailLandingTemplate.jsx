@@ -15,7 +15,8 @@ import {
   getSportPricingTable, 
   getSportDecorationData, 
   getPlayoffSchedule, 
-  getCareInstructions 
+  getCareInstructions,
+  getSportProgramEditorial
 } from '../../data/sportEditorialGuides';
 
 /**
@@ -44,6 +45,52 @@ export default function ProductDetailLandingTemplate({
   const decorationData = useMemo(() => getSportDecorationData(normSport, product?.price || basePrice), [normSport, product, basePrice]);
   const playoffSchedule = useMemo(() => getPlayoffSchedule(), []);
   const careInstructions = useMemo(() => getCareInstructions(normSport), [normSport]);
+  const programEditorial = useMemo(() => getSportProgramEditorial(normSport), [normSport]);
+
+  // Product classification helpers & dynamic unit labeling
+  const lowerName = productName.toLowerCase();
+  const isSet = useMemo(() => lowerName.includes('set') || lowerName.includes('package') || lowerName.includes('kit'), [lowerName]);
+  const isPractice = useMemo(() => lowerName.includes('practice') || lowerName.includes('training') || lowerName.includes('scrimmage'), [lowerName]);
+  const isPant = useMemo(() => lowerName.includes('pant') || lowerName.includes('short') || lowerName.includes('breezer') || lowerName.includes('shell'), [lowerName]);
+
+  // Product Badge (above H1)
+  const productBadge = useMemo(() => {
+    if (product?.badge) return product.badge;
+    if (isPractice) return 'PRO TRAINING & PRACTICE APPAREL';
+    if (isSet) return 'OFFICIAL TEAM MATCH SET';
+    if (isPant) return 'ATHLETIC TEAM BOTTOMS';
+    return 'FACTORY DIRECT TEAM APPAREL';
+  }, [product, isPractice, isSet, isPant]);
+
+  // Unit Label next to Base Price (completely eliminates "per complete set (Jersey + Pant / Shorts)" confusion)
+  const priceUnitLabel = useMemo(() => {
+    if (isSet) return 'per complete uniform set (1–24 tier)';
+    if (isPractice) return 'per practice jersey (1–24 tier)';
+    if (lowerName.includes('pant')) return 'per pant (1–24 tier)';
+    if (lowerName.includes('short')) return 'per shorts (1–24 tier)';
+    if (lowerName.includes('hoodie') || lowerName.includes('jacket') || lowerName.includes('parka')) return 'per piece (1–24 tier)';
+    if (lowerName.includes('sock')) return 'per pair (1–24 tier)';
+    if (lowerName.includes('jersey') || lowerName.includes('sweater') || lowerName.includes('shirt')) return 'per jersey (1–24 tier)';
+    return 'per piece (1–24 tier)';
+  }, [isSet, isPractice, lowerName]);
+
+  // Dynamic Volume Pricing Table column headers
+  const singleItemColLabel = useMemo(() => {
+    if (isPractice) return 'Practice Jersey Only';
+    if (lowerName.includes('pant')) return 'Athletic Pant Only';
+    if (lowerName.includes('short')) return 'Athletic Short Only';
+    if (lowerName.includes('sweater')) return 'Game Sweater Only';
+    if (lowerName.includes('hoodie') || lowerName.includes('jacket')) return 'Apparel Only';
+    return 'Game Jersey Only';
+  }, [isPractice, lowerName]);
+
+  const setColLabel = useMemo(() => {
+    if (isPractice) return 'Full Practice Kit (Jersey + Shorts)';
+    if (normSport === 'ICE HOCKEY') return 'Complete Kit (Sweater + Shell)';
+    if (normSport === 'FOOTBALL') return 'Full Uniform Set (Jersey + Pant)';
+    if (normSport === 'BASEBALL') return 'Full Match Package (Jersey + Pant)';
+    return 'Complete Uniform Set (Jersey + Shorts)';
+  }, [isPractice, normSport]);
 
   // Dynamic Product Full Text (Descriptions, Feature Bullets, Fabric Specs)
   const productData = useMemo(() => {
@@ -195,8 +242,14 @@ export default function ProductDetailLandingTemplate({
   }, [parsedPrice, product]);
 
   // 2. Dynamic In-Page Price Calculator (Block 18)
-  const [calcQty, setCalcQty] = useState(25);
-  const [calcFormat, setCalcFormat] = useState('jersey');
+  const [calcQty, setCalcQty] = useState(15);
+  const [calcFormat, setCalcFormat] = useState(isSet ? 'set' : 'jersey');
+
+  // Keep calcFormat in sync when product changes
+  useEffect(() => {
+    setCalcFormat(isSet ? 'set' : 'jersey');
+  }, [isSet]);
+
   const getCalcRate = () => {
     let rate = 0;
     if (calcFormat === 'set') {
@@ -216,6 +269,31 @@ export default function ProductDetailLandingTemplate({
     };
   };
   const calcResult = getCalcRate();
+
+  // Dynamic Real-Cost Invoice Comparison (Block 8) based on current product tiers
+  const invoiceData = useMemo(() => {
+    const isSetOrder = isSet;
+    const itemLabel = isSetOrder ? '25 Match Uniform Sets' : (isPractice ? '25 Practice Jerseys' : (lowerName.includes('pant') ? '25 Team Pants' : '25 Game Jerseys'));
+    const unitPrice = parseFloat(String(volumeTiers[1] ? (isSetOrder ? volumeTiers[1].set : volumeTiers[1].jersey) : parsedPrice).replace(/[^0-9.]/g, '')) || 42.99;
+    const hamloTotal = (25 * unitPrice).toFixed(2);
+    const resellerUnit = (unitPrice + 12.00).toFixed(2);
+    const resellerBase = (25 * parseFloat(resellerUnit)).toFixed(2);
+    const namesFee = 125.00;
+    const setupFee = 75.00;
+    const logoFee = 50.00;
+    const resellerTotal = (parseFloat(resellerBase) + namesFee + setupFee + logoFee).toFixed(2);
+    const savings = (parseFloat(resellerTotal) - parseFloat(hamloTotal)).toFixed(2);
+
+    return {
+      itemLabel,
+      unitPrice: unitPrice.toFixed(2),
+      hamloTotal,
+      resellerUnit,
+      resellerBase,
+      resellerTotal,
+      savings
+    };
+  }, [isSet, isPractice, lowerName, volumeTiers, parsedPrice]);
 
   // 3. Decoration Methods (Block 9)
   const decorationMethods = [
@@ -507,7 +585,7 @@ export default function ProductDetailLandingTemplate({
                   >
                     <img src={img} alt="HAMLO SPORTS Custom Uniform Angle View" className="w-full h-full object-cover" />
                     <span className="absolute bottom-1 left-1 bg-black/70 text-white text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">
-                      {i === 0 ? 'Front View' : i === 1 ? 'Back View' : 'Full Match Set'}
+                      {i === 0 ? 'Front View' : i === 1 ? 'Back View' : (isSet ? 'Full Match Set' : 'Detail View')}
                     </span>
                   </button>
                 ))}
@@ -518,7 +596,7 @@ export default function ProductDetailLandingTemplate({
             <div className="flex flex-col justify-between">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--accent)] block mb-1">
-                  OFFICIAL TEAM MATCH SET
+                  {productBadge}
                 </span>
 
                 {/* Single Clean H1 as per SEO Guide */}
@@ -531,7 +609,7 @@ export default function ProductDetailLandingTemplate({
                     {basePrice}
                   </span>
                   <span className="text-xs text-neutral-500 font-semibold uppercase">
-                    per complete set (Jersey + Pant / Shorts)
+                    {priceUnitLabel}
                   </span>
                 </div>
 
@@ -629,8 +707,8 @@ export default function ProductDetailLandingTemplate({
               <thead>
                 <tr className="bg-[var(--secondary)] text-white text-[11px] uppercase tracking-wider">
                   <th className="py-4 px-6">Quantity Roster Tier</th>
-                  <th className="py-4 px-4">Game Jersey Only</th>
-                  <th className="py-4 px-4">Complete Uniform Set</th>
+                  <th className="py-4 px-4">{singleItemColLabel}</th>
+                  <th className="py-4 px-4">{setColLabel}</th>
                   <th className="py-4 px-4">You Save</th>
                   <th className="py-4 px-4">Status</th>
                 </tr>
@@ -656,7 +734,11 @@ export default function ProductDetailLandingTemplate({
               </tbody>
             </table>
             <div className="p-4 bg-neutral-100/70 text-[11px] text-[var(--secondary)]/70 flex flex-wrap justify-between items-center border-t border-[var(--secondary)]/10">
-              <span>✓ Optional Pro Tackle Twill: +$5 per player name, +$5 per number</span>
+              {isPractice ? (
+                <span>✓ 100% Molecular Dye-Sublimation Included (Zero setup fees, lightweight breathable mesh for daily training)</span>
+              ) : (
+                <span>✓ Optional Pro Tackle Twill (Game Jerseys): +$5 per player name, +$5 per number</span>
+              )}
               <span>✓ Permanent vector storage for single-player reorders</span>
             </div>
           </div>
@@ -683,12 +765,12 @@ export default function ProductDetailLandingTemplate({
                 Typical US Retailer / Distributor
               </h3>
               <div className="space-y-2 text-xs text-neutral-600">
-                <div className="flex justify-between"><span>25 Match Sets (@ $75.00)</span><span>$1,875.00</span></div>
+                <div className="flex justify-between"><span>{invoiceData.itemLabel} (@ ${invoiceData.resellerUnit})</span><span>${invoiceData.resellerBase}</span></div>
                 <div className="flex justify-between text-red-600"><span>Player Names & Back Numbers ($5/player)</span><span>+$125.00</span></div>
                 <div className="flex justify-between text-red-600"><span>Vector Redraw & Screen Setup Fee</span><span>+$75.00</span></div>
                 <div className="flex justify-between text-red-600"><span>Multi-Color Sponsor Logo Surcharge</span><span>+$50.00</span></div>
                 <div className="pt-3 border-t border-neutral-300 flex justify-between font-black text-sm text-neutral-900">
-                  <span>Total Due:</span><span>$2,125.00</span>
+                  <span>Total Due:</span><span>${invoiceData.resellerTotal}</span>
                 </div>
               </div>
             </div>
@@ -705,17 +787,17 @@ export default function ProductDetailLandingTemplate({
                   </span>
                 </div>
                 <div className="space-y-2 text-xs text-neutral-700 font-medium">
-                  <div className="flex justify-between"><span>25 Match Sets (@ $74.99 Tier)</span><span>$1,874.75</span></div>
+                  <div className="flex justify-between"><span>{invoiceData.itemLabel} (@ ${invoiceData.unitPrice} Tier)</span><span>${invoiceData.hamloTotal}</span></div>
                   <div className="flex justify-between text-emerald-700"><span>Player Names & Numbers</span><span>$0.00 (Included)</span></div>
                   <div className="flex justify-between text-emerald-700"><span>Artwork & Digitizing Setup</span><span>$0.00 (Included)</span></div>
                   <div className="flex justify-between text-emerald-700"><span>Unlimited Sponsor Logos</span><span>$0.00 (Included)</span></div>
                   <div className="pt-3 border-t border-emerald-300 flex justify-between font-black text-sm text-emerald-950">
-                    <span>Total Due:</span><span className="text-emerald-700">$1,874.75</span>
+                    <span>Total Due:</span><span className="text-emerald-700">${invoiceData.hamloTotal}</span>
                   </div>
                 </div>
               </div>
               <div className="mt-4 p-2.5 bg-emerald-600 text-white text-[11px] font-bold text-center rounded">
-                Direct Factory Savings: $250.25 on this single team order!
+                Direct Factory Savings: ${invoiceData.savings} on this single team order!
               </div>
             </div>
           </div>
@@ -761,6 +843,12 @@ export default function ProductDetailLandingTemplate({
               <h2 className="text-2xl sm:text-3xl font-black uppercase text-[var(--secondary)] mt-1 mb-2">
                 {decorationData.heading}
               </h2>
+              {isPractice && (
+                <div className="mb-4 p-3.5 bg-amber-50 border-l-4 border-amber-500 rounded-[3px] text-xs text-amber-950 leading-relaxed font-medium">
+                  <strong className="uppercase tracking-wider font-bold block mb-0.5">Important Practice Product Note:</strong>
+                  For maximum airflow, quick-drying performance, and daily wash resistance through two-a-days and scrimmages, <strong>this practice jersey is manufactured exclusively via 100% molecular dye sublimation</strong> (ink is infused into the fabric fibers with zero cracking, peeling, or added weight). Stitched tackle twill shown below is available on our pro game-day match jerseys and official uniform packages.
+                </div>
+              )}
               <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-4xl">
                 {decorationData.intro}
               </p>
@@ -862,14 +950,14 @@ export default function ProductDetailLandingTemplate({
                   className={`flex-1 py-1.5 text-xs font-bold uppercase rounded-[3px] border cursor-pointer ${calcFormat === 'set' ? 'bg-[var(--secondary)] text-white' : 'bg-white text-neutral-600 border-neutral-300'
                     }`}
                 >
-                  Full Set (Jersey + Shorts)
+                  {setColLabel}
                 </button>
                 <button
                   onClick={() => setCalcFormat('jersey')}
                   className={`flex-1 py-1.5 text-xs font-bold uppercase rounded-[3px] border cursor-pointer ${calcFormat === 'jersey' ? 'bg-[var(--secondary)] text-white' : 'bg-white text-neutral-600 border-neutral-300'
                     }`}
                 >
-                  Jersey Only
+                  {singleItemColLabel}
                 </button>
               </div>
 
@@ -943,7 +1031,7 @@ export default function ProductDetailLandingTemplate({
                   Youth Club {normSport} Uniforms & Jerseys
                 </h3>
                 <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
-                  Youth clubs, academies, and community associations can group multiple age divisions into a single HAMLO SPORTS production order—even if each division features unique color schemes or team artwork. Ordering 15 jerseys across three age divisions totals 45 match sweaters, qualifying your entire organization for the 25–50 tier at $44.99 each ($2,024.55 total).
+                  Youth clubs, academies, and community associations can group multiple age divisions into a single HAMLO SPORTS production order—even if each division features unique color schemes or team artwork. Ordering 15 jerseys across three age divisions totals 45 {programEditorial.youthWord}, qualifying your entire organization for the 25–50 tier at $44.99 each ($2,024.55 total).
                 </p>
                 <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
                   Youth cuts span YXS through YXL, while adult XS to 4XL fit seamlessly on the same invoice for coaching staff and senior rosters. We recommend checking chest, waist, and hip measurements against our Youth Size Matrix prior to collecting orders from parents.
@@ -978,10 +1066,10 @@ export default function ProductDetailLandingTemplate({
               Adult Rec & Men's League {normSport} Kits
             </h3>
             <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
-              A single HAMLO SPORTS quote can cover your individual rec team or an entire adult league. The cumulative count across all participating teams determines the tier pricing, even when every club features its own custom artwork and striping. A 14-skater rec roster ordering custom game jerseys at $49.99 each totals $699.86 with all sublimated graphics and numbers included.
+              A single HAMLO SPORTS quote can cover your individual rec team or an entire adult league. The cumulative count across all participating teams determines the tier pricing, even when every club features its own custom artwork and striping. {programEditorial.recRoster}
             </p>
             <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
-              Adding stitched tackle-twill player names and numbers (+ $10/jersey) brings the total to $839.86. If an 8-team adult league orders 15 jerseys per team (120 total), everyone drops into the top 101+ tier at $39.99 per jersey ($4,798.80 total).
+              {programEditorial.tackleTwillRecNote}
             </p>
           </div>
 
@@ -989,25 +1077,25 @@ export default function ProductDetailLandingTemplate({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             <div className="p-6 sm:p-8 bg-white rounded-[3px] border border-[var(--secondary)]/10 shadow-sm">
               <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-3">
-                Specialized Cuts, Women's Patterns & Captain Letters
+                {programEditorial.cutsTitle}
               </h3>
               <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
-                Oversized goalie and pad cuts are tailored with expanded arm and chest gussets to fit over body armor at zero additional price premium. HAMLO SPORTS manufactures anatomically graded patterns for men, women, and youth athletes on the same order, ideal for co-ed leagues and competitive girls' athletic programs.
+                {programEditorial.cutsP1}
               </p>
               <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
-                Captain 'C' and alternate 'A' markers are precision-positioned on the chest—available in seamless dye-sublimation or multi-layer tackle twill embroidery. Authentic sewn-in reinforced fight straps (tie-downs) can be included upon request.
+                {programEditorial.cutsP2}
               </p>
             </div>
 
             <div className="p-6 sm:p-8 bg-white rounded-[3px] border border-[var(--secondary)]/10 shadow-sm">
               <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-3">
-                Practice Gear, Warmups and Full Package Sets
+                {programEditorial.packagesTitle}
               </h3>
               <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
-                A turnkey HAMLO SPORTS team kit combines home and away match jerseys, custom dye-sublimated socks, and heavy-duty pants or shells into one coordinated design aesthetic. Single-layer practice sweaters begin at $49.99 (1–24 pieces), while dual-layer reversible practice jerseys offer home/away scrimmages in one garment from $89.99.
+                {programEditorial.packagesP1}
               </p>
               <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
-                Custom pant shells start at $44.99, shielding breezers in team colors and emblems. Complete your club identity with our winter sideline parkas ($69.99) and moisture-wicking team travel hoodies ($46.99).
+                {programEditorial.packagesP2}
               </p>
             </div>
           </div>

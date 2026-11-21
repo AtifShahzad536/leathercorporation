@@ -351,43 +351,132 @@ export const getSportPricingTable = (sport) => {
 export const getSportDecorationData = (sport, basePrice = '$49.99') => {
   const cleanPrice = parseFloat(String(basePrice).replace(/[^0-9.]/g, '')) || 49.99;
   const twillTotal = (cleanPrice + 10).toFixed(2);
+  const sportName = (sport || 'Athletic').toLowerCase();
 
   return {
     heading: 'CHOOSE YOUR DECORATION: SUBLIMATED, TACKLE TWILL, OR BOTH',
-    intro: `Every HAMLO SPORTS ${sport.toLowerCase()} jersey comes sublimated, in tackle twill, or both on one jersey. We offer ten decoration methods and choose the right ones for each garment. Sublimated names, numbers and logos are included; tackle twill is $5 per name and $5 per number; other methods are priced on your quote.`,
+    intro: `Every HAMLO SPORTS ${sportName} team uniform can be crafted with full dye-sublimation, stitched pro tackle twill, or a hybrid combination. We match the right embellishment method to each fabric and garment type. Sublimated player names, numbers, and full graphics are always included at zero setup fee. Pro tackle twill embroidery is available on pro game-day jerseys at +$5 per name and +$5 per number.`,
     tableTitle: 'DECORATION OPTIONS AND PRICE PER PLAYER',
     rows: [
       {
         property: 'What it is',
-        sublimated: 'Colors, crest, names and numbers dyed into the fabric',
-        twill: 'Sewn twill names and numbers (the "stitched" look)'
+        sublimated: 'Colors, crest, names and numbers dyed molecularly into the fabric',
+        twill: 'Multi-layer stitched twill fabric lettering & numbers (authentic 3D textured look)'
       },
       {
         property: 'Names and numbers',
         sublimated: 'Included at zero extra cost',
-        twill: '+$5 per name, +$5 per number, per jersey'
+        twill: '+$5 per player name, +$5 per number (on game-day jerseys)'
       },
       {
         property: 'Example per player',
-        sublimated: `$${cleanPrice.toFixed(2)}`,
-        twill: `Twill name + twill number: $${cleanPrice.toFixed(2)} + $5 + $5 = $${twillTotal}`
+        sublimated: `$${cleanPrice.toFixed(2)} (All-Inclusive)`,
+        twill: `Stitched name + number: $${cleanPrice.toFixed(2)} + $5 + $5 = $${twillTotal}`
       },
       {
-        property: 'Twill crest',
-        sublimated: 'Not applicable (100% molecular sublimation)',
-        twill: 'Price on your custom quote'
+        property: 'Embroidered crest',
+        sublimated: '100% High-definition digital sublimation (Zero cracking/peeling)',
+        twill: 'Available upon request on custom team quotes'
       }
     ],
-    explanation1: 'The printed vs stitched question comes down to the look you want and the price per jersey. Sublimated graphics are dyed into the fabric, not printed on top of it, and your whole order is made in the same dye batch, so colors match. Tackle twill is sewn on and raised, the look many buyers mean when they search for stitched or embroidered team jerseys.',
-    explanation2: 'Home and away game jerseys are 180 GSM polyester mesh in one layer; reversible practice jerseys are two layers of 160 GSM polyester. Your order is ready 2 to 3 weeks after design approval, then 3 to 5 days in transit to US teams, with free shipping in the USA.'
+    explanation1: 'The choice between sublimated and stitched tackle twill comes down to weight, breathability, and aesthetic preference. Sublimated graphics are infused directly into the yarn fibers in a single dye lot, keeping the garment lightweight, ultra-breathable, and permanently resistant to peeling or fading.',
+    explanation2: `HAMLO SPORTS manufactures team uniforms from technical athletic poly knit and moisture-wicking stretch mesh. Your custom order is crafted factory-direct in 2 to 3 weeks after digital proof approval, followed by 3 to 5 days express transit with pre-cleared customs and tracking directly to your door.`
   };
 };
 
 export const getPlayoffSchedule = () => [
-  { tournamentDate: 'February 6, 2027', approveByDate: 'January 4, 2027' },
-  { tournamentDate: 'February 20, 2027', approveByDate: 'January 18, 2027' },
-  { tournamentDate: 'March 20, 2027', approveByDate: 'February 15, 2027' }
+  { tournamentDate: 'Spring Season Kickoff & Early Tournaments', approveByDate: 'Approve 33 Days Prior' },
+  { tournamentDate: 'Mid-Season Tournaments & Showcases', approveByDate: 'Approve 33 Days Prior' },
+  { tournamentDate: 'State / National Playoffs & Championships', approveByDate: 'Approve 35 Days Prior' },
+  { tournamentDate: 'Fall League Openers & Late-Season Cups', approveByDate: 'Approve 33 Days Prior' }
 ];
+
+export const getSportProgramEditorial = (sport) => {
+  const norm = (sport || 'BASEBALL').toUpperCase();
+
+  if (norm.includes('HOCKEY') && !norm.includes('FIELD')) {
+    return {
+      youthWord: 'match sweaters',
+      recRoster: 'A 14-skater rec roster ordering custom game jerseys at $49.99 each totals $699.86 with all sublimated graphics and numbers included.',
+      tackleTwillRecNote: 'Adding stitched tackle-twill player names and numbers (+ $10/jersey) brings the total to $839.86. If an 8-team adult league orders 15 jerseys per team (120 total), everyone drops into the top 101+ tier at $39.99 per jersey ($4,798.80 total).',
+      cutsTitle: "Goalie Cuts, Women's Patterns & Captain Letters",
+      cutsP1: "Oversized goalie and pad cuts are tailored with expanded arm and chest gussets to fit over body armor at zero additional price premium. HAMLO SPORTS manufactures anatomically graded patterns for men, women, and youth athletes on the same order, ideal for co-ed leagues and competitive girls' athletic programs.",
+      cutsP2: "Captain 'C' and alternate 'A' markers are precision-positioned on the chest—available in seamless dye-sublimation or multi-layer tackle twill embroidery. Authentic sewn-in reinforced fight straps (tie-downs) can be included upon request.",
+      packagesTitle: 'Practice Sweaters, Pant Shells and Full Kits',
+      packagesP1: 'A turnkey HAMLO SPORTS team kit combines home and away match jerseys, custom dye-sublimated socks, and heavy-duty pants or shells into one coordinated design aesthetic. Single-layer practice sweaters begin at $49.99 (1–24 pieces), while dual-layer reversible practice jerseys offer home/away scrimmages in one garment from $89.99.',
+      packagesP2: 'Custom pant shells start at $44.99, shielding breezers in team colors and emblems. Complete your club identity with our winter sideline parkas ($69.99) and moisture-wicking team travel hoodies ($46.99).'
+    };
+  }
+
+  if (norm === 'FOOTBALL') {
+    return {
+      youthWord: 'match jerseys',
+      recRoster: 'A 25-player rec or travel football roster ordering custom jerseys totals $1,074.75 in the 25–50 volume tier ($42.99/jersey) with all player names, numbers, and sponsor logos included.',
+      tackleTwillRecNote: 'Adding pro stitched tackle-twill numbers on game jerseys (+ $10/jersey) brings the total to $1,324.75. For entire leagues ordering 100+ jerseys, prices drop to our lowest factory tier at $36.99 per jersey.',
+      cutsTitle: 'Position-Specific Athletic Cuts & Shoulder Pad Contouring',
+      cutsP1: 'Skill-position, quarterback, and lineman cuts are tailored with elasticized sleeve cuffs and ergonomic torso gussets engineered to contour smoothly over shoulder pads and backplates without excess cloth. HAMLO SPORTS manufactures anatomically graded patterns across youth and adult sizes (YS to 4XL) on the same roster order with zero upcharges.',
+      cutsP2: 'Reinforced collar stitching, 4-thread flat-lock seam reinforcement, and optional captain emblems or league patches are precision-positioned in full molecular sublimation or heavy-duty tackle twill.',
+      packagesTitle: 'Practice Jerseys, Integrated Pants and Sideline Gear',
+      packagesP1: 'A turnkey HAMLO SPORTS football package pairs home and away game jerseys, integrated football pants, and lightweight practice tops into one coordinated team identity. Single-layer breathable practice jerseys start at $44.99 (1–24 pieces), while reversible practice jerseys provide offense-vs-defense scrimmage splits in one garment.',
+      packagesP2: 'Custom football pants start at $46.99 with reinforced pad pockets and tunnel waistband. Complete your program with sideline coach polos ($34.99), sideline windbreakers ($64.99), and moisture-wicking team travel hoodies ($44.99).'
+    };
+  }
+
+  if (norm === 'BASKETBALL') {
+    return {
+      youthWord: 'game jerseys',
+      recRoster: 'A 12-player tournament roster ordering custom team jerseys totals $479.88 in the 1–24 tier ($39.99/jersey) with all sublimated graphics, numbers, and team names included.',
+      tackleTwillRecNote: 'Ordering complete uniform sets (Jersey + Shorts) at $74.99 per player brings the team total to $899.88. For club programs ordering 50+ sets across divisions, pricing drops to $69.99/set.',
+      cutsTitle: "Pro-Motion Armholes & Women's/Youth Patterns",
+      cutsP1: 'Pro sleeveless cuts feature tailored armhole openings and wide shoulder profiles engineered for unhindered shooting mechanics, defensive reach, and rebounding freedom. Graded sizing spans youth AAU through adult 4XL with zero size upcharges.',
+      cutsP2: 'Breathable poly mesh side vents, reinforced rib-knit necklines, and elasticized waistbands ensure durable shape retention throughout intense tournament schedules.',
+      packagesTitle: 'Practice Reversibles, Shooter Shirts and Full Kits',
+      packagesP1: 'A complete HAMLO SPORTS basketball kit pairs custom game jerseys with matching athletic shorts and warmups into one cohesive colorway. Single-sided practice jerseys begin at $34.99, while dual-layer reversible mesh jerseys provide two uniform looks in one garment.',
+      packagesP2: 'Complete game uniform sets start at $64.99. Expand your team look with lightweight shooting shirts ($32.99), warmup tearaway pants ($42.99), and moisture-wicking travel hoodies ($44.99).'
+    };
+  }
+
+  if (norm === 'BASEBALL' || norm === 'SOFTBALL') {
+    return {
+      youthWord: 'match jerseys',
+      recRoster: 'A 15-player baseball roster ordering custom button-down jerseys totals $629.85 ($41.99/jersey) with all custom script, chest crests, and player numbers included.',
+      tackleTwillRecNote: 'Adding authentic stitched tackle-twill chest script and numbers (+ $10/jersey) brings the total to $779.85. Organizations ordering 50+ jerseys for multiple divisions drop to $37.99 per jersey.',
+      cutsTitle: 'Full-Motion Raglan Sleeves & Authentic Tailoring',
+      cutsP1: 'Full-button and two-button silhouettes feature raglan sleeve engineering for maximum throwing velocity and batting follow-through without jersey bind. Graded sizing spans youth Little League through adult competitive leagues with zero extended-size fees.',
+      cutsP2: 'Reinforced plackets, break-resistant buttons, and double-needle stitching ensure jerseys and custom team script stay pristine through slides, dives, and regular laundering.',
+      packagesTitle: 'Dugout Jackets, Reinforced Pants and Full Packages',
+      packagesP1: 'A complete baseball package pairs full-button match jerseys, pro-weight reinforced baseball pants, and stirrup socks into one coordinated design. Sublimated jerseys start from $41.99, while complete uniform packages start from $79.99.',
+      packagesP2: 'Reinforced baseball pants start at $44.99 with double-layer knees, brass zipper fly, and tunnel belt loops. Complete your dugout gear with custom cage batting jackets ($49.99) and team travel fleece hoodies ($44.99).'
+    };
+  }
+
+  if (norm === 'SOCCER') {
+    return {
+      youthWord: 'match jerseys',
+      recRoster: 'An 18-player soccer club roster ordering custom match jerseys totals $719.82 ($39.99/jersey) with all crest, player names, numbers, and sponsor graphics included.',
+      tackleTwillRecNote: 'Ordering complete uniform sets (Jersey + Match Shorts + Sublimated Socks) at $69.99 per player brings the total to $1,259.82. Academies ordering 50+ kits across age divisions drop to our lower volume tiers.',
+      cutsTitle: 'Aerodynamic Pro Match Cut & Ergonomic Fit',
+      cutsP1: "Athletic slim and classic club cuts feature raglan sleeve construction and breathable 4-way stretch poly interlock engineered for high-cadence sprinting and unhindered ball control. Available in youth, men's, and women's specific tailoring.",
+      cutsP2: 'Reinforced flatlock stitching and laser-cut underarm ventilation panels minimize friction and keep players cool across 90 minutes of competitive play.',
+      packagesTitle: 'Match Kits, Training Bibs and Sideline Tracksuits',
+      packagesP1: 'A turnkey HAMLO SPORTS soccer kit combines home and away match jerseys, matching athletic shorts, and sublimated socks into one unified club aesthetic. Training pinnies and warmups start from $24.99.',
+      packagesP2: 'Complete uniform kits start from $59.99. Complete your academy identity with rain jackets ($54.99), coach sideline tracksuits ($69.99), and custom team backpacks ($38.99).'
+    };
+  }
+
+  // Generic fallback for Rugby, Lacrosse, Cricket, Volleyball, etc.
+  return {
+    youthWord: 'match jerseys',
+    recRoster: `A 15-player ${sport.toLowerCase()} roster ordering custom jerseys totals $644.85 with all sublimated graphics, names, and numbers included.`,
+    tackleTwillRecNote: 'Organizations ordering 50+ jerseys across club divisions drop into our top volume tiers with lower per-unit pricing and complimentary design setups.',
+    cutsTitle: 'Sport-Specific Athletic Cuts & Inclusive Sizing',
+    cutsP1: `Tailored athletic patterns are engineered specifically for competitive ${sport.toLowerCase()} movement, providing optimal range of motion and breathability across youth and adult rosters (YS to 4XL) with zero extended-size upcharges.`,
+    cutsP2: 'Reinforced seams and ergonomic panels deliver collegiate-level durability for club, high school, and adult competitive seasons.',
+    packagesTitle: 'Practice Gear, Warmups and Complete Package Sets',
+    packagesP1: `A turnkey HAMLO SPORTS ${sport.toLowerCase()} kit combines custom game jerseys, matching athletic bottoms, and technical warmups into one cohesive team aesthetic.`,
+    packagesP2: 'Complete your club package with custom team warmups, coach sideline polos, and moisture-wicking travel hoodies.'
+  };
+};
 
 export const getCareInstructions = (sport) => {
   const s = (sport || 'Ice Hockey').toLowerCase();

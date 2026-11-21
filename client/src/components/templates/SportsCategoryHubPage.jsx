@@ -12,7 +12,8 @@ import {
   getSportPricingTable, 
   getSportDecorationData, 
   getPlayoffSchedule, 
-  getCareInstructions 
+  getCareInstructions,
+  getSportProgramEditorial
 } from '../../data/sportEditorialGuides';
 
 export default function SportsCategoryHubPage({
@@ -130,8 +131,9 @@ export default function SportsCategoryHubPage({
   const decorationData = useMemo(() => getSportDecorationData(activeSport), [activeSport]);
   const playoffSchedule = useMemo(() => getPlayoffSchedule(), []);
   const careInstructions = useMemo(() => getCareInstructions(activeSport), [activeSport]);
+  const programEditorial = useMemo(() => getSportProgramEditorial(activeSport), [activeSport]);
 
-  const [calcQty, setCalcQty] = useState(25);
+  const [calcQty, setCalcQty] = useState(15);
   const [calcProductType, setCalcProductType] = useState('set');
   const getCalcRate = () => {
     const pkg1 = sportPricing.packages[0];
@@ -563,7 +565,7 @@ export default function SportsCategoryHubPage({
                 Youth Club {activeSport} Jerseys
               </h3>
               <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
-                Youth clubs, academies, and community associations can group multiple age divisions into a single HAMLO SPORTS production order—even if each division features unique color schemes or team artwork. Ordering 15 jerseys across three age divisions totals 45 match sweaters, qualifying your entire organization for the 25–50 tier at $44.99 each ($2,024.55 total).
+                Youth clubs, academies, and community associations can group multiple age divisions into a single HAMLO SPORTS production order—even if each division features unique color schemes or team artwork. Ordering 15 jerseys across three age divisions totals 45 {programEditorial.youthWord}, qualifying your entire organization for the 25–50 tier at $44.99 each ($2,024.55 total).
               </p>
               <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
                 Youth cuts span YXS through YXL, while adult XS to 4XL fit seamlessly on the same invoice for coaching staff and senior rosters. We recommend checking chest, waist, and hip measurements against our Youth Size Matrix prior to collecting orders from parents.
@@ -595,13 +597,13 @@ export default function SportsCategoryHubPage({
             ADULT REC & MEN'S LEAGUE
           </span>
           <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-3">
-            Beer League & Adult Rec {activeSport} Jerseys
+            Adult Rec & Competitive {activeSport} Uniforms
           </h3>
           <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
-            A single HAMLO SPORTS quote can cover your individual rec team or an entire adult league. The cumulative count across all participating teams determines the tier pricing, even when every club features its own custom artwork and striping. A 14-skater rec roster ordering custom game jerseys at $49.99 each totals $699.86 with all sublimated graphics and numbers included.
+            A single HAMLO SPORTS quote can cover your individual rec team or an entire adult league. The cumulative count across all participating teams determines the tier pricing, even when every club features its own custom artwork and striping. {programEditorial.recRoster}
           </p>
           <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
-            Adding stitched tackle-twill player names and numbers (+ $10/jersey) brings the total to $839.86. If an 8-team adult league orders 15 jerseys per team (120 total), everyone drops into the top 101+ tier at $39.99 per jersey ($4,798.80 total).
+            {programEditorial.tackleTwillRecNote}
           </p>
         </div>
 
@@ -609,25 +611,25 @@ export default function SportsCategoryHubPage({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           <div className="p-6 sm:p-8 bg-white rounded-[3px] border border-[var(--secondary)]/10 shadow-sm">
             <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-3">
-              Goalie Cut, Women's Cut and Captain Letters
+              {programEditorial.cutsTitle}
             </h3>
             <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
-              Oversized goalie and pad cuts are tailored with expanded arm and chest gussets to fit over body armor at zero additional price premium. HAMLO SPORTS manufactures anatomically graded patterns for men, women, and youth athletes on the same order, ideal for co-ed leagues and competitive girls' athletic programs.
+              {programEditorial.cutsP1}
             </p>
             <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
-              Captain 'C' and alternate 'A' markers are precision-positioned on the chest—available in seamless dye-sublimation or multi-layer tackle twill embroidery. Authentic sewn-in reinforced fight straps (tie-downs) can be included upon request.
+              {programEditorial.cutsP2}
             </p>
           </div>
 
           <div className="p-6 sm:p-8 bg-white rounded-[3px] border border-[var(--secondary)]/10 shadow-sm">
             <h3 className="text-lg sm:text-xl font-black uppercase text-[var(--secondary)] mb-3">
-              Practice Jerseys, Pant Shells and Full Kits
+              {programEditorial.packagesTitle}
             </h3>
             <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
-              A turnkey HAMLO SPORTS team kit combines home and away match jerseys, custom dye-sublimated socks, and heavy-duty pants or shells into one coordinated design aesthetic. Single-layer practice sweaters begin at $49.99 (1–24 pieces), while dual-layer reversible practice jerseys offer home/away scrimmages in one garment from $89.99.
+              {programEditorial.packagesP1}
             </p>
             <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
-              Custom pant shells start at $44.99, shielding breezers in team colors and emblems. Complete your club identity with our winter sideline parkas ($69.99) and moisture-wicking team travel hoodies ($46.99).
+              {programEditorial.packagesP2}
             </p>
           </div>
         </div>
