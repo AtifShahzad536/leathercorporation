@@ -37,5 +37,5 @@ Allow: /
 
 # Sitemaps & LLM Discovery Specifications
 Sitemap: https://www.hamlosportswear.site/sitemap.xml
-LLMs-Txt: https://www.hamlosportswear.site/llms.txt
-LLMs-Full-Txt: https://www.hamlosportswear.site/llms-full.txt
+# LLMs-Txt: https://www.hamlosportswear.site/llms.txt
+# LLMs-Full-Txt: https://www.hamlosportswear.site/llms-full.txt
