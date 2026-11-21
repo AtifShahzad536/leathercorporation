@@ -7,7 +7,7 @@ import {
 import SEO from '../common/SEO';
 import TrustBar from '../common/TrustBar';
 import ProgressiveImage from '../common/ProgressiveImage';
-import { useCMS } from '../../context/CMSContext';
+import { useCMS, API_BASE } from '../../context/CMSContext';
 import { fullCatalog296 } from '../../data/fullCatalog296';
 import productFaqs296 from '../../data/productFaqs296.json';
 import productFullText296 from '../../data/productFullText296.json';
@@ -87,7 +87,7 @@ export default function ProductDetailLandingTemplate({
   const [dbProducts, setDbProducts] = useState([]);
   useEffect(() => {
     let isMounted = true;
-    fetch(`/api/products?sport=${encodeURIComponent(normSport)}&limit=100`)
+    fetch(`${API_BASE}/products?sport=${encodeURIComponent(normSport)}&limit=100`)
       .then(res => res.ok ? res.json() : null)
       .then(data => {
         if (isMounted && data?.data && data.data.length > 0) {

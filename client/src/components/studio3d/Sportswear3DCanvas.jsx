@@ -256,9 +256,9 @@ export function resolveModelUrl(url) {
   if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('blob:') || url.startsWith('data:')) {
     return url;
   }
-  const apiBase = (typeof window !== 'undefined' && window.location.hostname === 'localhost')
+  const apiBase = (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'))
     ? 'http://localhost:5000'
-    : '';
+    : 'https://leathercorporation-jmrv.vercel.app';
   return `${apiBase}${url.startsWith('/') ? '' : '/'}${url}`;
 }
 

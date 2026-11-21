@@ -5,7 +5,7 @@ import {
   Phone, Mail, MessageSquare, Info, AlertCircle, Award
 } from 'lucide-react';
 import TrustBar from '../common/TrustBar';
-import { useCMS } from '../../context/CMSContext';
+import { useCMS, API_BASE } from '../../context/CMSContext';
 import { fullCatalog296 } from '../../data/fullCatalog296';
 import { 
   getSportPricingTable, 
@@ -26,7 +26,7 @@ export default function SportsCategoryHubPage({
   useEffect(() => {
     let isMounted = true;
     const normSport = (activeSport || 'BASEBALL').toUpperCase();
-    fetch(`/api/products?sport=${encodeURIComponent(normSport)}&limit=100`)
+    fetch(`${API_BASE}/products?sport=${encodeURIComponent(normSport)}&limit=100`)
       .then(res => res.ok ? res.json() : null)
       .then(data => {
         if (isMounted && data?.data && data.data.length > 0) {

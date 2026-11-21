@@ -8,7 +8,7 @@ import {
   Eye, Compass, Sliders, Settings2
 } from 'lucide-react';
 import SEO from '../common/SEO';
-import { useCMS } from '../../context/CMSContext';
+import { useCMS, API_BASE } from '../../context/CMSContext';
 import Sportswear3DCanvas from '../studio3d/Sportswear3DCanvas';
 import StudioLeftPanel from '../studio3d/StudioLeftPanel';
 import StudioControlPanel from '../studio3d/StudioControlPanel';
@@ -75,9 +75,38 @@ export default function UniformBuilderPage({ onNavigateInquiry = () => { } }) {
     let isMounted = true;
     const fetchModels = async () => {
       try {
-        const res = await axios.get(`/api/models3d?sport=${encodeURIComponent(selectedSport.id)}`);
-        if (isMounted && res.data.success && res.data.data.length > 0) {
-          setActiveModel(res.data.data[0]);
+        const sportParam = encodeURIComponent(selectedSport.id);
+        
+        // 1. Fetch from configured API_BASE
+        let res = null;
+        try {
+          res = await axios.get(`${API_BASE}/models3d?sport=${sportParam}`);
+        } catch (err) {
+          // If API_BASE failed or returned error, try direct production backend
+          if (!API_BASE.includes('leathercorporation-jmrv.vercel.app')) {
+            try {
+              res = await axios.get(`https://leathercorporation-jmrv.vercel.app/api/models3d?sport=${sportParam}`);
+            } catch (fallbackErr) {
+              console.warn('Fallback models3d fetch failed:', fallbackErr?.message);
+            }
+          }
+        }
+
+        // Validate that response is a valid JSON object with data array (guards against HTML error responses)
+        if (
+          isMounted &&
+          res &&
+          res.data &&
+          typeof res.data === 'object' &&
+          res.data.success &&
+          Array.isArray(res.data.data) &&
+          res.data.data.length > 0
+        ) {
+          // If a model matches the selected cut, use it; otherwise use the first published model for this sport
+          const matchingCut = res.data.data.find(
+            m => m.cut && selectedCut && m.cut.toLowerCase() === selectedCut.toLowerCase()
+          );
+          setActiveModel(matchingCut || res.data.data[0]);
         } else if (isMounted) {
           setActiveModel(null);
         }
@@ -87,7 +116,7 @@ export default function UniformBuilderPage({ onNavigateInquiry = () => { } }) {
     };
     fetchModels();
     return () => { isMounted = false; };
-  }, [selectedSport, setActiveModel]);
+  }, [selectedSport, selectedCut, setActiveModel]);
 
   // Pricing calculation
   const unitRate = useMemo(() => {
@@ -132,7 +161,7 @@ export default function UniformBuilderPage({ onNavigateInquiry = () => { } }) {
       // 1. Save 3D Design to database
       let designCode = `HAMLO-${selectedSport.id.slice(0, 3).toUpperCase()}-${Math.floor(10000 + Math.random() * 90000)}`;
       try {
-        const designRes = await axios.post('/api/models3d/designs', {
+        const designPayload = {
           sport: selectedSport.name,
           cut: selectedCut,
           modelId: activeModel?._id || null,
@@ -146,8 +175,18 @@ export default function UniformBuilderPage({ onNavigateInquiry = () => { } }) {
             phone: contactPhone,
             organization
           }
-        });
-        if (designRes.data?.data?.designCode) {
+        };
+        let designRes = null;
+        try {
+          designRes = await axios.post(`${API_BASE}/models3d/designs`, designPayload);
+        } catch (postErr) {
+          if (!API_BASE.includes('leathercorporation-jmrv.vercel.app')) {
+            designRes = await axios.post(`https://leathercorporation-jmrv.vercel.app/api/models3d/designs`, designPayload);
+          } else {
+            throw postErr;
+          }
+        }
+        if (designRes?.data?.data?.designCode) {
           designCode = designRes.data.data.designCode;
         }
       } catch (err) {

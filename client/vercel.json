@@ -109,6 +109,14 @@
   ],
   "rewrites": [
     {
+      "source": "/api/:path*",
+      "destination": "https://leathercorporation-jmrv.vercel.app/api/:path*"
+    },
+    {
+      "source": "/uploads/:path*",
+      "destination": "https://leathercorporation-jmrv.vercel.app/uploads/:path*"
+    },
+    {
       "source": "/((?!assets/|\\.well-known/|llms\\.txt|ard\\.json|ai-catalog\\.json|favicon|apple-touch-icon|android-chrome|site\\.webmanifest|logo|robots\\.txt|sitemap\\.xml).*)",
       "destination": "/index.html"
     }
