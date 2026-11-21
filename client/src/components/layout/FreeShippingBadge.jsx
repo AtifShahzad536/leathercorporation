@@ -9,19 +9,32 @@ import {
  * FreeShippingBadge Component
  * Premium HAMLO SPORTS Animated Free US Shipping Banner
  * Unique characteristics:
- * - Placement: Docked on the LEFT EDGE (opposite of chat widget, uncluttered viewport)
- * - Shape: Asymmetric sports emblem with rounded-r-2xl and electric emerald neon border
+ * - Delay: Stays hidden for 15 seconds on initial load, then smoothly slides in with spring animation.
+ * - Dismiss / Close button: User can close / hide the badge at any time.
+ * - Minimized Tab: When dismissed, an ultra-compact mini tab rests on the edge allowing user to reopen anytime.
+ * - Placement: Docked on the LEFT EDGE (uncluttered viewport).
  * - Continuous Multi-Layer Animations:
  *   1. Animated driving truck with suspension bounce and speed-trail
  *   2. Periodic luxury diagonal shimmer sweep
- *   3. Pulsing radar beacon dot (● LIVE DDP AIR)
+ *   3. Pulsing radar beacon dot (● DDP AIR)
  *   4. Rotating micro-benefit ticker (Zero Tariffs -> 3–5 Days Air -> Direct to Door)
  * - Interactive slide-over Flyout Guarantee Drawer with lead time estimator & WhatsApp trigger
  */
 export default function FreeShippingBadge({ onNavigateInquiry = () => {} }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [tournamentWeeks, setTournamentWeeks] = useState(6);
   const [benefitIdx, setBenefitIdx] = useState(0);
+
+  // 15 seconds delay before appearing on screen
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 15000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Cycling micro-benefit ticker
   const rotatingBenefits = [
@@ -32,11 +45,12 @@ export default function FreeShippingBadge({ onNavigateInquiry = () => {} }) {
   ];
 
   useEffect(() => {
+    if (!isVisible || isDismissed) return;
     const timer = setInterval(() => {
       setBenefitIdx((prev) => (prev + 1) % rotatingBenefits.length);
     }, 2400);
     return () => clearInterval(timer);
-  }, [rotatingBenefits.length]);
+  }, [isVisible, isDismissed, rotatingBenefits.length]);
 
   // Dynamic delivery date calculation based on user timeline
   const today = new Date();
@@ -54,107 +68,147 @@ export default function FreeShippingBadge({ onNavigateInquiry = () => {} }) {
 
   return (
     <>
-      {/* ── 1. LEFT-PINNED ANIMATED LUXURY EMBLEM (CHANGED POSITION & CUSTOM HAMLO IDENTITY) ── */}
-      <motion.aside
-        initial={{ x: -100, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ delay: 0.6, duration: 0.5, ease: 'easeOut' }}
-        className="fixed left-0 top-[48%] -translate-y-1/2 z-[100] select-none"
-        aria-label="Free US Shipping Guarantee"
-      >
-        <button
-          onClick={() => setIsOpen(true)}
-          className="group relative flex flex-col items-center justify-between bg-gradient-to-br from-[#0B132B] via-[#092B24] to-[#044736] text-white w-[82px] sm:w-[94px] py-4 px-2 rounded-r-2xl shadow-[0_12px_40px_rgba(4,71,54,0.55)] hover:shadow-[0_15px_50px_rgba(16,185,129,0.7)] transition-all duration-300 hover:translate-x-1.5 cursor-pointer border-t-2 border-b-2 border-r-2 border-emerald-400/70 overflow-hidden"
-          title="Click to view Free US Shipping & Delivery Guarantee"
-        >
-          {/* Animated luxury diagonal shimmer sweep */}
-          <motion.div
-            initial={{ x: '-150%' }}
-            animate={{ x: '250%' }}
-            transition={{
-              duration: 2.6,
-              repeat: Infinity,
-              repeatDelay: 2.2,
-              ease: 'easeInOut'
-            }}
-            className="absolute inset-0 w-2/3 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-20 pointer-events-none"
-          />
+      {/* ── 1. LEFT-PINNED ANIMATED LUXURY EMBLEM (APPEARS AFTER 15 SECONDS) ── */}
+      <AnimatePresence>
+        {isVisible && !isDismissed && (
+          <motion.aside
+            initial={{ x: -140, opacity: 0, scale: 0.9 }}
+            animate={{ x: 0, opacity: 1, scale: 1 }}
+            exit={{ x: -140, opacity: 0, scale: 0.9 }}
+            transition={{ type: 'spring', damping: 20, stiffness: 180 }}
+            className="fixed left-0 top-[48%] -translate-y-1/2 z-[100] select-none"
+            aria-label="Free US Shipping Guarantee"
+          >
+            {/* Close / Hide Button on top-right of badge */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsDismissed(true);
+              }}
+              className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-neutral-900/90 text-white/80 hover:text-white hover:bg-rose-600 border border-white/30 flex items-center justify-center transition-all shadow-md cursor-pointer z-30 group/close"
+              title="Hide Free Shipping Banner"
+              aria-label="Hide Free Shipping Banner"
+            >
+              <X size={11} strokeWidth={2.5} className="group-hover/close:scale-110 transition-transform" />
+            </button>
 
-          {/* Ambient emerald neon glow */}
-          <span className="absolute -inset-0.5 rounded-r-2xl bg-emerald-400 opacity-20 blur-sm group-hover:opacity-60 transition duration-300 animate-pulse pointer-events-none" />
-
-          <div className="relative z-10 flex flex-col items-center w-full">
-            
-            {/* Animated Delivery Truck with motion and speed dash */}
-            <div className="relative w-11 h-11 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center mb-1 group-hover:bg-emerald-500/30 transition-all duration-300">
+            <button
+              onClick={() => setIsOpen(true)}
+              className="group relative flex flex-col items-center justify-between bg-gradient-to-br from-[#0B132B] via-[#092B24] to-[#044736] text-white w-[82px] sm:w-[94px] py-4 px-2 rounded-r-2xl shadow-[0_12px_40px_rgba(4,71,54,0.55)] hover:shadow-[0_15px_50px_rgba(16,185,129,0.7)] transition-all duration-300 hover:translate-x-1.5 cursor-pointer border-t-2 border-b-2 border-r-2 border-emerald-400/70 overflow-hidden"
+              title="Click to view Free US Shipping & Delivery Guarantee"
+            >
+              {/* Animated luxury diagonal shimmer sweep */}
               <motion.div
-                animate={{
-                  x: [0, 3, -1, 2, 0],
-                  y: [0, -1.5, 0, -1, 0]
-                }}
+                initial={{ x: '-150%' }}
+                animate={{ x: '250%' }}
                 transition={{
-                  duration: 2.2,
+                  duration: 2.6,
                   repeat: Infinity,
+                  repeatDelay: 2.2,
                   ease: 'easeInOut'
                 }}
-              >
-                <Truck size={23} className="text-emerald-400 drop-shadow-[0_2px_8px_rgba(52,211,153,0.8)]" />
-              </motion.div>
-            </div>
+                className="absolute inset-0 w-2/3 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-20 pointer-events-none"
+              />
 
-            {/* Pulsing Live Beacon Indicator */}
-            <div className="flex items-center gap-1 my-0.5 bg-emerald-950/70 px-1.5 py-0.5 rounded-full border border-emerald-500/40">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400"></span>
-              </span>
-              <span className="text-[7.5px] font-black uppercase tracking-wider text-emerald-300">
-                DDP AIR
-              </span>
-            </div>
+              {/* Ambient emerald neon glow */}
+              <span className="absolute -inset-0.5 rounded-r-2xl bg-emerald-400 opacity-20 blur-sm group-hover:opacity-60 transition duration-300 animate-pulse pointer-events-none" />
 
-            {/* Bold Branded Typography */}
-            <div className="text-center font-black uppercase tracking-tight leading-[1.08] my-1 text-white">
-              <span className="block text-[10.5px] sm:text-[11.5px] font-black tracking-wide text-white">
-                FREE US
-              </span>
-              <span className="block text-[12px] sm:text-[13px] font-black tracking-wider text-emerald-400 drop-shadow-sm">
-                SHIPPING
-              </span>
-              <span className="block text-[8.5px] sm:text-[9.5px] font-bold text-white/90 tracking-widest mt-0.5">
-                INCLUDED
-              </span>
-            </div>
+              <div className="relative z-10 flex flex-col items-center w-full">
+                
+                {/* Animated Delivery Truck with motion and speed dash */}
+                <div className="relative w-11 h-11 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center mb-1 group-hover:bg-emerald-500/30 transition-all duration-300">
+                  <motion.div
+                    animate={{
+                      x: [0, 3, -1, 2, 0],
+                      y: [0, -1.5, 0, -1, 0]
+                    }}
+                    transition={{
+                      duration: 2.2,
+                      repeat: Infinity,
+                      ease: 'easeInOut'
+                    }}
+                  >
+                    <Truck size={23} className="text-emerald-400 drop-shadow-[0_2px_8px_rgba(52,211,153,0.8)]" />
+                  </motion.div>
+                </div>
 
-            {/* Cycling Micro-Benefit Pill with AnimatePresence */}
-            <div className="w-full my-1 h-4 flex items-center justify-center overflow-hidden">
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={rotatingBenefits[benefitIdx]}
-                  initial={{ y: 8, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -8, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="text-[7.5px] font-bold uppercase tracking-widest text-emerald-200 text-center truncate block bg-white/10 px-1.5 py-0.5 rounded"
-                >
-                  {rotatingBenefits[benefitIdx]}
-                </motion.span>
-              </AnimatePresence>
-            </div>
+                {/* Pulsing Live Beacon Indicator */}
+                <div className="flex items-center gap-1 my-0.5 bg-emerald-950/70 px-1.5 py-0.5 rounded-full border border-emerald-500/40">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400"></span>
+                  </span>
+                  <span className="text-[7.5px] font-black uppercase tracking-wider text-emerald-300">
+                    DDP AIR
+                  </span>
+                </div>
 
-            {/* Green Neon Checkmark Badge */}
-            <div className="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-[0_0_12px_rgba(16,185,129,0.8)] mt-0.5 group-hover:scale-110 transition-transform duration-200">
-              <Check size={12} strokeWidth={3.5} />
-            </div>
-          </div>
+                {/* Bold Branded Typography */}
+                <div className="text-center font-black uppercase tracking-tight leading-[1.08] my-1 text-white">
+                  <span className="block text-[10.5px] sm:text-[11.5px] font-black tracking-wide text-white">
+                    FREE US
+                  </span>
+                  <span className="block text-[12px] sm:text-[13px] font-black tracking-wider text-emerald-400 drop-shadow-sm">
+                    SHIPPING
+                  </span>
+                  <span className="block text-[8.5px] sm:text-[9.5px] font-bold text-white/90 tracking-widest mt-0.5">
+                    INCLUDED
+                  </span>
+                </div>
 
-          {/* Micro interaction prompt */}
-          <div className="relative z-10 mt-1.5 flex items-center gap-0.5 text-[7px] font-bold uppercase tracking-widest text-emerald-300/80 group-hover:text-emerald-200 transition-colors">
-            <span>Details</span>
-            <ChevronRight size={9} />
-          </div>
-        </button>
-      </motion.aside>
+                {/* Cycling Micro-Benefit Pill with AnimatePresence */}
+                <div className="w-full my-1 h-4 flex items-center justify-center overflow-hidden">
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={rotatingBenefits[benefitIdx]}
+                      initial={{ y: 8, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -8, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-[7.5px] font-bold uppercase tracking-widest text-emerald-200 text-center truncate block bg-white/10 px-1.5 py-0.5 rounded"
+                    >
+                      {rotatingBenefits[benefitIdx]}
+                    </motion.span>
+                  </AnimatePresence>
+                </div>
+
+                {/* Green Neon Checkmark Badge */}
+                <div className="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-[0_0_12px_rgba(16,185,129,0.8)] mt-0.5 group-hover:scale-110 transition-transform duration-200">
+                  <Check size={12} strokeWidth={3.5} />
+                </div>
+              </div>
+
+              {/* Micro interaction prompt */}
+              <div className="relative z-10 mt-1.5 flex items-center gap-0.5 text-[7px] font-bold uppercase tracking-widest text-emerald-300/80 group-hover:text-emerald-200 transition-colors">
+                <span>Details</span>
+                <ChevronRight size={9} />
+              </div>
+            </button>
+          </motion.aside>
+        )}
+      </AnimatePresence>
+
+      {/* ── MINIMIZED REOPEN TAB (IF USER HIDDEN THE BADGE) ── */}
+      <AnimatePresence>
+        {isVisible && isDismissed && (
+          <motion.button
+            initial={{ x: -40, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -40, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={() => setIsDismissed(false)}
+            className="fixed left-0 top-[48%] -translate-y-1/2 z-[99] bg-gradient-to-r from-[#0B132B] to-[#044736] hover:to-emerald-600 text-white py-2 px-1.5 rounded-r-xl shadow-lg border-y border-r border-emerald-400/50 flex flex-col items-center gap-1 cursor-pointer group transition-all"
+            title="Click to show Free Shipping Banner"
+            aria-label="Show Free Shipping Banner"
+          >
+            <Truck size={14} className="text-emerald-400 group-hover:scale-110 transition-transform" />
+            <span className="text-[8px] font-black uppercase text-emerald-200 [writing-mode:vertical-lr] tracking-widest py-1">
+              FREE SHIPPING
+            </span>
+            <ChevronRight size={10} className="text-white/60 group-hover:text-white" />
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {/* ── 2. INTERACTIVE FLYOUT MODAL / DRAWER (EXPANDS FROM LEFT ON CLICK) ── */}
       <AnimatePresence>
