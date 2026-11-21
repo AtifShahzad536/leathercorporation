@@ -137,6 +137,7 @@ export const useStudioStore = create((set, get) => ({
       rotation: [0, 0, 0],
       scale: 0.6,
       angle: 0,
+      stacked: false,
       targetMeshId: null,
       visible: true
     },
@@ -562,6 +563,7 @@ export const useStudioStore = create((set, get) => ({
       ],
       angle: 0,
       scale: partScale,
+      stacked: false,
       targetMeshId: null,
       visible: true
     };

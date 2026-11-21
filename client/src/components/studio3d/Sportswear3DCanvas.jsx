@@ -880,7 +880,7 @@ function buildDecalGeometry(modelGroup, posVec, orientEuler, sizeVec, angle = 0,
 
   // 2. Outward projection normal & conforming depth bounding box
   const outwardNormal = new THREE.Vector3(0, 0, 1).applyEuler(rotEuler);
-  const effectiveDepth = Math.max(0.14, Math.min(sizeVec.z || 0.14, 0.24));
+  const effectiveDepth = Math.max(0.20, Math.min(sizeVec.z || 0.24, 0.35));
   const effectiveSize = new THREE.Vector3(sizeVec.x, sizeVec.y, effectiveDepth);
   const decalBox = new THREE.Box3().setFromCenterAndSize(p, effectiveSize);
   const validGeoms = [];
@@ -913,7 +913,7 @@ function buildDecalGeometry(modelGroup, posVec, orientEuler, sizeVec, angle = 0,
           const rawGeom = new DecalGeometry(child, p, rotEuler, effectiveSize);
           if (rawGeom && rawGeom.attributes.position && rawGeom.attributes.position.count > 0) {
             // Strictly cull any inward-facing or inner-lining triangles, allowing smooth cylinder wrapping
-            const culledGeom = cullDecalInnerTriangles(rawGeom, outwardNormal, -0.05);
+            const culledGeom = cullDecalInnerTriangles(rawGeom, outwardNormal, -0.20);
             if (culledGeom && culledGeom.attributes.position && culledGeom.attributes.position.count > 0) {
               validGeoms.push(culledGeom);
             }
@@ -951,59 +951,6 @@ function TextDecalPlane({ item, modelGroupRef }) {
   const [liveHit, setLiveHit] = useState(null);
   const liveHitRef = useRef(null);
 
-  // Generate dynamic canvas texture
-  const texture = useMemo(() => {
-    const canvas = document.createElement('canvas');
-    const isNum = item.type === 'number';
-    canvas.width = isNum ? 512 : 1024;
-    canvas.height = isNum ? 512 : 256;
-    const ctx = canvas.getContext('2d');
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-
-    const cx = canvas.width / 2;
-    const cy = canvas.height / 2;
-    const fontSize = isNum ? 340 : 120;
-    const fontFam = item.font || 'Impact';
-
-    // Auto-fit text within canvas with safety margins so outer letters (like 'H' or 'S') never clip
-    const maxTextWidth = canvas.width - 60;
-    let actualFontSize = fontSize;
-    ctx.font = `900 ${actualFontSize}px "${fontFam}", sans-serif`;
-    const metrics = ctx.measureText(item.text || '');
-    if (metrics.width > maxTextWidth) {
-      actualFontSize = Math.floor(fontSize * (maxTextWidth / metrics.width));
-      ctx.font = `900 ${actualFontSize}px "${fontFam}", sans-serif`;
-    }
-
-    // Outline Stroke
-    if (item.strokeWidth > 0 && item.strokeColor) {
-      ctx.strokeStyle = item.strokeColor;
-      ctx.lineWidth = item.strokeWidth * (isNum ? 6 : 4);
-      ctx.lineJoin = 'round';
-      ctx.strokeText(item.text || '', cx, cy);
-    }
-
-    // Text Fill
-    ctx.fillStyle = item.color || '#F5A623';
-    ctx.fillText(item.text || '', cx, cy);
-
-    const tex = new THREE.CanvasTexture(canvas);
-    tex.colorSpace = THREE.SRGBColorSpace;
-    tex.needsUpdate = true;
-    return tex;
-  }, [item.text, item.font, item.color, item.strokeColor, item.strokeWidth, item.type]);
-
-  const isNum = item.type === 'number';
-  const baseWidth = isNum ? 0.28 : 0.44;
-  const baseHeight = isNum ? 0.28 : 0.13;
-  const planeWidth = baseWidth * (item.scale || 1.0);
-  const planeHeight = baseHeight * (item.scale || 1.0);
-  const projDepth = 0.08;
-  const sizeVec = useMemo(() => new THREE.Vector3(planeWidth, planeHeight, projDepth), [planeWidth, planeHeight, projDepth]);
-
   // Current active position and rotation (live while dragging, else from item)
   const currentPos = useMemo(() => {
     if (liveHit?.pos) return liveHit.pos;
@@ -1022,6 +969,124 @@ function TextDecalPlane({ item, modelGroupRef }) {
     }
     return d.rotation;
   }, [liveHit, item.rotation, item.angle]);
+
+  const isNum = item.type === 'number';
+  const isStacked = Boolean(item.stacked && item.text && item.text.trim().includes(' '));
+
+  // Detect whether current placement is on a limb (leg or sleeve) vs chest/torso
+  const centerX = modelBounds?.center?.[0] || 0;
+  const currentX = currentPos?.x ?? 0;
+  const distFromCenter = Math.abs(currentX - centerX);
+  const isOnLimb = distFromCenter > 0.035;
+
+  // Generate dynamic canvas texture
+  const texture = useMemo(() => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1024;
+    canvas.height = isStacked ? 512 : (isNum ? 512 : 256);
+    const ctx = canvas.getContext('2d');
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    const cx = canvas.width / 2;
+    const fontFam = item.font || 'Impact';
+
+    if (isStacked) {
+      // Split into 2 stacked lines
+      const words = (item.text || '').trim().split(/\s+/);
+      let line1 = '';
+      let line2 = '';
+      if (words.length === 2) {
+        line1 = words[0];
+        line2 = words[1];
+      } else {
+        const mid = Math.ceil(words.length / 2);
+        line1 = words.slice(0, mid).join(' ');
+        line2 = words.slice(mid).join(' ');
+      }
+
+      const targetFontSize = 190;
+      const maxLineWidth = canvas.width - 120; // 60px side padding
+      ctx.font = `900 ${targetFontSize}px "${fontFam}", sans-serif`;
+      const w1 = ctx.measureText(line1).width;
+      const w2 = ctx.measureText(line2).width;
+      const maxW = Math.max(w1, w2, 1);
+      const actualFontSize = maxW > maxLineWidth
+        ? Math.floor(targetFontSize * (maxLineWidth / maxW))
+        : targetFontSize;
+
+      ctx.font = `900 ${actualFontSize}px "${fontFam}", sans-serif`;
+      const lineGap = actualFontSize * 1.05;
+      const cy1 = (canvas.height / 2) - (lineGap / 2);
+      const cy2 = (canvas.height / 2) + (lineGap / 2);
+
+      [ { text: line1, y: cy1 }, { text: line2, y: cy2 } ].forEach(({ text, y }) => {
+        if (item.strokeWidth > 0 && item.strokeColor) {
+          ctx.strokeStyle = item.strokeColor;
+          ctx.lineWidth = item.strokeWidth * 5;
+          ctx.lineJoin = 'round';
+          ctx.strokeText(text, cx, y);
+        }
+        ctx.fillStyle = item.color || '#F5A623';
+        ctx.fillText(text, cx, y);
+      });
+    } else {
+      // Single line text with generous safety margins so outer letter strokes never clip
+      const cy = canvas.height / 2;
+      const fontSize = isNum ? 340 : 120;
+      const maxTextWidth = canvas.width - 120; // 60px side padding so 'H' and 'S' never clip
+
+      ctx.font = `900 ${fontSize}px "${fontFam}", sans-serif`;
+      const metrics = ctx.measureText(item.text || '');
+      const actualFontSize = metrics.width > maxTextWidth
+        ? Math.floor(fontSize * (maxTextWidth / metrics.width))
+        : fontSize;
+      ctx.font = `900 ${actualFontSize}px "${fontFam}", sans-serif`;
+
+      if (item.strokeWidth > 0 && item.strokeColor) {
+        ctx.strokeStyle = item.strokeColor;
+        ctx.lineWidth = item.strokeWidth * (isNum ? 6 : 4);
+        ctx.lineJoin = 'round';
+        ctx.strokeText(item.text || '', cx, cy);
+      }
+
+      ctx.fillStyle = item.color || '#F5A623';
+      ctx.fillText(item.text || '', cx, cy);
+    }
+
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.needsUpdate = true;
+    return tex;
+  }, [item.text, item.font, item.color, item.strokeColor, item.strokeWidth, item.type, isStacked]);
+
+  // Dimension calculations:
+  // On a limb (leg or sleeve), base size is calibrated to the physical printable width of the limb
+  // so text NEVER spills past the limb's silhouette into empty space!
+  let baseWidth, baseHeight;
+  if (isNum) {
+    baseWidth = isOnLimb ? 0.16 : 0.26;
+    baseHeight = isOnLimb ? 0.16 : 0.26;
+  } else if (isStacked) {
+    baseWidth = isOnLimb ? 0.18 : 0.28;
+    baseHeight = isOnLimb ? 0.18 : 0.24;
+  } else {
+    // Single line text
+    baseWidth = isOnLimb ? 0.19 : 0.36;
+    baseHeight = isOnLimb ? 0.065 : 0.11;
+  }
+
+  const scaleVal = item.scale || 1.0;
+  // Bounded scale on limbs: prevents horizontal projection from exceeding visible leg cylinder
+  const maxLimbWidth = 0.21; // physical width of leg
+  const rawWidth = baseWidth * scaleVal;
+  const planeWidth = isOnLimb ? Math.min(rawWidth, maxLimbWidth) : rawWidth;
+  const planeHeight = baseHeight * scaleVal;
+  const projDepth = 0.28;
+
+  const sizeVec = useMemo(() => new THREE.Vector3(planeWidth, planeHeight, projDepth), [planeWidth, planeHeight, projDepth]);
 
   // Build true conforming 3D DecalGeometry on underlying mesh surface(s)
   const decalGeom = useMemo(() => {

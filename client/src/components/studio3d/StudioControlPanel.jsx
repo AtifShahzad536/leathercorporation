@@ -591,6 +591,33 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
                   />
                 </div>
 
+                {/* Single Line vs Stacked Words Toggle */}
+                {activeTextItem.text && activeTextItem.text.trim().includes(' ') && (
+                  <div className="flex items-center justify-between text-[11px] pt-1">
+                    <span className="text-slate-600 font-medium">Layout:</span>
+                    <div className="flex rounded border border-slate-200 overflow-hidden bg-slate-100 p-0.5">
+                      <button
+                        type="button"
+                        onClick={() => updateTextItem(activeTextItem.id, { stacked: false })}
+                        className={`px-2.5 py-1 text-[10px] font-bold rounded transition cursor-pointer ${
+                          !activeTextItem.stacked ? 'bg-white text-slate-900 shadow-2xs' : 'text-slate-500 hover:text-slate-800'
+                        }`}
+                      >
+                        Single Line
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => updateTextItem(activeTextItem.id, { stacked: true })}
+                        className={`px-2.5 py-1 text-[10px] font-bold rounded transition cursor-pointer ${
+                          activeTextItem.stacked ? 'bg-white text-slate-900 shadow-2xs' : 'text-slate-500 hover:text-slate-800'
+                        }`}
+                      >
+                        Stacked (2 Lines)
+                      </button>
+                    </div>
+                  </div>
+                )}
+
                 {/* Font Selector */}
                 <div>
                   <label className="block text-[11px] font-medium text-slate-600 mb-1">
