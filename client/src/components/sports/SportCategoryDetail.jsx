@@ -58,6 +58,8 @@ const SportCategoryDetail = memo(() => {
         title={`Custom ${category.name} Uniforms & Sublimated Team Apparel`}
         description={category.description}
         keywords={`custom ${category.name.toLowerCase()} uniforms, ${category.name.toLowerCase()} jerseys, custom team sublimation, sports apparel`}
+        canonical={`/${category.slug || slug}/`}
+        ogImage={category.image}
         schemaData={schemaData}
       />
 

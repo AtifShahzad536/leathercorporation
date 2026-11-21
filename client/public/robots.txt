@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://hamlosportswear.site/sitemap.xml
+Sitemap: https://www.hamlosportswear.site/sitemap.xml
+

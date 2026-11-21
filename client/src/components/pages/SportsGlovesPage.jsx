@@ -39,7 +39,7 @@ Product: Pro German Latex Match Goalkeeper Gloves`,
       <SEO
         title="Custom Sports Gloves & Goalkeeper Gloves USA | Hamlo Sports Wear"
         description="Custom goalkeeper gloves and athletic sports gloves manufactured factory-direct in Sialkot, Pakistan. 4mm German Contact Latex, negative cut, sublimated wrist straps. Low 15-pair MOQ, DDP USA shipping."
-        canonical="https://hamlosportswear.site/custom-sports-gloves/"
+        canonical="https://www.hamlosportswear.site/custom-sports-gloves/"
         keywords="custom sports gloves, goalkeeper gloves, custom soccer goalkeeper gloves, custom batting gloves, factory direct sports gloves Sialkot"
       />
 

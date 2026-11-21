@@ -8,7 +8,7 @@ import SEO from '../common/SEO';
 import TrustBar from '../common/TrustBar';
 import ProgressiveImage from '../common/ProgressiveImage';
 import { useCMS, API_BASE } from '../../context/CMSContext';
-import { fullCatalog296 } from '../../data/fullCatalog296';
+import { fullCatalog296, categoryToSportSlug } from '../../data/fullCatalog296';
 import productFaqs296 from '../../data/productFaqs296.json';
 import productFullText296 from '../../data/productFullText296.json';
 import { 
@@ -451,12 +451,16 @@ export default function ProductDetailLandingTemplate({
     return `https://wa.me/${whatsAppNumber}?text=${encodeURIComponent(text)}`;
   };
 
+  const productCatSlug = product?.categorySlug || categoryToSportSlug[normSport] || `custom-${normSport.toLowerCase().replace(/\s+/g, '-')}-uniforms`;
+  const productCanonical = product?.canonical || (product?.slug ? `/${productCatSlug}/${product.slug}/` : `/${productCatSlug}/`);
+
   return (
     <>
       <SEO
         title={`Custom ${sport} ${productName} - Factory Direct Price | HAMLO SPORTS`}
         description={`Custom ${sport.toLowerCase()} ${productName.toLowerCase()} with team names, numbers and logos included. Sialkot factory-direct, free mockup, sizes YS-4XL.`}
-        canonical={`/custom-${sport.toLowerCase()}-uniforms/`}
+        canonical={productCanonical}
+        ogImage={images?.[0] || product?.image}
       />
 
       <div className="w-full bg-[var(--primary)] text-[var(--secondary)] min-h-screen">

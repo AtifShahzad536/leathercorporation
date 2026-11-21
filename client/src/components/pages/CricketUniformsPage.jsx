@@ -81,7 +81,7 @@ Requirements: ${formData.notes}`,
       <SEO
         title="Custom Cricket Uniforms USA | Factory-Direct Sialkot | Hamlo Sports Wear"
         description="Custom cricket uniforms, sublimated T20 jerseys, and traditional match whites for American cricket clubs and leagues. 15-set low MOQ, 12-hour 3D mockups, 8–12 day turnaround, DDP USA shipping."
-        canonical="https://hamlosportswear.site/custom-cricket-uniforms/"
+        canonical="https://www.hamlosportswear.site/custom-cricket-uniforms/"
         keywords="custom cricket uniforms usa, custom cricket jerseys usa, custom cricket whites, t20 cricket uniforms, cricket team apparel manufacturer, sialkot cricket uniforms"
       />
 

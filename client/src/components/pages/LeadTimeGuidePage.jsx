@@ -9,7 +9,7 @@ export default function LeadTimeGuidePage({ onNavigateInquiry = () => {} }) {
       <SEO
         title="How Long Do Custom Team Uniforms Take? (8-12 Day Turnaround Guide)"
         description="Comprehensive turnaround time breakdown for custom sports team uniforms. Why US brokers take 4–6 weeks while Hamlo Sports Wear builds and ships factory-direct in 8–12 days."
-        canonical="https://hamlosportswear.site/how-long-do-custom-uniforms-take/"
+        canonical="https://www.hamlosportswear.site/how-long-do-custom-uniforms-take/"
         keywords="how long do custom uniforms take, custom jersey turnaround time, sports uniform production lead time, fast custom team uniforms, rush uniform manufacturing"
       />
 

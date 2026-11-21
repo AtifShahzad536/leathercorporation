@@ -39,7 +39,7 @@ Product: Sublimated Match Tops, Kilts & Goalie Smocks`,
       <SEO
         title="Custom Field Hockey Uniforms & Kilts USA | Hamlo Sports Wear"
         description="Factory-direct custom field hockey uniforms, racerback singlets, team kilts, socks, and padded goalie smocks. Low 15-set MOQ, 8–12 day turnaround, DDP USA shipping."
-        canonical="https://hamlosportswear.site/custom-field-hockey-uniforms/"
+        canonical="https://www.hamlosportswear.site/custom-field-hockey-uniforms/"
         keywords="custom field hockey uniforms, custom field hockey kilts, field hockey jerseys, field hockey goalie smocks, custom field hockey apparel"
       />
 

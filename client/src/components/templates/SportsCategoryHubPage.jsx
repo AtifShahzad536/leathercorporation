@@ -5,8 +5,9 @@ import {
   Phone, Mail, MessageSquare, Info, AlertCircle, Award
 } from 'lucide-react';
 import TrustBar from '../common/TrustBar';
+import SEO from '../common/SEO';
 import { useCMS, API_BASE } from '../../context/CMSContext';
-import { fullCatalog296 } from '../../data/fullCatalog296';
+import { fullCatalog296, categoryToSportSlug } from '../../data/fullCatalog296';
 import { 
   getSportPricingTable, 
   getSportDecorationData, 
@@ -210,8 +211,20 @@ export default function SportsCategoryHubPage({
     }
   };
 
+  const normSportName = (activeSport || 'BASEBALL').toUpperCase();
+  const catSlug = categoryToSportSlug[normSportName] || `custom-${normSportName.toLowerCase().replace(/\s+/g, '-')}-uniforms`;
+  const canonicalUrl = `/${catSlug}/`;
+
   return (
-    <div className="w-full bg-[var(--primary)] text-[var(--secondary)] min-h-screen">
+    <>
+      <SEO
+        title={`Custom ${activeSport} Uniforms & Jerseys - Sialkot Factory Direct | HAMLO SPORTS`}
+        description={`Factory-direct custom ${activeSport.toLowerCase()} uniforms and sublimated team apparel manufactured in Sialkot, Pakistan. 15-set low MOQ, 12-hour free 3D mockups, DDP USA shipping.`}
+        canonical={canonicalUrl}
+        keywords={`custom ${activeSport.toLowerCase()} uniforms, custom ${activeSport.toLowerCase()} jerseys, sublimated ${activeSport.toLowerCase()} uniforms, team sportswear manufacturer Sialkot`}
+        ogImage={sportProducts[0]?.image || '/hamlo-athletes-lineup.png'}
+      />
+      <div className="w-full bg-[var(--primary)] text-[var(--secondary)] min-h-screen">
       
       {/* ── 1. HERO SECTION (NO DUPLICATE SUB-NAVBAR) ───────────────────────── */}
       <section className="relative w-full bg-[var(--secondary)] text-white py-14 sm:py-20 border-b border-white/10">
@@ -1171,5 +1184,6 @@ export default function SportsCategoryHubPage({
       </section>
 
     </div>
+    </>
   );
 }

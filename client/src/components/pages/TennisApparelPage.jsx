@@ -39,7 +39,7 @@ Product: Custom Sublimated Tennis Polos & Team Apparel`,
       <SEO
         title="Custom Tennis Apparel USA | Team Polos & Skirts | Hamlo Sports Wear"
         description="Custom tennis apparel for varsity high school teams, collegiate clubs, and academies. Sublimated performance polos, tennis skirts, warmups, and jackets. Low 15-set MOQ, 8–12 day production, DDP USA shipping."
-        canonical="https://hamlosportswear.site/custom-tennis-apparel/"
+        canonical="https://www.hamlosportswear.site/custom-tennis-apparel/"
         keywords="custom tennis apparel usa, custom tennis polos, custom tennis team uniforms, custom tennis skirts, collegiate tennis apparel, tennis warm-up jackets"
       />
 

@@ -24,6 +24,7 @@ const SportsCatalogHome = memo(() => {
         title="Custom Sports Uniforms & Sublimation Team Apparel Manufacturer"
         description="Factory-direct custom athletic team uniforms for Baseball, Basketball, Esports, Football, Ice Hockey, Soccer, Volleyball, and Wrestling. Free mockups & worldwide shipping."
         keywords="custom sports uniforms, sublimation team jerseys, custom baseball uniforms, custom basketball uniforms, sportswear manufacturer"
+        canonical="/styles/"
         schemaData={schemaData}
       />
 

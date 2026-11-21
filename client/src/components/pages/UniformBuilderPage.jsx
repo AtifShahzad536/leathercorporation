@@ -242,7 +242,7 @@ Estimated Unit Price: $${unitRate.toFixed(2)} ($${totalEstimate.toFixed(2)} tota
       <SEO
         title="3D Custom Sports Jersey Builder | Studio Customizer | HAMLO SPORTS"
         description="Design custom sports uniforms online with professional real-time Three.js 3D visualization, PBR fabrics, 2D graphic editor, and factory-direct proofs from Sialkot."
-        canonical="https://hamlosportswear.site/builder/"
+        canonical="https://www.hamlosportswear.site/builder/"
         keywords="3d custom sports jersey builder, 3d uniform customizer, custom team uniforms factory direct Sialkot, sublimation 3d studio"
       />
 

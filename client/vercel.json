@@ -107,6 +107,18 @@
       ]
     }
   ],
+  "redirects": [
+    {
+      "source": "/custom-ice-hockey-sweaters/:path*",
+      "destination": "/custom-ice-hockey-uniforms/",
+      "permanent": true
+    },
+    {
+      "source": "/custom-ice-hockey-sweaters",
+      "destination": "/custom-ice-hockey-uniforms/",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/:path*",
