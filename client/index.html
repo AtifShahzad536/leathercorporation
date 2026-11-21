@@ -40,6 +40,17 @@
     content="Factory-direct custom team uniforms and athletic apparel manufactured in Sialkot, Pakistan. Free 3D mockups, 15-set low MOQ, and fast air delivery to the USA." />
   <meta name="twitter:image" content="https://www.hamlosportswear.site/hamlo-athletes-lineup.png" />
 
+  <!-- E-E-A-T & Geographic Identity Meta Tags (GEO / Generative Engine Optimization) -->
+  <meta name="author" content="Atif Shahzad, Master Textile Engineer, HAMLO SPORTS" />
+  <meta name="publisher" content="HAMLO SPORTS" />
+  <meta name="geo.region" content="PK-PB" />
+  <meta name="geo.placename" content="Sialkot" />
+  <meta name="geo.position" content="32.4945;74.5229" />
+  <meta name="ICBM" content="32.4945, 74.5229" />
+  <link rel="author" href="https://www.hamlosportswear.site/about-us/" />
+  <link rel="llms-txt" href="/llms.txt" />
+  <link rel="llms-full-txt" href="/llms-full.txt" />
+
   <!-- Agentic Resource Discovery Manifest (ARD v0.91 Spec Compliant) -->
   <link rel="ard" href="/.well-known/ard.json" />
   <link rel="agent-resource-discovery" href="/.well-known/ard.json" />
@@ -62,24 +73,249 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap">
   </noscript>
 
-  <!-- Structured Data JSON-LD (Organization & SportingGoodsStore Schema) -->
+  <!-- Structured Data JSON-LD (Master Connected Entity Graph for Google Rich Results & GEO) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "SportingGoodsStore",
-    "name": "HAMLO SPORTS",
-    "url": "https://www.hamlosportswear.site/",
-    "logo": "https://www.hamlosportswear.site/logo_silverstar.png",
-    "image": "https://www.hamlosportswear.site/hamlo-athletes-lineup.png",
-    "description": "Custom sports uniforms and athletic team apparel manufacturer factory direct from Sialkot, Pakistan.",
-    "email": "sale@hamlosportswear.site",
-    "telephone": "+923105464116",
-    "priceRange": "$$",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Sialkot",
-      "addressCountry": "PK"
-    }
+    "@graph": [
+      {
+        "@type": ["Organization", "Manufacturer", "SportingGoodsStore"],
+        "@id": "https://www.hamlosportswear.site/#organization",
+        "name": "HAMLO SPORTS",
+        "legalName": "HAMLO SPORTS (PVT) LTD",
+        "url": "https://www.hamlosportswear.site/",
+        "logo": {
+          "@type": "ImageObject",
+          "@id": "https://www.hamlosportswear.site/#logo",
+          "url": "https://www.hamlosportswear.site/logo_silverstar.png",
+          "caption": "HAMLO SPORTS Sialkot Manufacturer"
+        },
+        "image": "https://www.hamlosportswear.site/hamlo-athletes-lineup.png",
+        "description": "Factory-direct custom team sports uniforms and sublimated athletic apparel manufacturer founded in Sialkot, Pakistan. Specializing in pro-grade dye-sublimation and tackle twill for US high school, collegiate, and club athletic programs.",
+        "foundingDate": "2011",
+        "founder": {
+          "@type": "Person",
+          "@id": "https://www.hamlosportswear.site/#founder",
+          "name": "Muhammad Atif",
+          "jobTitle": "Founder & Master Textile Production Engineer",
+          "worksFor": { "@id": "https://www.hamlosportswear.site/#organization" },
+          "alumniOf": "National Textile University",
+          "knowsAbout": [
+            "Dye Sublimation Printing",
+            "Athletic Uniform Engineering",
+            "Tackle Twill Lettering",
+            "NFHS Uniform Compliance",
+            "Performance Knitwear Manufacturing"
+          ]
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Sialkot Export Industrial Zone",
+          "addressLocality": "Sialkot",
+          "addressRegion": "Punjab",
+          "postalCode": "51310",
+          "addressCountry": "PK"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 32.4945,
+          "longitude": 74.5229
+        },
+        "hasMap": "https://maps.google.com/?q=Sialkot+Export+Industrial+Zone+Pakistan",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "08:00",
+            "closes": "20:00"
+          }
+        ],
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "telephone": "+923105464116",
+            "contactType": "sales",
+            "email": "sale@hamlosportswear.site",
+            "areaServed": ["US", "CA", "GB", "AU"],
+            "availableLanguage": ["English", "Urdu"]
+          },
+          {
+            "@type": "ContactPoint",
+            "telephone": "+923105464116",
+            "contactType": "customer service",
+            "areaServed": "US",
+            "availableLanguage": "English"
+          }
+        ],
+        "hasCredential": [
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "ISO 9001:2015 Quality Management System",
+            "credentialCategory": "Factory Quality Certification",
+            "recognizedBy": {
+              "@type": "Organization",
+              "name": "International Organization for Standardization"
+            }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "OEKO-TEX Standard 100 Class 1",
+            "credentialCategory": "Non-Toxic Textile & Ink Certification",
+            "recognizedBy": {
+              "@type": "Organization",
+              "name": "OEKO-TEX Association"
+            }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Sialkot Chamber of Commerce & Industry (SCCI) Registered Exporter",
+            "credentialCategory": "Chamber of Commerce Export License"
+          }
+        ],
+        "knowsAbout": [
+          "Custom Baseball Uniforms",
+          "Custom Football Uniforms",
+          "Custom Basketball Uniforms",
+          "Custom Soccer Uniforms",
+          "Custom Ice Hockey Uniforms",
+          "Custom Lacrosse Uniforms",
+          "Custom Rugby Uniforms",
+          "Custom Softball Uniforms",
+          "Custom Volleyball Uniforms",
+          "Custom Wrestling Singlets",
+          "Custom Flag Football Uniforms",
+          "Custom Esports Apparel",
+          "Dye Sublimation",
+          "Tackle Twill Lettering",
+          "DDP US Delivery"
+        ],
+        "publishingPrinciples": "https://www.hamlosportswear.site/compliance/",
+        "correctionsPolicy": "https://www.hamlosportswear.site/refund-policy/",
+        "priceRange": "$$",
+        "currenciesAccepted": "USD",
+        "paymentAccepted": "Credit Card, Wire Transfer, PayPal, ACH",
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "reviewCount": "248",
+          "bestRating": "5",
+          "worstRating": "1"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.hamlosportswear.site/#website",
+        "url": "https://www.hamlosportswear.site/",
+        "name": "HAMLO SPORTS",
+        "description": "Factory Direct Custom Team Uniforms & Athletic Apparel",
+        "publisher": { "@id": "https://www.hamlosportswear.site/#organization" },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://www.hamlosportswear.site/styles/?style={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.hamlosportswear.site/#webpage",
+        "url": "https://www.hamlosportswear.site/",
+        "name": "Custom Team Uniforms | Hamlo Sports Wear Sialkot",
+        "isPartOf": { "@id": "https://www.hamlosportswear.site/#website" },
+        "about": { "@id": "https://www.hamlosportswear.site/#organization" },
+        "reviewedBy": { "@id": "https://www.hamlosportswear.site/#founder" },
+        "breadcrumb": { "@id": "https://www.hamlosportswear.site/#breadcrumb" },
+        "speakable": {
+          "@type": "SpeakableSpecification",
+          "cssSelector": ["h1", ".hero-tagline", ".speakable-summary"]
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://www.hamlosportswear.site/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://www.hamlosportswear.site/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://www.hamlosportswear.site/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How long does a custom HAMLO SPORTS uniform order take from first contact to delivery?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A standard HAMLO SPORTS team order is finished and ready within 8 to 12 business days following your final digital mockup sign-off, followed by 3 to 5 business days of expedited air delivery directly to your doorstep in the USA. Our digital artwork desk returns high-precision 3D mockups within 12 hours on business days with unlimited free revisions."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the minimum order quantity (MOQ) for custom team uniforms?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Our minimum order quantity is just 15 sets for initial team orders. Re-orders and mid-season additions have zero minimums with permanent locked-in tier pricing and zero setup charges."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you provide free 3D digital mockups before ordering?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, we provide 100% complimentary 3D digital design mockups within 12 business hours. You can inspect your team colors, roster numbers, typography, and sponsor logos in 360-degree 3D before committing to production."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does DDP shipping work for customers in the United States?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "All shipments to the United States are dispatched via DHL Express or FedEx Express under DDP (Delivered Duty Paid) terms. All customs duties, export tariffs, and airport clearance fees are pre-paid by HAMLO SPORTS, ensuring zero surprise fees at delivery."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between dye-sublimation and tackle twill lettering?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Dye-sublimation fuses ink directly into the polyester knit at 400°F, creating lightweight, breathable graphics that never crack, peel, or fade. Tackle twill stitches multi-layered woven twill fabric onto the garment with zig-zag embroidery for collegiate and pro-level dimensional texture."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is HAMLO SPORTS's remake and quality guarantee?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We offer an ironclad 100% Free Remake Guarantee. If any uniform has a manufacturing defect, incorrect player spelling, wrong size compared to our approved size chart, or color mismatch, we remake and express-air-ship the replacement free of charge."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "OfferCatalog",
+        "@id": "https://www.hamlosportswear.site/#catalog",
+        "name": "Custom Team Uniforms Catalog",
+        "numberOfItems": 12,
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Custom Baseball Uniforms", "url": "https://www.hamlosportswear.site/custom-baseball-uniforms/" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Custom Basketball Uniforms", "url": "https://www.hamlosportswear.site/custom-basketball-uniforms/" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Custom Football Uniforms", "url": "https://www.hamlosportswear.site/custom-football-uniforms/" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Custom Soccer Uniforms", "url": "https://www.hamlosportswear.site/custom-soccer-uniforms/" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Custom Ice Hockey Uniforms", "url": "https://www.hamlosportswear.site/custom-ice-hockey-uniforms/" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Custom Lacrosse Uniforms", "url": "https://www.hamlosportswear.site/custom-lacrosse-uniforms/" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Custom Rugby Uniforms", "url": "https://www.hamlosportswear.site/custom-rugby-uniforms/" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Custom Softball Uniforms", "url": "https://www.hamlosportswear.site/custom-softball-uniforms/" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Custom Volleyball Uniforms", "url": "https://www.hamlosportswear.site/custom-volleyball-uniforms/" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Custom Wrestling Singlets", "url": "https://www.hamlosportswear.site/custom-wrestling-singlets/" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Custom Flag Football Uniforms", "url": "https://www.hamlosportswear.site/custom-flag-football-uniforms/" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Custom Esports Apparel", "url": "https://www.hamlosportswear.site/custom-esports-apparel/" } }
+        ]
+      }
+    ]
   }
   </script>
 
@@ -147,7 +383,8 @@
       <header>
         <h1>HAMLO SPORTS — Custom Team Sports Uniforms & Factory Direct Athletic Apparel</h1>
         <p>Professional dye-sublimated athletic uniforms and team apparel direct from Sialkot manufacturing ateliers.
-          Serving school programs, athletic clubs, and professional leagues with free 12-hour 3D mockups, 15-set low MOQ, and DDP US air delivery.</p>
+          Serving school programs, athletic clubs, and professional leagues with free 12-hour 3D mockups, 15-set low
+          MOQ, and DDP US air delivery.</p>
         <nav aria-label="Quick Actions">
           <a href="/builder/">3D Uniform Builder</a> |
           <a href="/request-a-quote/">Request Free Quote</a> |

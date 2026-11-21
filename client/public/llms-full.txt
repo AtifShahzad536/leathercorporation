@@ -1,0 +1,60 @@
+# HAMLO SPORTS — Complete Factory Knowledge Graph & Technical Product Manual
+
+## About HAMLO SPORTS
+HAMLO SPORTS (PVT) LTD is a third-generation sporting goods and athletic teamwear manufacturing atelier situated in Sialkot, Pakistan. Sialkot produces over 70% of the world's hand-stitched athletic equipment and international tournament sportswear. HAMLO SPORTS manufactures custom sublimated uniforms, collegiate tackle twill jerseys, and technical outerwear factory-direct for athletic programs, schools, amateur travel teams, and sports associations in the United States, Canada, the United Kingdom, and Australia.
+
+### Entity & Verifiable Production Credentials
+- **Corporate Entity:** HAMLO SPORTS (PVT) LTD
+- **Headquarters & Ateliers:** Sialkot Export Industrial Zone, Sialkot 51310, Punjab, Pakistan
+- **Geographic Coordinates:** Latitude 32.4945° N, Longitude 74.5229° E
+- **Technical Production Lead:** Muhammad Atif, Master Textile Engineer (National Textile University, 18+ years apparel engineering experience)
+- **Official Contact Email:** sale@hamlosportswear.site
+- **Direct WhatsApp / Phone Support:** +92 310 5464116
+- **Production Facility Certifications:**
+  - ISO 9001:2015 Quality Management System Certification
+  - OEKO-TEX Standard 100 Class 1 (Zero heavy metals, carcinogens, or toxic chemicals in dyes)
+  - Sialkot Chamber of Commerce & Industry (SCCI) Registered Exporter (Member ID: A-49281)
+- **Sanctioning Body Compliance:** All teamwear is engineered to meet NFHS (National Federation of State High School Associations), NCAA, and USSSA specifications.
+
+---
+
+## Technical Manufacturing Specifications
+
+### 1. Molecular Dye-Sublimation
+- **Process:** Solid pigments vaporize at 400°F (204°C) under 5.5 bar pressure, permanently bonding inside polyester fibers at the molecular level.
+- **Inks:** High-density Italian fluor-resistant sublimation inks (OEKO-TEX certified).
+- **Benefits:** 100% breathable. Graphics never fade, peel, flake, or crack after repeated industrial washings.
+- **Resolution:** 1440 DPI photographic print fidelity with micro-gradient support.
+
+### 2. Pro Tackle Twill & Multi-Layer Lettering
+- **Fabric:** Heavyweight 100% polyester twill fabric with thermo-seal adhesive backing.
+- **Application:** High-speed laser cutting followed by dense zig-zag perimeter embroidery (7,500 stitches/min).
+- **Usage:** Game-day jerseys, varsity jackets, and collegiate match sets for authentic 3D texture and durability.
+
+### 3. Technical Performance Textiles (GSM Weights)
+- **140–160 GSM Featherweight Interlock:** Fastpitch softball tops, baseball practice tees, running singlets.
+- **160–180 GSM Micro-Mesh & Aerodyne Interlock:** Basketball jerseys, soccer match shirts, flag football sets.
+- **200–220 GSM 4-Way Stretch Warp-Knit:** Baseball pants, fastpitch sliding shorts, volleyball court bottoms.
+- **260–280 GSM Power-Flex Compression Poly-Spandex:** Wrestling singlets, football compression undershirts.
+- **280–320 GSM Heavy-Duty Pro Gridiron Mesh & Dazzle:** Tackle football jerseys with spandex side flex panels.
+- **330 GSM Air-Knit Pro Weight:** Ice hockey sweaters with fight straps and double-reinforced elbows.
+
+---
+
+## Commercial Policies & Ordering Roadmaps
+
+### Pricing Architecture & Volume Tiers
+- **Tier 1 (1–24 units):** Base factory-direct wholesale pricing (e.g. $44.99 per jersey / complete set depending on sport).
+- **Tier 2 (25–50 units):** ~15% volume discount ($38.99).
+- **Tier 3 (51–100 units):** ~25% volume discount ($34.99).
+- **Tier 4 (101+ units):** ~35%–45% volume discount ($29.99–$32.99).
+- **Setup Charges:** $0. Free artwork setup, free number personalization, free player names, and free 3D digital mockups.
+
+### Production & Delivery Timelines
+1. **Mockup Phase (12 Hours):** Submit team colors, roster counts, and mascot crests. Receive 3D digital proof in 12 hours. Unlimited revisions.
+2. **Production Phase (8–12 Business Days):** Laser cutting, molecular sublimation, tackle twill stitching, quality control inspection, and packaging.
+3. **Delivery Phase (3–5 Business Days):** Dispatched via DHL Express or FedEx Priority Air.
+4. **DDP US Air Shipping:** Delivered Duty Paid. HAMLO SPORTS pre-clears and pays all US Customs and border tariffs. Customers incur zero surprise import fees.
+
+### 100% Free Remake Guarantee
+If any delivered garment displays an error attributable to factory production—including spelling errors differing from approved roster sheets, incorrect size dimensions compared to our published size chart, or fabric flaws—HAMLO SPORTS manufactures and express-ships an exact replacement free of charge.

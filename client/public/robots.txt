@@ -1,5 +1,41 @@
+# Robots.txt for HAMLO SPORTS (https://www.hamlosportswear.site)
+# Full crawl accessibility for search engines and generative AI engines
+
 User-agent: *
 Allow: /
 
-Sitemap: https://www.hamlosportswear.site/sitemap.xml
+# Generative AI Engines & LLM Discovery Crawlers (GEO Visibility)
+User-agent: GPTBot
+Allow: /
 
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Sitemaps & LLM Discovery Specifications
+Sitemap: https://www.hamlosportswear.site/sitemap.xml
+LLMs-Txt: https://www.hamlosportswear.site/llms.txt
+LLMs-Full-Txt: https://www.hamlosportswear.site/llms-full.txt
