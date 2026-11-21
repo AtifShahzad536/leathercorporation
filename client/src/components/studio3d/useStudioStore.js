@@ -191,6 +191,9 @@ export const useStudioStore = create((set, get) => ({
   logos: [], // [{ id, url, name, placement, position, rotation, angle, scale, targetMeshId, visible }]
   selectedLogoId: null,
 
+  // Active Control Panel Tab
+  activeControlTab: 'colors', // 'colors' | 'fabrics' | 'patterns' | 'typography' | 'logos' | 'roster'
+
   // Camera & View
   viewAngle: 'front', // 'front' | 'back' | 'left' | 'right' | 'top' | 'perspective'
   cameraResetCount: 0,
@@ -344,7 +347,11 @@ export const useStudioStore = create((set, get) => ({
     }
   },
 
-  setSelectedMesh: (meshId) => set({ selectedMeshId: meshId }),
+  setActiveControlTab: (tab) => set({ activeControlTab: tab }),
+  setSelectedMesh: (meshId) => set((s) => ({
+    selectedMeshId: meshId,
+    ...(meshId ? { selectedTextId: null, selectedLogoId: null } : {})
+  })),
   setHoveredMesh: (meshId) => set({ hoveredMeshId: meshId }),
 
   setMeshColor: (meshId, color) => {
@@ -506,7 +513,10 @@ export const useStudioStore = create((set, get) => ({
   setModelBounds: (bounds) => set((s) => ({ modelBounds: bounds, modelRevision: (s.modelRevision || 0) + 1 })),
   setFrontSurface: (frontSurface) => set({ frontSurface }),
   setTextItems: (items) => set({ textItems: items }),
-  setSelectedTextId: (id) => set({ selectedTextId: id }),
+  setSelectedTextId: (id) => set({
+    selectedTextId: id,
+    ...(id ? { selectedMeshId: null, selectedLogoId: null, activeControlTab: 'typography' } : {})
+  }),
   setIsDragging3D: (isDragging) => set({ isDragging3D: isDragging }),
   setShow3DGizmo: (show) => set((s) => ({ show3DGizmo: typeof show === 'boolean' ? show : !s.show3DGizmo })),
 
@@ -755,7 +765,10 @@ export const useStudioStore = create((set, get) => ({
     });
   },
 
-  setSelectedLogoId: (id) => set({ selectedLogoId: id }),
+  setSelectedLogoId: (id) => set({
+    selectedLogoId: id,
+    ...(id ? { selectedMeshId: null, selectedTextId: null, activeControlTab: 'logos' } : {})
+  }),
 
   addLogo: (logo) => {
     get().saveSnapshot();

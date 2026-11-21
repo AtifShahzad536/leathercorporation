@@ -8,7 +8,7 @@ import { useStudioStore, FABRIC_PRESETS } from './useStudioStore';
 import { getFabricBumpTexture, getPatternTexture } from './FabricTextures';
 import { decalPipeline } from './DecalCanvasPipeline';
 import {
-  RotateCw, Eye, Maximize2, Minimize2, ZoomIn, ZoomOut,
+  RotateCw, RotateCcw, Plus, Minus, X, Move, Check, Eye, Maximize2, Minimize2, ZoomIn, ZoomOut,
   Sparkles, Layers, ShieldCheck, Camera, Compass
 } from 'lucide-react';
 
@@ -25,6 +25,10 @@ function ProceduralJerseyModel({ onSelectMesh, selectedMeshId, hoveredMeshId, on
     patternScale,
     nameNumber,
     logos,
+    textItems,
+    modelBounds,
+    setSelectedTextId,
+    setSelectedLogoId,
     isWireframe,
     setDetectedMeshes,
     setMeshCenters,
@@ -138,6 +142,33 @@ function ProceduralJerseyModel({ onSelectMesh, selectedMeshId, hoveredMeshId, on
 
   const handlePointerDown = (e, meshId) => {
     e.stopPropagation();
+    const hitPoint = e.point;
+    if (hitPoint) {
+      const centerZ = modelBounds?.center?.[2] || 0;
+      const isFrontClick = hitPoint.z >= centerZ;
+      const textHit = (textItems || []).find((t) => {
+        if (!t.visible || !t.position) return false;
+        const tPos = new THREE.Vector3(...t.position);
+        const dist = hitPoint.distanceTo(tPos);
+        const isFrontText = (t.position[2] || 0) >= centerZ;
+        return dist < 0.18 && isFrontClick === isFrontText;
+      });
+      if (textHit) {
+        setSelectedTextId(textHit.id);
+        return;
+      }
+      const logoHit = (logos || []).find((l) => {
+        if (!l.visible || !l.position) return false;
+        const lPos = new THREE.Vector3(...l.position);
+        const dist = hitPoint.distanceTo(lPos);
+        const isFrontLogo = (l.position[2] || 0) >= centerZ;
+        return dist < 0.16 && isFrontClick === isFrontLogo;
+      });
+      if (logoHit) {
+        setSelectedLogoId(logoHit.id);
+        return;
+      }
+    }
     onSelectMesh(meshId);
   };
 
@@ -357,7 +388,11 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
     setModelBounds,
     setFrontSurface,
     setTextItems,
-    textItems
+    textItems,
+    logos,
+    modelBounds,
+    setSelectedTextId,
+    setSelectedLogoId
   } = useStudioStore();
 
   // Create an isolated clone where EVERY mesh has its own unique, cloned material instance,
@@ -631,6 +666,33 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
       object={clonedScene}
       onPointerDown={(e) => {
         e.stopPropagation();
+        const hitPoint = e.point;
+        if (hitPoint) {
+          const centerZ = modelBounds?.center?.[2] || 0;
+          const isFrontClick = hitPoint.z >= centerZ;
+          const textHit = (textItems || []).find((t) => {
+            if (!t.visible || !t.position) return false;
+            const tPos = new THREE.Vector3(...t.position);
+            const dist = hitPoint.distanceTo(tPos);
+            const isFrontText = (t.position[2] || 0) >= centerZ;
+            return dist < 0.18 && isFrontClick === isFrontText;
+          });
+          if (textHit) {
+            setSelectedTextId(textHit.id);
+            return;
+          }
+          const logoHit = (logos || []).find((l) => {
+            if (!l.visible || !l.position) return false;
+            const lPos = new THREE.Vector3(...l.position);
+            const dist = hitPoint.distanceTo(lPos);
+            const isFrontLogo = (l.position[2] || 0) >= centerZ;
+            return dist < 0.16 && isFrontClick === isFrontLogo;
+          });
+          if (logoHit) {
+            setSelectedLogoId(logoHit.id);
+            return;
+          }
+        }
         onSelectMesh(e.object.name || e.object.uuid);
       }}
       onPointerOver={(e) => {
@@ -932,12 +994,292 @@ function buildDecalGeometry(modelGroup, posVec, orientEuler, sizeVec, angle = 0,
   }
 }
 
+// ── Interactive On-Model Transform Gizmo (Figma / IDE Style with Corner Resize & Top Rotate) ──
+function DecalTransformGizmo({
+  position,
+  rotation,
+  angle = 0,
+  scale = 1.0,
+  width = 0.3,
+  height = 0.1,
+  label = 'Text',
+  onScaleChange,
+  onAngleChange,
+  onDeselect,
+  onStartMove,
+  setIsDragging3D
+}) {
+  const boxRef = useRef(null);
+
+  // Dynamic box sizing in viewport pixels (calibrated to physical mesh dimensions)
+  const boxWidth = Math.max(140, Math.round(width * 540) + 36);
+  const boxHeight = Math.max(52, Math.round(height * 540) + 24);
+
+  // 1. Interactive Corner Resize Handlers (Chhota / Bara / Scale)
+  const handleResizePointerDown = (e, corner) => {
+    e.stopPropagation();
+    e.preventDefault();
+    if (!boxRef.current) return;
+
+    const rect = boxRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const initialDist = Math.hypot(e.clientX - centerX, e.clientY - centerY);
+    const initialScale = scale;
+
+    setIsDragging3D(true);
+
+    const onPointerMove = (moveEv) => {
+      moveEv.stopPropagation();
+      const curDist = Math.hypot(moveEv.clientX - centerX, moveEv.clientY - centerY);
+      const ratio = curDist / Math.max(initialDist, 10);
+      const nextScale = Math.round(Math.min(2.5, Math.max(0.25, initialScale * ratio)) * 100) / 100;
+      onScaleChange(nextScale);
+    };
+
+    const onPointerUp = (upEv) => {
+      upEv.stopPropagation();
+      setIsDragging3D(false);
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+    };
+
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+  };
+
+  // 2. Interactive Top Circular Knob Rotate Handler (Rotate / Ghumayein)
+  const handleRotatePointerDown = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    if (!boxRef.current) return;
+
+    const rect = boxRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const initialMouseAngle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI);
+    const initialAngle = angle;
+
+    setIsDragging3D(true);
+
+    const onPointerMove = (moveEv) => {
+      moveEv.stopPropagation();
+      const curMouseAngle = Math.atan2(moveEv.clientY - centerY, moveEv.clientX - centerX) * (180 / Math.PI);
+      const delta = curMouseAngle - initialMouseAngle;
+      let nextAngle = Math.round(initialAngle + delta);
+
+      // Normalize to [-180, 180]
+      while (nextAngle > 180) nextAngle -= 360;
+      while (nextAngle < -180) nextAngle += 360;
+
+      // Magnetic snap within 3 degrees
+      [-180, -90, -45, 0, 45, 90, 180].forEach((snap) => {
+        if (Math.abs(nextAngle - snap) <= 3) {
+          nextAngle = snap;
+        }
+      });
+
+      onAngleChange(nextAngle);
+    };
+
+    const onPointerUp = (upEv) => {
+      upEv.stopPropagation();
+      setIsDragging3D(false);
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+    };
+
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+  };
+
+  // 3. Move drag on bounding box body
+  const handleBoxPointerDown = (e) => {
+    if (e.target.closest('button') || e.target.closest('[data-handle]')) return;
+    e.stopPropagation();
+    if (onStartMove) {
+      onStartMove(e);
+    }
+  };
+
+  return (
+    <Html
+      position={[position.x, position.y, position.z]}
+      center
+      distanceFactor={1.8}
+      zIndexRange={[100, 0]}
+      style={{
+        pointerEvents: 'none',
+        userSelect: 'none'
+      }}
+    >
+      <div
+        ref={boxRef}
+        style={{
+          width: `${boxWidth}px`,
+          height: `${boxHeight}px`,
+          transform: `rotate(${angle}deg)`,
+          transformOrigin: 'center center',
+          pointerEvents: 'auto'
+        }}
+        className="relative group cursor-move select-none rounded border-2 border-dashed border-[#F26522] bg-[#F26522]/10 transition-colors hover:bg-[#F26522]/15 shadow-[0_0_0_1px_rgba(255,255,255,0.7),0_8px_24px_rgba(0,0,0,0.28)]"
+        onPointerDown={handleBoxPointerDown}
+      >
+        {/* Floating Quick Action Precision Toolbar */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '-74px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            pointerEvents: 'auto'
+          }}
+          className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-900/95 text-white shadow-xl backdrop-blur-md border border-white/20 whitespace-nowrap text-[11px] font-medium"
+          onPointerDown={(e) => e.stopPropagation()}
+        >
+          <button
+            type="button"
+            onClick={() => onScaleChange(Math.max(0.25, Math.round((scale - 0.08) * 100) / 100))}
+            title="Make Smaller (Chhota)"
+            className="px-1.5 py-0.5 rounded hover:bg-white/20 text-orange-300 font-bold hover:text-white transition flex items-center gap-1 cursor-pointer"
+          >
+            <Minus size={11} /> Small
+          </button>
+          <div className="w-[1px] h-3 bg-white/20" />
+          <button
+            type="button"
+            onClick={() => onScaleChange(Math.min(2.5, Math.round((scale + 0.08) * 100) / 100))}
+            title="Make Larger (Bara)"
+            className="px-1.5 py-0.5 rounded hover:bg-white/20 text-orange-300 font-bold hover:text-white transition flex items-center gap-1 cursor-pointer"
+          >
+            <Plus size={11} /> Big
+          </button>
+          <div className="w-[1px] h-3 bg-white/20" />
+          <button
+            type="button"
+            onClick={() => onAngleChange(((Math.round(angle) - 15 + 180) % 360) - 180)}
+            title="Rotate Left 15°"
+            className="px-1.5 py-0.5 rounded hover:bg-white/20 text-white transition flex items-center gap-1 cursor-pointer"
+          >
+            <RotateCcw size={11} /> -15°
+          </button>
+          <button
+            type="button"
+            onClick={() => onAngleChange(((Math.round(angle) + 15 + 180) % 360) - 180)}
+            title="Rotate Right 15°"
+            className="px-1.5 py-0.5 rounded hover:bg-white/20 text-white transition flex items-center gap-1 cursor-pointer"
+          >
+            <RotateCw size={11} /> +15°
+          </button>
+          {Math.abs(angle) > 1 && (
+            <button
+              type="button"
+              onClick={() => onAngleChange(0)}
+              title="Reset to 0° Horizontal"
+              className="px-1.5 py-0.5 rounded hover:bg-white/20 text-amber-300 font-semibold transition cursor-pointer"
+            >
+              0°
+            </button>
+          )}
+          <div className="w-[1px] h-3 bg-white/20" />
+          <button
+            type="button"
+            onClick={onDeselect}
+            title="Done / Deselect"
+            className="p-1 rounded-full hover:bg-red-500/40 text-white/80 hover:text-white transition cursor-pointer"
+          >
+            <X size={12} />
+          </button>
+        </div>
+
+        {/* Top Rotation Stem & Circular Knob */}
+        <div
+          data-handle="rotate"
+          style={{
+            position: 'absolute',
+            top: '-26px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            pointerEvents: 'auto'
+          }}
+          className="flex flex-col items-center"
+          onPointerDown={handleRotatePointerDown}
+        >
+          <div
+            className="w-6 h-6 rounded-full bg-white border-2 border-[#F26522] text-[#F26522] hover:bg-orange-50 hover:scale-110 shadow-lg flex items-center justify-center cursor-grab active:cursor-grabbing transition-transform"
+            title="Drag to Rotate (Ghumayein)"
+          >
+            <RotateCw size={12} className="stroke-[2.5]" />
+          </div>
+          <div className="w-[2px] h-[10px] bg-[#F26522]" />
+        </div>
+
+        {/* 4 Corner Resize Handles (Scale / Chhota-Bara) */}
+        {/* Top-Left */}
+        <div
+          data-handle="scale-tl"
+          onPointerDown={(e) => handleResizePointerDown(e, 'tl')}
+          style={{ position: 'absolute', top: '-6px', left: '-6px', pointerEvents: 'auto' }}
+          className="w-3.5 h-3.5 bg-white border-2 border-[#F26522] rounded-full shadow-md cursor-nwse-resize hover:scale-125 transition-transform"
+          title="Drag to Resize (Chhota / Bara karein)"
+        />
+        {/* Top-Right */}
+        <div
+          data-handle="scale-tr"
+          onPointerDown={(e) => handleResizePointerDown(e, 'tr')}
+          style={{ position: 'absolute', top: '-6px', right: '-6px', pointerEvents: 'auto' }}
+          className="w-3.5 h-3.5 bg-white border-2 border-[#F26522] rounded-full shadow-md cursor-nesw-resize hover:scale-125 transition-transform"
+          title="Drag to Resize (Chhota / Bara karein)"
+        />
+        {/* Bottom-Left */}
+        <div
+          data-handle="scale-bl"
+          onPointerDown={(e) => handleResizePointerDown(e, 'bl')}
+          style={{ position: 'absolute', bottom: '-6px', left: '-6px', pointerEvents: 'auto' }}
+          className="w-3.5 h-3.5 bg-white border-2 border-[#F26522] rounded-full shadow-md cursor-nesw-resize hover:scale-125 transition-transform"
+          title="Drag to Resize (Chhota / Bara karein)"
+        />
+        {/* Bottom-Right */}
+        <div
+          data-handle="scale-br"
+          onPointerDown={(e) => handleResizePointerDown(e, 'br')}
+          style={{ position: 'absolute', bottom: '-6px', right: '-6px', pointerEvents: 'auto' }}
+          className="w-3.5 h-3.5 bg-white border-2 border-[#F26522] rounded-full shadow-md cursor-nwse-resize hover:scale-125 transition-transform"
+          title="Drag to Resize (Chhota / Bara karein)"
+        />
+
+        {/* Live Dynamic Info Badge */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '-28px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            pointerEvents: 'none'
+          }}
+          className="px-2 py-0.5 rounded bg-slate-900/90 text-white text-[10px] font-mono tracking-wide shadow-md whitespace-nowrap flex items-center gap-1.5"
+        >
+          <span className="font-semibold text-orange-300">{label}</span>
+          <span className="opacity-60">•</span>
+          <span>{Math.round(scale * 100)}%</span>
+          <span className="opacity-60">•</span>
+          <span>{Math.round(angle)}°</span>
+        </div>
+      </div>
+    </Html>
+  );
+}
+
 // ── Interactive 3D Draggable Text Item Component (Conforming DecalGeometry) ──
 function TextDecalPlane({ item, modelGroupRef }) {
   const { camera, gl } = useThree();
   const {
     selectedTextId,
     setSelectedTextId,
+    setSelectedMesh,
+    setActiveControlTab,
     updateTextItem,
     setIsDragging3D,
     modelRevision,
@@ -969,6 +1311,23 @@ function TextDecalPlane({ item, modelGroupRef }) {
     }
     return d.rotation;
   }, [liveHit, item.rotation, item.angle]);
+
+  // Surface Normal Vector for Hit-Test Proxy Placement & Camera Facing Check
+  const normalVec = useMemo(() => {
+    const v = new THREE.Vector3(0, 0, 1);
+    v.applyEuler(currentRotation);
+    return v;
+  }, [currentRotation]);
+
+  const [facingCamera, setFacingCamera] = useState(true);
+  useFrame(() => {
+    if (!camera) return;
+    const toCam = camera.position.clone().sub(currentPos).normalize();
+    const facing = normalVec.dot(toCam) > 0.05;
+    if (facing !== facingCamera) {
+      setFacingCamera(facing);
+    }
+  });
 
   const isNum = item.type === 'number';
   const isStacked = Boolean(item.stacked && item.text && item.text.trim().includes(' '));
@@ -1164,6 +1523,8 @@ function TextDecalPlane({ item, modelGroupRef }) {
   const handlePointerDown = (e) => {
     e.stopPropagation();
     setSelectedTextId(item.id);
+    setSelectedMesh(null);
+    setActiveControlTab('typography');
     isDraggingRef.current = true;
     setIsDragging3D(true);
     gl.domElement.style.cursor = 'grabbing';
@@ -1217,6 +1578,7 @@ function TextDecalPlane({ item, modelGroupRef }) {
 
   return (
     <group position={[0, 0, 0]}>
+      {/* 1. Conforming Surface Decal Mesh */}
       <mesh
         geometry={decalGeom}
         userData={{ isTextDecal: true }}
@@ -1243,6 +1605,45 @@ function TextDecalPlane({ item, modelGroupRef }) {
           side={THREE.FrontSide}
         />
       </mesh>
+
+      {/* 2. Elevated Invisible Hit-Test Proxy Mesh (+8mm normal offset) to guarantee click priority over cloth */}
+      <mesh
+        position={[
+          currentPos.x + normalVec.x * 0.008,
+          currentPos.y + normalVec.y * 0.008,
+          currentPos.z + normalVec.z * 0.008
+        ]}
+        rotation={currentRotation}
+        onPointerDown={handlePointerDown}
+        onPointerOver={(e) => {
+          e.stopPropagation();
+          gl.domElement.style.cursor = 'grab';
+        }}
+        onPointerOut={() => {
+          if (!isDraggingRef.current) gl.domElement.style.cursor = 'default';
+        }}
+      >
+        <planeGeometry args={[planeWidth * 1.35, planeHeight * 1.6]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} side={THREE.DoubleSide} />
+      </mesh>
+
+      {/* 3. On-Model Figma/IDE Transform Controls (Bounding Box, Corner Scale, Top Rotate Knob & Quick Toolbar) */}
+      {isSelected && facingCamera && (
+        <DecalTransformGizmo
+          position={currentPos}
+          rotation={currentRotation}
+          angle={item.angle || 0}
+          scale={item.scale || 1.0}
+          width={planeWidth}
+          height={planeHeight}
+          label={item.text || item.label || 'Team Text'}
+          onScaleChange={(newScale) => updateTextItem(item.id, { scale: newScale })}
+          onAngleChange={(newAngle) => updateTextItem(item.id, { angle: newAngle })}
+          onDeselect={() => setSelectedTextId(null)}
+          onStartMove={handlePointerDown}
+          setIsDragging3D={setIsDragging3D}
+        />
+      )}
     </group>
   );
 }
@@ -1253,6 +1654,8 @@ function LogoDecalPlane({ item, modelGroupRef }) {
   const {
     selectedLogoId,
     setSelectedLogoId,
+    setSelectedMesh,
+    setActiveControlTab,
     updateLogo,
     setIsDragging3D,
     modelRevision,
@@ -1319,6 +1722,23 @@ function LogoDecalPlane({ item, modelGroupRef }) {
     }
     return d.rotation;
   }, [liveHit, item.rotation, item.angle]);
+
+  // Surface Normal Vector for Hit-Test Proxy Placement & Camera Facing Check
+  const normalVec = useMemo(() => {
+    const v = new THREE.Vector3(0, 0, 1);
+    v.applyEuler(currentRotation);
+    return v;
+  }, [currentRotation]);
+
+  const [facingCamera, setFacingCamera] = useState(true);
+  useFrame(() => {
+    if (!camera) return;
+    const toCam = camera.position.clone().sub(currentPos).normalize();
+    const facing = normalVec.dot(toCam) > 0.05;
+    if (facing !== facingCamera) {
+      setFacingCamera(facing);
+    }
+  });
 
   // Build true conforming 3D DecalGeometry across model mesh surface(s)
   const decalGeom = useMemo(() => {
@@ -1396,6 +1816,8 @@ function LogoDecalPlane({ item, modelGroupRef }) {
   const handlePointerDown = (e) => {
     e.stopPropagation();
     setSelectedLogoId(item.id);
+    setSelectedMesh(null);
+    setActiveControlTab('logos');
     isDraggingRef.current = true;
     setIsDragging3D(true);
     gl.domElement.style.cursor = 'grabbing';
@@ -1449,6 +1871,7 @@ function LogoDecalPlane({ item, modelGroupRef }) {
 
   return (
     <group position={[0, 0, 0]}>
+      {/* 1. Conforming Decal Mesh */}
       <mesh
         geometry={decalGeom}
         userData={{ isLogoDecal: true }}
@@ -1475,6 +1898,45 @@ function LogoDecalPlane({ item, modelGroupRef }) {
           side={THREE.FrontSide}
         />
       </mesh>
+
+      {/* 2. Elevated Invisible Hit-Test Proxy Mesh (+8mm normal offset) */}
+      <mesh
+        position={[
+          currentPos.x + normalVec.x * 0.008,
+          currentPos.y + normalVec.y * 0.008,
+          currentPos.z + normalVec.z * 0.008
+        ]}
+        rotation={currentRotation}
+        onPointerDown={handlePointerDown}
+        onPointerOver={(e) => {
+          e.stopPropagation();
+          gl.domElement.style.cursor = 'grab';
+        }}
+        onPointerOut={() => {
+          if (!isDraggingRef.current) gl.domElement.style.cursor = 'default';
+        }}
+      >
+        <planeGeometry args={[planeWidth * 1.35, planeHeight * 1.35]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} side={THREE.DoubleSide} />
+      </mesh>
+
+      {/* 3. On-Model Figma/IDE Transform Controls */}
+      {isSelected && facingCamera && (
+        <DecalTransformGizmo
+          position={currentPos}
+          rotation={currentRotation}
+          angle={item.angle || 0}
+          scale={item.scale || 1.0}
+          width={planeWidth}
+          height={planeHeight}
+          label={item.name || 'Emblem'}
+          onScaleChange={(newScale) => updateLogo(item.id, { scale: newScale })}
+          onAngleChange={(newAngle) => updateLogo(item.id, { angle: newAngle })}
+          onDeselect={() => setSelectedLogoId(null)}
+          onStartMove={handlePointerDown}
+          setIsDragging3D={setIsDragging3D}
+        />
+      )}
     </group>
   );
 }
@@ -1516,6 +1978,8 @@ export default function Sportswear3DCanvas({ className = '' }) {
     isFullscreen,
     setSelectedMesh,
     setHoveredMesh,
+    setSelectedTextId,
+    setSelectedLogoId,
     setViewAngle,
     toggleAutoRotate,
     toggleWireframe,
@@ -1564,6 +2028,10 @@ export default function Sportswear3DCanvas({ className = '' }) {
           toneMappingExposure: 1.1
         }}
         camera={{ position: [0, 0.2, 1.8], fov: 42 }}
+        onPointerMissed={() => {
+          setSelectedTextId(null);
+          setSelectedLogoId(null);
+        }}
         className="w-full h-full cursor-grab active:cursor-grabbing"
       >
         <CameraRig viewAngle={viewAngle} cameraResetCount={cameraResetCount} autoRotate={autoRotate} />

@@ -71,10 +71,13 @@ export default function StudioControlPanel({ onSaveDesign, isSubmitting = false 
     setIs2DEditorOpen,
     setRosterCount,
     setSelectedSizes,
-    setDecorationMethod
+    setDecorationMethod,
+    activeControlTab,
+    setActiveControlTab
   } = useStudioStore();
 
-  const [activeTab, setActiveTab] = useState('colors'); // 'colors' | 'fabrics' | 'patterns' | 'typography' | 'logos' | 'roster'
+  const activeTab = activeControlTab || 'colors';
+  const setActiveTab = setActiveControlTab;
 
   const TABS = [
     { id: 'colors', label: 'Colors', icon: Palette, title: 'Color Palette & Region Shading' },
