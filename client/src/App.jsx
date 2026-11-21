@@ -16,6 +16,7 @@ import BlogSection from './components/home/BlogSection';
 import FAQSection from './components/home/FAQSection';
 import ProSpecsSection from './components/home/ProSpecsSection';
 import LiveChatWidget from './components/layout/LiveChatWidget';
+import FreeShippingBadge from './components/layout/FreeShippingBadge';
 import CookieConsent from './components/layout/CookieConsent';
 import CartDrawer from './components/cart/CartDrawer';
 import { CartProvider } from './context/CartContext';
@@ -664,6 +665,7 @@ function MainApp() {
 
       {currentPage !== 'builder' && <Footer onNavigate={navigateTo} />}
       {currentPage !== 'builder' && <CookieConsent />}
+      {currentPage !== 'builder' && <FreeShippingBadge onNavigateInquiry={(item) => navigateTo('inquiry', item)} />}
       {currentPage !== 'builder' && <LiveChatWidget onNavigateInquiry={(item) => navigateTo('inquiry', item)} />}
 
       <CartDrawer
