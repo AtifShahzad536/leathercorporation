@@ -1073,26 +1073,26 @@ export default function SportsCategoryHubPage({
 
               <div className="p-4 bg-white/5 border border-white/10 rounded-[3px] flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <Phone size={20} className="text-[var(--accent)]" />
+                  <Phone size={20} className="text-orange-400" />
                   <span className="text-xs font-bold text-white">Direct Production Hotline</span>
                 </div>
-                <a href="https://wa.me/923105464116" target="_blank" rel="noopener noreferrer" className="text-xs font-black text-[var(--accent)] hover:underline">+92 310 5464116</a>
+                <a href="https://wa.me/923105464116" target="_blank" rel="noopener noreferrer" className="text-xs font-black text-orange-400 hover:text-orange-300 hover:underline">+92 310 5464116</a>
               </div>
 
               <div className="p-4 bg-white/5 border border-white/10 rounded-[3px] flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <Mail size={20} className="text-[var(--accent)]" />
+                  <Mail size={20} className="text-orange-400" />
                   <span className="text-xs font-bold text-white">Factory Sales Email</span>
                 </div>
-                <a href="mailto:sale@hamlosportswear.site" className="text-xs text-white/90 hover:text-[var(--accent)] transition-colors">sale@hamlosportswear.site</a>
+                <a href="mailto:sale@hamlosportswear.site" className="text-xs text-white/90 hover:text-orange-400 transition-colors">sale@hamlosportswear.site</a>
               </div>
 
               {/* Badges */}
               <div className="pt-4 border-t border-white/10 flex flex-wrap gap-4 text-xs font-semibold text-white/80">
-                <span className="flex items-center gap-1.5"><Check size={14} className="text-[var(--accent)]" /> No Minimum Order</span>
-                <span className="flex items-center gap-1.5"><Check size={14} className="text-[var(--accent)]" /> Free 3D Mockups</span>
-                <span className="flex items-center gap-1.5"><Check size={14} className="text-[var(--accent)]" /> 2 to 3 Weeks Delivery</span>
-                <span className="flex items-center gap-1.5"><Check size={14} className="text-[var(--accent)]" /> Free Remake Guarantee</span>
+                <span className="flex items-center gap-1.5"><Check size={14} className="text-orange-400" /> No Minimum Order</span>
+                <span className="flex items-center gap-1.5"><Check size={14} className="text-orange-400" /> Free 3D Mockups</span>
+                <span className="flex items-center gap-1.5"><Check size={14} className="text-orange-400" /> 2 to 3 Weeks Delivery</span>
+                <span className="flex items-center gap-1.5"><Check size={14} className="text-orange-400" /> Free Remake Guarantee</span>
               </div>
             </div>
 

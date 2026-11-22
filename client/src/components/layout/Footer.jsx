@@ -56,9 +56,9 @@ const Footer = ({ onNavigate = () => {} }) => {
             <p className="text-sm text-white/70 leading-relaxed mb-4 max-w-[320px]">
               Direct from Sialkot, Pakistan. HAMLO SPORTS manufactures world-class custom team uniforms, pro-grade dye-sublimation, and performance sportswear engineered for schools, clubs, and professional leagues.
             </p>
-            <div className="space-y-1 mb-6 text-xs text-white/80 font-medium">
-              <div>Sales: <a href="mailto:sale@hamlosportswear.site" className="text-[var(--accent)] hover:underline font-bold">sale@hamlosportswear.site</a></div>
-              <div>WhatsApp / Phone: <a href="https://wa.me/923105464116" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline font-bold">+92 310 5464116</a></div>
+            <div className="space-y-1 mb-6 text-xs text-white/90 font-medium">
+              <div>Sales: <a href="mailto:sale@hamlosportswear.site" className="text-orange-400 hover:text-orange-300 hover:underline font-bold">sale@hamlosportswear.site</a></div>
+              <div>WhatsApp / Phone: <a href="https://wa.me/923105464116" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300 hover:underline font-bold">+92 310 5464116</a></div>
             </div>
             {/* Social Icons */}
             <div className="flex items-center gap-4">
@@ -111,7 +111,7 @@ const Footer = ({ onNavigate = () => {} }) => {
                           else onNavigate('inquiry');
                         }
                       }}
-                      className="text-sm text-white/60 hover:text-[var(--accent)] transition-colors duration-200 tracking-wide text-left cursor-pointer"
+                      className="text-sm text-white/70 hover:text-orange-400 transition-colors duration-200 tracking-wide text-left cursor-pointer"
                     >
                       {link}
                     </button>
