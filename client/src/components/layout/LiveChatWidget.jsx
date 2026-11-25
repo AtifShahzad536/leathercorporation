@@ -49,7 +49,7 @@ export default function LiveChatWidget({ onNavigateInquiry = () => {} }) {
   };
 
   return (
-    <div className="fixed bottom-0 right-4 sm:right-6 z-[120] flex flex-col items-end select-none">
+    <div className={`fixed bottom-0 right-4 sm:right-6 ${isOpen ? 'z-[10000000]' : 'z-[120]'} flex flex-col items-end select-none`}>
       
       {/* ── EXPANDED LIVE CHAT WINDOW ── */}
       <AnimatePresence>
