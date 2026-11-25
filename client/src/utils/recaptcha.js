@@ -52,29 +52,32 @@ export const loadRecaptchaScript = (siteKey) => {
 };
 
 /**
- * Initializes reCAPTCHA v3 on first real user interaction.
- * Prevents Lighthouse / synthetic crawlers from throwing third-party requestStorageAccess console errors.
+ * Initializes reCAPTCHA v3 on form interaction (input focus or submit).
+ * Prevents Lighthouse / synthetic crawlers from downloading Google's 7-day TTL assets (logo_48.png, roboto font).
  */
 export const initLazyRecaptcha = () => {
   if (typeof window === 'undefined') return;
   const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
   if (!siteKey || siteKey === 'your_recaptcha_v3_site_key_here') return;
 
-  const triggerEvents = ['mousemove', 'touchstart', 'scroll', 'keydown', 'click'];
   let initialized = false;
-
-  const onUserInteraction = () => {
+  const triggerRecaptcha = () => {
     if (initialized) return;
     initialized = true;
-    triggerEvents.forEach(evt => {
-      window.removeEventListener(evt, onUserInteraction, { passive: true });
-    });
+    window.removeEventListener('focusin', onFocusIn);
+    document.removeEventListener('submit', triggerRecaptcha, true);
     loadRecaptchaScript(siteKey);
   };
 
-  triggerEvents.forEach(evt => {
-    window.addEventListener(evt, onUserInteraction, { passive: true, once: true });
-  });
+  const onFocusIn = (e) => {
+    const tag = e.target?.tagName?.toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || tag === 'select') {
+      triggerRecaptcha();
+    }
+  };
+
+  window.addEventListener('focusin', onFocusIn, { passive: true });
+  document.addEventListener('submit', triggerRecaptcha, { capture: true, passive: true });
 };
 
 /**
