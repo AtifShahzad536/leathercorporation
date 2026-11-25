@@ -1,9 +1,121 @@
 const express = require('express');
+const multer = require('multer');
+const cloudinary = require('../config/cloudinary');
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
 const ClubRegistration = require('../models/ClubRegistration');
 const Inquiry = require('../models/Inquiry');
 const { protect } = require('../middleware/auth');
 
 const router = express.Router();
+
+const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.NOW_REGION);
+const tempUploadDir = isServerless ? os.tmpdir() : path.join(__dirname, '../../uploads');
+
+if (!isServerless && !fs.existsSync(tempUploadDir)) {
+  try { fs.mkdirSync(tempUploadDir, { recursive: true }); } catch (e) {}
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const targetDir = isServerless ? os.tmpdir() : tempUploadDir;
+    if (!fs.existsSync(targetDir)) {
+      try { fs.mkdirSync(targetDir, { recursive: true }); } catch (e) {}
+    }
+    cb(null, targetDir);
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname) || '';
+    const cleanBase = path.basename(file.originalname, ext).replace(/[^a-zA-Z0-9_-]/g, '_');
+    cb(null, `club-logo-${Date.now()}-${cleanBase}${ext}`);
+  }
+});
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 30 * 1024 * 1024 }, // 30MB
+});
+
+// GET /api/clubs/signature - Direct Cloudinary Signature for public club logo uploads (Public)
+router.get('/signature', (req, res) => {
+  try {
+    const conf = cloudinary.config();
+    if (!conf.cloud_name || !conf.api_key || !conf.api_secret) {
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Cloudinary credentials missing in server environment.' 
+      });
+    }
+
+    const timestamp = Math.round(new Date().getTime() / 1000);
+    const folder = 'hamlo-sports/club-logos';
+    const paramsToSign = { folder, timestamp };
+    const signature = cloudinary.utils.api_sign_request(paramsToSign, conf.api_secret);
+
+    res.json({
+      success: true,
+      data: {
+        signature,
+        timestamp,
+        apiKey: conf.api_key,
+        cloudName: conf.cloud_name,
+        folder
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// POST /api/clubs/upload-artwork - Direct multipart upload with Cloudinary (Public)
+router.post('/upload-artwork', upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: 'No file provided' });
+    }
+
+    let fileUrl = '';
+    const conf = cloudinary.config();
+
+    if (conf.cloud_name && conf.api_key && conf.api_secret) {
+      try {
+        const result = await cloudinary.uploader.upload(req.file.path, {
+          folder: 'hamlo-sports/club-logos',
+          resource_type: 'auto',
+        });
+        fileUrl = result.secure_url;
+      } catch (cldErr) {
+        console.warn('Cloudinary upload error:', cldErr.message);
+      }
+    }
+
+    // Clean up temporary local upload file
+    if (fs.existsSync(req.file.path)) {
+      try { fs.unlinkSync(req.file.path); } catch (e) {}
+    }
+
+    if (!fileUrl) {
+      return res.status(500).json({
+        success: false,
+        message: 'Artwork upload failed. Please try again or provide an external drive link.'
+      });
+    }
+
+    res.json({
+      success: true,
+      url: fileUrl,
+      filename: req.file.originalname,
+      message: 'Logo artwork uploaded successfully'
+    });
+  } catch (error) {
+    if (req.file && fs.existsSync(req.file.path)) {
+      try { fs.unlinkSync(req.file.path); } catch (e) {}
+    }
+    console.error('Club artwork upload error:', error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
 
 // GET /api/clubs - List all registered clubs (Admin only)
 router.get('/', protect, async (req, res) => {

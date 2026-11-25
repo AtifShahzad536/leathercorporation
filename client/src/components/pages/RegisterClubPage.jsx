@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { 
   Trophy, ClipboardCheck, ClipboardList, Palette, Truck, Check, ArrowRight, ArrowLeft, 
   ChevronDown, ShieldCheck, Award, HelpCircle, Send, Sparkles, Building2, 
-  Users, Phone, Mail, CheckCircle2, AlertCircle, Loader2, MessageSquare
+  Users, Phone, Mail, CheckCircle2, AlertCircle, Loader2, MessageSquare,
+  UploadCloud, FileText, X, Link2
 } from 'lucide-react';
-import { useCMS } from '../../context/CMSContext';
+import { useCMS, API_BASE } from '../../context/CMSContext';
 
 export default function RegisterClubPage({ 
   onNavigateInquiry = () => {},
@@ -18,6 +19,105 @@ export default function RegisterClubPage({
   const [submitted, setSubmitted] = useState(false);
   const [registrationData, setRegistrationData] = useState(null);
   const [formError, setFormError] = useState('');
+
+  // Logo Uploader States
+  const [logoFile, setLogoFile] = useState(null);
+  const [logoPreview, setLogoPreview] = useState(null);
+  const [isUploadingLogo, setIsUploadingLogo] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState('');
+  const [showLinkInput, setShowLinkInput] = useState(false);
+
+  const handleFileUpload = async (file) => {
+    if (!file) return;
+
+    setLogoFile(file);
+    if (formError) setFormError('');
+
+    // 1. Generate local preview immediately if image
+    if (file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setLogoPreview(e.target.result);
+        if (!formData.logoUrl || formData.logoUrl.startsWith('data:')) {
+          setFormData(prev => ({ ...prev, logoUrl: e.target.result }));
+        }
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setLogoPreview(null);
+    }
+
+    // 2. Upload to Cloudinary / Server in background
+    setIsUploadingLogo(true);
+    setUploadProgress('Uploading artwork to factory server...');
+
+    try {
+      let uploadedUrl = null;
+
+      // Try direct Cloudinary signature first (handles files up to 25MB with zero Vercel limits)
+      try {
+        const sigRes = await fetch(`${API_BASE}/clubs/signature`);
+        if (sigRes.ok) {
+          const sigJson = await sigRes.json();
+          if (sigJson.success && sigJson.data) {
+            const { signature, timestamp, apiKey, cloudName, folder } = sigJson.data;
+            const cldFormData = new FormData();
+            cldFormData.append('file', file);
+            cldFormData.append('api_key', apiKey);
+            cldFormData.append('timestamp', timestamp);
+            cldFormData.append('signature', signature);
+            cldFormData.append('folder', folder);
+
+            const cldRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`, {
+              method: 'POST',
+              body: cldFormData
+            });
+            const cldData = await cldRes.json();
+            if (cldData.secure_url) {
+              uploadedUrl = cldData.secure_url;
+            }
+          }
+        }
+      } catch (directErr) {
+        console.warn('Direct Cloudinary upload attempt failed, trying backend route:', directErr);
+      }
+
+      // If direct didn't succeed, try server upload route
+      if (!uploadedUrl) {
+        const formPayload = new FormData();
+        formPayload.append('file', file);
+        const serverRes = await fetch(`${API_BASE}/clubs/upload-artwork`, {
+          method: 'POST',
+          body: formPayload
+        });
+        if (serverRes.ok) {
+          const serverData = await serverRes.json();
+          if (serverData.success && serverData.url) {
+            uploadedUrl = serverData.url;
+          }
+        }
+      }
+
+      if (uploadedUrl) {
+        setFormData(prev => ({ ...prev, logoUrl: uploadedUrl }));
+        setUploadProgress('Uploaded successfully!');
+      } else {
+        setUploadProgress('File saved locally for registration proof.');
+      }
+    } catch (uploadErr) {
+      console.warn('Artwork upload warning:', uploadErr);
+      setUploadProgress('Saved locally for direct review.');
+    } finally {
+      setIsUploadingLogo(false);
+    }
+  };
+
+  const handleRemoveFile = () => {
+    setLogoFile(null);
+    setLogoPreview(null);
+    setUploadProgress('');
+    setFormData(prev => ({ ...prev, logoUrl: '' }));
+  };
 
   // Form Fields
   const [formData, setFormData] = useState({
@@ -552,20 +652,123 @@ export default function RegisterClubPage({
                     </div>
                   </div>
 
+                  {/* Dedicated Logo & Artwork Uploader */}
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[var(--secondary)] mb-1.5">
-                      Club Logo / Artwork URL (Google Drive / Dropbox / Cloudinary)
+                    <label className="block text-xs font-bold uppercase tracking-wider text-[var(--secondary)] mb-1.5 flex items-center justify-between">
+                      <span className="flex items-center gap-1.5">
+                        <Palette size={14} className="text-[var(--accent)]" />
+                        Club Logo / Team Crest Artwork
+                      </span>
+                      <span className="text-[10px] text-neutral-400 font-normal">Optional (Upload file or share link)</span>
                     </label>
-                    <input
-                      type="url"
-                      placeholder="https://drive.google.com/... or paste logo link"
-                      value={formData.logoUrl}
-                      onChange={(e) => updateField('logoUrl', e.target.value)}
-                      className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)] font-mono text-xs"
-                    />
-                    <span className="text-[10px] text-neutral-400 mt-1 block">
-                      Don't have a link? You can also email artwork directly to sale@hamlosportswear.site after registration.
-                    </span>
+
+                    {!logoFile && !formData.logoUrl ? (
+                      /* Drag & Drop Dropzone Box */
+                      <div
+                        onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                        onDrop={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          const file = e.dataTransfer.files?.[0];
+                          if (file) handleFileUpload(file);
+                        }}
+                        className="border-2 border-dashed border-neutral-300 hover:border-[var(--accent)] transition-all rounded-[5px] p-6 text-center bg-neutral-50/60 hover:bg-neutral-50 group cursor-pointer"
+                        onClick={() => document.getElementById('club-logo-file-input')?.click()}
+                      >
+                        <input
+                          id="club-logo-file-input"
+                          type="file"
+                          accept="image/*,.pdf,.ai,.eps,.svg"
+                          className="hidden"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) handleFileUpload(file);
+                            e.target.value = '';
+                          }}
+                        />
+                        <div className="w-12 h-12 rounded-[5px] bg-[var(--accent)]/10 text-[var(--accent)] flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                          <UploadCloud size={24} />
+                        </div>
+                        <p className="text-xs sm:text-sm font-bold text-[var(--secondary)] mb-0.5">
+                          Click to upload or drag &amp; drop team logo / artwork
+                        </p>
+                        <span className="text-[11px] text-neutral-500 font-light block mb-3">
+                          PNG, SVG, JPG, WEBP, PDF, AI, or EPS (High Resolution up to 25MB)
+                        </span>
+                        <span className="inline-block px-4 py-1.5 bg-[#1E1B6E] group-hover:bg-[var(--accent)] text-white text-[11px] font-bold uppercase tracking-wider rounded-[5px] transition shadow-xs">
+                          Choose Logo File
+                        </span>
+                      </div>
+                    ) : (
+                      /* Uploaded File Preview Card */
+                      <div className="p-4 bg-neutral-50 border border-neutral-200 rounded-[5px] flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-3 overflow-hidden">
+                          {logoPreview ? (
+                            <img
+                              src={logoPreview}
+                              alt="Club Crest Preview"
+                              className="w-12 h-12 object-contain rounded-[4px] border border-neutral-200 bg-white p-1 flex-shrink-0 shadow-xs"
+                            />
+                          ) : (
+                            <div className="w-12 h-12 rounded-[4px] bg-[var(--accent)]/10 text-[var(--accent)] flex items-center justify-center flex-shrink-0">
+                              <FileText size={24} />
+                            </div>
+                          )}
+                          <div className="min-w-0">
+                            <span className="text-xs font-bold text-[var(--secondary)] truncate block">
+                              {logoFile ? logoFile.name : 'Team Logo Attached'}
+                            </span>
+                            <div className="flex items-center gap-2 text-[11px] text-neutral-500 mt-0.5">
+                              {logoFile && (
+                                <span>{(logoFile.size / (1024 * 1024)).toFixed(2)} MB •</span>
+                              )}
+                              {isUploadingLogo ? (
+                                <span className="inline-flex items-center gap-1 text-[var(--accent)] font-medium">
+                                  <Loader2 size={12} className="animate-spin" /> Uploading to server...
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center gap-1 text-emerald-600 font-medium">
+                                  <CheckCircle2 size={12} /> Ready for 3D proof
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={handleRemoveFile}
+                          className="px-3 py-1.5 border border-red-200 text-red-600 hover:bg-red-50 text-[11px] font-bold uppercase tracking-wider rounded-[5px] transition flex items-center gap-1 flex-shrink-0 cursor-pointer"
+                        >
+                          <X size={12} />
+                          <span>Remove</span>
+                        </button>
+                      </div>
+                    )}
+
+                    {/* External Link Option Toggle */}
+                    <div className="mt-2 text-right">
+                      <button
+                        type="button"
+                        onClick={() => setShowLinkInput(!showLinkInput)}
+                        className="text-[11px] text-[var(--accent)] hover:underline inline-flex items-center gap-1 cursor-pointer font-medium"
+                      >
+                        <Link2 size={11} />
+                        <span>{showLinkInput ? 'Hide link option' : 'Or paste Google Drive / Dropbox link'}</span>
+                      </button>
+                    </div>
+
+                    {showLinkInput && (
+                      <div className="mt-2 animate-fade-in">
+                        <input
+                          type="url"
+                          placeholder="https://drive.google.com/... or paste shared logo link"
+                          value={formData.logoUrl && !formData.logoUrl.startsWith('data:') ? formData.logoUrl : ''}
+                          onChange={(e) => updateField('logoUrl', e.target.value)}
+                          className="w-full px-3.5 py-2.5 border border-neutral-300 rounded-[5px] text-xs font-mono focus:outline-none focus:border-[var(--accent)] bg-white"
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <div>
