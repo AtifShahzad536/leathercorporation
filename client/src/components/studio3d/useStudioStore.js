@@ -174,7 +174,7 @@ export const useStudioStore = create((set, get) => ({
       visible: false
     }
   ],
-  selectedTextId: 'team_name',
+  selectedTextId: null,
   isDragging3D: false,
   show3DGizmo: false,
   meshCenters: {}, // { [meshId]: { center: [x,y,z], size: [x,y,z], surfacePosition: [x,y,z], rotation: [rx,ry,rz] } }

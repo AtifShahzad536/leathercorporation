@@ -142,33 +142,9 @@ function ProceduralJerseyModel({ onSelectMesh, selectedMeshId, hoveredMeshId, on
 
   const handlePointerDown = (e, meshId) => {
     e.stopPropagation();
-    const hitPoint = e.point;
-    if (hitPoint) {
-      const centerZ = modelBounds?.center?.[2] || 0;
-      const isFrontClick = hitPoint.z >= centerZ;
-      const textHit = (textItems || []).find((t) => {
-        if (!t.visible || !t.position) return false;
-        const tPos = new THREE.Vector3(...t.position);
-        const dist = hitPoint.distanceTo(tPos);
-        const isFrontText = (t.position[2] || 0) >= centerZ;
-        return dist < 0.18 && isFrontClick === isFrontText;
-      });
-      if (textHit) {
-        setSelectedTextId(textHit.id);
-        return;
-      }
-      const logoHit = (logos || []).find((l) => {
-        if (!l.visible || !l.position) return false;
-        const lPos = new THREE.Vector3(...l.position);
-        const dist = hitPoint.distanceTo(lPos);
-        const isFrontLogo = (l.position[2] || 0) >= centerZ;
-        return dist < 0.16 && isFrontClick === isFrontLogo;
-      });
-      if (logoHit) {
-        setSelectedLogoId(logoHit.id);
-        return;
-      }
-    }
+    // Clicking on garment cloth deselects text/logos; text is selected ONLY when clicked directly on its glyphs
+    setSelectedTextId(null);
+    setSelectedLogoId(null);
     onSelectMesh(meshId);
   };
 
@@ -666,33 +642,9 @@ function CustomGlbModel({ url, onSelectMesh, selectedMeshId, hoveredMeshId, onHo
       object={clonedScene}
       onPointerDown={(e) => {
         e.stopPropagation();
-        const hitPoint = e.point;
-        if (hitPoint) {
-          const centerZ = modelBounds?.center?.[2] || 0;
-          const isFrontClick = hitPoint.z >= centerZ;
-          const textHit = (textItems || []).find((t) => {
-            if (!t.visible || !t.position) return false;
-            const tPos = new THREE.Vector3(...t.position);
-            const dist = hitPoint.distanceTo(tPos);
-            const isFrontText = (t.position[2] || 0) >= centerZ;
-            return dist < 0.18 && isFrontClick === isFrontText;
-          });
-          if (textHit) {
-            setSelectedTextId(textHit.id);
-            return;
-          }
-          const logoHit = (logos || []).find((l) => {
-            if (!l.visible || !l.position) return false;
-            const lPos = new THREE.Vector3(...l.position);
-            const dist = hitPoint.distanceTo(lPos);
-            const isFrontLogo = (l.position[2] || 0) >= centerZ;
-            return dist < 0.16 && isFrontClick === isFrontLogo;
-          });
-          if (logoHit) {
-            setSelectedLogoId(logoHit.id);
-            return;
-          }
-        }
+        // Clicking on garment cloth deselects text/logos; text is selected ONLY when clicked directly on its glyphs
+        setSelectedTextId(null);
+        setSelectedLogoId(null);
         onSelectMesh(e.object.name || e.object.uuid);
       }}
       onPointerOver={(e) => {
@@ -1010,10 +962,14 @@ function DecalTransformGizmo({
   setIsDragging3D
 }) {
   const boxRef = useRef(null);
+  const { size } = useThree();
 
-  // Dynamic box sizing in viewport pixels (tightly hugging text/logo glyphs)
-  const boxWidth = Math.max(48, Math.round(width * 400) + 10);
-  const boxHeight = Math.max(24, Math.round(height * 400) + 8);
+  // Convert 3D physical meters directly to CSS pixels in Drei's <Html distanceFactor={1.8}>
+  // Formula: CSS_pixels = 3D_meters * (canvas_height / distanceFactor)
+  // This ensures the dashed bounding box tightly hugs the actual text glyphs with minimal 2px padding
+  const pxPerMeter = (size?.height || 600) / 1.8;
+  const boxWidth = Math.max(14, Math.round(width * pxPerMeter) + 4);
+  const boxHeight = Math.max(10, Math.round(height * pxPerMeter) + 4);
 
   // 1. Interactive Corner Resize Handlers (Chhota / Bara / Scale)
   const handleResizePointerDown = (e, corner) => {
@@ -1124,94 +1080,15 @@ function DecalTransformGizmo({
           transformOrigin: 'center center',
           pointerEvents: 'auto'
         }}
-        className="relative group cursor-move select-none rounded-[3px] border border-dashed border-[#F26522] bg-[#F26522]/5 transition-colors hover:bg-[#F26522]/10 shadow-[0_0_0_1px_rgba(255,255,255,0.7),0_4px_12px_rgba(0,0,0,0.18)]"
+        className="relative group cursor-move select-none rounded-[2px] border border-dashed border-[#F26522] bg-[#F26522]/5 transition-colors hover:bg-[#F26522]/10 shadow-[0_0_0_1px_rgba(255,255,255,0.7)]"
         onPointerDown={handleBoxPointerDown}
       >
-        {/* Sleek Compact Micro-Toolbar (Snug directly above the text boundary) */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '-32px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            pointerEvents: 'auto'
-          }}
-          className="flex items-center gap-0.5 px-1.5 py-0.5 rounded-[5px] bg-slate-900/95 text-white shadow-xl backdrop-blur-md border border-white/20 whitespace-nowrap text-[10px] font-medium"
-          onPointerDown={(e) => e.stopPropagation()}
-        >
-          {/* Zoom / Scale Controls */}
-          <button
-            type="button"
-            onClick={() => onScaleChange(Math.max(0.25, Math.round((scale - 0.08) * 100) / 100))}
-            title="Make Smaller (Chhota)"
-            className="w-5 h-5 rounded-[3px] hover:bg-white/20 text-orange-400 hover:text-white transition flex items-center justify-center cursor-pointer"
-          >
-            <Minus size={11} strokeWidth={2.5} />
-          </button>
-          
-          <span className="text-[9px] text-white/70 font-mono px-1 select-none">
-            {Math.round(scale * 100)}%
-          </span>
-
-          <button
-            type="button"
-            onClick={() => onScaleChange(Math.min(2.5, Math.round((scale + 0.08) * 100) / 100))}
-            title="Make Larger (Bara)"
-            className="w-5 h-5 rounded-[3px] hover:bg-white/20 text-orange-400 hover:text-white transition flex items-center justify-center cursor-pointer"
-          >
-            <Plus size={11} strokeWidth={2.5} />
-          </button>
-
-          <div className="w-[1px] h-3 bg-white/20 mx-0.5" />
-
-          {/* Rotation Controls */}
-          <button
-            type="button"
-            onClick={() => onAngleChange(((Math.round(angle) - 15 + 180) % 360) - 180)}
-            title="Rotate Left (-15°)"
-            className="w-5 h-5 rounded-[3px] hover:bg-white/20 text-white/80 hover:text-white transition flex items-center justify-center cursor-pointer"
-          >
-            <RotateCcw size={10} />
-          </button>
-          <button
-            type="button"
-            onClick={() => onAngleChange(((Math.round(angle) + 15 + 180) % 360) - 180)}
-            title="Rotate Right (+15°)"
-            className="w-5 h-5 rounded-[3px] hover:bg-white/20 text-white/80 hover:text-white transition flex items-center justify-center cursor-pointer"
-          >
-            <RotateCw size={10} />
-          </button>
-
-          {Math.abs(angle) > 1 && (
-            <button
-              type="button"
-              onClick={() => onAngleChange(0)}
-              title="Reset Angle to 0°"
-              className="px-1 h-5 rounded-[3px] hover:bg-white/20 text-amber-300 text-[9px] font-bold transition flex items-center justify-center cursor-pointer"
-            >
-              0°
-            </button>
-          )}
-
-          <div className="w-[1px] h-3 bg-white/20 mx-0.5" />
-
-          {/* Deselect / Close */}
-          <button
-            type="button"
-            onClick={onDeselect}
-            title="Done / Deselect"
-            className="w-5 h-5 rounded-[3px] hover:bg-red-500/40 text-white/70 hover:text-white transition flex items-center justify-center cursor-pointer"
-          >
-            <X size={10} />
-          </button>
-        </div>
-
-        {/* Top Rotation Stem & Circular Knob */}
+        {/* Top Rotation Stem & Circular Knob (Snug, compact) */}
         <div
           data-handle="rotate"
           style={{
             position: 'absolute',
-            top: '-15px',
+            top: '-14px',
             left: '50%',
             transform: 'translateX(-50%)',
             pointerEvents: 'auto'
@@ -1220,41 +1097,41 @@ function DecalTransformGizmo({
           onPointerDown={handleRotatePointerDown}
         >
           <div
-            className="w-4 h-4 rounded-full bg-white border border-[#F26522] text-[#F26522] hover:bg-orange-50 hover:scale-115 shadow-sm flex items-center justify-center cursor-grab active:cursor-grabbing transition-transform"
+            className="w-3.5 h-3.5 rounded-full bg-white border border-[#F26522] text-[#F26522] hover:bg-orange-50 hover:scale-115 shadow-xs flex items-center justify-center cursor-grab active:cursor-grabbing transition-transform"
             title="Drag to Rotate (Ghumayein)"
           >
-            <RotateCw size={9} className="stroke-[2.5]" />
+            <RotateCw size={8} className="stroke-[2.5]" />
           </div>
-          <div className="w-[1px] h-[5px] bg-[#F26522]" />
+          <div className="w-[1px] h-[4px] bg-[#F26522]" />
         </div>
 
-        {/* 4 Corner Resize Handles */}
+        {/* 4 Compact Corner Resize Handles */}
         <div
           data-handle="scale-tl"
           onPointerDown={(e) => handleResizePointerDown(e, 'tl')}
-          style={{ position: 'absolute', top: '-4px', left: '-4px', pointerEvents: 'auto' }}
-          className="w-2.5 h-2.5 bg-white border border-[#F26522] rounded-full shadow-xs cursor-nwse-resize hover:scale-125 transition-transform"
+          style={{ position: 'absolute', top: '-3px', left: '-3px', pointerEvents: 'auto' }}
+          className="w-2 h-2 bg-white border border-[#F26522] rounded-full shadow-xs cursor-nwse-resize hover:scale-125 transition-transform"
           title="Drag to Resize"
         />
         <div
           data-handle="scale-tr"
           onPointerDown={(e) => handleResizePointerDown(e, 'tr')}
-          style={{ position: 'absolute', top: '-4px', right: '-4px', pointerEvents: 'auto' }}
-          className="w-2.5 h-2.5 bg-white border border-[#F26522] rounded-full shadow-xs cursor-nesw-resize hover:scale-125 transition-transform"
+          style={{ position: 'absolute', top: '-3px', right: '-3px', pointerEvents: 'auto' }}
+          className="w-2 h-2 bg-white border border-[#F26522] rounded-full shadow-xs cursor-nesw-resize hover:scale-125 transition-transform"
           title="Drag to Resize"
         />
         <div
           data-handle="scale-bl"
           onPointerDown={(e) => handleResizePointerDown(e, 'bl')}
-          style={{ position: 'absolute', bottom: '-4px', left: '-4px', pointerEvents: 'auto' }}
-          className="w-2.5 h-2.5 bg-white border border-[#F26522] rounded-full shadow-xs cursor-nesw-resize hover:scale-125 transition-transform"
+          style={{ position: 'absolute', bottom: '-3px', left: '-3px', pointerEvents: 'auto' }}
+          className="w-2 h-2 bg-white border border-[#F26522] rounded-full shadow-xs cursor-nesw-resize hover:scale-125 transition-transform"
           title="Drag to Resize"
         />
         <div
           data-handle="scale-br"
           onPointerDown={(e) => handleResizePointerDown(e, 'br')}
-          style={{ position: 'absolute', bottom: '-4px', right: '-4px', pointerEvents: 'auto' }}
-          className="w-2.5 h-2.5 bg-white border border-[#F26522] rounded-full shadow-xs cursor-nwse-resize hover:scale-125 transition-transform"
+          style={{ position: 'absolute', bottom: '-3px', right: '-3px', pointerEvents: 'auto' }}
+          className="w-2 h-2 bg-white border border-[#F26522] rounded-full shadow-xs cursor-nwse-resize hover:scale-125 transition-transform"
           title="Drag to Resize"
         />
       </div>
@@ -1329,11 +1206,13 @@ function TextDecalPlane({ item, modelGroupRef }) {
   const isOnLimb = distFromCenter > 0.035;
 
   // Generate dynamic canvas texture and tight glyph bounds
+  const canvasRef = useRef(null);
   const { texture, widthRatio, heightRatio } = useMemo(() => {
     const canvas = document.createElement('canvas');
     canvas.width = 1024;
     canvas.height = isStacked ? 512 : (isNum ? 512 : 256);
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    canvasRef.current = canvas;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.textAlign = 'center';
@@ -1342,8 +1221,8 @@ function TextDecalPlane({ item, modelGroupRef }) {
     const cx = canvas.width / 2;
     const fontFam = item.font || 'Impact';
 
-    let measuredTextWidth = 200;
-    let measuredTextHeight = 80;
+    let glyphWidth = 200;
+    let glyphHeight = 80;
 
     if (isStacked) {
       // Split into 2 stacked lines
@@ -1360,7 +1239,7 @@ function TextDecalPlane({ item, modelGroupRef }) {
       }
 
       const targetFontSize = 190;
-      const maxLineWidth = canvas.width - 120; // 60px side padding
+      const maxLineWidth = canvas.width - 60; // 30px side padding
       ctx.font = `900 ${targetFontSize}px "${fontFam}", sans-serif`;
       const w1 = ctx.measureText(line1).width;
       const w2 = ctx.measureText(line2).width;
@@ -1374,8 +1253,16 @@ function TextDecalPlane({ item, modelGroupRef }) {
       const cy1 = (canvas.height / 2) - (lineGap / 2);
       const cy2 = (canvas.height / 2) + (lineGap / 2);
 
-      measuredTextWidth = maxW;
-      measuredTextHeight = actualFontSize * 2.2;
+      const m1 = ctx.measureText(line1);
+      const m2 = ctx.measureText(line2);
+      const width1 = (m1.actualBoundingBoxLeft !== undefined && m1.actualBoundingBoxRight !== undefined)
+        ? (m1.actualBoundingBoxLeft + m1.actualBoundingBoxRight)
+        : m1.width;
+      const width2 = (m2.actualBoundingBoxLeft !== undefined && m2.actualBoundingBoxRight !== undefined)
+        ? (m2.actualBoundingBoxLeft + m2.actualBoundingBoxRight)
+        : m2.width;
+      glyphWidth = Math.max(width1, width2);
+      glyphHeight = actualFontSize * 2.1;
 
       [ { text: line1, y: cy1 }, { text: line2, y: cy2 } ].forEach(({ text, y }) => {
         if (item.strokeWidth > 0 && item.strokeColor) {
@@ -1388,10 +1275,10 @@ function TextDecalPlane({ item, modelGroupRef }) {
         ctx.fillText(text, cx, y);
       });
     } else {
-      // Single line text with generous safety margins so outer letter strokes never clip
+      // Single line text with precise glyph bounding box measurement
       const cy = canvas.height / 2;
-      const fontSize = isNum ? 340 : 120;
-      const maxTextWidth = canvas.width - 120; // 60px side padding so 'H' and 'S' never clip
+      const fontSize = isNum ? 340 : 130;
+      const maxTextWidth = canvas.width - 60; // 30px side padding
 
       ctx.font = `900 ${fontSize}px "${fontFam}", sans-serif`;
       const metrics = ctx.measureText(item.text || '');
@@ -1401,12 +1288,20 @@ function TextDecalPlane({ item, modelGroupRef }) {
       ctx.font = `900 ${actualFontSize}px "${fontFam}", sans-serif`;
 
       const finalMetrics = ctx.measureText(item.text || '');
-      measuredTextWidth = finalMetrics.width;
-      measuredTextHeight = actualFontSize * 0.9;
+      const measuredW = (finalMetrics.actualBoundingBoxLeft !== undefined && finalMetrics.actualBoundingBoxRight !== undefined)
+        ? (finalMetrics.actualBoundingBoxLeft + finalMetrics.actualBoundingBoxRight)
+        : finalMetrics.width;
+      const measuredH = (finalMetrics.actualBoundingBoxAscent !== undefined && finalMetrics.actualBoundingBoxDescent !== undefined)
+        ? (finalMetrics.actualBoundingBoxAscent + finalMetrics.actualBoundingBoxDescent)
+        : (actualFontSize * 0.85);
+
+      const strokePad = (item.strokeWidth > 0 && item.strokeColor) ? (item.strokeWidth * (isNum ? 6 : 4)) : 0;
+      glyphWidth = measuredW + strokePad;
+      glyphHeight = measuredH + strokePad;
 
       if (item.strokeWidth > 0 && item.strokeColor) {
         ctx.strokeStyle = item.strokeColor;
-        ctx.lineWidth = item.strokeWidth * (isNum ? 6 : 4);
+        ctx.lineWidth = strokePad;
         ctx.lineJoin = 'round';
         ctx.strokeText(item.text || '', cx, cy);
       }
@@ -1420,8 +1315,8 @@ function TextDecalPlane({ item, modelGroupRef }) {
     tex.needsUpdate = true;
 
     // Tight ratio of the actual drawn text glyphs compared to full canvas
-    const wRatio = Math.min(1.0, Math.max(0.18, (measuredTextWidth + 30) / canvas.width));
-    const hRatio = Math.min(1.0, Math.max(0.32, (measuredTextHeight + 20) / canvas.height));
+    const wRatio = Math.min(1.0, Math.max(0.05, (glyphWidth + 4) / canvas.width));
+    const hRatio = Math.min(1.0, Math.max(0.05, (glyphHeight + 4) / canvas.height));
 
     return {
       texture: tex,
@@ -1534,6 +1429,26 @@ function TextDecalPlane({ item, modelGroupRef }) {
   };
 
   const handlePointerDown = (e) => {
+    // Exact Word / Glyph Hit-Testing: check pixel transparency at click coordinate
+    if (e.uv && canvasRef.current) {
+      const u = e.uv.x;
+      const v = e.uv.y;
+      const canvasX = Math.floor(u * canvasRef.current.width);
+      const canvasY = Math.floor((1 - v) * canvasRef.current.height);
+      if (canvasX >= 0 && canvasX < canvasRef.current.width && canvasY >= 0 && canvasY < canvasRef.current.height) {
+        try {
+          const ctx = canvasRef.current.getContext('2d', { willReadFrequently: true });
+          const alpha = ctx.getImageData(canvasX, canvasY, 1, 1).data[3];
+          if (alpha < 15) {
+            // Click was in transparent cloth space outside text words!
+            // Do not select text, deselect and let event proceed to cloth
+            setSelectedTextId(null);
+            return;
+          }
+        } catch (err) {}
+      }
+    }
+
     e.stopPropagation();
     setSelectedTextId(item.id);
     setSelectedMesh(null);
@@ -1541,6 +1456,27 @@ function TextDecalPlane({ item, modelGroupRef }) {
     isDraggingRef.current = true;
     setIsDragging3D(true);
     gl.domElement.style.cursor = 'grabbing';
+  };
+
+  const handlePointerOver = (e) => {
+    if (e.uv && canvasRef.current) {
+      const u = e.uv.x;
+      const v = e.uv.y;
+      const canvasX = Math.floor(u * canvasRef.current.width);
+      const canvasY = Math.floor((1 - v) * canvasRef.current.height);
+      if (canvasX >= 0 && canvasX < canvasRef.current.width && canvasY >= 0 && canvasY < canvasRef.current.height) {
+        try {
+          const ctx = canvasRef.current.getContext('2d', { willReadFrequently: true });
+          const alpha = ctx.getImageData(canvasX, canvasY, 1, 1).data[3];
+          if (alpha < 15) {
+            if (!isDraggingRef.current) gl.domElement.style.cursor = 'default';
+            return;
+          }
+        } catch (err) {}
+      }
+    }
+    e.stopPropagation();
+    gl.domElement.style.cursor = 'grab';
   };
 
   useEffect(() => {
@@ -1596,10 +1532,7 @@ function TextDecalPlane({ item, modelGroupRef }) {
         geometry={decalGeom}
         userData={{ isTextDecal: true }}
         onPointerDown={handlePointerDown}
-        onPointerOver={(e) => {
-          e.stopPropagation();
-          gl.domElement.style.cursor = 'grab';
-        }}
+        onPointerOver={handlePointerOver}
         onPointerOut={() => {
           if (!isDraggingRef.current) gl.domElement.style.cursor = 'default';
         }}
@@ -1619,7 +1552,7 @@ function TextDecalPlane({ item, modelGroupRef }) {
         />
       </mesh>
 
-      {/* 2. Elevated Invisible Hit-Test Proxy Mesh (Tightly bounded to text to avoid blocking other texts) */}
+      {/* 2. Elevated Invisible Hit-Test Proxy Mesh (Exact glyph bounds) */}
       <mesh
         position={[
           currentPos.x + normalVec.x * 0.008,
@@ -1628,15 +1561,12 @@ function TextDecalPlane({ item, modelGroupRef }) {
         ]}
         rotation={currentRotation}
         onPointerDown={handlePointerDown}
-        onPointerOver={(e) => {
-          e.stopPropagation();
-          gl.domElement.style.cursor = 'grab';
-        }}
+        onPointerOver={handlePointerOver}
         onPointerOut={() => {
           if (!isDraggingRef.current) gl.domElement.style.cursor = 'default';
         }}
       >
-        <planeGeometry args={[tightWidth * 1.12, tightHeight * 1.25]} />
+        <planeGeometry args={[tightWidth, tightHeight]} />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} side={THREE.DoubleSide} />
       </mesh>
 
