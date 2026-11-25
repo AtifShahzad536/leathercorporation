@@ -1011,9 +1011,9 @@ function DecalTransformGizmo({
 }) {
   const boxRef = useRef(null);
 
-  // Dynamic box sizing in viewport pixels (calibrated to physical mesh dimensions)
-  const boxWidth = Math.max(140, Math.round(width * 540) + 36);
-  const boxHeight = Math.max(52, Math.round(height * 540) + 24);
+  // Dynamic box sizing in viewport pixels (tightly hugging text/logo glyphs)
+  const boxWidth = Math.max(48, Math.round(width * 400) + 10);
+  const boxHeight = Math.max(24, Math.round(height * 400) + 8);
 
   // 1. Interactive Corner Resize Handlers (Chhota / Bara / Scale)
   const handleResizePointerDown = (e, corner) => {
@@ -1124,73 +1124,85 @@ function DecalTransformGizmo({
           transformOrigin: 'center center',
           pointerEvents: 'auto'
         }}
-        className="relative group cursor-move select-none rounded border-2 border-dashed border-[#F26522] bg-[#F26522]/10 transition-colors hover:bg-[#F26522]/15 shadow-[0_0_0_1px_rgba(255,255,255,0.7),0_8px_24px_rgba(0,0,0,0.28)]"
+        className="relative group cursor-move select-none rounded-[3px] border border-dashed border-[#F26522] bg-[#F26522]/5 transition-colors hover:bg-[#F26522]/10 shadow-[0_0_0_1px_rgba(255,255,255,0.7),0_4px_12px_rgba(0,0,0,0.18)]"
         onPointerDown={handleBoxPointerDown}
       >
-        {/* Floating Quick Action Precision Toolbar */}
+        {/* Sleek Compact Micro-Toolbar (Snug directly above the text boundary) */}
         <div
           style={{
             position: 'absolute',
-            top: '-74px',
+            top: '-32px',
             left: '50%',
             transform: 'translateX(-50%)',
             pointerEvents: 'auto'
           }}
-          className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-900/95 text-white shadow-xl backdrop-blur-md border border-white/20 whitespace-nowrap text-[11px] font-medium"
+          className="flex items-center gap-0.5 px-1.5 py-0.5 rounded-[5px] bg-slate-900/95 text-white shadow-xl backdrop-blur-md border border-white/20 whitespace-nowrap text-[10px] font-medium"
           onPointerDown={(e) => e.stopPropagation()}
         >
+          {/* Zoom / Scale Controls */}
           <button
             type="button"
             onClick={() => onScaleChange(Math.max(0.25, Math.round((scale - 0.08) * 100) / 100))}
             title="Make Smaller (Chhota)"
-            className="px-1.5 py-0.5 rounded hover:bg-white/20 text-orange-300 font-bold hover:text-white transition flex items-center gap-1 cursor-pointer"
+            className="w-5 h-5 rounded-[3px] hover:bg-white/20 text-orange-400 hover:text-white transition flex items-center justify-center cursor-pointer"
           >
-            <Minus size={11} /> Small
+            <Minus size={11} strokeWidth={2.5} />
           </button>
-          <div className="w-[1px] h-3 bg-white/20" />
+          
+          <span className="text-[9px] text-white/70 font-mono px-1 select-none">
+            {Math.round(scale * 100)}%
+          </span>
+
           <button
             type="button"
             onClick={() => onScaleChange(Math.min(2.5, Math.round((scale + 0.08) * 100) / 100))}
             title="Make Larger (Bara)"
-            className="px-1.5 py-0.5 rounded hover:bg-white/20 text-orange-300 font-bold hover:text-white transition flex items-center gap-1 cursor-pointer"
+            className="w-5 h-5 rounded-[3px] hover:bg-white/20 text-orange-400 hover:text-white transition flex items-center justify-center cursor-pointer"
           >
-            <Plus size={11} /> Big
+            <Plus size={11} strokeWidth={2.5} />
           </button>
-          <div className="w-[1px] h-3 bg-white/20" />
+
+          <div className="w-[1px] h-3 bg-white/20 mx-0.5" />
+
+          {/* Rotation Controls */}
           <button
             type="button"
             onClick={() => onAngleChange(((Math.round(angle) - 15 + 180) % 360) - 180)}
-            title="Rotate Left 15°"
-            className="px-1.5 py-0.5 rounded hover:bg-white/20 text-white transition flex items-center gap-1 cursor-pointer"
+            title="Rotate Left (-15°)"
+            className="w-5 h-5 rounded-[3px] hover:bg-white/20 text-white/80 hover:text-white transition flex items-center justify-center cursor-pointer"
           >
-            <RotateCcw size={11} /> -15°
+            <RotateCcw size={10} />
           </button>
           <button
             type="button"
             onClick={() => onAngleChange(((Math.round(angle) + 15 + 180) % 360) - 180)}
-            title="Rotate Right 15°"
-            className="px-1.5 py-0.5 rounded hover:bg-white/20 text-white transition flex items-center gap-1 cursor-pointer"
+            title="Rotate Right (+15°)"
+            className="w-5 h-5 rounded-[3px] hover:bg-white/20 text-white/80 hover:text-white transition flex items-center justify-center cursor-pointer"
           >
-            <RotateCw size={11} /> +15°
+            <RotateCw size={10} />
           </button>
+
           {Math.abs(angle) > 1 && (
             <button
               type="button"
               onClick={() => onAngleChange(0)}
-              title="Reset to 0° Horizontal"
-              className="px-1.5 py-0.5 rounded hover:bg-white/20 text-amber-300 font-semibold transition cursor-pointer"
+              title="Reset Angle to 0°"
+              className="px-1 h-5 rounded-[3px] hover:bg-white/20 text-amber-300 text-[9px] font-bold transition flex items-center justify-center cursor-pointer"
             >
               0°
             </button>
           )}
-          <div className="w-[1px] h-3 bg-white/20" />
+
+          <div className="w-[1px] h-3 bg-white/20 mx-0.5" />
+
+          {/* Deselect / Close */}
           <button
             type="button"
             onClick={onDeselect}
             title="Done / Deselect"
-            className="p-1 rounded-full hover:bg-red-500/40 text-white/80 hover:text-white transition cursor-pointer"
+            className="w-5 h-5 rounded-[3px] hover:bg-red-500/40 text-white/70 hover:text-white transition flex items-center justify-center cursor-pointer"
           >
-            <X size={12} />
+            <X size={10} />
           </button>
         </div>
 
@@ -1199,7 +1211,7 @@ function DecalTransformGizmo({
           data-handle="rotate"
           style={{
             position: 'absolute',
-            top: '-26px',
+            top: '-15px',
             left: '50%',
             transform: 'translateX(-50%)',
             pointerEvents: 'auto'
@@ -1208,65 +1220,43 @@ function DecalTransformGizmo({
           onPointerDown={handleRotatePointerDown}
         >
           <div
-            className="w-6 h-6 rounded-full bg-white border-2 border-[#F26522] text-[#F26522] hover:bg-orange-50 hover:scale-110 shadow-lg flex items-center justify-center cursor-grab active:cursor-grabbing transition-transform"
+            className="w-4 h-4 rounded-full bg-white border border-[#F26522] text-[#F26522] hover:bg-orange-50 hover:scale-115 shadow-sm flex items-center justify-center cursor-grab active:cursor-grabbing transition-transform"
             title="Drag to Rotate (Ghumayein)"
           >
-            <RotateCw size={12} className="stroke-[2.5]" />
+            <RotateCw size={9} className="stroke-[2.5]" />
           </div>
-          <div className="w-[2px] h-[10px] bg-[#F26522]" />
+          <div className="w-[1px] h-[5px] bg-[#F26522]" />
         </div>
 
-        {/* 4 Corner Resize Handles (Scale / Chhota-Bara) */}
-        {/* Top-Left */}
+        {/* 4 Corner Resize Handles */}
         <div
           data-handle="scale-tl"
           onPointerDown={(e) => handleResizePointerDown(e, 'tl')}
-          style={{ position: 'absolute', top: '-6px', left: '-6px', pointerEvents: 'auto' }}
-          className="w-3.5 h-3.5 bg-white border-2 border-[#F26522] rounded-full shadow-md cursor-nwse-resize hover:scale-125 transition-transform"
-          title="Drag to Resize (Chhota / Bara karein)"
+          style={{ position: 'absolute', top: '-4px', left: '-4px', pointerEvents: 'auto' }}
+          className="w-2.5 h-2.5 bg-white border border-[#F26522] rounded-full shadow-xs cursor-nwse-resize hover:scale-125 transition-transform"
+          title="Drag to Resize"
         />
-        {/* Top-Right */}
         <div
           data-handle="scale-tr"
           onPointerDown={(e) => handleResizePointerDown(e, 'tr')}
-          style={{ position: 'absolute', top: '-6px', right: '-6px', pointerEvents: 'auto' }}
-          className="w-3.5 h-3.5 bg-white border-2 border-[#F26522] rounded-full shadow-md cursor-nesw-resize hover:scale-125 transition-transform"
-          title="Drag to Resize (Chhota / Bara karein)"
+          style={{ position: 'absolute', top: '-4px', right: '-4px', pointerEvents: 'auto' }}
+          className="w-2.5 h-2.5 bg-white border border-[#F26522] rounded-full shadow-xs cursor-nesw-resize hover:scale-125 transition-transform"
+          title="Drag to Resize"
         />
-        {/* Bottom-Left */}
         <div
           data-handle="scale-bl"
           onPointerDown={(e) => handleResizePointerDown(e, 'bl')}
-          style={{ position: 'absolute', bottom: '-6px', left: '-6px', pointerEvents: 'auto' }}
-          className="w-3.5 h-3.5 bg-white border-2 border-[#F26522] rounded-full shadow-md cursor-nesw-resize hover:scale-125 transition-transform"
-          title="Drag to Resize (Chhota / Bara karein)"
+          style={{ position: 'absolute', bottom: '-4px', left: '-4px', pointerEvents: 'auto' }}
+          className="w-2.5 h-2.5 bg-white border border-[#F26522] rounded-full shadow-xs cursor-nesw-resize hover:scale-125 transition-transform"
+          title="Drag to Resize"
         />
-        {/* Bottom-Right */}
         <div
           data-handle="scale-br"
           onPointerDown={(e) => handleResizePointerDown(e, 'br')}
-          style={{ position: 'absolute', bottom: '-6px', right: '-6px', pointerEvents: 'auto' }}
-          className="w-3.5 h-3.5 bg-white border-2 border-[#F26522] rounded-full shadow-md cursor-nwse-resize hover:scale-125 transition-transform"
-          title="Drag to Resize (Chhota / Bara karein)"
+          style={{ position: 'absolute', bottom: '-4px', right: '-4px', pointerEvents: 'auto' }}
+          className="w-2.5 h-2.5 bg-white border border-[#F26522] rounded-full shadow-xs cursor-nwse-resize hover:scale-125 transition-transform"
+          title="Drag to Resize"
         />
-
-        {/* Live Dynamic Info Badge */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '-28px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            pointerEvents: 'none'
-          }}
-          className="px-2 py-0.5 rounded bg-slate-900/90 text-white text-[10px] font-mono tracking-wide shadow-md whitespace-nowrap flex items-center gap-1.5"
-        >
-          <span className="font-semibold text-orange-300">{label}</span>
-          <span className="opacity-60">•</span>
-          <span>{Math.round(scale * 100)}%</span>
-          <span className="opacity-60">•</span>
-          <span>{Math.round(angle)}°</span>
-        </div>
       </div>
     </Html>
   );
@@ -1338,8 +1328,8 @@ function TextDecalPlane({ item, modelGroupRef }) {
   const distFromCenter = Math.abs(currentX - centerX);
   const isOnLimb = distFromCenter > 0.035;
 
-  // Generate dynamic canvas texture
-  const texture = useMemo(() => {
+  // Generate dynamic canvas texture and tight glyph bounds
+  const { texture, widthRatio, heightRatio } = useMemo(() => {
     const canvas = document.createElement('canvas');
     canvas.width = 1024;
     canvas.height = isStacked ? 512 : (isNum ? 512 : 256);
@@ -1351,6 +1341,9 @@ function TextDecalPlane({ item, modelGroupRef }) {
 
     const cx = canvas.width / 2;
     const fontFam = item.font || 'Impact';
+
+    let measuredTextWidth = 200;
+    let measuredTextHeight = 80;
 
     if (isStacked) {
       // Split into 2 stacked lines
@@ -1381,6 +1374,9 @@ function TextDecalPlane({ item, modelGroupRef }) {
       const cy1 = (canvas.height / 2) - (lineGap / 2);
       const cy2 = (canvas.height / 2) + (lineGap / 2);
 
+      measuredTextWidth = maxW;
+      measuredTextHeight = actualFontSize * 2.2;
+
       [ { text: line1, y: cy1 }, { text: line2, y: cy2 } ].forEach(({ text, y }) => {
         if (item.strokeWidth > 0 && item.strokeColor) {
           ctx.strokeStyle = item.strokeColor;
@@ -1404,6 +1400,10 @@ function TextDecalPlane({ item, modelGroupRef }) {
         : fontSize;
       ctx.font = `900 ${actualFontSize}px "${fontFam}", sans-serif`;
 
+      const finalMetrics = ctx.measureText(item.text || '');
+      measuredTextWidth = finalMetrics.width;
+      measuredTextHeight = actualFontSize * 0.9;
+
       if (item.strokeWidth > 0 && item.strokeColor) {
         ctx.strokeStyle = item.strokeColor;
         ctx.lineWidth = item.strokeWidth * (isNum ? 6 : 4);
@@ -1418,7 +1418,16 @@ function TextDecalPlane({ item, modelGroupRef }) {
     const tex = new THREE.CanvasTexture(canvas);
     tex.colorSpace = THREE.SRGBColorSpace;
     tex.needsUpdate = true;
-    return tex;
+
+    // Tight ratio of the actual drawn text glyphs compared to full canvas
+    const wRatio = Math.min(1.0, Math.max(0.18, (measuredTextWidth + 30) / canvas.width));
+    const hRatio = Math.min(1.0, Math.max(0.32, (measuredTextHeight + 20) / canvas.height));
+
+    return {
+      texture: tex,
+      widthRatio: wRatio,
+      heightRatio: hRatio
+    };
   }, [item.text, item.font, item.color, item.strokeColor, item.strokeWidth, item.type, isStacked]);
 
   // Dimension calculations:
@@ -1444,6 +1453,10 @@ function TextDecalPlane({ item, modelGroupRef }) {
   const planeWidth = isOnLimb ? Math.min(rawWidth, maxLimbWidth) : rawWidth;
   const planeHeight = baseHeight * scaleVal;
   const projDepth = 0.28;
+
+  // Tight physical bounds of the actual text on the model surface
+  const tightWidth = planeWidth * (widthRatio || 1.0);
+  const tightHeight = planeHeight * (heightRatio || 1.0);
 
   const sizeVec = useMemo(() => new THREE.Vector3(planeWidth, planeHeight, projDepth), [planeWidth, planeHeight, projDepth]);
 
@@ -1606,7 +1619,7 @@ function TextDecalPlane({ item, modelGroupRef }) {
         />
       </mesh>
 
-      {/* 2. Elevated Invisible Hit-Test Proxy Mesh (+8mm normal offset) to guarantee click priority over cloth */}
+      {/* 2. Elevated Invisible Hit-Test Proxy Mesh (Tightly bounded to text to avoid blocking other texts) */}
       <mesh
         position={[
           currentPos.x + normalVec.x * 0.008,
@@ -1623,19 +1636,19 @@ function TextDecalPlane({ item, modelGroupRef }) {
           if (!isDraggingRef.current) gl.domElement.style.cursor = 'default';
         }}
       >
-        <planeGeometry args={[planeWidth * 1.35, planeHeight * 1.6]} />
+        <planeGeometry args={[tightWidth * 1.12, tightHeight * 1.25]} />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} side={THREE.DoubleSide} />
       </mesh>
 
-      {/* 3. On-Model Figma/IDE Transform Controls (Bounding Box, Corner Scale, Top Rotate Knob & Quick Toolbar) */}
+      {/* 3. On-Model Figma/IDE Transform Controls (Snug bounding box hugging actual text glyphs) */}
       {isSelected && facingCamera && (
         <DecalTransformGizmo
           position={currentPos}
           rotation={currentRotation}
           angle={item.angle || 0}
           scale={item.scale || 1.0}
-          width={planeWidth}
-          height={planeHeight}
+          width={tightWidth}
+          height={tightHeight}
           label={item.text || item.label || 'Team Text'}
           onScaleChange={(newScale) => updateTextItem(item.id, { scale: newScale })}
           onAngleChange={(newAngle) => updateTextItem(item.id, { angle: newAngle })}
@@ -1916,7 +1929,7 @@ function LogoDecalPlane({ item, modelGroupRef }) {
           if (!isDraggingRef.current) gl.domElement.style.cursor = 'default';
         }}
       >
-        <planeGeometry args={[planeWidth * 1.35, planeHeight * 1.35]} />
+        <planeGeometry args={[planeWidth * 1.08, planeHeight * 1.08]} />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} side={THREE.DoubleSide} />
       </mesh>
 
