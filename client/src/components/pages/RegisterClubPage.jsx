@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { 
-  Trophy, ClipboardList, Palette, Truck, Check, ArrowRight, ArrowLeft, 
+  Trophy, ClipboardCheck, ClipboardList, Palette, Truck, Check, ArrowRight, ArrowLeft, 
   ChevronDown, ShieldCheck, Award, HelpCircle, Send, Sparkles, Building2, 
-  Users, Phone, Mail, CheckCircle2, AlertCircle, Loader2
+  Users, Phone, Mail, CheckCircle2, AlertCircle, Loader2, MessageSquare
 } from 'lucide-react';
 import { useCMS } from '../../context/CMSContext';
 
@@ -191,34 +191,42 @@ export default function RegisterClubPage({
             Join the HAMLO SPORTS family and get team discounts, priority ordering, and free 12-hour 3D design services.
           </p>
 
-          {/* 4 Feature Badges (Matching Benchmark Reference Screenshot 1) */}
+          {/* 4 Feature Badges (Professional React Icons & 5px rounded corners) */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-            <div className="flex flex-col items-center p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm hover:border-[var(--accent)] transition-colors">
-              <span className="text-2xl mb-2">🏆</span>
+            <div className="flex flex-col items-center p-4 rounded-[5px] bg-white/5 border border-white/10 backdrop-blur-sm hover:border-[var(--accent)] transition-colors group">
+              <div className="w-11 h-11 rounded-[5px] bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                <Trophy size={24} className="text-amber-400" />
+              </div>
               <strong className="text-xs sm:text-sm font-black uppercase text-white tracking-wide">
                 Team Discounts
               </strong>
               <span className="text-[10px] text-white/60 font-medium mt-0.5">Permanent Volume Tiers</span>
             </div>
 
-            <div className="flex flex-col items-center p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm hover:border-[var(--accent)] transition-colors">
-              <span className="text-2xl mb-2">📋</span>
+            <div className="flex flex-col items-center p-4 rounded-[5px] bg-white/5 border border-white/10 backdrop-blur-sm hover:border-[var(--accent)] transition-colors group">
+              <div className="w-11 h-11 rounded-[5px] bg-sky-500/10 border border-sky-500/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                <ClipboardCheck size={24} className="text-sky-400" />
+              </div>
               <strong className="text-xs sm:text-sm font-black uppercase text-white tracking-wide">
                 Easy Ordering
               </strong>
               <span className="text-[10px] text-white/60 font-medium mt-0.5">0 MOQ Re-Orders</span>
             </div>
 
-            <div className="flex flex-col items-center p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm hover:border-[var(--accent)] transition-colors">
-              <span className="text-2xl mb-2">🎨</span>
+            <div className="flex flex-col items-center p-4 rounded-[5px] bg-white/5 border border-white/10 backdrop-blur-sm hover:border-[var(--accent)] transition-colors group">
+              <div className="w-11 h-11 rounded-[5px] bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                <Palette size={24} className="text-purple-400" />
+              </div>
               <strong className="text-xs sm:text-sm font-black uppercase text-white tracking-wide">
                 Custom Designs
               </strong>
               <span className="text-[10px] text-white/60 font-medium mt-0.5">Free 12h 3D Mockups</span>
             </div>
 
-            <div className="flex flex-col items-center p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm hover:border-[var(--accent)] transition-colors">
-              <span className="text-2xl mb-2">🚚</span>
+            <div className="flex flex-col items-center p-4 rounded-[5px] bg-white/5 border border-white/10 backdrop-blur-sm hover:border-[var(--accent)] transition-colors group">
+              <div className="w-11 h-11 rounded-[5px] bg-orange-500/10 border border-orange-500/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                <Truck size={24} className="text-[var(--accent)]" />
+              </div>
               <strong className="text-xs sm:text-sm font-black uppercase text-white tracking-wide">
                 Priority Shipping
               </strong>
@@ -232,7 +240,7 @@ export default function RegisterClubPage({
       <section className="w-[96%] max-w-[960px] mx-auto py-12 sm:py-16">
         
         {!submitted ? (
-          <div className="bg-white rounded-2xl shadow-xl border border-[var(--secondary)]/15 overflow-hidden">
+          <div className="bg-white rounded-[5px] shadow-xl border border-[var(--secondary)]/15 overflow-hidden">
             
             {/* Step Progress Bar (Screenshot 2 Benchmark) */}
             <div className="p-6 sm:p-8 bg-neutral-50/70 border-b border-neutral-200">
@@ -279,7 +287,7 @@ export default function RegisterClubPage({
 
             {/* Error Message Alert */}
             {formError && (
-              <div className="mx-6 sm:mx-10 mt-6 p-3.5 bg-red-50 border border-red-200 text-red-700 text-xs font-bold rounded-lg flex items-center gap-2">
+              <div className="mx-6 sm:mx-10 mt-6 p-3.5 bg-red-50 border border-red-200 text-red-700 text-xs font-bold rounded-[5px] flex items-center gap-2">
                 <AlertCircle size={16} className="flex-shrink-0" />
                 <span>{formError}</span>
               </div>
@@ -292,9 +300,12 @@ export default function RegisterClubPage({
               {currentStep === 1 && (
                 <div className="space-y-6">
                   <div className="text-center pb-4 border-b border-neutral-100">
-                    <h2 className="text-2xl sm:text-3xl font-black uppercase text-[var(--secondary)] tracking-tight">
-                      CLUB INFORMATION
-                    </h2>
+                    <div className="inline-flex items-center justify-center gap-2 mb-1 text-[var(--accent)]">
+                      <Building2 size={20} />
+                      <h2 className="text-2xl sm:text-3xl font-black uppercase text-[var(--secondary)] tracking-tight">
+                        CLUB INFORMATION
+                      </h2>
+                    </div>
                     <p className="text-xs sm:text-sm text-neutral-500 font-light mt-1">
                       Tell us about your team or organization
                     </p>
@@ -311,7 +322,7 @@ export default function RegisterClubPage({
                         placeholder="e.g., Texas Titans Baseball Club"
                         value={formData.clubName}
                         onChange={(e) => updateField('clubName', e.target.value)}
-                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
+                        className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
                       />
                     </div>
 
@@ -322,7 +333,7 @@ export default function RegisterClubPage({
                       <select
                         value={formData.sport}
                         onChange={(e) => updateField('sport', e.target.value)}
-                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg text-xs sm:text-sm bg-white focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] cursor-pointer"
+                        className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm bg-white focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] cursor-pointer"
                       >
                         {sportsOptions.map((s) => (
                           <option key={s} value={s}>{s}</option>
@@ -337,7 +348,7 @@ export default function RegisterClubPage({
                       <select
                         value={formData.orgType}
                         onChange={(e) => updateField('orgType', e.target.value)}
-                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg text-xs sm:text-sm bg-white focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] cursor-pointer"
+                        className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm bg-white focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] cursor-pointer"
                       >
                         {orgTypes.map((o) => (
                           <option key={o} value={o}>{o}</option>
@@ -354,7 +365,7 @@ export default function RegisterClubPage({
                         placeholder="e.g., High School Varsity, U12 Division, AAU"
                         value={formData.league}
                         onChange={(e) => updateField('league', e.target.value)}
-                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
+                        className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
                       />
                     </div>
                   </div>
@@ -368,7 +379,7 @@ export default function RegisterClubPage({
                       placeholder="Brief description of your team/organization, age divisions, or current uniform requirements..."
                       value={formData.description}
                       onChange={(e) => updateField('description', e.target.value)}
-                      className="w-full px-4 py-3 border border-neutral-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
+                      className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
                     />
                   </div>
 
@@ -376,7 +387,7 @@ export default function RegisterClubPage({
                     <button
                       type="button"
                       onClick={handleNext}
-                      className="px-8 py-3.5 bg-[#1E1B6E] hover:bg-[var(--accent)] text-white text-xs sm:text-sm font-black uppercase tracking-wider rounded-lg shadow-md transition-all duration-300 flex items-center gap-2 cursor-pointer"
+                      className="px-8 py-3.5 bg-[#1E1B6E] hover:bg-[var(--accent)] text-white text-xs sm:text-sm font-black uppercase tracking-wider rounded-[5px] shadow-md transition-all duration-300 flex items-center gap-2 cursor-pointer"
                     >
                       <span>NEXT &gt;</span>
                     </button>
@@ -388,9 +399,12 @@ export default function RegisterClubPage({
               {currentStep === 2 && (
                 <div className="space-y-6">
                   <div className="text-center pb-4 border-b border-neutral-100">
-                    <h2 className="text-2xl sm:text-3xl font-black uppercase text-[var(--secondary)] tracking-tight">
-                      CONTACT & COACH INFORMATION
-                    </h2>
+                    <div className="inline-flex items-center justify-center gap-2 mb-1 text-[var(--accent)]">
+                      <Users size={20} />
+                      <h2 className="text-2xl sm:text-3xl font-black uppercase text-[var(--secondary)] tracking-tight">
+                        CONTACT & COACH INFORMATION
+                      </h2>
+                    </div>
                     <p className="text-xs sm:text-sm text-neutral-500 font-light mt-1">
                       Who should our uniform production desk coordinate with?
                     </p>
@@ -407,7 +421,7 @@ export default function RegisterClubPage({
                         placeholder="e.g., Coach Mark Stevens"
                         value={formData.contactName}
                         onChange={(e) => updateField('contactName', e.target.value)}
-                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
+                        className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
                       />
                     </div>
 
@@ -420,7 +434,7 @@ export default function RegisterClubPage({
                         placeholder="e.g., Head Coach, Athletic Director, Equipment Manager"
                         value={formData.role}
                         onChange={(e) => updateField('role', e.target.value)}
-                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
+                        className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
                       />
                     </div>
 
@@ -434,7 +448,7 @@ export default function RegisterClubPage({
                         placeholder="coach@yourclub.com"
                         value={formData.email}
                         onChange={(e) => updateField('email', e.target.value)}
-                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
+                        className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
                       />
                     </div>
 
@@ -448,7 +462,7 @@ export default function RegisterClubPage({
                         placeholder="e.g., +1 (555) 234-5678"
                         value={formData.phone}
                         onChange={(e) => updateField('phone', e.target.value)}
-                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
+                        className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
                       />
                     </div>
                   </div>
@@ -477,14 +491,14 @@ export default function RegisterClubPage({
                     <button
                       type="button"
                       onClick={handleBack}
-                      className="px-6 py-3 border border-neutral-300 hover:bg-neutral-100 text-neutral-700 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg transition cursor-pointer"
+                      className="px-6 py-3 border border-neutral-300 hover:bg-neutral-100 text-neutral-700 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-[5px] transition cursor-pointer"
                     >
                       &lt; BACK
                     </button>
                     <button
                       type="button"
                       onClick={handleNext}
-                      className="px-8 py-3.5 bg-[#1E1B6E] hover:bg-[var(--accent)] text-white text-xs sm:text-sm font-black uppercase tracking-wider rounded-lg shadow-md transition-all duration-300 flex items-center gap-2 cursor-pointer"
+                      className="px-8 py-3.5 bg-[#1E1B6E] hover:bg-[var(--accent)] text-white text-xs sm:text-sm font-black uppercase tracking-wider rounded-[5px] shadow-md transition-all duration-300 flex items-center gap-2 cursor-pointer"
                     >
                       <span>NEXT &gt;</span>
                     </button>
@@ -496,9 +510,12 @@ export default function RegisterClubPage({
               {currentStep === 3 && (
                 <div className="space-y-6">
                   <div className="text-center pb-4 border-b border-neutral-100">
-                    <h2 className="text-2xl sm:text-3xl font-black uppercase text-[var(--secondary)] tracking-tight">
-                      ROSTER, LOGO & UNIFORM NEEDS
-                    </h2>
+                    <div className="inline-flex items-center justify-center gap-2 mb-1 text-[var(--accent)]">
+                      <Palette size={20} />
+                      <h2 className="text-2xl sm:text-3xl font-black uppercase text-[var(--secondary)] tracking-tight">
+                        ROSTER, LOGO & UNIFORM NEEDS
+                      </h2>
+                    </div>
                     <p className="text-xs sm:text-sm text-neutral-500 font-light mt-1">
                       Help us prepare your 12-hour free 3D digital artwork proof
                     </p>
@@ -512,7 +529,7 @@ export default function RegisterClubPage({
                       <select
                         value={formData.totalPlayers}
                         onChange={(e) => updateField('totalPlayers', e.target.value)}
-                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg text-xs sm:text-sm bg-white focus:outline-none focus:border-[var(--accent)] cursor-pointer"
+                        className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm bg-white focus:outline-none focus:border-[var(--accent)] cursor-pointer"
                       >
                         <option value="15-30">15 – 30 Players (1–2 Squads)</option>
                         <option value="31-60">31 – 60 Players (3–4 Squads)</option>
@@ -530,7 +547,7 @@ export default function RegisterClubPage({
                         placeholder="e.g., Deep Navy, Radiant Orange, White"
                         value={formData.teamColors}
                         onChange={(e) => updateField('teamColors', e.target.value)}
-                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)]"
+                        className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)]"
                       />
                     </div>
                   </div>
@@ -544,7 +561,7 @@ export default function RegisterClubPage({
                       placeholder="https://drive.google.com/... or paste logo link"
                       value={formData.logoUrl}
                       onChange={(e) => updateField('logoUrl', e.target.value)}
-                      className="w-full px-4 py-3 border border-neutral-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)] font-mono text-xs"
+                      className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)] font-mono text-xs"
                     />
                     <span className="text-[10px] text-neutral-400 mt-1 block">
                       Don't have a link? You can also email artwork directly to sale@hamlosportswear.site after registration.
@@ -560,7 +577,7 @@ export default function RegisterClubPage({
                       placeholder="e.g., Full button baseball jerseys + pants, warmup hoodies, customized socks, coaching staff polos..."
                       value={formData.uniformNeeds}
                       onChange={(e) => updateField('uniformNeeds', e.target.value)}
-                      className="w-full px-4 py-3 border border-neutral-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)]"
+                      className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)]"
                     />
                   </div>
 
@@ -568,14 +585,14 @@ export default function RegisterClubPage({
                     <button
                       type="button"
                       onClick={handleBack}
-                      className="px-6 py-3 border border-neutral-300 hover:bg-neutral-100 text-neutral-700 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg transition cursor-pointer"
+                      className="px-6 py-3 border border-neutral-300 hover:bg-neutral-100 text-neutral-700 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-[5px] transition cursor-pointer"
                     >
                       &lt; BACK
                     </button>
                     <button
                       type="button"
                       onClick={handleNext}
-                      className="px-8 py-3.5 bg-[#1E1B6E] hover:bg-[var(--accent)] text-white text-xs sm:text-sm font-black uppercase tracking-wider rounded-lg shadow-md transition-all duration-300 flex items-center gap-2 cursor-pointer"
+                      className="px-8 py-3.5 bg-[#1E1B6E] hover:bg-[var(--accent)] text-white text-xs sm:text-sm font-black uppercase tracking-wider rounded-[5px] shadow-md transition-all duration-300 flex items-center gap-2 cursor-pointer"
                     >
                       <span>NEXT &gt;</span>
                     </button>
@@ -587,9 +604,12 @@ export default function RegisterClubPage({
               {currentStep === 4 && (
                 <div className="space-y-6">
                   <div className="text-center pb-4 border-b border-neutral-100">
-                    <h2 className="text-2xl sm:text-3xl font-black uppercase text-[var(--secondary)] tracking-tight">
-                      BILLING & SHIPPING LOCATION
-                    </h2>
+                    <div className="inline-flex items-center justify-center gap-2 mb-1 text-[var(--accent)]">
+                      <Truck size={20} />
+                      <h2 className="text-2xl sm:text-3xl font-black uppercase text-[var(--secondary)] tracking-tight">
+                        BILLING & SHIPPING LOCATION
+                      </h2>
+                    </div>
                     <p className="text-xs sm:text-sm text-neutral-500 font-light mt-1">
                       For accurate DDP air freight estimates and club regional tax exemption
                     </p>
@@ -604,7 +624,7 @@ export default function RegisterClubPage({
                         type="text"
                         value={formData.country}
                         onChange={(e) => updateField('country', e.target.value)}
-                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg text-xs sm:text-sm bg-neutral-50 focus:outline-none"
+                        className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm bg-neutral-50 focus:outline-none"
                       />
                     </div>
 
@@ -617,7 +637,7 @@ export default function RegisterClubPage({
                         placeholder="e.g., 104 Athletic Club Way"
                         value={formData.address}
                         onChange={(e) => updateField('address', e.target.value)}
-                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)]"
+                        className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)]"
                       />
                     </div>
 
@@ -630,7 +650,7 @@ export default function RegisterClubPage({
                         placeholder="e.g., Dallas"
                         value={formData.city}
                         onChange={(e) => updateField('city', e.target.value)}
-                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)]"
+                        className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)]"
                       />
                     </div>
 
@@ -644,7 +664,7 @@ export default function RegisterClubPage({
                           placeholder="TX"
                           value={formData.state}
                           onChange={(e) => updateField('state', e.target.value)}
-                          className="w-full px-4 py-3 border border-neutral-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)]"
+                          className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)]"
                         />
                       </div>
                       <div>
@@ -656,13 +676,13 @@ export default function RegisterClubPage({
                           placeholder="75001"
                           value={formData.zip}
                           onChange={(e) => updateField('zip', e.target.value)}
-                          className="w-full px-4 py-3 border border-neutral-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)]"
+                          className="w-full px-4 py-3 border border-neutral-300 rounded-[5px] text-xs sm:text-sm focus:outline-none focus:border-[var(--accent)]"
                         />
                       </div>
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-neutral-50 border border-neutral-200">
+                  <div className="p-4 rounded-[5px] bg-neutral-50 border border-neutral-200">
                     <label className="flex items-center gap-3 cursor-pointer">
                       <input
                         type="checkbox"
@@ -685,14 +705,14 @@ export default function RegisterClubPage({
                     <button
                       type="button"
                       onClick={handleBack}
-                      className="px-6 py-3 border border-neutral-300 hover:bg-neutral-100 text-neutral-700 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg transition cursor-pointer"
+                      className="px-6 py-3 border border-neutral-300 hover:bg-neutral-100 text-neutral-700 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-[5px] transition cursor-pointer"
                     >
                       &lt; BACK
                     </button>
                     <button
                       type="button"
                       onClick={handleNext}
-                      className="px-8 py-3.5 bg-[#1E1B6E] hover:bg-[var(--accent)] text-white text-xs sm:text-sm font-black uppercase tracking-wider rounded-lg shadow-md transition-all duration-300 flex items-center gap-2 cursor-pointer"
+                      className="px-8 py-3.5 bg-[#1E1B6E] hover:bg-[var(--accent)] text-white text-xs sm:text-sm font-black uppercase tracking-wider rounded-[5px] shadow-md transition-all duration-300 flex items-center gap-2 cursor-pointer"
                     >
                       <span>REVIEW DETAILS &gt;</span>
                     </button>
@@ -713,7 +733,7 @@ export default function RegisterClubPage({
                   </div>
 
                   {/* Summary Card */}
-                  <div className="bg-neutral-50 rounded-xl p-5 sm:p-6 border border-neutral-200 space-y-4 text-xs">
+                  <div className="bg-neutral-50 rounded-[5px] p-5 sm:p-6 border border-neutral-200 space-y-4 text-xs">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-4 border-b border-neutral-200">
                       <div>
                         <span className="text-[10px] font-bold uppercase text-neutral-400 block">Club / Organization</span>
@@ -759,7 +779,7 @@ export default function RegisterClubPage({
                       type="button"
                       onClick={handleBack}
                       disabled={submitting}
-                      className="px-6 py-3 border border-neutral-300 hover:bg-neutral-100 text-neutral-700 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg transition cursor-pointer"
+                      className="px-6 py-3 border border-neutral-300 hover:bg-neutral-100 text-neutral-700 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-[5px] transition cursor-pointer"
                     >
                       &lt; BACK
                     </button>
@@ -768,7 +788,7 @@ export default function RegisterClubPage({
                       type="button"
                       onClick={handleSubmit}
                       disabled={submitting}
-                      className="px-8 py-3.5 bg-[var(--accent)] hover:bg-[#d95316] text-white text-xs sm:text-sm font-black uppercase tracking-wider rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 cursor-pointer disabled:opacity-60"
+                      className="px-8 py-3.5 bg-[var(--accent)] hover:bg-[#d95316] text-white text-xs sm:text-sm font-black uppercase tracking-wider rounded-[5px] shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 cursor-pointer disabled:opacity-60"
                     >
                       {submitting ? (
                         <>
@@ -791,7 +811,7 @@ export default function RegisterClubPage({
           </div>
         ) : (
           /* ── SUCCESS STATE CONFIRMATION ── */
-          <div className="bg-white rounded-2xl shadow-2xl border border-emerald-200 p-8 sm:p-14 text-center max-w-2xl mx-auto space-y-6 animate-fade-in">
+          <div className="bg-white rounded-[5px] shadow-2xl border border-emerald-200 p-8 sm:p-14 text-center max-w-2xl mx-auto space-y-6 animate-fade-in">
             <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner">
               <CheckCircle2 size={36} />
             </div>
@@ -805,7 +825,7 @@ export default function RegisterClubPage({
               </h2>
             </div>
 
-            <div className="p-4 rounded-xl bg-neutral-50 border border-neutral-200 max-w-md mx-auto">
+            <div className="p-4 rounded-[5px] bg-neutral-50 border border-neutral-200 max-w-md mx-auto">
               <span className="text-[10px] font-bold uppercase text-neutral-400 block mb-1">Your Official Club ID</span>
               <strong className="text-xl sm:text-2xl font-mono font-black text-[var(--accent)] tracking-wider block">
                 {registrationData?.registrationId || 'HAMLO-CLUB-ACTIVATED'}
@@ -819,13 +839,13 @@ export default function RegisterClubPage({
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
               <button
                 onClick={() => onNavigateInquiry(formData.clubName)}
-                className="w-full sm:w-auto px-6 py-3 bg-[var(--accent)] hover:bg-[#d95316] text-white text-xs font-black uppercase tracking-widest rounded-lg shadow transition cursor-pointer"
+                className="w-full sm:w-auto px-6 py-3 bg-[var(--accent)] hover:bg-[#d95316] text-white text-xs font-black uppercase tracking-widest rounded-[5px] shadow transition cursor-pointer"
               >
                 REQUEST 3D DESIGN PROOF
               </button>
               <button
                 onClick={() => window.location.href = '/'}
-                className="w-full sm:w-auto px-6 py-3 bg-[#1E1B6E] hover:bg-[#161352] text-white text-xs font-black uppercase tracking-widest rounded-lg shadow transition cursor-pointer"
+                className="w-full sm:w-auto px-6 py-3 bg-[#1E1B6E] hover:bg-[#161352] text-white text-xs font-black uppercase tracking-widest rounded-[5px] shadow transition cursor-pointer"
               >
                 RETURN TO HOMEPAGE
               </button>
@@ -840,9 +860,12 @@ export default function RegisterClubPage({
         <div className="w-[96%] max-w-[1200px] mx-auto">
           
           <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-            <h2 className="text-3xl sm:text-5xl font-black uppercase tracking-tight text-[var(--secondary)] leading-tight mb-2">
-              CLUB REGISTRATION FAQS
-            </h2>
+            <div className="inline-flex items-center justify-center gap-2 mb-2">
+              <HelpCircle size={28} className="text-[var(--accent)]" />
+              <h2 className="text-3xl sm:text-5xl font-black uppercase tracking-tight text-[var(--secondary)] leading-tight">
+                CLUB REGISTRATION FAQS
+              </h2>
+            </div>
             <div className="w-16 h-1 bg-[var(--accent)] mx-auto mb-3" />
             <p className="text-xs sm:text-sm text-neutral-500 font-light">
               Everything you need to know about registering your team or club
@@ -858,7 +881,7 @@ export default function RegisterClubPage({
                 <div
                   key={idx}
                   onClick={() => setOpenFaq(isOpen ? -1 : idx)}
-                  className={`bg-white rounded-xl border transition-all duration-300 cursor-pointer overflow-hidden shadow-xs hover:shadow-md ${
+                  className={`bg-white rounded-[5px] border transition-all duration-300 cursor-pointer overflow-hidden shadow-xs hover:shadow-md ${
                     isOpen 
                       ? 'border-[var(--accent)] ring-1 ring-[var(--accent)]/30' 
                       : 'border-neutral-200 hover:border-neutral-300'
@@ -886,15 +909,16 @@ export default function RegisterClubPage({
           </div>
 
           {/* Bottom Help CTA Box (Screenshot 5 Benchmark) */}
-          <div className="mt-14 sm:mt-16 p-8 sm:p-10 bg-neutral-50 border border-neutral-200 rounded-2xl text-center max-w-xl mx-auto space-y-4">
+          <div className="mt-14 sm:mt-16 p-8 sm:p-10 bg-neutral-50 border border-neutral-200 rounded-[5px] text-center max-w-xl mx-auto space-y-4">
             <p className="text-xs sm:text-sm font-bold text-neutral-700">
               Have more questions? We're here to help!
             </p>
             <button
               onClick={() => onNavigateInquiry('Club Registration Inquiry')}
-              className="px-8 py-3.5 bg-[var(--accent)] hover:bg-[#d95316] text-white text-xs font-black uppercase tracking-wider rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
+              className="inline-flex items-center gap-2 px-8 py-3.5 bg-[var(--accent)] hover:bg-[#d95316] text-white text-xs font-black uppercase tracking-wider rounded-[5px] shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
             >
-              CONTACT OUR TEAM
+              <Phone size={14} />
+              <span>CONTACT OUR TEAM</span>
             </button>
           </div>
 
