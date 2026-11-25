@@ -80,14 +80,14 @@ router.get('/', protect, async (req, res) => {
 
 // Helper: Process single file upload (Cloudinary with Local Fallback)
 async function processFileUpload(file, folder = 'hamlo-sports') {
-  const isVideo = file.mimetype.startsWith('video/');
+  const isVideo = file.mimetype.startsWith('video/') || /\.(mp4|webm|mov|mkv|avi|wmv)$/i.test(file.originalname);
   const resourceType = isVideo ? 'video' : 'image';
 
   let fileUrl = '';
   let publicId = '';
   let width = null;
   let height = null;
-  let format = path.extname(file.originalname).replace('.', '').toLowerCase() || (isVideo ? 'mp4' : 'jpg');
+  let format = path.extname(file.originalname).replace('.', '').toLowerCase() || (isVideo ? 'webm' : 'jpg');
   let size = file.size;
   let storageType = 'cloudinary';
 
@@ -95,16 +95,26 @@ async function processFileUpload(file, folder = 'hamlo-sports') {
   try {
     const conf = cloudinary.config();
     if (conf.cloud_name && conf.api_key && conf.api_secret) {
-      const result = await cloudinary.uploader.upload(file.path, {
+      const uploadOptions = {
         folder,
         resource_type: resourceType,
-      });
+      };
+
+      if (isVideo) {
+        // Automatically transcode and optimize video to WebM
+        uploadOptions.format = 'webm';
+        uploadOptions.video_codec = 'auto';
+        uploadOptions.quality = 'auto';
+        uploadOptions.chunk_size = 6000000; // 6MB chunking for large video files
+      }
+
+      const result = await cloudinary.uploader.upload_large(file.path, uploadOptions);
 
       fileUrl = result.secure_url;
       publicId = result.public_id;
       width = result.width;
       height = result.height;
-      format = result.format;
+      format = result.format || (isVideo ? 'webm' : 'jpg');
       size = result.bytes;
       storageType = 'cloudinary';
 
@@ -112,7 +122,7 @@ async function processFileUpload(file, folder = 'hamlo-sports') {
         try { fs.unlinkSync(file.path); } catch (e) {}
       }
     } else {
-      throw new Error('Cloudinary not configured');
+      throw new Error('Cloudinary credentials not configured in server environment');
     }
   } catch (cldErr) {
     console.warn(`⚠️ Cloudinary upload failed (${cldErr.message}). Saving to persistent local storage.`);
@@ -156,6 +166,45 @@ async function processFileUpload(file, folder = 'hamlo-sports') {
 
   return { media, storage: storageType };
 }
+
+// GET /api/media/signature - Get signed Cloudinary upload params for direct browser uploads (bypasses Vercel 4.5MB limit)
+router.get('/signature', protect, (req, res) => {
+  try {
+    const conf = cloudinary.config();
+    if (!conf.cloud_name || !conf.api_key || !conf.api_secret) {
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Cloudinary credentials missing in server environment variables (CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET).' 
+      });
+    }
+
+    const timestamp = Math.round(new Date().getTime() / 1000);
+    const folder = req.query.folder || 'hamlo-sports';
+    const isVideo = req.query.type === 'video';
+
+    // Cloudinary signature parameters
+    const paramsToSign = {
+      folder,
+      timestamp,
+    };
+
+    const signature = cloudinary.utils.api_sign_request(paramsToSign, conf.api_secret);
+
+    res.json({
+      success: true,
+      data: {
+        signature,
+        timestamp,
+        apiKey: conf.api_key,
+        cloudName: conf.cloud_name,
+        folder,
+        isVideo,
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
 
 // POST /api/media/upload - Upload to Cloudinary (with automatic local fallback)
 router.post('/upload', protect, upload.single('file'), async (req, res) => {

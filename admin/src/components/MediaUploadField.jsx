@@ -42,23 +42,81 @@ export default function MediaUploadField({
     setError('');
     setSuccess(false);
 
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('folder', 'hamlo-sports');
+    const isVideo = type === 'video' || file.type.startsWith('video/') || /\.(mp4|webm|mov|mkv|avi)$/i.test(file.name);
 
     try {
-      const res = await api.post('/media/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      let uploadSuccess = false;
+      let finalUrl = '';
 
-      if (res.data.success && res.data.data?.url) {
-        onChange(res.data.data.url);
+      // 1. Attempt Direct Cloudinary Upload via Signed API (Bypasses Vercel 4.5MB serverless limit)
+      try {
+        const sigRes = await api.get('/media/signature', {
+          params: { folder: 'hamlo-sports', type: isVideo ? 'video' : 'image' }
+        });
+
+        if (sigRes.data?.success && sigRes.data?.data) {
+          const { signature, timestamp, apiKey, cloudName, folder } = sigRes.data.data;
+          const resourceType = isVideo ? 'video' : 'image';
+
+          const cldFormData = new FormData();
+          cldFormData.append('file', file);
+          cldFormData.append('api_key', apiKey);
+          cldFormData.append('timestamp', timestamp);
+          cldFormData.append('signature', signature);
+          cldFormData.append('folder', folder);
+
+          const cldRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`, {
+            method: 'POST',
+            body: cldFormData,
+          });
+
+          const cldData = await cldRes.json();
+          if (cldData.secure_url) {
+            // For video, ensure optimized WebM format delivery via Cloudinary on-the-fly transformation
+            let secureUrl = cldData.secure_url;
+            if (isVideo) {
+              if (secureUrl.endsWith('.mp4') || secureUrl.endsWith('.mov')) {
+                secureUrl = secureUrl.replace(/\.(mp4|mov)$/i, '.webm');
+              }
+            }
+            finalUrl = secureUrl;
+            uploadSuccess = true;
+          } else if (cldData.error) {
+            console.warn('[Direct Cloudinary Error]', cldData.error);
+          }
+        }
+      } catch (directErr) {
+        console.warn('Direct Cloudinary signature failed, falling back to server route:', directErr);
+      }
+
+      // 2. Fallback to server /media/upload endpoint if direct upload not available
+      if (!uploadSuccess) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('folder', 'hamlo-sports');
+
+        const res = await api.post('/media/upload', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+
+        if (res.data.success && res.data.data?.url) {
+          finalUrl = res.data.data.url;
+          uploadSuccess = true;
+        }
+      }
+
+      if (uploadSuccess && finalUrl) {
+        onChange(finalUrl);
         setSuccess(true);
-        setSuccessMsg(res.data.storage === 'cloudinary' ? 'Uploaded to Cloudinary CDN!' : 'Uploaded to Local Server Storage!');
+        setSuccessMsg(isVideo ? 'Optimized WebM Video Uploaded to Cloudinary CDN!' : 'Uploaded to Cloudinary CDN!');
         setTimeout(() => setSuccess(false), 4000);
+      } else {
+        throw new Error('Upload failed. Please check Cloudinary configuration.');
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Upload failed. Check Cloudinary credentials in server/.env.');
+      console.error('Upload Error:', err);
+      const msg = err.response?.data?.message || err.message || 'Upload failed.';
+      setError(`${msg} (Tip: On Vercel, ensure CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET are configured in Project Settings -> Environment Variables).`);
     } finally {
       setUploading(false);
     }
