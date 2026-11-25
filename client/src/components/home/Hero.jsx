@@ -8,9 +8,9 @@ const Hero = ({ onExplore = () => {} }) => {
 
   const videoSrc = hero.videoUrl || '/leaderheros.mp4';
 
-  // Responsive poster: w=800 (85 KiB) on mobile vs w=1600 on desktop (saves 1,090 KiB payload)
-  const mobilePoster = 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=75&w=800&auto=format&fit=crop';
-  const desktopPoster = hero.posterImage || 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1600&auto=format&fit=crop';
+  // Responsive poster: w=720 on mobile vs w=960 on desktop (optimized with q=70 & auto=format)
+  const mobilePoster = 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=70&w=720&auto=format&fit=crop';
+  const desktopPoster = hero.posterImage || 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=70&w=960&auto=format&fit=crop';
 
   const [isMobile, setIsMobile] = useState(false);
 
