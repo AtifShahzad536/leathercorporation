@@ -377,6 +377,10 @@ const Navbar = ({ onNavigate = () => {} }) => {
           setSearchOpen(false);
           onNavigate('sports-hub', sport);
         }}
+        onSelectSearch={(term) => {
+          setSearchOpen(false);
+          onNavigate('sports-hub', term);
+        }}
       />
     </>
   );
