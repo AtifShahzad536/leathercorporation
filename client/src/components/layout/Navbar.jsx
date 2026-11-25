@@ -369,9 +369,13 @@ const Navbar = ({ onNavigate = () => {} }) => {
       <SearchOverlay
         isOpen={searchOpen}
         onClose={() => setSearchOpen(false)}
-        onSelectProduct={(slug) => {
+        onSelectProduct={(product) => {
           setSearchOpen(false);
-          onNavigate('products', '', slug);
+          onNavigate('product-detail', product);
+        }}
+        onSelectCategory={(sport) => {
+          setSearchOpen(false);
+          onNavigate('sports-hub', sport);
         }}
       />
     </>
