@@ -206,6 +206,32 @@ router.get('/signature', protect, (req, res) => {
   }
 });
 
+// POST /api/media/record - Record a direct Cloudinary upload in MongoDB
+router.post('/record', protect, async (req, res) => {
+  try {
+    const { url, publicId, type, format, size, width, height, folder, filename } = req.body;
+    if (!url) {
+      return res.status(400).json({ success: false, message: 'URL is required' });
+    }
+
+    const media = await Media.create({
+      filename: filename || path.basename(url),
+      url,
+      publicId: publicId || `cld-${Date.now()}`,
+      type: type || 'video',
+      folder: folder || 'hamlo-sports',
+      size: size || 0,
+      width: width || null,
+      height: height || null,
+      format: format || 'webm',
+    });
+
+    res.status(201).json({ success: true, data: media });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 // POST /api/media/upload - Upload to Cloudinary (with automatic local fallback)
 router.post('/upload', protect, upload.single('file'), async (req, res) => {
   try {

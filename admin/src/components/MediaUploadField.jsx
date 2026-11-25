@@ -75,18 +75,39 @@ export default function MediaUploadField({
             // For video, ensure optimized WebM format delivery via Cloudinary on-the-fly transformation
             let secureUrl = cldData.secure_url;
             if (isVideo) {
-              if (secureUrl.endsWith('.mp4') || secureUrl.endsWith('.mov')) {
-                secureUrl = secureUrl.replace(/\.(mp4|mov)$/i, '.webm');
-              }
+              secureUrl = secureUrl
+                .replace('/upload/', '/upload/f_webm,q_auto/')
+                .replace(/\.(mp4|mov|mkv|avi)$/i, '.webm');
             }
             finalUrl = secureUrl;
             uploadSuccess = true;
+
+            // Record media in backend database
+            try {
+              await api.post('/media/record', {
+                url: finalUrl,
+                publicId: cldData.public_id,
+                type: isVideo ? 'video' : 'image',
+                format: isVideo ? 'webm' : (cldData.format || 'jpg'),
+                size: cldData.bytes,
+                width: cldData.width,
+                height: cldData.height,
+                folder,
+                filename: file.name
+              });
+            } catch (recErr) {
+              console.warn('Could not record media in database:', recErr);
+            }
           } else if (cldData.error) {
             console.warn('[Direct Cloudinary Error]', cldData.error);
+            throw new Error(cldData.error.message || 'Direct Cloudinary upload failed');
           }
         }
       } catch (directErr) {
-        console.warn('Direct Cloudinary signature failed, falling back to server route:', directErr);
+        console.warn('Direct Cloudinary signature failed, evaluating fallback:', directErr);
+        if (directErr.message && directErr.message.includes('Cloudinary')) {
+          throw directErr;
+        }
       }
 
       // 2. Fallback to server /media/upload endpoint if direct upload not available

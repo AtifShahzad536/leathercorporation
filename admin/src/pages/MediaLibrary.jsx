@@ -30,19 +30,87 @@ export default function MediaLibrary() {
     if (!file) return;
 
     setUploading(true);
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('folder', 'hamlo-sports');
+    const isVideo = file.type.startsWith('video/') || /\.(mp4|webm|mov|mkv|avi)$/i.test(file.name);
 
     try {
-      const res = await api.post('/media/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      if (res.data.success) {
-        fetchMedia();
+      let uploadSuccess = false;
+
+      // 1. Direct Cloudinary Upload via Backend Signature
+      try {
+        const sigRes = await api.get('/media/signature', {
+          params: { folder: 'hamlo-sports', type: isVideo ? 'video' : 'image' }
+        });
+
+        if (sigRes.data?.success && sigRes.data?.data) {
+          const { signature, timestamp, apiKey, cloudName, folder } = sigRes.data.data;
+          const resourceType = isVideo ? 'video' : 'image';
+
+          const cldFormData = new FormData();
+          cldFormData.append('file', file);
+          cldFormData.append('api_key', apiKey);
+          cldFormData.append('timestamp', timestamp);
+          cldFormData.append('signature', signature);
+          cldFormData.append('folder', folder);
+
+          const cldRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`, {
+            method: 'POST',
+            body: cldFormData,
+          });
+
+          const cldData = await cldRes.json();
+          if (cldData.secure_url) {
+            let finalUrl = cldData.secure_url;
+            if (isVideo) {
+              finalUrl = finalUrl
+                .replace('/upload/', '/upload/f_webm,q_auto/')
+                .replace(/\.(mp4|mov|mkv|avi)$/i, '.webm');
+            }
+
+            await api.post('/media/record', {
+              url: finalUrl,
+              publicId: cldData.public_id,
+              type: isVideo ? 'video' : 'image',
+              format: isVideo ? 'webm' : (cldData.format || 'jpg'),
+              size: cldData.bytes,
+              width: cldData.width,
+              height: cldData.height,
+              folder,
+              filename: file.name
+            });
+
+            uploadSuccess = true;
+            fetchMedia();
+          } else if (cldData.error) {
+            throw new Error(cldData.error.message || 'Direct Cloudinary upload failed');
+          }
+        }
+      } catch (directErr) {
+        console.warn('Direct upload error:', directErr);
+        if (directErr.message && directErr.message.includes('Cloudinary')) {
+          throw directErr;
+        }
+      }
+
+      // 2. Fallback to server route for small files
+      if (!uploadSuccess && file.size < 4 * 1024 * 1024) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('folder', 'hamlo-sports');
+
+        const res = await api.post('/media/upload', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        if (res.data.success) {
+          fetchMedia();
+          uploadSuccess = true;
+        }
+      }
+
+      if (!uploadSuccess) {
+        throw new Error('Upload failed. Please check Cloudinary configuration.');
       }
     } catch (err) {
-      alert(err.response?.data?.message || 'Upload to Cloudinary failed. Check CLOUDINARY_ credentials in server/.env.');
+      alert(err.message || 'Upload to Cloudinary failed.');
     } finally {
       setUploading(false);
     }
