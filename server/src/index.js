@@ -25,6 +25,7 @@ const emailRoutes = require('./routes/email');
 const analyticsRoutes = require('./routes/analytics');
 const inquiryRoutes = require('./routes/inquiries');
 const models3dRoutes = require('./routes/models3d');
+const clubRoutes = require('./routes/clubs');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -109,6 +110,7 @@ app.use('/api/email', emailRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/inquiries', inquiryRoutes);
 app.use('/api/models3d', models3dRoutes);
+app.use('/api/clubs', clubRoutes);
 
 // Error handling
 app.use((err, req, res, next) => {

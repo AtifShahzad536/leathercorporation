@@ -195,8 +195,49 @@ export const CMSProvider = ({ children }) => {
     }
   };
 
+  // Submit Club Partnership Registration
+  const registerClub = async (payload) => {
+    try {
+      const recaptchaToken = await executeRecaptcha('register_club');
+      const res = await fetch(`${API_BASE}/clubs/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...payload,
+          recaptchaToken
+        })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        return data;
+      }
+      throw new Error(data.message || 'Club registration endpoint error');
+    } catch (err) {
+      console.warn('Direct /clubs/register failed, submitting via inquiries fallback:', err);
+      // Resilient fallback to submitInquiry
+      return await submitInquiry({
+        name: `${payload.contactName || 'Club Coach'} (${payload.clubName})`,
+        email: payload.email,
+        phone: payload.phone,
+        company: payload.clubName,
+        sport: payload.sport,
+        quantity: parseInt(payload.totalPlayers, 10) || 25,
+        message: `🏆 NEW CLUB REGISTRATION [DIRECT FALLBACK]\n` +
+          `• Club/Team: ${payload.clubName} (${payload.sport})\n` +
+          `• Org Type: ${payload.orgType || 'Club'} | League: ${payload.league || 'N/A'}\n` +
+          `• Contact: ${payload.contactName} (${payload.role || 'Head Coach'})\n` +
+          `• Phone: ${payload.phone} | Preferred: ${payload.preferredContact || 'Email'}\n` +
+          `• Teams: ${payload.totalTeams || 'N/A'} | Players: ${payload.totalPlayers || 'N/A'}\n` +
+          `• Colors: ${payload.teamColors || 'N/A'}\n` +
+          `• Address: ${payload.address || ''}, ${payload.city || ''}, ${payload.state || ''} ${payload.zip || ''}\n` +
+          `• Description / Needs: ${payload.description || payload.uniformNeeds || 'Club Volume Program'}`,
+        source: 'club_registration'
+      });
+    }
+  };
+
   return (
-    <CMSContext.Provider value={{ homeContent, loading, submitInquiry }}>
+    <CMSContext.Provider value={{ homeContent, loading, submitInquiry, registerClub }}>
       {children}
     </CMSContext.Provider>
   );

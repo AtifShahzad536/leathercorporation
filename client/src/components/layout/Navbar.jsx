@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Globe, ChevronDown, Menu, ShoppingBag, Sparkles, Building2, Phone, Mail } from 'lucide-react';
+import { Search, Globe, ChevronDown, Menu, ShoppingBag, Sparkles, Building2, Phone, Mail, Trophy } from 'lucide-react';
 import MobileMenu from './MobileMenu';
 import SearchOverlay from './SearchOverlay';
 import NavbarDropdown from './NavbarDropdown';
@@ -125,6 +125,7 @@ const Navbar = ({ onNavigate = () => {} }) => {
   // PRODUCTS removed, STYLES kept in header!
   const navLinks = [
     '3D BUILDER',
+    'REGISTER CLUB',
     'STYLES',
     'EXPLORE',
     'PARTNER WITH US',
@@ -136,6 +137,8 @@ const Navbar = ({ onNavigate = () => {} }) => {
   const handleNavLinkClick = (link) => {
     if (link === '3D BUILDER') {
       onNavigate('builder');
+    } else if (link === 'REGISTER CLUB') {
+      onNavigate('register-club');
     } else if (link === 'STYLES') {
       onNavigate('styles');
     } else if (link === 'EXPLORE') {
@@ -337,23 +340,34 @@ const Navbar = ({ onNavigate = () => {} }) => {
         </div>
       </nav>
 
-      {/* ── 3. DIRECT SPORTS BAR (Reduced left/right space) ── */}
+      {/* ── 3. DIRECT SPORTS & CATEGORIES BAR (With Prominent REGISTER CLUB Navlink) ── */}
       <div className="w-full bg-white border-b border-[var(--secondary)]/15 shadow-xs z-[80] sticky top-16 md:top-20">
         <div className="w-[96%] max-w-[1800px] mx-auto flex items-center justify-between gap-1 sm:gap-2 py-2 overflow-x-auto lg:overflow-x-visible no-scrollbar whitespace-nowrap">
-          {directSports.map((sport) => (
-            <button
-              key={sport.name}
-              onClick={() => {
-                if (sport.name === 'CRICKET') onNavigate('cricket');
-                else onNavigate('products', sport.name);
-              }}
-              className="relative px-1 sm:px-2 py-1.5 text-[9px] sm:text-[10px] xl:text-[11px] font-bold uppercase tracking-wider text-[var(--secondary)]/85 hover:text-[var(--accent)] transition-colors duration-200 cursor-pointer flex-shrink-0 group"
-            >
-              <span>{sport.label}</span>
-              {/* Clean underline on hover instead of orange background */}
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[var(--accent)] transition-all duration-300 group-hover:w-full" />
-            </button>
-          ))}
+          <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar">
+            {directSports.map((sport) => (
+              <button
+                key={sport.name}
+                onClick={() => {
+                  if (sport.name === 'CRICKET') onNavigate('cricket');
+                  else onNavigate('products', sport.name);
+                }}
+                className="relative px-1 sm:px-2 py-1.5 text-[9px] sm:text-[10px] xl:text-[11px] font-bold uppercase tracking-wider text-[var(--secondary)]/85 hover:text-[var(--accent)] transition-colors duration-200 cursor-pointer flex-shrink-0 group"
+              >
+                <span>{sport.label}</span>
+                {/* Clean underline on hover instead of orange background */}
+                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[var(--accent)] transition-all duration-300 group-hover:w-full" />
+              </button>
+            ))}
+          </div>
+
+          {/* Prominent REGISTER CLUB Navlink in Center Categories Bar */}
+          <button
+            onClick={() => onNavigate('register-club')}
+            className="ml-2 inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#1E1B6E] hover:bg-[var(--accent)] text-white text-[9px] sm:text-[10px] xl:text-[11px] font-black uppercase tracking-wider rounded-[3px] shadow transition-all duration-300 flex-shrink-0 cursor-pointer"
+          >
+            <Trophy size={13} className="text-amber-400 flex-shrink-0" />
+            <span className="whitespace-nowrap">REGISTER CLUB</span>
+          </button>
         </div>
       </div>
 

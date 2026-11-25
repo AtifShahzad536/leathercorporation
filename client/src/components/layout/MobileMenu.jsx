@@ -73,6 +73,8 @@ const NavItem = ({ link, data, isExpanded, onToggle, linkIdx, isMenuOpen, onNavi
         onNavigate('explore');
       } else if (link === 'PARTNER WITH US') {
         onNavigate('inquiry');
+      } else if (link === 'REGISTER CLUB') {
+        onNavigate('register-club');
       } else if (link === 'COMPLIANCE') {
         onNavigate('compliance');
       } else if (link === 'CERTIFICATION') {
