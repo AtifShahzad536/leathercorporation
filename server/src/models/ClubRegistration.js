@@ -35,6 +35,18 @@ const clubRegistrationSchema = new mongoose.Schema({
   zip: { type: String, default: '' },
   isTaxExempt: { type: Boolean, default: false },
 
+  // Discount & Partnership Terms
+  discountPercentage: { type: Number, default: 20 },
+  discountCode: { type: String, default: '' },
+  discountTier: { type: String, default: 'Gold Partner (20%)' },
+  discountStatus: { 
+    type: String, 
+    enum: ['active', 'pending', 'expired'], 
+    default: 'pending' 
+  },
+  discountNotes: { type: String, default: '' },
+  approvedAt: { type: Date },
+
   // Administrative
   status: { 
     type: String, 

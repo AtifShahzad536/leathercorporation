@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const IconInstagram = () => (
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -20,6 +20,33 @@ const IconX = () => (
     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
   </svg>
 );
+const IconTikTok = () => (
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.12V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.47 6.27 6.27 0 0 0 1.88-4.46V8.76a8.28 8.28 0 0 0 4.89 1.58V6.89c-.33 0-.67-.07-1-.2z"/>
+  </svg>
+);
+const IconWhatsApp = () => (
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+  </svg>
+);
+const IconLinkedIn = () => (
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+  </svg>
+);
+
+const getSocialIcon = (platform = '') => {
+  const p = platform.toLowerCase();
+  if (p.includes('instagram')) return <IconInstagram />;
+  if (p.includes('facebook')) return <IconFacebook />;
+  if (p.includes('youtube')) return <IconYoutube />;
+  if (p.includes('twitter') || p.includes('x')) return <IconX />;
+  if (p.includes('tiktok')) return <IconTikTok />;
+  if (p.includes('whatsapp')) return <IconWhatsApp />;
+  if (p.includes('linkedin')) return <IconLinkedIn />;
+  return <IconInstagram />;
+};
 
 const footerLinks = {
   Products: ['Baseball Uniforms', 'Basketball Jerseys', 'Football Uniforms', 'Soccer Kits', 'Cricket Uniforms', 'Ice Hockey Sweaters'],
@@ -29,6 +56,36 @@ const footerLinks = {
 };
 
 const Footer = ({ onNavigate = () => {} }) => {
+  const [socialLinks, setSocialLinks] = useState([
+    { platform: 'Instagram', url: 'https://instagram.com/hamlosports', isActive: true },
+    { platform: 'Facebook', url: 'https://facebook.com/hamlosports', isActive: true },
+    { platform: 'YouTube', url: 'https://youtube.com/@hamlosports', isActive: true },
+    { platform: 'X / Twitter', url: 'https://x.com/hamlosports', isActive: true },
+  ]);
+
+  const [companyInfo, setCompanyInfo] = useState({
+    salesEmail: 'sale@hamlosportswear.site',
+    phone: '+92 310 5464116',
+    whatsapp: '923105464116'
+  });
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(res => res.json())
+      .then(json => {
+        if (json.success && json.data) {
+          if (json.data.social_links && Array.isArray(json.data.social_links)) {
+            const active = json.data.social_links.filter(s => s.isActive && s.url);
+            if (active.length > 0) setSocialLinks(active);
+          }
+          if (json.data.company_info) {
+            setCompanyInfo(prev => ({ ...prev, ...json.data.company_info }));
+          }
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <footer className="w-full bg-[var(--secondary)] text-white">
       {/* Top Section */}
@@ -57,24 +114,25 @@ const Footer = ({ onNavigate = () => {} }) => {
               Direct from Sialkot, Pakistan. HAMLO SPORTS manufactures world-class custom team uniforms, pro-grade dye-sublimation, and performance sportswear engineered for schools, clubs, and professional leagues.
             </p>
             <div className="space-y-1 mb-6 text-xs text-white/90 font-medium">
-              <div>Sales: <a href="mailto:sale@hamlosportswear.site" className="text-orange-400 hover:text-orange-300 hover:underline font-bold">sale@hamlosportswear.site</a></div>
-              <div>WhatsApp / Phone: <a href="https://wa.me/923105464116" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300 hover:underline font-bold">+92 310 5464116</a></div>
+              <div>Sales: <a href={`mailto:${companyInfo.salesEmail || 'sale@hamlosportswear.site'}`} className="text-orange-400 hover:text-orange-300 hover:underline font-bold">{companyInfo.salesEmail || 'sale@hamlosportswear.site'}</a></div>
+              <div>WhatsApp / Phone: <a href={`https://wa.me/${(companyInfo.whatsapp || '923105464116').replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300 hover:underline font-bold">{companyInfo.phone || '+92 310 5464116'}</a></div>
             </div>
-            {/* Social Icons */}
-            <div className="flex items-center gap-4">
-              {[
-                { icon: <IconInstagram />, label: 'Instagram' },
-                { icon: <IconFacebook />, label: 'Facebook' },
-                { icon: <IconYoutube />, label: 'YouTube' },
-                { icon: <IconX />, label: 'X / Twitter' },
-              ].map(({ icon, label }) => (
-                <button
-                  key={label}
-                  aria-label={label}
+            {/* Social Icons (Dynamic from Admin Settings) */}
+            <div className="flex items-center gap-3 flex-wrap">
+              {socialLinks.map((s, idx) => (
+                <a
+                  key={s.id || s.platform || idx}
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.platform}
                   className="w-9 h-9 rounded-[3px] border border-white/20 flex items-center justify-center hover:bg-[var(--accent)] hover:text-white hover:border-[var(--accent)] transition-all duration-200 group cursor-pointer"
+                  title={s.platform}
                 >
-                  <span className="group-hover:scale-110 transition-transform">{icon}</span>
-                </button>
+                  <span className="group-hover:scale-110 transition-transform">
+                    {getSocialIcon(s.platform)}
+                  </span>
+                </a>
               ))}
             </div>
           </div>

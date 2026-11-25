@@ -3,7 +3,7 @@ import api from '../api/client';
 import { 
   Package, Layers, Mail, Clock, CheckCircle2, 
   MessageSquare, Box, ArrowUpRight, RefreshCw, 
-  ChevronRight, Calendar, User, Eye, Sparkles
+  ChevronRight, Calendar, User, Eye, Sparkles, Award
 } from 'lucide-react';
 import { 
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, 
@@ -67,6 +67,31 @@ export default function DashboardPage({ onNavigate }) {
             <span>Refresh</span>
           </button>
         </div>
+      </div>
+
+      {/* Club Registration & Discount Program Banner */}
+      <div className="bg-gradient-to-r from-[#1E1B6E] to-indigo-900 text-white rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm border border-indigo-950">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-[#F26522] shrink-0">
+            <Award size={20} />
+          </div>
+          <div>
+            <h3 className="text-sm font-bold tracking-tight">
+              Club Registrations & Discount Program
+            </h3>
+            <p className="text-xs text-white/70 mt-0.5">
+              Review athletic team applications, assign factory volume discounts (15%–30%), and generate club promo codes.
+            </p>
+          </div>
+        </div>
+
+        <button
+          onClick={() => onNavigate('clubs')}
+          className="px-4 py-2 bg-[#F26522] hover:bg-orange-600 text-white rounded-lg text-xs font-bold transition shadow-xs flex items-center justify-center gap-1.5 cursor-pointer shrink-0"
+        >
+          <span>Manage Club Registrations</span>
+          <ChevronRight size={14} />
+        </button>
       </div>
 
       {/* ── 4 KEY METRIC CARDS ── */}

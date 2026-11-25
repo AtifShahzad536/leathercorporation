@@ -9,11 +9,13 @@ import HomePageManager from './pages/HomePageManager';
 import PagesManager from './pages/PagesManager';
 import InquiriesManager from './pages/InquiriesManager';
 import Model3DManager from './pages/Model3DManager';
+import ClubRegistrationsPage from './pages/ClubRegistrationsPage';
+import SiteSettingsManager from './pages/SiteSettingsManager';
 import { 
   LayoutDashboard, Mail, Package, Image as ImageIcon, 
   Layers, LogOut, ExternalLink, ShieldCheck, Home, 
   Search, Bell, ChevronRight, Menu, X, User, Settings,
-  MessageSquare, Box
+  MessageSquare, Box, Award
 } from 'lucide-react';
 
 export default function App() {
@@ -46,8 +48,9 @@ export default function App() {
       ]
     },
     {
-      group: 'Quotes & Inquiries',
+      group: 'Quotes, Clubs & Leads',
       items: [
+        { id: 'clubs', label: 'Club Registrations & Discounts', icon: Award },
         { id: 'inquiries', label: 'Customer Quotes & Inquiries', icon: MessageSquare },
         { id: 'leads', label: 'Email Marketing & Leads', icon: Mail },
       ]
@@ -61,18 +64,26 @@ export default function App() {
         { id: 'pages', label: 'Content Pages', icon: Layers },
         { id: 'media', label: 'Media Assets Vault', icon: ImageIcon },
       ]
+    },
+    {
+      group: 'Settings & Administration',
+      items: [
+        { id: 'settings', label: 'Site & Social Media Settings', icon: Settings },
+      ]
     }
   ];
 
   const currentTitle = {
     dashboard: 'Operations Dashboard & Analytics',
+    clubs: 'Athletic Club Registrations & Volume Discount Management',
     models3d: '3D Customizer Models & Mesh Management',
     inquiries: 'Customer Quotes & Inquiries Inbox',
     homePage: 'Home Page CMS & Showcase',
     products: 'Custom Sports Uniforms Catalog',
     pages: 'Website Pages & Compliance',
     media: 'Media Asset Vault',
-    leads: 'Email Marketing & Leads Management'
+    leads: 'Email Marketing & Leads Management',
+    settings: 'Site, Social Media & Global Configuration'
   }[currentPage];
 
   return (
@@ -238,6 +249,7 @@ export default function App() {
         <div className="flex-1 overflow-y-auto overflow-x-hidden p-6 sm:p-8">
           <div className="max-w-7xl mx-auto pb-12">
             {currentPage === 'dashboard' && <DashboardPage onNavigate={setCurrentPage} />}
+            {currentPage === 'clubs' && <ClubRegistrationsPage />}
             {currentPage === 'models3d' && <Model3DManager />}
             {currentPage === 'inquiries' && <InquiriesManager />}
             {currentPage === 'homePage' && <HomePageManager />}
@@ -245,6 +257,7 @@ export default function App() {
             {currentPage === 'leads' && <EmailLeadsPage />}
             {currentPage === 'media' && <MediaLibrary />}
             {currentPage === 'pages' && <PagesManager />}
+            {currentPage === 'settings' && <SiteSettingsManager />}
           </div>
         </div>
 

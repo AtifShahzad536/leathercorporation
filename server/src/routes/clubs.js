@@ -145,6 +145,7 @@ router.get('/', protect, async (req, res) => {
       new: await ClubRegistration.countDocuments({ status: 'new' }),
       contacted: await ClubRegistration.countDocuments({ status: 'contacted' }),
       approved: await ClubRegistration.countDocuments({ status: 'approved' }),
+      archived: await ClubRegistration.countDocuments({ status: 'archived' }),
     };
 
     res.json({
@@ -173,17 +174,53 @@ router.get('/:id', protect, async (req, res) => {
   }
 });
 
-// PATCH /api/clubs/:id - Update status/notes (Admin only)
+// PATCH /api/clubs/:id - Update status, notes, and discount assignment (Admin only)
 router.patch('/:id', protect, async (req, res) => {
   try {
-    const { status, notes, assignedRep } = req.body;
+    const { 
+      status, 
+      notes, 
+      assignedRep,
+      discountPercentage,
+      discountCode,
+      discountTier,
+      discountStatus,
+      discountNotes
+    } = req.body;
+
+    const updateFields = {};
+    if (status !== undefined) updateFields.status = status;
+    if (notes !== undefined) updateFields.notes = notes;
+    if (assignedRep !== undefined) updateFields.assignedRep = assignedRep;
+    if (discountPercentage !== undefined) updateFields.discountPercentage = Number(discountPercentage);
+    if (discountCode !== undefined) updateFields.discountCode = discountCode;
+    if (discountTier !== undefined) updateFields.discountTier = discountTier;
+    if (discountStatus !== undefined) updateFields.discountStatus = discountStatus;
+    if (discountNotes !== undefined) updateFields.discountNotes = discountNotes;
+
+    if (status === 'approved') {
+      updateFields.approvedAt = new Date();
+      if (!updateFields.discountStatus) updateFields.discountStatus = 'active';
+    }
+
     const club = await ClubRegistration.findByIdAndUpdate(
       req.params.id,
-      { $set: { ...(status && { status }), ...(notes !== undefined && { notes }), ...(assignedRep && { assignedRep }) } },
+      { $set: updateFields },
       { new: true }
     );
     if (!club) return res.status(404).json({ success: false, message: 'Club registration not found' });
-    res.json({ success: true, data: club, message: 'Registration updated successfully' });
+    res.json({ success: true, data: club, message: 'Club registration and discount updated successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// DELETE /api/clubs/:id - Delete registration (Admin only)
+router.delete('/:id', protect, async (req, res) => {
+  try {
+    const club = await ClubRegistration.findByIdAndDelete(req.params.id);
+    if (!club) return res.status(404).json({ success: false, message: 'Club registration not found' });
+    res.json({ success: true, message: 'Club registration deleted successfully' });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
