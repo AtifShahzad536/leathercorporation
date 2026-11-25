@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { useCMS } from '../../context/CMSContext';
 
 export default function SustainabilitySection({ onExplore = () => { } }) {
@@ -21,11 +20,7 @@ export default function SustainabilitySection({ onExplore = () => { } }) {
         <div className="flex flex-col md:flex-row h-auto md:h-[650px] w-full rounded-none border-none relative bg-black">
 
           {/* Left Side: Eco Teamwear Transition */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1 }}
+          <div
             onClick={() => onExplore('compliance')}
             className="relative w-full md:w-1/2 h-[420px] md:h-full group cursor-pointer border-r-0 md:border-r-2 border-white/90 overflow-hidden"
           >
@@ -54,16 +49,12 @@ export default function SustainabilitySection({ onExplore = () => { } }) {
               </h3>
               <div className="w-20 h-1.5 bg-[var(--accent)] shadow-lg" />
             </div>
-          </motion.div>
+          </div>
 
           {/* Center Diamond Hub */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 hidden md:block pointer-events-auto">
-            <motion.div
-              initial={{ scale: 0, rotate: 45 }}
-              whileInView={{ scale: 1, rotate: 45 }}
-              viewport={{ once: true }}
-              transition={{ type: "spring", damping: 15, delay: 0.3 }}
-              className="relative w-64 h-64 border-2 border-white shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden bg-black group/hub"
+            <div
+              className="relative w-64 h-64 border-2 border-white shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden bg-black group/hub rotate-45"
             >
               <div className="absolute inset-[-50%] -rotate-45 flex flex-col items-center justify-center p-8 text-center text-white">
                 <div
@@ -97,15 +88,11 @@ export default function SustainabilitySection({ onExplore = () => { } }) {
                   </button>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
 
           {/* Right Side: HAMLO LAB */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.2 }}
+          <div
             onClick={() => onExplore('certification')}
             className="relative w-full md:w-1/2 h-[420px] md:h-full group cursor-pointer overflow-hidden"
           >
@@ -138,7 +125,7 @@ export default function SustainabilitySection({ onExplore = () => { } }) {
                 {rightTagline}
               </p>
             </div>
-          </motion.div>
+          </div>
 
         </div>
       </div>

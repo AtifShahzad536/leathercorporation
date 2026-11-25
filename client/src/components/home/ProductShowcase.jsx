@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
 import { sportsCategories } from '../../data/sportsCategoriesData';
 import { useCMS } from '../../context/CMSContext';
@@ -81,12 +80,10 @@ export default function ProductShowcase({
             const formattedIndex = (index + 1).toString().padStart(2, '0');
 
             return (
-              <motion.div
+              <div
                 key={sport.id}
-                whileHover={{ y: -6 }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
                 onClick={() => handleCategoryClick(sport)}
-                className={`relative rounded-[5px] overflow-hidden cursor-pointer group shadow-xl border border-[var(--secondary)]/15 bg-neutral-900 ${spanClass} flex flex-col justify-end p-6 sm:p-8`}
+                className={`relative rounded-[5px] overflow-hidden cursor-pointer group shadow-xl border border-[var(--secondary)]/15 bg-neutral-900 ${spanClass} flex flex-col justify-end p-6 sm:p-8 transition-transform duration-300 hover:-translate-y-1.5`}
               >
                 {/* High-Resolution Action Image with Parallax Zoom */}
                 <img
@@ -124,7 +121,7 @@ export default function ProductShowcase({
 
                 {/* Accent Border Ring on Hover */}
                 <div className="absolute inset-0 rounded-[5px] border-2 border-transparent group-hover:border-[var(--accent)] transition-colors duration-300 pointer-events-none" />
-              </motion.div>
+              </div>
             );
           })}
         </div>

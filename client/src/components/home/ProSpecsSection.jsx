@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Layers, Sparkles, CheckCircle2 } from 'lucide-react';
 
 /**
@@ -57,11 +56,9 @@ export default function ProSpecsSection({ onExplore = () => { } }) {
         {/* 3 Columns Card Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
           {specsCards.map((card, idx) => (
-            <motion.div
+            <div
               key={idx}
-              whileHover={{ y: -6 }}
-              transition={{ duration: 0.35, ease: 'easeOut' }}
-              className="bg-white rounded-[5px] overflow-hidden shadow-lg border border-[var(--secondary)]/12 flex flex-col group hover:shadow-2xl hover:border-[var(--accent)]/50 transition-all duration-300"
+              className="bg-white rounded-[5px] overflow-hidden shadow-lg border border-[var(--secondary)]/12 flex flex-col group hover:shadow-2xl hover:border-[var(--accent)]/50 transition-all duration-300 hover:-translate-y-1.5"
             >
               {/* Top Banner Image with Zoom on Hover */}
               <div className="relative w-full h-[220px] sm:h-[260px] overflow-hidden bg-neutral-900">
@@ -108,7 +105,7 @@ export default function ProSpecsSection({ onExplore = () => { } }) {
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 

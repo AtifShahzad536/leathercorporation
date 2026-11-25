@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React from 'react';
 import { useCMS } from '../../context/CMSContext';
 
 const Hero = ({ onExplore = () => {} }) => {
@@ -60,12 +59,7 @@ const Hero = ({ onExplore = () => {} }) => {
 
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-[8%]">
         <div className="w-[96%] max-w-[1800px] mx-auto flex flex-col items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: 'easeOut' }}
-            className="flex flex-col items-center gap-4 w-full"
-          >
+          <div className="flex flex-col items-center gap-4 w-full">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-[var(--accent)] text-[9px] md:text-xs font-bold uppercase tracking-widest border border-white/20">
               {badgeText}
             </div>
@@ -74,15 +68,13 @@ const Hero = ({ onExplore = () => {} }) => {
               {headingText}
             </h1>
   
-            <motion.button
+            <button
               onClick={onExplore}
-              whileHover={{ scale: 1.05, backgroundColor: '#F26522', color: '#1E1B6E', borderColor: '#F26522' }}
-              whileTap={{ scale: 0.97 }}
-              className="border border-white bg-transparent text-white font-bold tracking-widest uppercase text-[9px] md:text-sm px-5 py-2.5 md:px-10 md:py-4 transition-all duration-300 shadow-xl cursor-pointer"
+              className="border border-white bg-transparent text-white font-bold tracking-widest uppercase text-[9px] md:text-sm px-5 py-2.5 md:px-10 md:py-4 transition-all duration-300 shadow-xl cursor-pointer hover:scale-105 hover:bg-[#F26522] hover:text-[#1E1B6E] hover:border-[#F26522] active:scale-95"
             >
               {buttonLabel}
-            </motion.button>
-          </motion.div>
+            </button>
+          </div>
         </div>
       </div>
 
