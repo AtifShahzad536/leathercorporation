@@ -117,10 +117,16 @@
   /* Google reCAPTCHA v3 Badge Positioning & Layering */
   .grecaptcha-badge {
     bottom: 115px !important; /* Lifts badge cleanly above the sticky Live Chat "DON'T THINK! TALK TO US" widget */
-    right: 0 !important;
+    right: -186px !important; /* Collapsed by default: only the clean circular icon stays visible on the edge */
     z-index: 9999999 !important; /* High z-index so it floats above cards and content */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+    box-shadow: -2px 4px 16px rgba(0, 0, 0, 0.18) !important;
     border-radius: 6px 0 0 6px !important;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease !important;
+  }
+
+  .grecaptcha-badge:hover,
+  .grecaptcha-badge:focus-within {
+    right: 0 !important; /* Expands smoothly on mouse hover to reveal full badge */
+    box-shadow: -4px 6px 24px rgba(0, 0, 0, 0.28) !important;
   }
 }
