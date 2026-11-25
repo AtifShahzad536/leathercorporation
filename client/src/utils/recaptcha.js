@@ -52,6 +52,32 @@ export const loadRecaptchaScript = (siteKey) => {
 };
 
 /**
+ * Initializes reCAPTCHA v3 on first real user interaction.
+ * Prevents Lighthouse / synthetic crawlers from throwing third-party requestStorageAccess console errors.
+ */
+export const initLazyRecaptcha = () => {
+  if (typeof window === 'undefined') return;
+  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+  if (!siteKey || siteKey === 'your_recaptcha_v3_site_key_here') return;
+
+  const triggerEvents = ['mousemove', 'touchstart', 'scroll', 'keydown', 'click'];
+  let initialized = false;
+
+  const onUserInteraction = () => {
+    if (initialized) return;
+    initialized = true;
+    triggerEvents.forEach(evt => {
+      window.removeEventListener(evt, onUserInteraction, { passive: true });
+    });
+    loadRecaptchaScript(siteKey);
+  };
+
+  triggerEvents.forEach(evt => {
+    window.addEventListener(evt, onUserInteraction, { passive: true, once: true });
+  });
+};
+
+/**
  * Execute reCAPTCHA v3 for an action and return token
  * @param {string} action e.g. 'submit_inquiry'
  * @returns {Promise<string|null>} token or null if unconfigured/failed
