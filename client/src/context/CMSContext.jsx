@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { sportsCategories as staticCategories } from '../data/sportsCategoriesData';
+import { executeRecaptcha, loadRecaptchaScript } from '../utils/recaptcha';
 
 const CMSContext = createContext();
 
@@ -168,15 +169,27 @@ export const CMSProvider = ({ children }) => {
     };
 
     fetchCMS();
+
+    // Preload reCAPTCHA v3 script if site key is configured
+    const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+    if (siteKey && siteKey !== 'your_recaptcha_v3_site_key_here') {
+      loadRecaptchaScript(siteKey);
+    }
   }, []);
 
   // Submit Inquiry to MongoDB
   const submitInquiry = async (payload) => {
     try {
+      // Execute reCAPTCHA v3 verification (invisible)
+      const recaptchaToken = await executeRecaptcha('submit_inquiry');
+
       const res = await fetch(`${API_BASE}/inquiries`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+          ...payload,
+          recaptchaToken
+        })
       });
       return await res.json();
     } catch (err) {

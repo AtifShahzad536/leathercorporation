@@ -63,10 +63,53 @@ router.get('/:id', protect, async (req, res) => {
 // POST /api/inquiries - Submit inquiry (PUBLIC — called by frontend quote/contact forms & live chat)
 router.post('/', async (req, res) => {
   try {
-    const { name, email, phone, company, sport, product, quantity, message, source } = req.body;
+    const { name, email, phone, company, sport, product, quantity, message, source, recaptchaToken } = req.body;
 
     if (!name || !email || !message) {
       return res.status(400).json({ success: false, message: 'Name, email and message are required.' });
+    }
+
+    // Google reCAPTCHA v3 Verification (active when secret key is provided)
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+    if (secretKey && secretKey !== 'your_recaptcha_v3_secret_key_here') {
+      if (!recaptchaToken) {
+        return res.status(400).json({
+          success: false,
+          message: 'reCAPTCHA token is missing. Please refresh and try again.',
+        });
+      }
+
+      try {
+        const verifyRes = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            secret: secretKey,
+            response: recaptchaToken,
+            remoteip: req.ip || req.connection?.remoteAddress,
+          }),
+        });
+
+        const verifyData = await verifyRes.json();
+
+        // Check verification success and score (v3 threshold standard: >= 0.4)
+        if (!verifyData.success || (verifyData.score !== undefined && verifyData.score < 0.4)) {
+          console.warn('[reCAPTCHA Blocked]', {
+            success: verifyData.success,
+            score: verifyData.score,
+            action: verifyData.action,
+            errors: verifyData['error-codes'],
+          });
+          return res.status(403).json({
+            success: false,
+            message: 'reCAPTCHA verification failed. Automated traffic detected.',
+            score: verifyData.score,
+          });
+        }
+      } catch (captchaErr) {
+        console.error('[reCAPTCHA API Error]', captchaErr);
+        // Fail open on external network outage to avoid blocking genuine leads
+      }
     }
 
     const inquiry = await Inquiry.create({
