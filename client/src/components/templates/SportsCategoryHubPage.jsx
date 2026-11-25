@@ -290,7 +290,7 @@ export default function SportsCategoryHubPage({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {jerseyCuts.map((cut) => (
+          {jerseyCuts.map((cut, idx) => (
             <div
               key={cut.id || cut.slug || cut.name}
               onClick={() => onSelectProduct(cut)}
@@ -301,7 +301,9 @@ export default function SportsCategoryHubPage({
                   src={cut.image || cut.img}
                   alt={cut.name}
                   className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-md"
-                  loading="lazy"
+                  loading={idx < 3 ? 'eager' : 'lazy'}
+                  fetchPriority={idx === 0 ? 'high' : 'auto'}
+                  decoding="async"
                 />
                 <span className="absolute top-2.5 left-2.5 bg-[var(--secondary)] text-white text-[9px] font-black tracking-widest uppercase px-2.5 py-1 rounded-[3px] shadow">
                   {cut.badge || 'TOP SELLER'}

@@ -223,6 +223,11 @@ const Navbar = ({ onNavigate = () => {} }) => {
               <img
                 src="/logo_silverstar.png"
                 alt="HAMLO SPORTS"
+                width="48"
+                height="48"
+                fetchPriority="high"
+                loading="eager"
+                decoding="sync"
                 className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
               />
             </div>

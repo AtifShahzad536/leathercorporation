@@ -12,24 +12,34 @@ const Hero = ({ onExplore = () => {} }) => {
   const mobilePoster = 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=70&w=720&auto=format&fit=crop';
   const desktopPoster = hero.posterImage || 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=70&w=960&auto=format&fit=crop';
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile, { passive: true });
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const posterSrc = isMobile ? mobilePoster : desktopPoster;
   const badgeText = hero.badge || 'CUSTOM SPORTSWEAR & ATHLETIC UNIFORMS MANUFACTURER';
   const headingText = hero.title || 'PRO-GRADE DYE-SUBLIMATED UNIFORMS & TEAM APPAREL FACTORY DIRECT';
   const buttonLabel = hero.buttonText || 'Explore 2026 Sports Uniforms Collection';
 
   return (
-    <section className="relative w-full overflow-hidden bg-[var(--secondary)] h-[45svh] md:h-[100svh]">
+    <section className="relative w-full overflow-hidden bg-[var(--secondary)] min-h-[460px] h-[75svh] md:h-[100svh]">
 
-      {/* Dynamic Video (preload="none" on mobile ensures video does not block LCP or waste mobile data) */}
+      {/* ── High-Priority Responsive LCP Image (Immediately discoverable, Eager, High Priority) ── */}
+      <picture className="absolute inset-0 w-full h-full pointer-events-none">
+        <source
+          media="(max-width: 768px)"
+          srcSet={mobilePoster}
+        />
+        <source
+          media="(min-width: 769px)"
+          srcSet={desktopPoster}
+        />
+        <img
+          src={mobilePoster}
+          alt="HAMLO SPORTS Pro-Grade Athletic Uniforms & Teamwear"
+          fetchPriority="high"
+          loading="eager"
+          decoding="async"
+          className="w-full h-full object-cover"
+        />
+      </picture>
+
+      {/* Dynamic Video (plays smoothly above background image once loaded) */}
       <video
         key={videoSrc}
         autoPlay
@@ -37,16 +47,16 @@ const Hero = ({ onExplore = () => {} }) => {
         loop
         playsInline
         aria-hidden="true"
-        preload={isMobile ? "none" : "metadata"}
-        poster={posterSrc}
+        preload="metadata"
+        poster={mobilePoster}
         src={videoSrc}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover z-[1]"
       >
         <track kind="captions" src="data:text/vtt,WEBVTT" label="English" default={false} />
       </video>
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-[var(--secondary)]/50 backdrop-brightness-90" />
+      <div className="absolute inset-0 bg-[var(--secondary)]/50 backdrop-brightness-90 z-[2]" />
 
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-[8%]">
         <div className="w-[96%] max-w-[1800px] mx-auto flex flex-col items-center">

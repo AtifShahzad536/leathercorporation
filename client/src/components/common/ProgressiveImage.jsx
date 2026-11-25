@@ -17,10 +17,15 @@ const ProgressiveImage = memo(({
   priority = false, // If true, eager loads without lazy loading
   ...props
 }) => {
-  const [currentSrc, setCurrentSrc] = useState(placeholderSrc || src);
-  const [loading, setLoading] = useState(true);
+  const [currentSrc, setCurrentSrc] = useState(priority ? src : (placeholderSrc || src));
+  const [loading, setLoading] = useState(!priority && Boolean(placeholderSrc));
 
   useEffect(() => {
+    if (priority) {
+      setCurrentSrc(src);
+      setLoading(false);
+      return;
+    }
     // If priority or already high-res, load immediately
     setLoading(true);
     const img = new Image();
@@ -32,7 +37,7 @@ const ProgressiveImage = memo(({
     img.onerror = () => {
       setLoading(false);
     };
-  }, [src]);
+  }, [src, priority]);
 
   return (
     <div
@@ -45,6 +50,7 @@ const ProgressiveImage = memo(({
         width={width}
         height={height}
         loading={priority ? 'eager' : 'lazy'}
+        fetchPriority={priority ? 'high' : 'auto'}
         decoding="async"
         className={`w-full h-full object-cover transition-all duration-700 ease-out ${
           loading ? 'blur-md scale-105' : 'blur-0 scale-100'

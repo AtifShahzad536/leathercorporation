@@ -91,8 +91,9 @@ export default function ProductShowcase({
                 {/* High-Resolution Action Image with Parallax Zoom */}
                 <img
                   src={sport.image}
-                  alt="HAMLO SPORTS Custom Athletic Uniform Category"
-                  loading="lazy"
+                  alt={`HAMLO SPORTS Custom ${sport.name} Athletic Uniform Category`}
+                  loading={index < 2 ? "eager" : "lazy"}
+                  fetchPriority={index === 0 ? "high" : "auto"}
                   decoding="async"
                   className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110 filter brightness-95 group-hover:brightness-105"
                 />
