@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Globe, ChevronDown, Menu, ShoppingBag, Sparkles, Building2, Phone, Mail, Trophy } from 'lucide-react';
+import { Search, Globe, ChevronDown, Menu, ShoppingBag, Sparkles, Building2, Phone, Mail } from 'lucide-react';
 import MobileMenu from './MobileMenu';
 import SearchOverlay from './SearchOverlay';
 import NavbarDropdown from './NavbarDropdown';
@@ -215,14 +215,14 @@ const Navbar = ({ onNavigate = () => {} }) => {
         className="w-full bg-[var(--primary)] text-[var(--secondary)] border-b border-[var(--secondary)]/10 sticky top-0 z-[90]"
         onMouseLeave={() => setActiveDropdown(null)}
       >
-        <div className="w-[96%] max-w-[1800px] mx-auto flex items-center justify-between h-16 md:h-20 gap-4">
+        <div className="w-[96%] max-w-[1800px] mx-auto flex items-center justify-between h-16 md:h-20 gap-2 xl:gap-4">
           
           {/* Brand Logo & Name */}
           <div 
-            className="flex items-center gap-3 cursor-pointer group flex-shrink-0"
+            className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group flex-shrink-0"
             onClick={() => onNavigate('home')}
           >
-            <div className="w-9 h-9 sm:w-12 sm:h-12 relative flex-shrink-0">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 relative flex-shrink-0">
               <img
                 src="/logo_silverstar.png"
                 alt="HAMLO SPORTS"
@@ -235,21 +235,21 @@ const Navbar = ({ onNavigate = () => {} }) => {
               />
             </div>
             <div className="hidden sm:flex flex-col">
-              <span className="font-black text-base sm:text-lg text-[var(--secondary)] tracking-tight leading-none uppercase">
+              <span className="font-black text-sm sm:text-base xl:text-lg text-[var(--secondary)] tracking-tight leading-none uppercase">
                 HAMLO
               </span>
-              <span className="text-[8px] sm:text-[9px] font-bold text-[var(--accent)] tracking-[0.25em] uppercase leading-none mt-1">
+              <span className="text-[7.5px] sm:text-[8.5px] font-bold text-[var(--accent)] tracking-[0.25em] uppercase leading-none mt-1">
                 SPORTS
               </span>
             </div>
           </div>
 
-          {/* Desktop Navigation Links — STYLES is kept here */}
-          <div className="hidden lg:flex items-center gap-4 xl:gap-7 h-full flex-nowrap">
+          {/* Desktop Navigation Links — Compact & Responsive */}
+          <div className="hidden lg:flex items-center gap-2 lg:gap-2.5 xl:gap-3.5 2xl:gap-5 h-full flex-nowrap">
             {navLinks.map((link, idx) => (
               <div
                 key={link}
-                className="relative flex items-center h-full gap-1 cursor-pointer group flex-shrink-0"
+                className="relative flex items-center h-full gap-0.5 cursor-pointer group flex-shrink-0"
                 onMouseEnter={() => {
                   if (drawerData[link]) {
                     setActiveDropdown(link);
@@ -260,15 +260,15 @@ const Navbar = ({ onNavigate = () => {} }) => {
                 onMouseLeave={() => setActiveDropdown(null)}
               >
                 <div 
-                  className="flex items-center gap-1 h-full whitespace-nowrap"
+                  className="flex items-center gap-0.5 xl:gap-1 h-full whitespace-nowrap"
                   onClick={() => handleNavLinkClick(link)}
                 >
-                  <span className={`nav-link text-[10.5px] xl:text-[11.5px] font-bold tracking-[0.1em] whitespace-nowrap transition-all duration-300 ${activeDropdown === link ? 'text-[var(--accent)] font-black' : 'text-[var(--secondary)]'}`}>
+                  <span className={`nav-link text-[10px] xl:text-[11px] font-bold tracking-tight xl:tracking-wider whitespace-nowrap transition-all duration-300 ${activeDropdown === link ? 'text-[var(--accent)] font-black' : 'text-[var(--secondary)]'}`}>
                     {link}
                   </span>
                   {drawerData[link] && (
                     <ChevronDown
-                      size={13}
+                      size={11}
                       className={`flex-shrink-0 transition-transform duration-300 ${activeDropdown === link ? 'rotate-180 text-[var(--accent)]' : 'group-hover:rotate-180 text-[var(--secondary)]'}`}
                     />
                   )}
@@ -295,14 +295,14 @@ const Navbar = ({ onNavigate = () => {} }) => {
           </div>
 
           {/* Right Action Icons & Get Quote Button */}
-          <div className="flex items-center gap-2 sm:gap-3.5 flex-shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 xl:gap-3 flex-shrink-0">
             {/* Search */}
             <button
               onClick={() => setSearchOpen(true)}
               className="p-1.5 sm:p-2 rounded-full hover:bg-[var(--secondary)]/5 text-[var(--secondary)] transition-colors cursor-pointer"
               aria-label="Search"
             >
-              <Search size={17} className="sm:w-[19px] sm:h-[19px]" />
+              <Search size={16} className="sm:w-[18px] sm:h-[18px]" />
             </button>
 
             {/* Cart Icon with badge */}
@@ -311,7 +311,7 @@ const Navbar = ({ onNavigate = () => {} }) => {
               className="relative p-1.5 sm:p-2 rounded-full hover:bg-[var(--secondary)]/5 text-[var(--secondary)] transition-colors cursor-pointer"
               aria-label="Inquiry Cart"
             >
-              <ShoppingBag size={17} className="sm:w-[19px] sm:h-[19px]" />
+              <ShoppingBag size={16} className="sm:w-[18px] sm:h-[18px]" />
               {totalItems > 0 && (
                 <span className="absolute top-0.5 right-0.5 w-4 h-4 bg-[var(--accent)] text-white text-[9px] font-bold rounded-full flex items-center justify-center leading-none">
                   {totalItems}
@@ -322,7 +322,7 @@ const Navbar = ({ onNavigate = () => {} }) => {
             {/* GET QUOTE CTA Button */}
             <button
               onClick={() => onNavigate('inquiry')}
-              className="hidden sm:flex items-center px-4 py-2 sm:px-5 sm:py-2.5 bg-[var(--accent)] text-white font-bold text-[10px] sm:text-xs uppercase tracking-widest rounded-[3px] hover:opacity-90 transition-all shadow-md flex-shrink-0 cursor-pointer whitespace-nowrap"
+              className="hidden sm:inline-flex items-center px-3 py-1.5 xl:px-4 xl:py-2 bg-[var(--accent)] text-white font-bold text-[10px] xl:text-[11px] uppercase tracking-wider rounded-[3px] hover:opacity-90 transition-all shadow-sm flex-shrink-0 cursor-pointer whitespace-nowrap"
             >
               GET QUOTE
             </button>
@@ -340,10 +340,10 @@ const Navbar = ({ onNavigate = () => {} }) => {
         </div>
       </nav>
 
-      {/* ── 3. DIRECT SPORTS & CATEGORIES BAR (With Prominent REGISTER CLUB Navlink) ── */}
+      {/* ── 3. DIRECT SPORTS & CATEGORIES BAR ── */}
       <div className="w-full bg-white border-b border-[var(--secondary)]/15 shadow-xs z-[80] sticky top-16 md:top-20">
-        <div className="w-[96%] max-w-[1800px] mx-auto flex items-center justify-between gap-1 sm:gap-2 py-2 overflow-x-auto lg:overflow-x-visible no-scrollbar whitespace-nowrap">
-          <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar">
+        <div className="w-[96%] max-w-[1800px] mx-auto flex items-center justify-between gap-1 sm:gap-2 py-2 overflow-x-auto no-scrollbar whitespace-nowrap">
+          <div className="flex items-center justify-between w-full gap-1 sm:gap-2 overflow-x-auto no-scrollbar">
             {directSports.map((sport) => (
               <button
                 key={sport.name}
@@ -359,15 +359,6 @@ const Navbar = ({ onNavigate = () => {} }) => {
               </button>
             ))}
           </div>
-
-          {/* Prominent REGISTER CLUB Navlink in Center Categories Bar */}
-          <button
-            onClick={() => onNavigate('register-club')}
-            className="ml-2 inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#1E1B6E] hover:bg-[var(--accent)] text-white text-[9px] sm:text-[10px] xl:text-[11px] font-black uppercase tracking-wider rounded-[3px] shadow transition-all duration-300 flex-shrink-0 cursor-pointer"
-          >
-            <Trophy size={13} className="text-amber-400 flex-shrink-0" />
-            <span className="whitespace-nowrap">REGISTER CLUB</span>
-          </button>
         </div>
       </div>
 
