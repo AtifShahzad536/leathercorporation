@@ -634,6 +634,7 @@ router.post('/send-batch', protect, async (req, res) => {
       data: result,
     });
   } catch (error) {
+    console.error('[SEND BATCH ERROR]:', error.message);
     res.status(500).json({ success: false, message: error.message });
   }
 });

@@ -560,7 +560,13 @@ const sendDailyEmails = async (options = {}) => {
 
     // 5. Partition and send emails in parallel chunks of 4 concurrent sends
     const CHUNK_SIZE = 4;
+    const deadline = Date.now() + 8500; // 8.5 seconds max safety for Vercel
+
     for (let offset = 0; offset < pendingEmails.length; offset += CHUNK_SIZE) {
+      if (Date.now() >= deadline) {
+        addLiveLog(`⏱️ Vercel execution window safeguard triggered. Successfully concluded batch cycle with ${hostingerSent + gmailSent} leads dispatched.`, 'info');
+        break;
+      }
       const chunk = pendingEmails.slice(offset, offset + CHUNK_SIZE);
       await Promise.all(chunk.map(async (entry, chunkIdx) => {
         const i = offset + chunkIdx;

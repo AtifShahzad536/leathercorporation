@@ -30,6 +30,88 @@ const SENDER_ACCOUNTS = {
   }
 };
 
+// Short-lived in-memory token cache for Google OAuth2 (1 hour lifetime)
+let cachedGmailToken = {
+  token: null,
+  expiresAt: 0,
+};
+
+/**
+ * Exchanges a Google OAuth refresh token for a fresh short-lived access token
+ */
+const getGmailAccessToken = async (clientId, clientSecret, refreshToken) => {
+  if (cachedGmailToken.token && Date.now() < cachedGmailToken.expiresAt - 60000) {
+    return cachedGmailToken.token;
+  }
+
+  const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      client_id: clientId,
+      client_secret: clientSecret,
+      refresh_token: refreshToken,
+      grant_type: 'refresh_token',
+    }).toString(),
+    signal: AbortSignal.timeout(5000),
+  });
+
+  const tokenData = await tokenRes.json();
+  if (!tokenData.access_token) {
+    throw new Error(tokenData.error_description || tokenData.error || 'Failed to refresh Google OAuth token');
+  }
+
+  cachedGmailToken = {
+    token: tokenData.access_token,
+    expiresAt: Date.now() + ((tokenData.expires_in || 3600) * 1000),
+  };
+
+  return cachedGmailToken.token;
+};
+
+/**
+ * Sends an email directly via the official Google Gmail REST API (HTTPS port 443).
+ * Extremely fast (~200ms) and immune to SMTP port blocks or XOAUTH2 scope restrictions.
+ */
+const sendViaGmailRestApi = async ({ user, clientId, clientSecret, refreshToken, to, subject, html, text, from, replyTo }) => {
+  const accessToken = await getGmailAccessToken(clientId, clientSecret, refreshToken);
+
+  const utf8Subject = `=?utf-8?B?${Buffer.from(subject).toString('base64')}?=`;
+  const messageParts = [
+    `From: ${from || `"HAMLO SPORTS" <${user}>`}`,
+    `To: ${to}`,
+    replyTo ? `Reply-To: ${replyTo}` : '',
+    `Subject: ${utf8Subject}`,
+    'MIME-Version: 1.0',
+    'Content-Type: text/html; charset=utf-8',
+    '',
+    html || text || '',
+  ].filter(Boolean).join('\r\n');
+
+  const rawBase64Url = Buffer.from(messageParts)
+    .toString('base64')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '');
+
+  const sendRes = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ raw: rawBase64Url }),
+    signal: AbortSignal.timeout(6000),
+  });
+
+  const sendResult = await sendRes.json();
+  if (!sendRes.ok || sendResult.error) {
+    throw new Error(sendResult.error?.message || 'Google Gmail API send error');
+  }
+
+  return { messageId: sendResult.id, response: '250 OK' };
+};
+
 /**
  * Retrieves the effective configuration for a channel, preferring dynamic database settings in SiteSetting
  * @param {'hostinger'|'gmail'} channel 
@@ -71,23 +153,37 @@ const getChannelConfig = async (channel = 'hostinger') => {
 };
 
 /**
- * Builds a nodemailer transporter instance from a resolved config object
- * Supports both standard SMTP (User/Pass) and Google OAuth2 (RefreshToken)
+ * Builds a unified transporter instance from a resolved config object.
+ * - For Gmail with OAuth2: uses high-speed HTTPS REST API (~200ms, zero port blockage).
+ * - For Hostinger or SMTP: uses Nodemailer with aggressive 5s fast-fail timeouts.
  */
 const createTransporterFromConfig = (config) => {
   if (config.authType === 'oauth2' && config.refreshToken) {
-    return nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        type: 'OAuth2',
-        user: config.user,
-        clientId: config.clientId || process.env.GOOGLE_CLIENT_ID,
-        clientSecret: config.clientSecret || process.env.GOOGLE_CLIENT_SECRET,
-        refreshToken: config.refreshToken,
-        accessToken: config.accessToken,
+    const clientId = config.clientId || process.env.GOOGLE_CLIENT_ID;
+    const clientSecret = config.clientSecret || process.env.GOOGLE_CLIENT_SECRET;
+    const refreshToken = config.refreshToken;
+    const user = config.user;
+
+    return {
+      sendMail: async ({ from, to, subject, html, text, replyTo }) => {
+        return sendViaGmailRestApi({
+          user,
+          clientId,
+          clientSecret,
+          refreshToken,
+          to,
+          subject,
+          html,
+          text,
+          from: from || config.from,
+          replyTo: replyTo || config.replyTo,
+        });
       },
-      connectionTimeout: 12000,
-    });
+      verify: async () => {
+        await getGmailAccessToken(clientId, clientSecret, refreshToken);
+        return true;
+      },
+    };
   }
 
   return nodemailer.createTransport({
@@ -98,8 +194,8 @@ const createTransporterFromConfig = (config) => {
       user: config.user,
       pass: config.pass,
     },
-    connectionTimeout: 12000,
-    greetingTimeout: 10000,
+    connectionTimeout: 5000,
+    greetingTimeout: 4000,
   });
 };
 
@@ -169,3 +265,4 @@ module.exports.getChannelConfig = getChannelConfig;
 module.exports.getDynamicTransporter = getDynamicTransporter;
 module.exports.getActiveChannels = getActiveChannels;
 module.exports.SENDER_ACCOUNTS = SENDER_ACCOUNTS;
+module.exports.sendViaGmailRestApi = sendViaGmailRestApi;
