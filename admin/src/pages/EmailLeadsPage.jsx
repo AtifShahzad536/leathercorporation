@@ -3,7 +3,7 @@ import api from '../api/client';
 import { 
   Upload, FileSpreadsheet, Mail, CheckCircle, Clock, AlertTriangle, 
   Trash2, Play, Pause, RefreshCw, FileText, Send, Sparkles, ChevronRight,
-  Zap, Loader2, Check, X, ShieldCheck, Link2, Globe, Key, Lock, ExternalLink, Terminal
+  Zap, Loader2, Check, X, ShieldCheck, Link2, Globe, Key, Lock, ExternalLink, Terminal, RotateCcw
 } from 'lucide-react';
 
 export default function EmailLeadsPage() {
@@ -293,27 +293,46 @@ export default function EmailLeadsPage() {
   };
 
   const handleFileUpload = async (e) => {
-    e.preventDefault();
-    if (!selectedFile) return;
+    if (e && e.preventDefault) e.preventDefault();
+    if (!selectedFile) {
+      alert('Please choose an Excel (.xlsx, .xls) or CSV file first.');
+      return;
+    }
 
     setUploading(true);
     setUploadMessage(null);
+    console.log('[UPLOAD] Starting upload of:', selectedFile.name, selectedFile.size, 'bytes');
+
     const formData = new FormData();
     formData.append('file', selectedFile);
 
     try {
       const res = await api.post('/email/lists/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+        headers: { 'Content-Type': undefined } // Let browser boundary calculate automatically
       });
+      console.log('[UPLOAD] Success response:', res.data);
       if (res.data.success) {
         setUploadMessage({ type: 'success', text: res.data.message });
         setSelectedFile(null);
         fetchData();
       }
     } catch (err) {
-      setUploadMessage({ type: 'error', text: err.response?.data?.message || 'Upload failed' });
+      console.error('[UPLOAD] Error:', err);
+      const errMsg = err.response?.data?.message || err.message || 'Upload failed';
+      setUploadMessage({ type: 'error', text: errMsg });
     } finally {
       setUploading(false);
+    }
+  };
+
+  const handleResetStats = async () => {
+    if (!window.confirm('Reset all sent email history and counters back to 0?')) return;
+    try {
+      const res = await api.post('/email/stats/reset');
+      setBatchResult({ type: 'success', text: res.data.message });
+      fetchData();
+    } catch (err) {
+      setBatchResult({ type: 'error', text: err.response?.data?.message || err.message });
     }
   };
 
@@ -496,6 +515,15 @@ export default function EmailLeadsPage() {
           >
             <Sparkles size={14} />
             <span>+ New Template</span>
+          </button>
+
+          <button
+            onClick={handleResetStats}
+            title="Reset Sent Stats & Delivery History back to 0"
+            className="px-3 py-2 bg-white hover:bg-rose-50 border border-slate-200 hover:border-rose-300 text-slate-700 hover:text-rose-600 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-xs cursor-pointer transition"
+          >
+            <RotateCcw size={14} className="text-rose-500" />
+            <span>Reset Sent (0)</span>
           </button>
 
           <button
@@ -847,39 +875,93 @@ export default function EmailLeadsPage() {
         </p>
 
         {uploadMessage && (
-          <div className={`mb-6 p-4 rounded-lg text-xs font-semibold flex items-center gap-2 ${uploadMessage.type === 'success' ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
-            {uploadMessage.type === 'success' ? <CheckCircle size={16} /> : <AlertTriangle size={16} />}
-            <span>{uploadMessage.text}</span>
+          <div className={`mb-6 p-4 rounded-xl text-xs font-semibold flex items-center justify-between gap-3 shadow-xs ${uploadMessage.type === 'success' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
+            <div className="flex items-center gap-2">
+              {uploadMessage.type === 'success' ? <CheckCircle size={16} /> : <AlertTriangle size={16} />}
+              <span>{uploadMessage.text}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setUploadMessage(null)}
+              className="text-slate-400 hover:text-slate-700 cursor-pointer p-1"
+            >
+              <X size={14} />
+            </button>
           </div>
         )}
 
-        <form onSubmit={handleFileUpload} className="flex flex-col sm:flex-row items-center gap-4">
-          <label className="flex-1 w-full flex items-center justify-center px-6 py-6 border-2 border-dashed border-slate-300 hover:border-[#F26522] rounded-xl cursor-pointer bg-slate-50/50 hover:bg-slate-50 transition group">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+          <label className={`flex-1 w-full flex items-center justify-center px-6 py-6 border-2 border-dashed rounded-xl cursor-pointer transition group ${
+            selectedFile ? 'border-emerald-500 bg-emerald-50/40' : 'border-slate-300 hover:border-[#F26522] bg-slate-50/50 hover:bg-slate-50'
+          }`}>
             <div className="text-center">
-              <Upload size={24} className="mx-auto text-slate-400 group-hover:text-[#F26522] mb-1" />
-              <span className="text-xs font-bold text-slate-700 block">
-                {selectedFile ? selectedFile.name : 'Choose Excel / CSV file from computer'}
-              </span>
-              <span className="text-[10px] text-slate-400 block mt-0.5">
-                Supports .xlsx, .xls, .csv up to 10MB
-              </span>
+              {selectedFile ? (
+                <>
+                  <CheckCircle size={26} className="mx-auto text-emerald-600 mb-1" />
+                  <span className="text-xs font-black text-emerald-900 block">
+                    {selectedFile.name}
+                  </span>
+                  <span className="text-[10px] text-emerald-600 block mt-0.5">
+                    Ready to ingest • {(selectedFile.size / 1024).toFixed(1)} KB
+                  </span>
+                </>
+              ) : (
+                <>
+                  <Upload size={24} className="mx-auto text-slate-400 group-hover:text-[#F26522] mb-1" />
+                  <span className="text-xs font-bold text-slate-700 block">
+                    Choose Excel / CSV file from computer
+                  </span>
+                  <span className="text-[10px] text-slate-400 block mt-0.5">
+                    Supports .xlsx, .xls, .csv up to 15MB
+                  </span>
+                </>
+              )}
             </div>
             <input
               type="file"
               accept=".xlsx,.xls,.csv"
-              onChange={(e) => setSelectedFile(e.target.files[0])}
+              onClick={(e) => { e.target.value = null; }}
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  setSelectedFile(e.target.files[0]);
+                  setUploadMessage(null);
+                }
+              }}
               className="hidden"
             />
           </label>
 
-          <button
-            type="submit"
-            disabled={!selectedFile || uploading}
-            className="w-full sm:w-auto px-8 py-5 bg-[#F26522] hover:bg-[#d95316] text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-md transition disabled:opacity-50 cursor-pointer flex-shrink-0"
-          >
-            {uploading ? 'Processing File...' : 'Ingest Leads'}
-          </button>
-        </form>
+          <div className="flex flex-col gap-2 flex-shrink-0">
+            <button
+              type="button"
+              onClick={handleFileUpload}
+              disabled={!selectedFile || uploading}
+              className="w-full sm:w-auto px-8 py-5 bg-[#F26522] hover:bg-[#d95316] text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-md transition disabled:opacity-50 cursor-pointer flex items-center justify-center gap-2"
+            >
+              {uploading ? (
+                <>
+                  <Loader2 size={16} className="animate-spin" />
+                  <span>Processing File...</span>
+                </>
+              ) : (
+                <>
+                  <Upload size={16} />
+                  <span>Ingest Leads</span>
+                </>
+              )}
+            </button>
+
+            {selectedFile && !uploading && (
+              <button
+                type="button"
+                onClick={() => setSelectedFile(null)}
+                className="text-[11px] font-bold text-rose-600 hover:text-rose-700 hover:underline text-center cursor-pointer"
+              >
+                ✕ Remove & choose another
+              </button>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* ── UPLOADED LISTS TABLE ── */}

@@ -14,25 +14,9 @@ const { protect } = require('../middleware/auth');
 
 const router = express.Router();
 
-const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.NOW_REGION);
-
-const emailStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const targetDir = isServerless ? os.tmpdir() : path.join(__dirname, '../../uploads');
-    if (!fs.existsSync(targetDir)) {
-      try { fs.mkdirSync(targetDir, { recursive: true }); } catch (e) {}
-    }
-    cb(null, targetDir);
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname) || '';
-    cb(null, `email-${Date.now()}${ext}`);
-  }
-});
-
 const upload = multer({
-  storage: emailStorage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 15 * 1024 * 1024 }, // 15MB
   fileFilter: (req, file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase();
     if (['.xlsx', '.xls', '.csv'].includes(ext)) return cb(null, true);
@@ -74,20 +58,29 @@ router.get('/lists/:id', protect, async (req, res) => {
   }
 });
 
-// POST /api/email/lists/upload - Upload Excel file
-router.post('/lists/upload', protect, upload.single('file'), async (req, res) => {
+// POST /api/email/lists/upload - Upload Excel or CSV file
+router.post('/lists/upload', protect, (req, res, next) => {
+  upload.single('file')(req, res, (err) => {
+    if (err) {
+      console.error('[MULTER UPLOAD ERROR]:', err.message);
+      return res.status(400).json({ success: false, message: `Upload error: ${err.message}` });
+    }
+    next();
+  });
+}, async (req, res) => {
   try {
     if (!req.file) {
-      return res.status(400).json({ success: false, message: 'No file uploaded' });
+      return res.status(400).json({ success: false, message: 'No file received by server. Please select a valid Excel (.xlsx, .xls) or CSV file.' });
     }
 
-    const emails = parseExcelFile(req.file.path);
-    if (fs.existsSync(req.file.path)) {
-      fs.unlinkSync(req.file.path);
-    }
+    const fileData = req.file.buffer || req.file.path;
+    const emails = parseExcelFile(fileData);
 
     if (emails.length === 0) {
-      return res.status(400).json({ success: false, message: 'No valid emails found in file. Ensure file contains an "email" column.' });
+      return res.status(400).json({ 
+        success: false, 
+        message: 'No valid email addresses found in file. Ensure the file has an "email", "name", or "company" column header.' 
+      });
     }
 
     const list = await EmailList.create({
@@ -99,7 +92,7 @@ router.post('/lists/upload', protect, upload.single('file'), async (req, res) =>
 
     res.status(201).json({
       success: true,
-      message: `Successfully extracted and uploaded ${emails.length} leads from ${req.file.originalname}`,
+      message: `🎉 Successfully ingested ${emails.length} leads from ${req.file.originalname}!`,
       data: {
         id: list._id,
         fileName: list.fileName,
@@ -109,9 +102,7 @@ router.post('/lists/upload', protect, upload.single('file'), async (req, res) =>
       },
     });
   } catch (error) {
-    if (req.file && fs.existsSync(req.file.path)) {
-      fs.unlinkSync(req.file.path);
-    }
+    console.error('[UPLOAD ERROR]:', error.message);
     res.status(500).json({ success: false, message: error.message });
   }
 });
@@ -295,6 +286,16 @@ router.post('/clear-live-logs', protect, (req, res) => {
   try {
     clearLiveExecutionLogs();
     res.json({ success: true, message: 'Live engine console logs cleared.' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// POST /api/email/stats/reset - Reset sent counters and email delivery logs
+router.post('/stats/reset', protect, async (req, res) => {
+  try {
+    await EmailLog.deleteMany({});
+    res.json({ success: true, message: 'All sent logs cleared and counters reset to 0.' });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
