@@ -266,3 +266,4 @@ module.exports.getDynamicTransporter = getDynamicTransporter;
 module.exports.getActiveChannels = getActiveChannels;
 module.exports.SENDER_ACCOUNTS = SENDER_ACCOUNTS;
 module.exports.sendViaGmailRestApi = sendViaGmailRestApi;
+module.exports.getGmailAccessToken = getGmailAccessToken;

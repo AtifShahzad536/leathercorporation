@@ -8,11 +8,30 @@ const EmailTemplate = require('../models/EmailTemplate');
 const EmailLog = require('../models/EmailLog');
 const parseExcelFile = require('../utils/parseExcel');
 const SiteSetting = require('../models/SiteSetting');
-const { createTransporter, createTransporterFromConfig, getChannelConfig, SENDER_ACCOUNTS, getActiveChannels } = require('../config/email');
+const { createTransporter, createTransporterFromConfig, getChannelConfig, SENDER_ACCOUNTS, getActiveChannels, getGmailAccessToken } = require('../config/email');
 const { sendDailyEmails, ensureDefaultTemplates, getLiveExecutionState, clearLiveExecutionLogs } = require('../cron/emailCron');
 const { protect } = require('../middleware/auth');
 
 const router = express.Router();
+
+// GET /api/email/test-diag - Diagnostic endpoint to test Gmail REST API token on live Vercel
+router.get('/test-diag', async (req, res) => {
+  const steps = [];
+  const t0 = Date.now();
+  try {
+    steps.push('1. Diagnostic start');
+    const gmailConfig = await getChannelConfig('gmail');
+    steps.push(`2. Gmail config: authType=${gmailConfig.authType}, hasRefresh=${!!gmailConfig.refreshToken}, hasClientId=${!!gmailConfig.clientId}, hasSecret=${!!gmailConfig.clientSecret}`);
+    
+    const token = await getGmailAccessToken(gmailConfig.clientId, gmailConfig.clientSecret, gmailConfig.refreshToken);
+    steps.push(`3. Gmail token acquired in ${Date.now() - t0}ms: ${token.slice(0, 15)}...`);
+    
+    res.json({ success: true, durationMs: Date.now() - t0, steps });
+  } catch (err) {
+    steps.push(`FAILED: ${err.message}`);
+    res.status(500).json({ success: false, durationMs: Date.now() - t0, steps, error: err.message });
+  }
+});
 
 const upload = multer({
   storage: multer.memoryStorage(),
