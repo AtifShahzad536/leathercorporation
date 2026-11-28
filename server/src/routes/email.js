@@ -545,11 +545,19 @@ router.get('/oauth/google/callback', async (req, res) => {
       { upsert: true }
     );
 
-    const adminUrl = (process.env.ADMIN_URL || 'https://leathercorporation-oi7z.vercel.app').replace(/\/+$/, '');
+    let adminUrl = process.env.ADMIN_URL;
+    if (!adminUrl || (adminUrl.includes('localhost') && (process.env.VERCEL || req.headers.host?.includes('vercel.app')))) {
+      adminUrl = 'https://leathercorporation-oi7z.vercel.app';
+    }
+    adminUrl = (adminUrl || 'https://leathercorporation-oi7z.vercel.app').replace(/\/+$/, '');
     res.redirect(`${adminUrl}/?page=leads&oauth=success&channel=gmail`);
   } catch (error) {
     console.error('[GOOGLE OAUTH CALLBACK ERROR]:', error.message);
-    const adminUrl = (process.env.ADMIN_URL || 'https://leathercorporation-oi7z.vercel.app').replace(/\/+$/, '');
+    let adminUrl = process.env.ADMIN_URL;
+    if (!adminUrl || (adminUrl.includes('localhost') && (process.env.VERCEL || req.headers.host?.includes('vercel.app')))) {
+      adminUrl = 'https://leathercorporation-oi7z.vercel.app';
+    }
+    adminUrl = (adminUrl || 'https://leathercorporation-oi7z.vercel.app').replace(/\/+$/, '');
     res.redirect(`${adminUrl}/?page=leads&oauth=error&message=${encodeURIComponent(error.message)}`);
   }
 });
