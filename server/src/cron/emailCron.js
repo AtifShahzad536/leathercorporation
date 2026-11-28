@@ -432,25 +432,91 @@ const ensureDefaultTemplates = async () => {
   }
 };
 
+// ── LIVE REAL-TIME EXECUTION CONSOLE BUFFER ──
+let liveExecutionState = {
+  isRunning: false,
+  startTime: null,
+  completedTime: null,
+  total: 0,
+  processed: 0,
+  sent: 0,
+  failed: 0,
+  currentLead: null,
+  logs: [
+    {
+      id: 'init-1',
+      time: new Date().toLocaleTimeString('en-US', { hour12: false }),
+      message: 'Dual Dispatch Engine standby. Sched: 9:00 AM EST (14:00 UTC) • 12 Hostinger + 12 Gmail = 24 Leads/Day.',
+      level: 'info',
+    }
+  ],
+};
+
+const addLiveLog = (message, level = 'info', meta = {}) => {
+  const entry = {
+    id: Date.now() + '-' + Math.random().toString(36).substr(2, 6),
+    time: new Date().toLocaleTimeString('en-US', { hour12: false }),
+    message,
+    level, // 'info', 'hostinger', 'gmail', 'success', 'warn', 'error'
+    ...meta,
+  };
+  liveExecutionState.logs.push(entry);
+  if (liveExecutionState.logs.length > 250) {
+    liveExecutionState.logs.shift();
+  }
+  return entry;
+};
+
+const getLiveExecutionState = () => ({ ...liveExecutionState });
+
+const clearLiveExecutionLogs = () => {
+  liveExecutionState.logs = [
+    {
+      id: 'cleared-' + Date.now(),
+      time: new Date().toLocaleTimeString('en-US', { hour12: false }),
+      message: 'Console logs cleared. Ready for next engine dispatch session.',
+      level: 'info',
+    }
+  ];
+  return true;
+};
+
 const sendDailyEmails = async () => {
-  console.log(`[EMAIL CRON] 🚀 Starting dual email marketing batch (Target: ${HOSTINGER_QUOTA} Hostinger + ${GMAIL_QUOTA} Gmail = ${TOTAL_DAILY_BATCH} leads)...`);
+  const sessionStart = new Date();
+  liveExecutionState.isRunning = true;
+  liveExecutionState.startTime = sessionStart.toISOString();
+  liveExecutionState.completedTime = null;
+  liveExecutionState.processed = 0;
+  liveExecutionState.sent = 0;
+  liveExecutionState.failed = 0;
+
+  addLiveLog(`🚀 [DUAL-ENGINE] Initialized automated dispatch run at ${sessionStart.toLocaleTimeString('en-US')}`, 'info');
+  addLiveLog(`Target Quota: ${HOSTINGER_QUOTA} Hostinger + ${GMAIL_QUOTA} Gmail = ${TOTAL_DAILY_BATCH} leads`, 'info');
 
   try {
     // 1. Find the first active list that has pending emails
+    addLiveLog('🔍 Scanning MongoDB for active lead batches with pending contacts...', 'info');
     const activeList = await EmailList.findOne({ status: 'active', pendingCount: { $gt: 0 } });
 
     if (!activeList) {
-      console.log('[EMAIL CRON] ⚠️ ALL LISTS COMPLETED OR NONE ACTIVE — SYSTEM STATUS: "NEEDS LEADS LIST"!');
+      addLiveLog('⚠️ No active lead batches with pending leads found! Status: NEEDS LEADS LIST', 'warn');
+      liveExecutionState.isRunning = false;
       return { success: false, message: 'All email lists completed or none active. Please upload a new leads list.' };
     }
+
+    addLiveLog(`📁 Active Lead Batch Selected: "${activeList.fileName}" (${activeList.pendingCount} pending leads in list)`, 'info');
 
     // 2. Ensure active templates exist (at least 10)
     await ensureDefaultTemplates();
     let templates = await EmailTemplate.find({ isActive: true });
 
     if (templates.length === 0) {
+      addLiveLog('❌ No active email templates found in database!', 'error');
+      liveExecutionState.isRunning = false;
       return { success: false, message: 'No active email templates found.' };
     }
+
+    addLiveLog(`✨ Active Templates Synced: ${templates.length} alternating pro templates loaded`, 'info');
 
     // 3. Pick next TOTAL_DAILY_BATCH pending emails (up to 24 leads)
     const pendingEmails = activeList.emails
@@ -460,13 +526,16 @@ const sendDailyEmails = async () => {
     if (pendingEmails.length === 0) {
       activeList.recalcCounts();
       await activeList.save();
-      console.log(`[EMAIL CRON] List "${activeList.fileName}" has no pending emails.`);
+      addLiveLog(`⚠️ List "${activeList.fileName}" has 0 pending emails to send.`, 'warn');
+      liveExecutionState.isRunning = false;
       return { success: false, message: `List "${activeList.fileName}" has no pending leads.` };
     }
 
-    console.log(`[EMAIL CRON] Processing dual batch of ${pendingEmails.length} leads from "${activeList.fileName}"...`);
+    liveExecutionState.total = pendingEmails.length;
+    addLiveLog(`⚡ Queued ${pendingEmails.length} leads for current dispatch cycle`, 'info');
 
     // 4. Create Nodemailer transporters from dynamic DB / env settings
+    addLiveLog('🔌 Verifying SMTP / OAuth channels...', 'info');
     const { transporter: hostingerTransporter, config: hostingerConfig } = await getDynamicTransporter('hostinger');
     const { transporter: gmailTransporter, config: gmailConfig } = await getDynamicTransporter('gmail');
 
@@ -474,30 +543,30 @@ const sendDailyEmails = async () => {
     const gmailReady = Boolean(gmailConfig.pass || gmailConfig.refreshToken);
 
     if (!hostingerReady && !gmailReady) {
-      console.log('[EMAIL CRON] ❌ Neither Hostinger nor Gmail is connected!');
+      addLiveLog('❌ Connection Failure: Neither Hostinger nor Gmail is connected!', 'error');
+      liveExecutionState.isRunning = false;
       return { success: false, message: 'No email channels connected. Please connect Hostinger or Gmail in Admin Panel.' };
     }
+
+    addLiveLog(`  • Channel 1 [HOSTINGER]: ${hostingerConfig.user} (${hostingerReady ? 'CONNECTED ✓' : 'OFFLINE'})`, hostingerReady ? 'hostinger' : 'warn');
+    addLiveLog(`  • Channel 2 [GMAIL]: ${gmailConfig.user} (${gmailReady ? 'CONNECTED ✓' : 'OFFLINE'})`, gmailReady ? 'gmail' : 'warn');
 
     let hostingerSent = 0;
     let hostingerFailed = 0;
     let gmailSent = 0;
     let gmailFailed = 0;
 
-    console.log(`[EMAIL CRON] Channel Status: Hostinger=${hostingerReady ? 'READY' : 'OFF'}, Gmail=${gmailReady ? 'READY' : 'OFF'}`);
-
     // 5. Partition and send each email, rotating templates
     for (let i = 0; i < pendingEmails.length; i++) {
       const entry = pendingEmails[i];
+      liveExecutionState.currentLead = entry.email;
       
       // Smart Channel Selection:
-      // If both ready: first 12 to Hostinger, rest to Gmail.
-      // If only Hostinger ready: all 24 via Hostinger (fallback).
-      // If only Gmail ready: all 24 via Gmail.
       let channel = 'hostinger';
       if (hostingerReady && gmailReady) {
         channel = i < HOSTINGER_QUOTA ? 'hostinger' : 'gmail';
       } else if (hostingerReady && !gmailReady) {
-        channel = 'hostinger'; // Fallback so daily batch never stops
+        channel = 'hostinger'; // Fallback
       } else if (!hostingerReady && gmailReady) {
         channel = 'gmail';
       }
@@ -505,11 +574,12 @@ const sendDailyEmails = async () => {
       const senderConfig = channel === 'hostinger' ? hostingerConfig : gmailConfig;
       const transporter = channel === 'hostinger' ? hostingerTransporter : gmailTransporter;
 
-      // Rotate templates so every lead across both channels receives a different template
+      // Rotate templates
       const template = templates[i % templates.length];
 
-      try {
+      addLiveLog(`[${i + 1}/${pendingEmails.length}] [${channel.toUpperCase()}] Preparing: ${entry.email} (Template: "${template.name}")`, channel);
 
+      try {
         let html = template.htmlBody
           .replace(/{{name}}/gi, entry.name || 'Team Director')
           .replace(/{{email}}/gi, entry.email)
@@ -558,7 +628,10 @@ const sendDailyEmails = async () => {
           gmailSent++;
         }
 
-        console.log(`  ✅ [${i + 1}/${pendingEmails.length}] [${channel.toUpperCase()}] Sent to: ${entry.email} (Template: ${template.name})`);
+        liveExecutionState.processed = i + 1;
+        liveExecutionState.sent = hostingerSent + gmailSent;
+
+        addLiveLog(`  ✅ [${channel.toUpperCase()}] DELIVERED to ${entry.email} via ${senderConfig.user} (250 OK)`, 'success', { lead: entry.email, channel });
       } catch (sendError) {
         if (channel === 'hostinger') {
           hostingerFailed++;
@@ -586,7 +659,10 @@ const sendDailyEmails = async () => {
           listId: activeList._id,
         });
 
-        console.log(`  ❌ [${i + 1}/${pendingEmails.length}] [${channel.toUpperCase()}] Failed: ${entry.email} - ${sendError.message}`);
+        liveExecutionState.processed = i + 1;
+        liveExecutionState.failed = hostingerFailed + gmailFailed;
+
+        addLiveLog(`  ❌ [${channel.toUpperCase()}] FAILED for ${entry.email}: ${sendError.message}`, 'error', { lead: entry.email, channel, error: sendError.message });
       }
     }
 
@@ -597,19 +673,21 @@ const sendDailyEmails = async () => {
     const totalSent = hostingerSent + gmailSent;
     const totalFailed = hostingerFailed + gmailFailed;
 
-    console.log(`[EMAIL CRON] Batch complete! Status for "${activeList.fileName}": ${activeList.sentCount}/${activeList.totalEmails} total sent.`);
-    console.log(`  - Hostinger (${SENDER_ACCOUNTS.hostinger.user}): ${hostingerSent} sent, ${hostingerFailed} failed`);
-    console.log(`  - Gmail (${SENDER_ACCOUNTS.gmail.user}): ${gmailSent} sent, ${gmailFailed} failed`);
+    addLiveLog(`🏁 [DUAL-ENGINE] Batch Cycle Complete!`, 'info');
+    addLiveLog(`  📊 Summary: ${totalSent} Sent, ${totalFailed} Failed (Hostinger: ${hostingerSent}, Gmail: ${gmailSent})`, totalSent > 0 ? 'success' : 'warn');
+    addLiveLog(`  📈 List "${activeList.fileName}" Progress: ${activeList.sentCount}/${activeList.totalEmails} total leads completed`, 'info');
 
     // 7. Check if list is completed and if any other active list exists
     if (activeList.status === 'completed') {
       const nextActive = await EmailList.findOne({ status: 'active', pendingCount: { $gt: 0 } });
       if (!nextActive) {
-        console.log('═══════════════════════════════════════════════════════');
-        console.log('🚨 ALERT: ALL LEADS LISTS COMPLETED! PLEASE UPLOAD NEW LEADS LIST!');
-        console.log('═══════════════════════════════════════════════════════');
+        addLiveLog('🚨 ALERT: ALL LEADS IN BATCH COMPLETED! Please upload new leads Excel file.', 'warn');
       }
     }
+
+    liveExecutionState.isRunning = false;
+    liveExecutionState.completedTime = new Date().toISOString();
+    liveExecutionState.currentLead = null;
 
     return {
       success: totalSent > 0,
@@ -620,18 +698,20 @@ const sendDailyEmails = async () => {
         sent: hostingerSent,
         failed: hostingerFailed,
         quota: HOSTINGER_QUOTA,
-        email: SENDER_ACCOUNTS.hostinger.user,
+        email: hostingerConfig.user,
       },
       gmail: {
         sent: gmailSent,
         failed: gmailFailed,
         quota: GMAIL_QUOTA,
-        email: SENDER_ACCOUNTS.gmail.user,
+        email: gmailConfig.user,
       },
       listName: activeList.fileName,
-      message: `Dual batch processed: ${hostingerSent}/${HOSTINGER_QUOTA} sent via Hostinger (${SENDER_ACCOUNTS.hostinger.user}), ${gmailSent}/${GMAIL_QUOTA} sent via Gmail (${SENDER_ACCOUNTS.gmail.user}). Total: ${totalSent} sent, ${totalFailed} failed.`,
+      message: `Dual batch processed: ${hostingerSent} sent via Hostinger (${hostingerConfig.user}), ${gmailSent} sent via Gmail (${gmailConfig.user}). Total: ${totalSent} sent, ${totalFailed} failed.`,
     };
   } catch (error) {
+    liveExecutionState.isRunning = false;
+    addLiveLog(`💥 Fatal Batch Execution Error: ${error.message}`, 'error');
     console.error('[EMAIL CRON] Fatal batch error:', error.message);
     return { success: false, message: error.message };
   }
@@ -649,6 +729,9 @@ module.exports = {
   startEmailCron, 
   sendDailyEmails, 
   ensureDefaultTemplates, 
+  getLiveExecutionState,
+  clearLiveExecutionLogs,
+  addLiveLog,
   BATCH_SIZE, 
   HOSTINGER_QUOTA, 
   GMAIL_QUOTA, 

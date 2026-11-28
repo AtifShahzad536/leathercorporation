@@ -3,7 +3,7 @@ import api from '../api/client';
 import { 
   Upload, FileSpreadsheet, Mail, CheckCircle, Clock, AlertTriangle, 
   Trash2, Play, Pause, RefreshCw, FileText, Send, Sparkles, ChevronRight,
-  Zap, Loader2, Check, X, ShieldCheck, Link2, Globe, Key, Lock, ExternalLink
+  Zap, Loader2, Check, X, ShieldCheck, Link2, Globe, Key, Lock, ExternalLink, Terminal
 } from 'lucide-react';
 
 export default function EmailLeadsPage() {
@@ -34,6 +34,20 @@ export default function EmailLeadsPage() {
   const [savingOauthConfig, setSavingOauthConfig] = useState(false);
   const [showOauthSetup, setShowOauthSetup] = useState(false);
   const [previewModalTemplate, setPreviewModalTemplate] = useState(null);
+
+  // Live Dual Engine Runtime Console State
+  const [liveEngineState, setLiveEngineState] = useState({
+    isRunning: false,
+    processed: 0,
+    total: 0,
+    sent: 0,
+    failed: 0,
+    currentLead: null,
+    logs: [],
+  });
+  const [consoleExpanded, setConsoleExpanded] = useState(true);
+  const [autoScrollLogs, setAutoScrollLogs] = useState(true);
+  const terminalScrollRef = useRef(null);
 
   const getCategoryTag = (name = '') => {
     const lower = name.toLowerCase();
@@ -149,6 +163,37 @@ export default function EmailLeadsPage() {
     }
   }, []);
 
+  const fetchLiveLogs = async () => {
+    try {
+      const res = await api.get('/email/live-logs');
+      if (res.data.success && res.data.data) {
+        setLiveEngineState(res.data.data);
+      }
+    } catch (err) {}
+  };
+
+  const handleClearTerminalLogs = async () => {
+    try {
+      await api.post('/email/clear-live-logs');
+      fetchLiveLogs();
+    } catch (err) {}
+  };
+
+  // Poll live engine logs
+  useEffect(() => {
+    fetchLiveLogs();
+    const intervalTime = (sendingBatch || liveEngineState.isRunning) ? 1000 : 3500;
+    const interval = setInterval(fetchLiveLogs, intervalTime);
+    return () => clearInterval(interval);
+  }, [sendingBatch, liveEngineState.isRunning]);
+
+  // Auto-scroll terminal logs
+  useEffect(() => {
+    if (autoScrollLogs && terminalScrollRef.current) {
+      terminalScrollRef.current.scrollTop = terminalScrollRef.current.scrollHeight;
+    }
+  }, [liveEngineState.logs, autoScrollLogs]);
+
   // ── LIVE COUNTDOWN TIMER TO 9:00 AM EST (14:00 UTC) ──
   useEffect(() => {
     const updateCountdown = () => {
@@ -194,10 +239,13 @@ export default function EmailLeadsPage() {
   const handleSendBatchNow = async () => {
     setSendingBatch(true);
     setBatchResult(null);
+    setConsoleExpanded(true);
+    fetchLiveLogs();
     try {
       const res = await api.post('/email/send-batch');
       setBatchResult({ type: res.data.success ? 'success' : 'error', text: res.data.message });
       fetchData();
+      fetchLiveLogs();
       if (selectedListDetail?._id) {
         handleViewDetails(selectedListDetail._id);
       }
@@ -205,6 +253,7 @@ export default function EmailLeadsPage() {
       setBatchResult({ type: 'error', text: err.response?.data?.message || err.message });
     } finally {
       setSendingBatch(false);
+      fetchLiveLogs();
     }
   };
 
@@ -601,6 +650,131 @@ export default function EmailLeadsPage() {
           </div>
 
         </div>
+      </div>
+
+      {/* ── LIVE REAL-TIME DISPATCH ENGINE CONSOLE (TERMINAL) ── */}
+      <div className="bg-slate-900 rounded-2xl border border-slate-800 shadow-xl overflow-hidden transition-all">
+        {/* Terminal Header */}
+        <div className="px-4 py-3 bg-slate-950 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            {/* Mac style window controls */}
+            <div className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block border border-rose-600/50" />
+              <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block border border-amber-600/50" />
+              <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block border border-emerald-600/50" />
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Terminal size={14} className="text-[#F26522]" />
+              <span className="font-mono text-xs font-black uppercase tracking-wider text-slate-200">
+                Dual Dispatch Engine // Live Console Stream
+              </span>
+            </div>
+
+            {liveEngineState.isRunning ? (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                <span>Running • Dispatching...</span>
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-800 text-slate-400 border border-slate-700">
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-500" />
+                <span>Standby / Ready</span>
+              </span>
+            )}
+          </div>
+
+          <div className="flex items-center gap-2">
+            {/* Auto scroll toggle */}
+            <button
+              onClick={() => setAutoScrollLogs(!autoScrollLogs)}
+              className={`text-[10px] font-bold px-2.5 py-1 rounded-lg border transition cursor-pointer ${autoScrollLogs ? 'bg-slate-800 text-emerald-400 border-slate-700' : 'bg-slate-900 text-slate-500 border-slate-800'}`}
+              title="Toggle Auto Scroll to latest log"
+            >
+              Auto-Scroll: {autoScrollLogs ? 'ON' : 'OFF'}
+            </button>
+
+            {/* Clear logs */}
+            <button
+              onClick={handleClearTerminalLogs}
+              className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition cursor-pointer"
+            >
+              Clear
+            </button>
+
+            {/* Minimize / Expand */}
+            <button
+              onClick={() => setConsoleExpanded(!consoleExpanded)}
+              className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition cursor-pointer"
+            >
+              {consoleExpanded ? 'Collapse' : 'Expand'}
+            </button>
+          </div>
+        </div>
+
+        {/* Live Progress Bar if active */}
+        {liveEngineState.isRunning && (
+          <div className="bg-slate-950/80 px-4 py-2 border-b border-slate-800/80 flex items-center justify-between gap-4 text-xs font-mono">
+            <div className="flex items-center gap-2 flex-1">
+              <span className="text-slate-400 text-[10px] uppercase font-bold">Progress:</span>
+              <div className="flex-1 max-w-md bg-slate-800 rounded-full h-2 overflow-hidden border border-slate-700">
+                <div 
+                  className="bg-gradient-to-r from-[#F26522] to-emerald-400 h-full transition-all duration-300 rounded-full"
+                  style={{ width: `${Math.round(((liveEngineState.processed || 0) / (liveEngineState.total || 1)) * 100)}%` }}
+                />
+              </div>
+              <span className="text-emerald-400 font-bold text-[11px]">
+                {liveEngineState.processed || 0}/{liveEngineState.total || 24}
+              </span>
+            </div>
+            {liveEngineState.currentLead && (
+              <span className="text-[11px] text-slate-300 truncate max-w-xs">
+                Active: <span className="text-amber-400">{liveEngineState.currentLead}</span>
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* Terminal Body */}
+        {consoleExpanded && (
+          <div 
+            ref={terminalScrollRef}
+            className="p-4 max-h-72 overflow-y-auto font-mono text-[11px] leading-relaxed space-y-1 bg-slate-950/95 scroll-smooth select-text"
+          >
+            {(!liveEngineState.logs || liveEngineState.logs.length === 0) ? (
+              <div className="text-slate-500 py-3 text-center">
+                Waiting for dispatch operations... Click "Dispatch 24 Leads Now" or wait for 9:00 AM EST timer.
+              </div>
+            ) : (
+              liveEngineState.logs.map((log) => {
+                let badgeClass = 'text-slate-400';
+                if (log.level === 'hostinger') badgeClass = 'text-emerald-400 font-bold bg-emerald-950/70 border border-emerald-800/50 px-1.5 py-0.5 rounded';
+                if (log.level === 'gmail') badgeClass = 'text-blue-400 font-bold bg-blue-950/70 border border-blue-800/50 px-1.5 py-0.5 rounded';
+                if (log.level === 'success') badgeClass = 'text-emerald-300 font-bold';
+                if (log.level === 'warn') badgeClass = 'text-amber-300 font-bold';
+                if (log.level === 'error') badgeClass = 'text-rose-400 font-bold';
+                if (log.level === 'info') badgeClass = 'text-sky-300';
+
+                return (
+                  <div key={log.id} className="flex items-start gap-2 hover:bg-slate-900/60 px-1.5 py-0.5 rounded transition">
+                    <span className="text-slate-600 select-none flex-shrink-0 text-[10px] mt-0.5">
+                      [{log.time}]
+                    </span>
+                    <span className={`break-all ${badgeClass}`}>
+                      {log.message}
+                    </span>
+                  </div>
+                );
+              })
+            )}
+
+            <div className="flex items-center gap-1 text-slate-500 pt-1 text-[10px]">
+              <span className="text-emerald-500 font-bold">&gt;</span>
+              <span>dual-engine@hamlo-sports:~</span>
+              <span className="inline-block w-1.5 h-3 bg-emerald-400 animate-pulse ml-0.5" />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ── METRIC STATS CARDS ── */}

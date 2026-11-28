@@ -9,7 +9,7 @@ const EmailLog = require('../models/EmailLog');
 const parseExcelFile = require('../utils/parseExcel');
 const SiteSetting = require('../models/SiteSetting');
 const { createTransporter, createTransporterFromConfig, getChannelConfig, SENDER_ACCOUNTS, getActiveChannels } = require('../config/email');
-const { sendDailyEmails, ensureDefaultTemplates } = require('../cron/emailCron');
+const { sendDailyEmails, ensureDefaultTemplates, getLiveExecutionState, clearLiveExecutionLogs } = require('../cron/emailCron');
 const { protect } = require('../middleware/auth');
 
 const router = express.Router();
@@ -273,6 +273,28 @@ router.get('/stats', protect, async (req, res) => {
         schedule: 'Daily at 9:00 AM EST (USA Morning) • Dual Channels (24 Leads/Day)',
       },
     });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// ── LIVE ENGINE REAL-TIME LOGS CONSOLE ──
+
+// GET /api/email/live-logs - Stream or poll real-time dual engine dispatch console logs
+router.get('/live-logs', protect, (req, res) => {
+  try {
+    const state = getLiveExecutionState();
+    res.json({ success: true, data: state });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// POST /api/email/clear-live-logs - Clear console logs buffer
+router.post('/clear-live-logs', protect, (req, res) => {
+  try {
+    clearLiveExecutionLogs();
+    res.json({ success: true, message: 'Live engine console logs cleared.' });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
