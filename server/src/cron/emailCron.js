@@ -470,16 +470,38 @@ const sendDailyEmails = async () => {
     const { transporter: hostingerTransporter, config: hostingerConfig } = await getDynamicTransporter('hostinger');
     const { transporter: gmailTransporter, config: gmailConfig } = await getDynamicTransporter('gmail');
 
+    const hostingerReady = Boolean(hostingerConfig.pass);
+    const gmailReady = Boolean(gmailConfig.pass || gmailConfig.refreshToken);
+
+    if (!hostingerReady && !gmailReady) {
+      console.log('[EMAIL CRON] ❌ Neither Hostinger nor Gmail is connected!');
+      return { success: false, message: 'No email channels connected. Please connect Hostinger or Gmail in Admin Panel.' };
+    }
+
     let hostingerSent = 0;
     let hostingerFailed = 0;
     let gmailSent = 0;
     let gmailFailed = 0;
 
+    console.log(`[EMAIL CRON] Channel Status: Hostinger=${hostingerReady ? 'READY' : 'OFF'}, Gmail=${gmailReady ? 'READY' : 'OFF'}`);
+
     // 5. Partition and send each email, rotating templates
     for (let i = 0; i < pendingEmails.length; i++) {
       const entry = pendingEmails[i];
-      // Assign channel: first HOSTINGER_QUOTA (12) to Hostinger, remainder (up to 12) to Gmail
-      const channel = i < HOSTINGER_QUOTA ? 'hostinger' : 'gmail';
+      
+      // Smart Channel Selection:
+      // If both ready: first 12 to Hostinger, rest to Gmail.
+      // If only Hostinger ready: all 24 via Hostinger (fallback).
+      // If only Gmail ready: all 24 via Gmail.
+      let channel = 'hostinger';
+      if (hostingerReady && gmailReady) {
+        channel = i < HOSTINGER_QUOTA ? 'hostinger' : 'gmail';
+      } else if (hostingerReady && !gmailReady) {
+        channel = 'hostinger'; // Fallback so daily batch never stops
+      } else if (!hostingerReady && gmailReady) {
+        channel = 'gmail';
+      }
+
       const senderConfig = channel === 'hostinger' ? hostingerConfig : gmailConfig;
       const transporter = channel === 'hostinger' ? hostingerTransporter : gmailTransporter;
 
@@ -487,10 +509,6 @@ const sendDailyEmails = async () => {
       const template = templates[i % templates.length];
 
       try {
-        // Validation check for Gmail authentication
-        if (channel === 'gmail' && !senderConfig.pass && !senderConfig.refreshToken) {
-          throw new Error('Gmail account not connected yet. Please connect via Google or enter App Password in Mail Connectors.');
-        }
 
         let html = template.htmlBody
           .replace(/{{name}}/gi, entry.name || 'Team Director')
