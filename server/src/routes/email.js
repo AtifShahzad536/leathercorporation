@@ -495,11 +495,11 @@ router.get('/oauth/google/callback', async (req, res) => {
     );
 
     const adminUrl = process.env.ADMIN_URL || 'https://leathercorporation-oi7z.vercel.app';
-    res.redirect(`${adminUrl}/email-leads?oauth=success&channel=gmail`);
+    res.redirect(`${adminUrl}/?page=leads&oauth=success&channel=gmail`);
   } catch (error) {
     console.error('[GOOGLE OAUTH CALLBACK ERROR]:', error.message);
     const adminUrl = process.env.ADMIN_URL || 'https://leathercorporation-oi7z.vercel.app';
-    res.redirect(`${adminUrl}/email-leads?oauth=error&message=${encodeURIComponent(error.message)}`);
+    res.redirect(`${adminUrl}/?page=leads&oauth=error&message=${encodeURIComponent(error.message)}`);
   }
 });
 

@@ -107,6 +107,11 @@ app.use('/api/products', productRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/media', mediaRoutes);
 app.use('/api/email', emailRoutes);
+// Compatibility alias for Google OAuth redirect URI if entered as /api/auth/google/callback
+app.get('/api/auth/google/callback', (req, res) => {
+  const query = new URLSearchParams(req.query).toString();
+  res.redirect(`/api/email/oauth/google/callback${query ? '?' + query : ''}`);
+});
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/inquiries', inquiryRoutes);
 app.use('/api/models3d', models3dRoutes);

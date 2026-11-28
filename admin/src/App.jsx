@@ -20,7 +20,11 @@ import {
 
 export default function App() {
   const { user, token, loading, logout } = useAuth();
-  const [currentPage, setCurrentPage] = useState('dashboard');
+  const [currentPage, setCurrentPage] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('oauth') || params.get('page') === 'leads') return 'leads';
+    return 'dashboard';
+  });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   if (loading) {
