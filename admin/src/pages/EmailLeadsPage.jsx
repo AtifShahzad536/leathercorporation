@@ -32,6 +32,7 @@ export default function EmailLeadsPage() {
   const [testSending, setTestSending] = useState(false);
   const [testEmail, setTestEmail] = useState('');
   const [testTemplateId, setTestTemplateId] = useState('');
+  const [testChannel, setTestChannel] = useState('hostinger');
   const [testResult, setTestResult] = useState(null);
 
   // New Template state
@@ -143,6 +144,7 @@ export default function EmailLeadsPage() {
       const res = await api.post('/email/test-send', {
         to: testEmail,
         templateId: testTemplateId || undefined,
+        channel: testChannel,
       });
       setTestResult({ type: 'success', text: res.data.message });
       fetchData();
@@ -229,7 +231,7 @@ export default function EmailLeadsPage() {
             Email Marketing & Lead Automation
           </h1>
           <p className="text-xs text-slate-500 font-medium mt-1">
-            Excel Lead Ingestion • Daily 12 Leads at 9:00 AM EST (USA Morning) • Direct Product Links • Alternating Templates
+            Excel Lead Ingestion • Daily 24 Leads at 9:00 AM EST • Dual Senders: Hostinger (12/day) + Gmail (12/day) • Alternating Templates
           </p>
         </div>
 
@@ -242,12 +244,12 @@ export default function EmailLeadsPage() {
             {sendingBatch ? (
               <>
                 <Loader2 size={14} className="animate-spin" />
-                <span>Sending 12 Leads...</span>
+                <span>Sending 24 Leads...</span>
               </>
             ) : (
               <>
                 <Zap size={14} />
-                <span>⚡ Dispatch 12 Leads Now</span>
+                <span>⚡ Dispatch Dual Batch (24 Leads) Now</span>
               </>
             )}
           </button>
@@ -305,13 +307,13 @@ export default function EmailLeadsPage() {
               </h3>
             </div>
             <p className="text-xs text-white/90 mt-1 leading-relaxed">
-              All uploaded lead lists have finished sending or no active list was found. The automated daily script needs contacts to dispatch the next 12 daily emails. Please upload an Excel or CSV file below to resume the campaign.
+              All uploaded lead lists have finished sending or no active list was found. The automated daily script needs contacts to dispatch the next 24 daily emails (12 Hostinger + 12 Gmail). Please upload an Excel or CSV file below to resume the campaign.
             </p>
           </div>
         </div>
       )}
 
-      {/* ── LIVE DIGITAL DISPATCH COUNTDOWN & AUTOMATED SCHEDULE BANNER ── */}
+      {/* ── LIVE DIGITAL DISPATCH COUNTDOWN & DUAL PIPELINE BANNER ── */}
       <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 rounded-2xl p-6 text-white border border-indigo-900/40 shadow-xl space-y-4">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           
@@ -324,18 +326,32 @@ export default function EmailLeadsPage() {
               <div className="flex flex-wrap items-center gap-2">
                 <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
                 <span className="text-xs font-black uppercase tracking-wider text-emerald-400">
-                  Live Dispatch Countdown Timer
+                  Dual Pipeline Countdown Timer
                 </span>
                 <span className="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-mono border border-slate-700">
                   Daily 9:00 AM EST (14:00 UTC)
                 </span>
               </div>
               <h3 className="font-black text-lg uppercase tracking-tight text-white mt-1">
-                Next Automated Batch Dispatch
+                Next Automated Dual Batch Dispatch (24 Leads)
               </h3>
               <p className="text-xs text-slate-300 mt-1 leading-relaxed max-w-xl">
-                Jasy hi countdown zero hoga, system automatically active list sy <strong>12 leads</strong> ko emails dispatch kr dega. Subha USA time per daily automatically mails send hongi.
+                Rozana Subha USA time per <strong>24 leads</strong> ko automatically emails jayengi: 12 leads via Hostinger aur 12 leads via Gmail with alternating different templates.
               </p>
+
+              {/* Senders Channel Badges */}
+              <div className="flex flex-wrap items-center gap-2.5 mt-3">
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-slate-800/90 border border-slate-700">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                  <span className="text-slate-300">Hostinger (12/day):</span>
+                  <span className="text-emerald-300 font-mono">sale@hamlosportswear.site</span>
+                </div>
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-slate-800/90 border border-slate-700">
+                  <span className="w-2 h-2 rounded-full bg-blue-400" />
+                  <span className="text-slate-300">Gmail (12/day):</span>
+                  <span className="text-blue-300 font-mono">hamlosportswear@gmail.com</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -371,11 +387,11 @@ export default function EmailLeadsPage() {
               className="px-5 py-3 bg-[#F26522] hover:bg-[#d95316] text-white rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg cursor-pointer disabled:opacity-50 transition"
             >
               {sendingBatch ? <Loader2 size={15} className="animate-spin" /> : <Zap size={15} />}
-              <span>⚡ Dispatch 12 Leads Now</span>
+              <span>⚡ Dispatch 24 Leads Now</span>
             </button>
             <div className="flex items-center justify-center gap-2 text-[11px] text-slate-400">
               <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              <span>Auto-Run on Zero: <strong className="text-emerald-400">Active</strong></span>
+              <span>Dual Auto-Run on Zero: <strong className="text-emerald-400">Active</strong></span>
             </div>
           </div>
 
@@ -398,8 +414,8 @@ export default function EmailLeadsPage() {
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Emails Sent Today</span>
             <Send size={18} className="text-[#F26522]" />
           </div>
-          <div className="text-2xl font-black text-slate-900">{stats?.sentToday || 0} / {stats?.dailyQuota || 12}</div>
-          <span className="text-[11px] text-slate-500 mt-1 block">Daily USA Quota (12 Leads)</span>
+          <div className="text-2xl font-black text-slate-900">{stats?.sentToday || 0} / {stats?.dailyQuota || 24}</div>
+          <span className="text-[11px] text-slate-500 mt-1 block">Dual Quota (12 Hostinger + 12 Gmail)</span>
         </div>
 
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
@@ -734,7 +750,7 @@ export default function EmailLeadsPage() {
                       className="px-3.5 py-1.5 bg-[#F26522] hover:bg-[#d95316] text-white rounded-lg text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow cursor-pointer disabled:opacity-50"
                     >
                       {sendingBatch ? <Loader2 size={13} className="animate-spin" /> : <Zap size={13} />}
-                      <span>Send 12 Leads Now</span>
+                      <span>Send 24 Leads Now</span>
                     </button>
                   )}
                   <button
@@ -753,6 +769,7 @@ export default function EmailLeadsPage() {
                       <th className="p-2.5">Email</th>
                       <th className="p-2.5">Name</th>
                       <th className="p-2.5">Company</th>
+                      <th className="p-2.5">Sender</th>
                       <th className="p-2.5">Status</th>
                       <th className="p-2.5">Sent Template</th>
                     </tr>
@@ -763,6 +780,16 @@ export default function EmailLeadsPage() {
                         <td className="p-2.5 font-mono font-medium text-slate-900">{e.email}</td>
                         <td className="p-2.5 font-semibold text-slate-800">{e.name || '-'}</td>
                         <td className="p-2.5 text-slate-600">{e.company || '-'}</td>
+                        <td className="p-2.5 text-[11px]">
+                          {e.senderChannel ? (
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded font-mono font-bold ${e.senderChannel === 'hostinger' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-blue-50 text-blue-800 border border-blue-200'}`}>
+                              <span className={`w-1.5 h-1.5 rounded-full ${e.senderChannel === 'hostinger' ? 'bg-emerald-500' : 'bg-blue-500'}`} />
+                              <span>{e.senderChannel === 'hostinger' ? 'Hostinger' : 'Gmail'}</span>
+                            </span>
+                          ) : (
+                            <span className="text-slate-400">-</span>
+                          )}
+                        </td>
                         <td className="p-2.5">
                           {e.status === 'sent' ? (
                             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-2xs">
@@ -844,6 +871,25 @@ export default function EmailLeadsPage() {
             <form onSubmit={handleSendTestEmail} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold uppercase text-slate-700 mb-1">
+                  Sender Email Channel *
+                </label>
+                <select
+                  value={testChannel}
+                  onChange={(e) => setTestChannel(e.target.value)}
+                  className="w-full border border-slate-300 rounded-lg p-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#F26522] bg-white font-medium"
+                >
+                  <option value="hostinger">Hostinger Business: sale@hamlosportswear.site (Active ✓)</option>
+                  <option value="gmail">Google Gmail: hamlosportswear@gmail.com (Requires App Password)</option>
+                </select>
+                <span className="text-[10px] text-slate-400 mt-1 block">
+                  {testChannel === 'hostinger' 
+                    ? 'Dispatched directly via smtp.hostinger.com:465 with SSL encryption.' 
+                    : 'Dispatched via smtp.gmail.com:587 (Requires 16-char Google App Password in .env).'}
+                </span>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase text-slate-700 mb-1">
                   Recipient Email Address *
                 </label>
                 <input
@@ -854,9 +900,6 @@ export default function EmailLeadsPage() {
                   onChange={(e) => setTestEmail(e.target.value)}
                   className="w-full border border-slate-300 rounded-lg p-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#F26522]"
                 />
-                <span className="text-[10px] text-slate-400 mt-1 block">
-                  A verification email will be dispatched immediately via Gmail SMTP.
-                </span>
               </div>
 
               <div>

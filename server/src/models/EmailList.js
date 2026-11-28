@@ -6,6 +6,8 @@ const emailEntrySchema = new mongoose.Schema({
   company: { type: String, default: '' },
   status: { type: String, enum: ['pending', 'sent', 'failed', 'skipped'], default: 'pending' },
   sentAt: Date,
+  senderEmail: String,
+  senderChannel: String,
   templateUsed: String,
   errorMessage: String,
 }, { _id: true });

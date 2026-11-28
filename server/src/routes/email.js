@@ -7,7 +7,7 @@ const EmailList = require('../models/EmailList');
 const EmailTemplate = require('../models/EmailTemplate');
 const EmailLog = require('../models/EmailLog');
 const parseExcelFile = require('../utils/parseExcel');
-const createTransporter = require('../config/email');
+const { createTransporter, SENDER_ACCOUNTS, getActiveChannels } = require('../config/email');
 const { sendDailyEmails, ensureDefaultTemplates } = require('../cron/emailCron');
 const { protect } = require('../middleware/auth');
 
@@ -265,8 +265,11 @@ router.get('/stats', protect, async (req, res) => {
         totalPending,
         needsLeadsList,
         dailySends,
-        dailyQuota: 12,
-        schedule: 'Daily at 9:00 AM EST (USA Morning)',
+        dailyQuota: 24,
+        hostingerQuota: 12,
+        gmailQuota: 12,
+        channels: getActiveChannels(),
+        schedule: 'Daily at 9:00 AM EST (USA Morning) • Dual Channels (24 Leads/Day)',
       },
     });
   } catch (error) {
@@ -295,12 +298,12 @@ router.all('/cron-trigger', async (req, res) => {
       }
     }
 
-    console.log(`[CRON TRIGGER] ⏰ Triggered daily 12-lead batch at ${new Date().toISOString()} (Agent: ${userAgent})`);
+    console.log(`[CRON TRIGGER] ⏰ Triggered daily dual batch (24 leads) at ${new Date().toISOString()} (Agent: ${userAgent})`);
     const result = await sendDailyEmails();
 
     res.json({
       success: result.success !== false,
-      schedule: '09:00 AM EST (14:00 UTC) • 12 Leads/Day',
+      schedule: '09:00 AM EST (14:00 UTC) • 12 Hostinger + 12 Gmail = 24 Leads/Day',
       timestamp: new Date().toISOString(),
       result,
     });
@@ -310,13 +313,13 @@ router.all('/cron-trigger', async (req, res) => {
   }
 });
 
-// POST /api/email/send-batch - Admin trigger: immediately dispatch the next pending batch (12 leads)
+// POST /api/email/send-batch - Admin trigger: immediately dispatch the next dual pending batch (24 leads)
 router.post('/send-batch', protect, async (req, res) => {
   try {
     const result = await sendDailyEmails();
     res.json({
       success: result.success !== false,
-      message: result.message || 'Batch dispatched successfully',
+      message: result.message || 'Dual batch dispatched successfully',
       data: result,
     });
   } catch (error) {
@@ -324,15 +327,25 @@ router.post('/send-batch', protect, async (req, res) => {
   }
 });
 
-// POST /api/email/test-send - Admin trigger: send a test email to verify SMTP and deliverability
+// POST /api/email/test-send - Admin trigger: send a test email to verify Hostinger or Gmail SMTP
 router.post('/test-send', protect, async (req, res) => {
   try {
-    const { to, templateId, customSubject, customBody } = req.body;
+    const { to, templateId, customSubject, customBody, channel = 'hostinger' } = req.body;
     if (!to) {
       return res.status(400).json({ success: false, message: 'Recipient email address (to) is required.' });
     }
 
-    let subject = customSubject || 'HAMLO SPORTS • Test Email Delivery Verification';
+    const selectedChannel = channel === 'gmail' ? 'gmail' : 'hostinger';
+    const senderConfig = SENDER_ACCOUNTS[selectedChannel];
+
+    if (selectedChannel === 'gmail' && !senderConfig.pass) {
+      return res.status(400).json({
+        success: false,
+        message: 'Gmail App Password not set yet. Please generate a 16-character Google App Password for hamlosportswear@gmail.com and add it to server/.env.',
+      });
+    }
+
+    let subject = customSubject || `HAMLO SPORTS • ${senderConfig.displayName} Delivery Verification`;
     let html = customBody;
 
     if (templateId) {
@@ -346,28 +359,27 @@ router.post('/test-send', protect, async (req, res) => {
     if (!html) {
       html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
-          <h2 style="color: #1E1B6E; margin-bottom: 8px;">HAMLO SPORTS Verification</h2>
+          <h2 style="color: #1E1B6E; margin-bottom: 8px;">HAMLO SPORTS • Delivery Verification</h2>
           <p style="color: #475569; font-size: 14px; line-height: 1.6;">
-            This is a real-time verification email confirming that your SMTP email server and delivery credentials are configured and functioning correctly.
+            This is a real-time verification email confirming that your <strong>${senderConfig.displayName}</strong> (${senderConfig.user}) is configured and functioning correctly.
           </p>
           <div style="background: #f8fafc; padding: 12px; border-left: 4px solid #F26522; margin: 16px 0; font-size: 12px; font-family: monospace;">
-            Timestamp: ${new Date().toISOString()}<br/>
+            Channel: ${selectedChannel.toUpperCase()}<br/>
+            Sender Account: ${senderConfig.user}<br/>
+            Gateway: ${senderConfig.host}:${senderConfig.port}<br/>
             Delivered To: ${to}<br/>
-            SMTP Gateway: ${process.env.SMTP_HOST || 'smtp.gmail.com'}
+            Timestamp: ${new Date().toISOString()}
           </div>
           <p style="color: #64748b; font-size: 12px;">HAMLO SPORTS • Sialkot, Pakistan • High Performance Custom Teamwear</p>
         </div>
       `;
     }
 
-    const transporter = createTransporter();
-    const fromSender = process.env.SMTP_USER 
-      ? `"HAMLO SPORTS" <${process.env.SMTP_USER}>` 
-      : (process.env.EMAIL_FROM || 'sale@hamlosportswear.site');
+    const transporter = createTransporter(selectedChannel);
 
     await transporter.sendMail({
-      from: fromSender,
-      replyTo: process.env.EMAIL_FROM || 'sale@hamlosportswear.site',
+      from: senderConfig.from,
+      replyTo: senderConfig.replyTo,
       to,
       subject,
       html,
@@ -375,19 +387,23 @@ router.post('/test-send', protect, async (req, res) => {
 
     await EmailLog.create({
       to,
+      from: senderConfig.user,
+      senderChannel: selectedChannel,
       subject,
-      templateName: templateId ? 'Template Test' : 'Direct SMTP Test',
+      templateName: templateId ? 'Template Test' : `${senderConfig.displayName} Test`,
       status: 'sent',
     });
 
     res.json({
       success: true,
-      message: `Test email successfully delivered to ${to}! Check your inbox.`,
+      message: `Test email successfully delivered via ${senderConfig.displayName} (${senderConfig.user}) to ${to}! Check your inbox.`,
     });
   } catch (error) {
     console.error('[Email Test] Send error:', error);
     await EmailLog.create({
       to: req.body.to || 'unknown',
+      from: req.body.channel === 'gmail' ? SENDER_ACCOUNTS.gmail.user : SENDER_ACCOUNTS.hostinger.user,
+      senderChannel: req.body.channel || 'hostinger',
       subject: 'Test Email (Failed)',
       status: 'failed',
       error: error.message,
@@ -395,7 +411,7 @@ router.post('/test-send', protect, async (req, res) => {
 
     res.status(500).json({
       success: false,
-      message: `Delivery failed: ${error.message}. Please check SMTP credentials in server/.env.`,
+      message: `Delivery failed via ${req.body.channel || 'hostinger'}: ${error.message}.`,
     });
   }
 });

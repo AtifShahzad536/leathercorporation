@@ -2,10 +2,13 @@ const cron = require('node-cron');
 const EmailList = require('../models/EmailList');
 const EmailTemplate = require('../models/EmailTemplate');
 const EmailLog = require('../models/EmailLog');
-const createTransporter = require('../config/email');
+const { createTransporter, SENDER_ACCOUNTS } = require('../config/email');
 
-// Send exactly 12 emails per day (customizable via env)
-const BATCH_SIZE = parseInt(process.env.DAILY_EMAIL_BATCH_SIZE || '12', 10);
+// Dual Channel Quotas: 12 from Hostinger + 12 from Gmail = 24 Leads / Day
+const HOSTINGER_QUOTA = parseInt(process.env.HOSTINGER_BATCH_SIZE || '12', 10);
+const GMAIL_QUOTA = parseInt(process.env.GMAIL_BATCH_SIZE || '12', 10);
+const TOTAL_DAILY_BATCH = HOSTINGER_QUOTA + GMAIL_QUOTA; // 24
+const BATCH_SIZE = TOTAL_DAILY_BATCH;
 
 // 10 Distinct, High-Converting Email Marketing Templates for Sports & Uniforms
 const DEFAULT_TEMPLATES = [
@@ -430,7 +433,7 @@ const ensureDefaultTemplates = async () => {
 };
 
 const sendDailyEmails = async () => {
-  console.log('[EMAIL CRON] 🚀 Starting daily email marketing batch (Target: 12 leads)...');
+  console.log(`[EMAIL CRON] 🚀 Starting dual email marketing batch (Target: ${HOSTINGER_QUOTA} Hostinger + ${GMAIL_QUOTA} Gmail = ${TOTAL_DAILY_BATCH} leads)...`);
 
   try {
     // 1. Find the first active list that has pending emails
@@ -449,10 +452,10 @@ const sendDailyEmails = async () => {
       return { success: false, message: 'No active email templates found.' };
     }
 
-    // 3. Pick next BATCH_SIZE pending emails (default 12)
+    // 3. Pick next TOTAL_DAILY_BATCH pending emails (up to 24 leads)
     const pendingEmails = activeList.emails
       .filter(e => e.status === 'pending')
-      .slice(0, BATCH_SIZE);
+      .slice(0, TOTAL_DAILY_BATCH);
 
     if (pendingEmails.length === 0) {
       activeList.recalcCounts();
@@ -461,21 +464,34 @@ const sendDailyEmails = async () => {
       return { success: false, message: `List "${activeList.fileName}" has no pending leads.` };
     }
 
-    console.log(`[EMAIL CRON] Sending batch of ${pendingEmails.length} emails (Quota: 12/day) from "${activeList.fileName}"...`);
+    console.log(`[EMAIL CRON] Processing dual batch of ${pendingEmails.length} leads from "${activeList.fileName}"...`);
 
-    // 4. Create Nodemailer transporter
-    const transporter = createTransporter();
+    // 4. Create Nodemailer transporters for both Hostinger and Gmail
+    const hostingerTransporter = createTransporter('hostinger');
+    const gmailTransporter = createTransporter('gmail');
 
-    let batchSent = 0;
-    let batchFailed = 0;
+    let hostingerSent = 0;
+    let hostingerFailed = 0;
+    let gmailSent = 0;
+    let gmailFailed = 0;
 
-    // 5. Send each email, alternating templates
+    // 5. Partition and send each email, rotating templates
     for (let i = 0; i < pendingEmails.length; i++) {
       const entry = pendingEmails[i];
-      // Rotate templates so users receive alternating templates
+      // Assign channel: first HOSTINGER_QUOTA (12) to Hostinger, remainder (up to 12) to Gmail
+      const channel = i < HOSTINGER_QUOTA ? 'hostinger' : 'gmail';
+      const senderConfig = SENDER_ACCOUNTS[channel];
+      const transporter = channel === 'hostinger' ? hostingerTransporter : gmailTransporter;
+
+      // Rotate templates so every lead across both channels receives a different template
       const template = templates[i % templates.length];
 
       try {
+        // Validation check for Gmail App Password
+        if (channel === 'gmail' && !senderConfig.pass) {
+          throw new Error('Gmail App Password not configured yet in server environment. Please generate a 16-character Google App Password for hamlosportswear@gmail.com.');
+        }
+
         let html = template.htmlBody
           .replace(/{{name}}/gi, entry.name || 'Team Director')
           .replace(/{{email}}/gi, entry.email)
@@ -485,13 +501,9 @@ const sendDailyEmails = async () => {
           .replace(/{{name}}/gi, entry.name || 'Team Director')
           .replace(/{{company}}/gi, entry.company || 'Athletic Program');
 
-        const fromSender = process.env.SMTP_USER 
-          ? `"HAMLO SPORTS" <${process.env.SMTP_USER}>` 
-          : (process.env.EMAIL_FROM || 'sale@hamlosportswear.site');
-
         await transporter.sendMail({
-          from: fromSender,
-          replyTo: process.env.EMAIL_FROM || 'sale@hamlosportswear.site',
+          from: senderConfig.from,
+          replyTo: senderConfig.replyTo,
           to: entry.email,
           subject,
           html,
@@ -503,11 +515,15 @@ const sendDailyEmails = async () => {
           emailDoc.status = 'sent';
           emailDoc.sentAt = new Date();
           emailDoc.templateUsed = template.name;
+          emailDoc.senderEmail = senderConfig.user;
+          emailDoc.senderChannel = channel;
         }
 
         // Log success
         await EmailLog.create({
           to: entry.email,
+          from: senderConfig.user,
+          senderChannel: channel,
           subject,
           templateId: template._id,
           templateName: template.name,
@@ -517,19 +533,33 @@ const sendDailyEmails = async () => {
 
         template.sendCount = (template.sendCount || 0) + 1;
         await template.save();
-        batchSent++;
 
-        console.log(`  ✅ [${i + 1}/${pendingEmails.length}] Sent to: ${entry.email} (Template: ${template.name})`);
+        if (channel === 'hostinger') {
+          hostingerSent++;
+        } else {
+          gmailSent++;
+        }
+
+        console.log(`  ✅ [${i + 1}/${pendingEmails.length}] [${channel.toUpperCase()}] Sent to: ${entry.email} (Template: ${template.name})`);
       } catch (sendError) {
-        batchFailed++;
+        if (channel === 'hostinger') {
+          hostingerFailed++;
+        } else {
+          gmailFailed++;
+        }
+
         const emailDoc = activeList.emails.id(entry._id);
         if (emailDoc) {
           emailDoc.status = 'failed';
           emailDoc.errorMessage = sendError.message;
+          emailDoc.senderChannel = channel;
+          emailDoc.senderEmail = senderConfig.user;
         }
 
         await EmailLog.create({
           to: entry.email,
+          from: senderConfig.user,
+          senderChannel: channel,
           subject: template.subject,
           templateId: template._id,
           templateName: template.name,
@@ -538,7 +568,7 @@ const sendDailyEmails = async () => {
           listId: activeList._id,
         });
 
-        console.log(`  ❌ [${i + 1}/${pendingEmails.length}] Failed: ${entry.email} - ${sendError.message}`);
+        console.log(`  ❌ [${i + 1}/${pendingEmails.length}] [${channel.toUpperCase()}] Failed: ${entry.email} - ${sendError.message}`);
       }
     }
 
@@ -546,7 +576,12 @@ const sendDailyEmails = async () => {
     activeList.recalcCounts();
     await activeList.save();
 
-    console.log(`[EMAIL CRON] Batch complete! Status for "${activeList.fileName}": ${activeList.sentCount}/${activeList.totalEmails} sent.`);
+    const totalSent = hostingerSent + gmailSent;
+    const totalFailed = hostingerFailed + gmailFailed;
+
+    console.log(`[EMAIL CRON] Batch complete! Status for "${activeList.fileName}": ${activeList.sentCount}/${activeList.totalEmails} total sent.`);
+    console.log(`  - Hostinger (${SENDER_ACCOUNTS.hostinger.user}): ${hostingerSent} sent, ${hostingerFailed} failed`);
+    console.log(`  - Gmail (${SENDER_ACCOUNTS.gmail.user}): ${gmailSent} sent, ${gmailFailed} failed`);
 
     // 7. Check if list is completed and if any other active list exists
     if (activeList.status === 'completed') {
@@ -559,12 +594,24 @@ const sendDailyEmails = async () => {
     }
 
     return {
-      success: true,
-      sent: batchSent,
-      failed: batchFailed,
+      success: totalSent > 0,
+      sent: totalSent,
+      failed: totalFailed,
       total: pendingEmails.length,
+      hostinger: {
+        sent: hostingerSent,
+        failed: hostingerFailed,
+        quota: HOSTINGER_QUOTA,
+        email: SENDER_ACCOUNTS.hostinger.user,
+      },
+      gmail: {
+        sent: gmailSent,
+        failed: gmailFailed,
+        quota: GMAIL_QUOTA,
+        email: SENDER_ACCOUNTS.gmail.user,
+      },
       listName: activeList.fileName,
-      message: `Processed batch of ${pendingEmails.length} leads: ${batchSent} sent, ${batchFailed} failed.`,
+      message: `Dual batch processed: ${hostingerSent}/${HOSTINGER_QUOTA} sent via Hostinger (${SENDER_ACCOUNTS.hostinger.user}), ${gmailSent}/${GMAIL_QUOTA} sent via Gmail (${SENDER_ACCOUNTS.gmail.user}). Total: ${totalSent} sent, ${totalFailed} failed.`,
     };
   } catch (error) {
     console.error('[EMAIL CRON] Fatal batch error:', error.message);
@@ -577,7 +624,16 @@ const startEmailCron = () => {
   cron.schedule('0 14 * * *', () => {
     sendDailyEmails();
   });
-  console.log('📧 Email Marketing Cron scheduled: Daily at 9:00 AM EST (14:00 UTC) — 12 Leads/Day');
+  console.log(`📧 Dual Email Marketing Cron scheduled: Daily at 9:00 AM EST (14:00 UTC) — 12 Hostinger + 12 Gmail = 24 Leads/Day`);
 };
 
-module.exports = { startEmailCron, sendDailyEmails, ensureDefaultTemplates, BATCH_SIZE, DEFAULT_TEMPLATES };
+module.exports = { 
+  startEmailCron, 
+  sendDailyEmails, 
+  ensureDefaultTemplates, 
+  BATCH_SIZE, 
+  HOSTINGER_QUOTA, 
+  GMAIL_QUOTA, 
+  TOTAL_DAILY_BATCH, 
+  DEFAULT_TEMPLATES 
+};

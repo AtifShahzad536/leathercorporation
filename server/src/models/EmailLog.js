@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const emailLogSchema = new mongoose.Schema({
   to: { type: String, required: true },
+  from: String,
+  senderChannel: { type: String, enum: ['hostinger', 'gmail', 'default'], default: 'hostinger' },
   subject: String,
   templateId: { type: mongoose.Schema.Types.ObjectId, ref: 'EmailTemplate' },
   templateName: String,
