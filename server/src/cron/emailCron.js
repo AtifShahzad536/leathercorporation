@@ -32,7 +32,7 @@ const DEFAULT_TEMPLATES = [
         Why Athletic Programs Partner With Us:
       </h3>
       <ul style="margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.7; color: #334155;">
-        <li><strong>ZERO Minimum Order Quantity</strong> — order 1 replacement or 500 anytime</li>
+        <li><strong>Low Minimum Order Quantity (MOQ: 12 Pieces)</strong> — flexible squad orders & full roster packages</li>
         <li><strong>Free 12-Hour 3D Digital Mockup</strong> with your team colors, logos & fonts</li>
         <li><strong>Factory Direct Turnaround</strong> — 2 to 3 weeks delivered to USA via DDP Air Cargo</li>
         <li><strong>All-Inclusive Sublimation</strong> — unlimited colors, player names, numbers & sponsors included</li>
@@ -261,13 +261,13 @@ const DEFAULT_TEMPLATES = [
     isActive: true,
   },
   {
-    name: 'Template 7: $500 Team & Club Outfitter Credit',
-    subject: 'Exclusive: $500 Program Credit for {{company}} Team Uniforms',
+    name: 'Template 7: Factory Direct Bulk Team Uniform Packages',
+    subject: 'Factory Direct Team Uniforms & Package Pricing for {{company}}',
     htmlBody: `
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
   <div style="background: linear-gradient(135deg, #1E1B6E 0%, #161250 100%); padding: 26px 22px; text-align: center;">
     <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 900; text-transform: uppercase;">HAMLO SPORTS</h1>
-    <p style="color: #F26522; margin: 6px 0 0; font-weight: 700; font-size: 12px; letter-spacing: 2px; text-transform: uppercase;">Special Outfitter Grant: $500 Off</p>
+    <p style="color: #F26522; margin: 6px 0 0; font-weight: 700; font-size: 12px; letter-spacing: 2px; text-transform: uppercase;">Wholesale Team Packages • Minimum Order: 12 Pieces</p>
   </div>
   <div style="padding: 30px 26px; color: #334155;">
     <p style="font-size: 16px; color: #0f172a; margin-top: 0;">Dear <strong>{{name}}</strong>,</p>
@@ -275,7 +275,7 @@ const DEFAULT_TEMPLATES = [
       Why pay domestic distributor markups of 40–60% when you can order your program's gear directly from the manufacturing source?
     </p>
     <p style="font-size: 15px; line-height: 1.65; color: #475569;">
-      For your inaugural team order over $5,000, HAMLO SPORTS is applying an <strong>instant $500 factory credit</strong> directly on your invoice for <strong>{{company}}</strong>.
+      Whether ordering for a varsity squad, travel club, or recreational league at <strong>{{company}}</strong>, our <strong>minimum order is only 12 pieces per style</strong>, giving you maximum flexibility with tier-1 factory direct pricing.
     </p>
 
     <div style="background-color: #f1f5f9; border-left: 4px solid #1E1B6E; padding: 16px 18px; margin: 20px 0; border-radius: 0 8px 8px 0;">
@@ -288,8 +288,8 @@ const DEFAULT_TEMPLATES = [
     </div>
 
     <div style="text-align: center; margin: 28px 0;">
-      <a href="https://www.hamlosportswear.site/?discount=500CREDIT&utm_source=email_leads" style="display: inline-block; background-color: #1E1B6E; color: #ffffff; padding: 13px 26px; text-decoration: none; font-weight: 800; font-size: 13px; border-radius: 8px; text-transform: uppercase;">
-        Browse Products & Claim $500 Credit
+      <a href="https://www.hamlosportswear.site/?utm_source=email_leads&utm_medium=team_packages" style="display: inline-block; background-color: #1E1B6E; color: #ffffff; padding: 13px 26px; text-decoration: none; font-weight: 800; font-size: 13px; border-radius: 8px; text-transform: uppercase;">
+        Browse Products & Team Packages
       </a>
     </div>
 
@@ -303,26 +303,26 @@ const DEFAULT_TEMPLATES = [
     isActive: true,
   },
   {
-    name: 'Template 8: Zero MOQ Replacement & Late-Roster Guarantee',
-    subject: 'No Minimum Re-Orders: Never Pay Late-Roster Penalties — {{company}}',
+    name: 'Template 8: Low Minimum Orders (MOQ: 12 Pieces)',
+    subject: 'Low 12-Piece Minimum Order: Custom Team Uniforms for {{company}}',
     htmlBody: `
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
   <div style="background: linear-gradient(135deg, #1E1B6E 0%, #0d0a3d 100%); padding: 26px 22px; text-align: center;">
-    <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 900; text-transform: uppercase;">ZERO MOQ POLICY</h1>
-    <p style="color: #F26522; margin: 6px 0 0; font-weight: 700; font-size: 12px; letter-spacing: 2px; text-transform: uppercase;">Order 1 Replacement Jersey Anytime</p>
+    <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 900; text-transform: uppercase;">MINIMUM ORDER: 12 PIECES</h1>
+    <p style="color: #F26522; margin: 6px 0 0; font-weight: 700; font-size: 12px; letter-spacing: 2px; text-transform: uppercase;">Flexible Squad & Roster Uniform Orders</p>
   </div>
   <div style="padding: 30px 26px; color: #334155;">
     <p style="font-size: 16px; color: #0f172a; margin-top: 0;">Hi <strong>{{name}}</strong>,</p>
     <p style="font-size: 15px; line-height: 1.65; color: #475569;">
-      Every coach knows the headache: a new student transfers in mid-season, or a uniform gets lost, and big brands demand a 12-piece minimum order just to replace 1 jersey.
+      Big retail athletic brands often demand 50 to 100 piece minimums, locking out smaller programs or charging massive surcharges.
     </p>
     <p style="font-size: 15px; line-height: 1.65; color: #475569;">
-      At HAMLO SPORTS, <strong>we archive every client's digital sublimation artwork indefinitely</strong>. We will gladly manufacture even a single 1-off replacement jersey for <strong>{{company}}</strong> at regular factory rates!
+      At HAMLO SPORTS, our standard minimum order quantity is <strong>only 12 pieces per style</strong>! You get 100% bespoke dye-sublimation, custom player names, numbers, and sponsor logos with low minimums for <strong>{{company}}</strong>.
     </p>
 
     <div style="text-align: center; margin: 28px 0;">
-      <a href="https://www.hamlosportswear.site/about-us/?utm_source=email_leads&utm_medium=zero_moq" style="display: inline-block; background-color: #F26522; color: #ffffff; padding: 13px 26px; text-decoration: none; font-weight: 800; font-size: 13px; border-radius: 8px; text-transform: uppercase;">
-        Learn About Our Zero MOQ Guarantee
+      <a href="https://www.hamlosportswear.site/about-us/?utm_source=email_leads&utm_medium=moq_12" style="display: inline-block; background-color: #F26522; color: #ffffff; padding: 13px 26px; text-decoration: none; font-weight: 800; font-size: 13px; border-radius: 8px; text-transform: uppercase;">
+        View 12-Piece MOQ Guidelines & Catalog
       </a>
     </div>
 
@@ -415,17 +415,29 @@ const DEFAULT_TEMPLATES = [
   }
 ];
 
-// Helper to ensure all 10 templates exist in the database
+// Helper to ensure all 10 templates exist in the database with up-to-date content
 const ensureDefaultTemplates = async () => {
   try {
-    const existing = await EmailTemplate.find();
-    const existingNames = new Set(existing.map(t => t.name));
-    const missing = DEFAULT_TEMPLATES.filter(t => !existingNames.has(t.name));
+    // 1. Remove old/deprecated $500 templates and legacy templates from DB
+    await EmailTemplate.deleteMany({
+      $or: [
+        { name: { $regex: /500/i } },
+        { subject: { $regex: /500/i } },
+        { name: { $regex: /zero moq/i } },
+        { name: 'Template 1: Free 3D Mockup Offer' },
+        { name: 'Template 2: $500 Program Discount' },
+        { name: 'Template 7: $500 Team & Club Outfitter Credit' },
+        { name: 'Template 8: Zero MOQ Replacement & Late-Roster Guarantee' }
+      ]
+    });
 
-    if (missing.length > 0) {
-      console.log(`[EMAIL CRON] 📦 Seeding ${missing.length} missing templates to database...`);
-      await EmailTemplate.insertMany(missing);
-      console.log(`[EMAIL CRON] ✅ Now have at least 10 active marketing templates.`);
+    // 2. Upsert each standard template so content stays fresh
+    for (const t of DEFAULT_TEMPLATES) {
+      await EmailTemplate.findOneAndUpdate(
+        { name: t.name },
+        { $set: t },
+        { upsert: true, new: true }
+      );
     }
   } catch (err) {
     console.warn('[EMAIL CRON] Template sync warning:', err.message);
