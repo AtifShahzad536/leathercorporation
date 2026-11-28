@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const tls = require('tls');
 const SiteSetting = require('../models/SiteSetting');
 
 const SENDER_ACCOUNTS = {
@@ -113,6 +114,62 @@ const sendViaGmailRestApi = async ({ user, clientId, clientSecret, refreshToken,
 };
 
 /**
+ * Automatically saves a copy of an email sent via Hostinger SMTP into Hostinger Webmail's 'INBOX.Sent' folder via IMAP.
+ * Non-blocking / fire-and-forget so delivery is never slowed down.
+ */
+const saveToHostingerSentFolder = ({ user, pass, to, subject, html, text, from }) => {
+  return new Promise((resolve) => {
+    try {
+      const utf8Subject = `=?utf-8?B?${Buffer.from(subject || '').toString('base64')}?=`;
+      const rawMsg = [
+        `From: ${from || `"HAMLO SPORTS" <${user}>`}`,
+        `To: ${to}`,
+        `Subject: ${utf8Subject}`,
+        `Date: ${new Date().toUTCString()}`,
+        'MIME-Version: 1.0',
+        'Content-Type: text/html; charset=utf-8',
+        '',
+        html || text || '',
+      ].join('\r\n');
+
+      const rawBuffer = Buffer.from(rawMsg, 'utf-8');
+      const socket = tls.connect(993, 'imap.hostinger.com', { servername: 'imap.hostinger.com' });
+      socket.setTimeout(4000);
+
+      socket.on('connect', () => {
+        socket.write(`A01 LOGIN ${user} ${pass}\r\n`);
+      });
+
+      socket.on('data', (d) => {
+        const str = d.toString();
+        if (str.includes('A01 OK')) {
+          socket.write(`A02 APPEND "INBOX.Sent" (\\Seen) {${rawBuffer.length}}\r\n`);
+        } else if (str.startsWith('+')) {
+          socket.write(rawBuffer);
+          socket.write('\r\n');
+        } else if (str.includes('A02 OK') || str.includes('A02 NO') || str.includes('A02 BAD')) {
+          socket.write('A03 LOGOUT\r\n');
+          socket.end();
+          resolve(true);
+        }
+      });
+
+      socket.on('timeout', () => {
+        socket.destroy();
+        resolve(false);
+      });
+
+      socket.on('error', () => {
+        socket.destroy();
+        resolve(false);
+      });
+    } catch (e) {
+      resolve(false);
+    }
+  });
+};
+
+/**
  * Retrieves the effective configuration for a channel, preferring dynamic database settings in SiteSetting
  * @param {'hostinger'|'gmail'} channel 
  */
@@ -155,7 +212,7 @@ const getChannelConfig = async (channel = 'hostinger') => {
 /**
  * Builds a unified transporter instance from a resolved config object.
  * - For Gmail with OAuth2: uses high-speed HTTPS REST API (~200ms, zero port blockage).
- * - For Hostinger or SMTP: uses Nodemailer with aggressive 5s fast-fail timeouts.
+ * - For Hostinger: uses Nodemailer SMTP with non-blocking IMAP INBOX.Sent mirror so sent emails appear in Hostinger Webmail!
  */
 const createTransporterFromConfig = (config) => {
   if (config.authType === 'oauth2' && config.refreshToken) {
@@ -186,7 +243,7 @@ const createTransporterFromConfig = (config) => {
     };
   }
 
-  return nodemailer.createTransport({
+  const smtpTransport = nodemailer.createTransport({
     host: config.host,
     port: config.port,
     secure: config.secure,
@@ -197,6 +254,29 @@ const createTransporterFromConfig = (config) => {
     connectionTimeout: 5000,
     greetingTimeout: 4000,
   });
+
+  // If Hostinger, wrap sendMail to mirror into INBOX.Sent folder in webmail
+  if (config.key === 'hostinger' || (config.host && config.host.includes('hostinger'))) {
+    return {
+      sendMail: async (mailOptions) => {
+        const info = await smtpTransport.sendMail(mailOptions);
+        // Non-blocking mirror into Hostinger webmail Sent box
+        saveToHostingerSentFolder({
+          user: config.user,
+          pass: config.pass,
+          to: mailOptions.to,
+          subject: mailOptions.subject,
+          html: mailOptions.html,
+          text: mailOptions.text,
+          from: mailOptions.from || config.from,
+        }).catch(() => {});
+        return info;
+      },
+      verify: () => smtpTransport.verify(),
+    };
+  }
+
+  return smtpTransport;
 };
 
 /**
@@ -267,3 +347,4 @@ module.exports.getActiveChannels = getActiveChannels;
 module.exports.SENDER_ACCOUNTS = SENDER_ACCOUNTS;
 module.exports.sendViaGmailRestApi = sendViaGmailRestApi;
 module.exports.getGmailAccessToken = getGmailAccessToken;
+module.exports.saveToHostingerSentFolder = saveToHostingerSentFolder;
