@@ -3,13 +3,14 @@ import api from '../api/client';
 import { 
   Upload, FileSpreadsheet, Mail, CheckCircle, Clock, AlertTriangle, 
   Trash2, Play, Pause, RefreshCw, FileText, Send, Sparkles, ChevronRight,
-  Zap, Loader2, Check, X, ShieldCheck
+  Zap, Loader2, Check, X, ShieldCheck, Link2, Globe, Key, Lock, ExternalLink
 } from 'lucide-react';
 
 export default function EmailLeadsPage() {
   const [lists, setLists] = useState([]);
   const [templates, setTemplates] = useState([]);
   const [stats, setStats] = useState(null);
+  const [connectors, setConnectors] = useState({ hostinger: null, gmail: null });
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [uploadMessage, setUploadMessage] = useState(null);
@@ -20,6 +21,33 @@ export default function EmailLeadsPage() {
   const [sendingBatch, setSendingBatch] = useState(false);
   const [batchResult, setBatchResult] = useState(null);
   const [seedingTemplates, setSeedingTemplates] = useState(false);
+
+  // Connectors Modal State
+  const [showConnectorsModal, setShowConnectorsModal] = useState(false);
+  const [connectingHostinger, setConnectingHostinger] = useState(false);
+  const [connectingGmail, setConnectingGmail] = useState(false);
+  const [connectorResult, setConnectorResult] = useState(null);
+  const [gmailConnectMode, setGmailConnectMode] = useState('app_password'); // 'oauth' or 'app_password'
+  const [showHostingerPass, setShowHostingerPass] = useState(false);
+  const [showGmailPass, setShowGmailPass] = useState(false);
+
+  const [hostingerForm, setHostingerForm] = useState({
+    user: 'sale@hamlosportswear.site',
+    pass: 'Hamlo903@',
+    host: 'smtp.hostinger.com',
+    port: '465',
+    secure: true,
+    dailyQuota: 12,
+  });
+
+  const [gmailForm, setGmailForm] = useState({
+    user: 'hamlosportswear@gmail.com',
+    pass: '',
+    host: 'smtp.gmail.com',
+    port: '587',
+    secure: false,
+    dailyQuota: 12,
+  });
 
   // Automated Daily Dispatch Countdown Timer (Target: 9:00 AM EST / 14:00 UTC)
   const [timeLeft, setTimeLeft] = useState({ hours: '00', minutes: '00', seconds: '00', totalMs: 0 });
@@ -39,6 +67,31 @@ export default function EmailLeadsPage() {
   const [showTemplateModal, setShowTemplateModal] = useState(false);
   const [templateForm, setTemplateForm] = useState({ name: '', subject: '', htmlBody: '' });
 
+  const fetchConnectors = async () => {
+    try {
+      const res = await api.get('/email/connectors');
+      if (res.data.success) {
+        setConnectors(res.data.data);
+        if (res.data.data.hostinger?.email) {
+          setHostingerForm(prev => ({
+            ...prev,
+            user: res.data.data.hostinger.email,
+            host: res.data.data.hostinger.host || 'smtp.hostinger.com',
+            port: String(res.data.data.hostinger.port || '465'),
+          }));
+        }
+        if (res.data.data.gmail?.email) {
+          setGmailForm(prev => ({
+            ...prev,
+            user: res.data.data.gmail.email,
+          }));
+        }
+      }
+    } catch (err) {
+      console.warn('Failed to fetch connectors:', err.message);
+    }
+  };
+
   const fetchData = async () => {
     try {
       const [listsRes, templatesRes, statsRes] = await Promise.all([
@@ -49,7 +102,13 @@ export default function EmailLeadsPage() {
 
       if (listsRes.data.success) setLists(listsRes.data.data);
       if (templatesRes.data.success) setTemplates(templatesRes.data.data);
-      if (statsRes.data.success) setStats(statsRes.data.data);
+      if (statsRes.data.success) {
+        setStats(statsRes.data.data);
+        if (statsRes.data.data.channels) {
+          setConnectors(statsRes.data.data.channels);
+        }
+      }
+      fetchConnectors();
     } catch (err) {
       console.error('Failed to fetch email data', err);
     } finally {
@@ -59,6 +118,17 @@ export default function EmailLeadsPage() {
 
   useEffect(() => {
     fetchData();
+
+    // Check for Google OAuth callback params in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('oauth') === 'success') {
+      setBatchResult({ type: 'success', text: '🎉 Google Workspace / Gmail successfully connected via OAuth2!' });
+      window.history.replaceState({}, document.title, window.location.pathname);
+      fetchConnectors();
+    } else if (urlParams.get('oauth') === 'error') {
+      setBatchResult({ type: 'error', text: 'Google OAuth connection failed: ' + (urlParams.get('message') || 'Unknown error') });
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
   }, []);
 
   // ── LIVE COUNTDOWN TIMER TO 9:00 AM EST (14:00 UTC) ──
@@ -221,6 +291,78 @@ export default function EmailLeadsPage() {
     }
   };
 
+  const handleConnectHostinger = async (e) => {
+    e.preventDefault();
+    setConnectingHostinger(true);
+    setConnectorResult(null);
+    try {
+      const res = await api.post('/email/connect-smtp', {
+        channel: 'hostinger',
+        ...hostingerForm,
+        port: Number(hostingerForm.port),
+      });
+      setConnectorResult({ type: 'success', text: res.data.message || 'Hostinger connected successfully!' });
+      fetchConnectors();
+      fetchData();
+    } catch (err) {
+      setConnectorResult({ type: 'error', text: err.response?.data?.message || err.message });
+    } finally {
+      setConnectingHostinger(false);
+    }
+  };
+
+  const handleConnectGmailSmtp = async (e) => {
+    e.preventDefault();
+    setConnectingGmail(true);
+    setConnectorResult(null);
+    try {
+      const res = await api.post('/email/connect-smtp', {
+        channel: 'gmail',
+        ...gmailForm,
+        port: Number(gmailForm.port),
+      });
+      setConnectorResult({ type: 'success', text: res.data.message || 'Gmail connected successfully!' });
+      fetchConnectors();
+      fetchData();
+    } catch (err) {
+      setConnectorResult({ type: 'error', text: err.response?.data?.message || err.message });
+    } finally {
+      setConnectingGmail(false);
+    }
+  };
+
+  const handleConnectGoogleOAuth = async () => {
+    setConnectingGmail(true);
+    setConnectorResult(null);
+    try {
+      const res = await api.get('/email/oauth/google/url');
+      if (res.data.success && res.data.url) {
+        window.location.href = res.data.url;
+      } else {
+        setConnectorResult({ 
+          type: 'error', 
+          text: res.data.message || 'Google OAuth is not configured with client ID / secret in server environment. Please use 16-character App Password option.' 
+        });
+      }
+    } catch (err) {
+      setConnectorResult({ type: 'error', text: err.response?.data?.message || err.message });
+    } finally {
+      setConnectingGmail(false);
+    }
+  };
+
+  const handleDisconnectChannel = async (channel) => {
+    if (!window.confirm(`Are you sure you want to disconnect ${channel === 'hostinger' ? 'Hostinger' : 'Gmail'}?`)) return;
+    try {
+      const res = await api.post('/email/disconnect', { channel });
+      setConnectorResult({ type: 'success', text: res.data.message });
+      fetchConnectors();
+      fetchData();
+    } catch (err) {
+      setConnectorResult({ type: 'error', text: err.response?.data?.message || err.message });
+    }
+  };
+
   return (
     <div className="space-y-8">
       
@@ -236,6 +378,16 @@ export default function EmailLeadsPage() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            onClick={() => { setShowConnectorsModal(true); setConnectorResult(null); fetchConnectors(); }}
+            className="px-3.5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm cursor-pointer transition"
+          >
+            <Link2 size={14} /> Mail Connectors
+            {(connectors?.hostinger?.connected || connectors?.gmail?.connected) && (
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+            )}
+          </button>
+
           <button
             onClick={handleSendBatchNow}
             disabled={sendingBatch}
@@ -341,16 +493,31 @@ export default function EmailLeadsPage() {
 
               {/* Senders Channel Badges */}
               <div className="flex flex-wrap items-center gap-2.5 mt-3">
-                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-slate-800/90 border border-slate-700">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                <button
+                  type="button"
+                  onClick={() => { setShowConnectorsModal(true); setConnectorResult(null); }}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold border transition cursor-pointer shadow-xs ${connectors?.hostinger?.connected ? 'bg-emerald-950/70 border-emerald-500/50 text-emerald-300 hover:bg-emerald-900/80' : 'bg-rose-950/70 border-rose-500/50 text-rose-300 hover:bg-rose-900/80'}`}
+                >
+                  <span className={`w-2 h-2 rounded-full ${connectors?.hostinger?.connected ? 'bg-emerald-400' : 'bg-rose-400'}`} />
                   <span className="text-slate-300">Hostinger (12/day):</span>
-                  <span className="text-emerald-300 font-mono">sale@hamlosportswear.site</span>
-                </div>
-                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-slate-800/90 border border-slate-700">
-                  <span className="w-2 h-2 rounded-full bg-blue-400" />
+                  <span className="font-mono">{connectors?.hostinger?.email || 'sale@hamlosportswear.site'}</span>
+                  <span className={`text-[9px] uppercase ml-1 px-1.5 py-0.5 rounded font-black tracking-wider ${connectors?.hostinger?.connected ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-300 border border-rose-500/30'}`}>
+                    {connectors?.hostinger?.connected ? 'Connected ✓' : 'Connect'}
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => { setShowConnectorsModal(true); setConnectorResult(null); }}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold border transition cursor-pointer shadow-xs ${connectors?.gmail?.connected ? 'bg-emerald-950/70 border-emerald-500/50 text-emerald-300 hover:bg-emerald-900/80' : 'bg-amber-950/70 border-amber-500/50 text-amber-300 hover:bg-amber-900/80'}`}
+                >
+                  <span className={`w-2 h-2 rounded-full ${connectors?.gmail?.connected ? 'bg-emerald-400' : 'bg-amber-400'}`} />
                   <span className="text-slate-300">Gmail (12/day):</span>
-                  <span className="text-blue-300 font-mono">hamlosportswear@gmail.com</span>
-                </div>
+                  <span className="font-mono">{connectors?.gmail?.email || 'hamlosportswear@gmail.com'}</span>
+                  <span className={`text-[9px] uppercase ml-1 px-1.5 py-0.5 rounded font-black tracking-wider ${connectors?.gmail?.connected ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'}`}>
+                    {connectors?.gmail?.connected ? 'Connected ✓' : 'Connect'}
+                  </span>
+                </button>
               </div>
             </div>
           </div>
@@ -879,12 +1046,12 @@ export default function EmailLeadsPage() {
                   className="w-full border border-slate-300 rounded-lg p-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#F26522] bg-white font-medium"
                 >
                   <option value="hostinger">Hostinger Business: sale@hamlosportswear.site (Active ✓)</option>
-                  <option value="gmail">Google Gmail: hamlosportswear@gmail.com (Requires App Password)</option>
+                  <option value="gmail">Google Gmail: hamlosportswear@gmail.com</option>
                 </select>
                 <span className="text-[10px] text-slate-400 mt-1 block">
                   {testChannel === 'hostinger' 
                     ? 'Dispatched directly via smtp.hostinger.com:465 with SSL encryption.' 
-                    : 'Dispatched via smtp.gmail.com:587 (Requires 16-char Google App Password in .env).'}
+                    : 'Dispatched via smtp.gmail.com:587 (Requires connected Gmail).'}
                 </span>
               </div>
 
@@ -945,6 +1112,370 @@ export default function EmailLeadsPage() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* ── MAIL CONNECTORS MODAL (HOSTINGER & GMAIL) ── */}
+      {showConnectorsModal && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-xs z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-2xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl space-y-6 my-8 border border-slate-200">
+            
+            {/* Modal Header */}
+            <div className="flex items-center justify-between pb-4 border-b border-slate-200">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-600 flex items-center justify-center">
+                  <Link2 size={20} />
+                </div>
+                <div>
+                  <h3 className="font-black text-lg uppercase tracking-tight text-slate-900 flex items-center gap-2">
+                    Mail Senders Connectors
+                    <span className="text-[10px] bg-indigo-100 text-indigo-700 font-bold px-2 py-0.5 rounded-full uppercase">
+                      Dual Senders Pipeline
+                    </span>
+                  </h3>
+                  <p className="text-xs text-slate-500 font-medium">
+                    Hostinger Business Mail (12/day) aur Google Workspace / Gmail (12/day) connect karein ta ke daily 24 automated emails dispatch hon.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowConnectorsModal(false)}
+                className="text-slate-400 hover:text-slate-700 font-bold text-lg p-1.5 rounded-lg hover:bg-slate-100 cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Diagnostic Alert Banner */}
+            {connectorResult && (
+              <div className={`p-4 rounded-xl text-xs font-bold flex items-center justify-between gap-3 shadow-xs ${connectorResult.type === 'success' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-800 border border-rose-200'}`}>
+                <div className="flex items-center gap-2.5">
+                  {connectorResult.type === 'success' ? <CheckCircle size={18} className="text-emerald-600 flex-shrink-0" /> : <AlertTriangle size={18} className="text-rose-600 flex-shrink-0" />}
+                  <span>{connectorResult.text}</span>
+                </div>
+                <button onClick={() => setConnectorResult(null)} className="text-slate-400 hover:text-slate-700">
+                  <X size={14} />
+                </button>
+              </div>
+            )}
+
+            {/* Two Connector Columns */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+              {/* ── CARD 1: HOSTINGER BUSINESS MAIL ── */}
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 flex flex-col justify-between space-y-4">
+                <div>
+                  <div className="flex items-center justify-between mb-3 pb-3 border-b border-slate-200">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-xs">
+                        H
+                      </div>
+                      <div>
+                        <h4 className="font-black text-sm text-slate-900 uppercase">Hostinger Mail</h4>
+                        <span className="text-[10px] text-slate-500 font-medium">Domain Business SMTP</span>
+                      </div>
+                    </div>
+                    {connectors?.hostinger?.connected ? (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300">
+                        <Check size={12} className="text-emerald-600" /> CONNECTED
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-200 text-slate-600">
+                        DISCONNECTED
+                      </span>
+                    )}
+                  </div>
+
+                  <p className="text-xs text-slate-600 mb-4 leading-relaxed">
+                    Hostinger business mailbox credentials enter karein. System live verify karega aur instant database me connect kar dega:
+                  </p>
+
+                  <form onSubmit={handleConnectHostinger} className="space-y-3">
+                    <div>
+                      <label className="block text-[11px] font-bold uppercase text-slate-700 mb-1">
+                        Hostinger Email Address
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={hostingerForm.user}
+                        onChange={(e) => setHostingerForm({ ...hostingerForm, user: e.target.value })}
+                        className="w-full border border-slate-300 rounded-lg p-2.5 text-xs text-slate-900 bg-white font-mono focus:border-emerald-500 focus:outline-none"
+                        placeholder="sale@hamlosportswear.site"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold uppercase text-slate-700 mb-1">
+                        Mail Password
+                      </label>
+                      <div className="relative">
+                        <input
+                          type={showHostingerPass ? 'text' : 'password'}
+                          required
+                          value={hostingerForm.pass}
+                          onChange={(e) => setHostingerForm({ ...hostingerForm, pass: e.target.value })}
+                          className="w-full border border-slate-300 rounded-lg p-2.5 pr-9 text-xs text-slate-900 bg-white font-mono focus:border-emerald-500 focus:outline-none"
+                          placeholder="Hamlo903@"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowHostingerPass(!showHostingerPass)}
+                          className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 text-xs font-bold"
+                        >
+                          {showHostingerPass ? 'Hide' : 'Show'}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 text-[11px]">
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase text-slate-500 mb-0.5">SMTP Host</label>
+                        <input
+                          type="text"
+                          value={hostingerForm.host}
+                          onChange={(e) => setHostingerForm({ ...hostingerForm, host: e.target.value })}
+                          className="w-full border border-slate-300 rounded p-1.5 text-xs bg-white text-slate-700 font-mono"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase text-slate-500 mb-0.5">Port (SSL)</label>
+                        <input
+                          type="text"
+                          value={hostingerForm.port}
+                          onChange={(e) => setHostingerForm({ ...hostingerForm, port: e.target.value })}
+                          className="w-full border border-slate-300 rounded p-1.5 text-xs bg-white text-slate-700 font-mono"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="pt-2 flex items-center justify-between gap-2">
+                      <button
+                        type="submit"
+                        disabled={connectingHostinger}
+                        className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-sm cursor-pointer disabled:opacity-50 transition"
+                      >
+                        {connectingHostinger ? (
+                          <>
+                            <Loader2 size={13} className="animate-spin" />
+                            <span>Verifying...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Zap size={13} />
+                            <span>⚡ Verify & Connect Hostinger</span>
+                          </>
+                        )}
+                      </button>
+
+                      {connectors?.hostinger?.connected && (
+                        <button
+                          type="button"
+                          onClick={() => handleDisconnectChannel('hostinger')}
+                          className="px-3 py-2.5 border border-rose-300 text-rose-700 hover:bg-rose-50 rounded-lg text-xs font-bold uppercase tracking-wider cursor-pointer transition"
+                        >
+                          Disconnect
+                        </button>
+                      )}
+                    </div>
+                  </form>
+                </div>
+
+                <div className="pt-3 border-t border-slate-200 text-[10px] text-slate-500 flex items-center gap-1.5">
+                  <ShieldCheck size={14} className="text-emerald-600 flex-shrink-0" />
+                  <span>Verified credentials encrypt directly into your database. Daily quota: 12 leads.</span>
+                </div>
+              </div>
+
+              {/* ── CARD 2: GMAIL / GOOGLE WORKSPACE ── */}
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 flex flex-col justify-between space-y-4">
+                <div>
+                  <div className="flex items-center justify-between mb-3 pb-3 border-b border-slate-200">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-black text-xs">
+                        G
+                      </div>
+                      <div>
+                        <h4 className="font-black text-sm text-slate-900 uppercase">Gmail / Google Workspace</h4>
+                        <span className="text-[10px] text-slate-500 font-medium">OAuth2 & Direct App Password</span>
+                      </div>
+                    </div>
+                    {connectors?.gmail?.connected ? (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300">
+                        <Check size={12} className="text-emerald-600" /> CONNECTED
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-200 text-slate-600">
+                        DISCONNECTED
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Mode Selector Tabs */}
+                  <div className="grid grid-cols-2 gap-2 p-1 bg-slate-200 rounded-lg mb-4 text-xs font-bold">
+                    <button
+                      type="button"
+                      onClick={() => setGmailConnectMode('app_password')}
+                      className={`py-1.5 rounded-md transition ${gmailConnectMode === 'app_password' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
+                    >
+                      App Password (SMTP)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setGmailConnectMode('oauth')}
+                      className={`py-1.5 rounded-md transition ${gmailConnectMode === 'oauth' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
+                    >
+                      Google OAuth2 (1-Click)
+                    </button>
+                  </div>
+
+                  {gmailConnectMode === 'oauth' ? (
+                    /* OAuth 2.0 Tab */
+                    <div className="space-y-4 py-2">
+                      <p className="text-xs text-slate-600 leading-relaxed">
+                        ChatGPT connector ki tarah Google Login ke zariye 1-click authorization se Gmail account connect karein:
+                      </p>
+
+                      <div className="p-4 bg-white border border-slate-200 rounded-xl text-center space-y-3">
+                        <button
+                          type="button"
+                          onClick={handleConnectGoogleOAuth}
+                          disabled={connectingGmail}
+                          className="w-full py-3 px-4 bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 rounded-xl text-xs font-bold shadow-xs hover:shadow transition flex items-center justify-center gap-3 cursor-pointer"
+                        >
+                          <svg className="w-4 h-4" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+                          </svg>
+                          <span>Sign in with Google to Connect</span>
+                        </button>
+                        <p className="text-[10px] text-slate-400">
+                          Note: Requires GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET configured in server .env.
+                        </p>
+                      </div>
+
+                      {connectors?.gmail?.connected && (
+                        <div className="pt-2 text-right">
+                          <button
+                            type="button"
+                            onClick={() => handleDisconnectChannel('gmail')}
+                            className="px-3 py-2 border border-rose-300 text-rose-700 hover:bg-rose-50 rounded-lg text-xs font-bold uppercase cursor-pointer"
+                          >
+                            Disconnect Gmail
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    /* App Password SMTP Tab */
+                    <form onSubmit={handleConnectGmailSmtp} className="space-y-3">
+                      <div>
+                        <label className="block text-[11px] font-bold uppercase text-slate-700 mb-1">
+                          Gmail Address
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          value={gmailForm.user}
+                          onChange={(e) => setGmailForm({ ...gmailForm, user: e.target.value })}
+                          className="w-full border border-slate-300 rounded-lg p-2.5 text-xs text-slate-900 bg-white font-mono focus:border-blue-500 focus:outline-none"
+                          placeholder="hamlosportswear@gmail.com"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-bold uppercase text-slate-700 mb-1 flex items-center justify-between">
+                          <span>16-Char Google App Password</span>
+                          <a
+                            href="https://myaccount.google.com/apppasswords"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:underline flex items-center gap-1 font-bold lowercase text-[10px]"
+                          >
+                            <span>Generate App Password</span>
+                            <ExternalLink size={10} />
+                          </a>
+                        </label>
+                        <div className="relative">
+                          <input
+                            type={showGmailPass ? 'text' : 'password'}
+                            required
+                            value={gmailForm.pass}
+                            onChange={(e) => setGmailForm({ ...gmailForm, pass: e.target.value })}
+                            className="w-full border border-slate-300 rounded-lg p-2.5 pr-9 text-xs text-slate-900 bg-white font-mono focus:border-blue-500 focus:outline-none"
+                            placeholder="xxxx xxxx xxxx xxxx"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowGmailPass(!showGmailPass)}
+                            className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 text-xs font-bold"
+                          >
+                            {showGmailPass ? 'Hide' : 'Show'}
+                          </button>
+                        </div>
+                        <span className="text-[10px] text-slate-500 mt-1 block">
+                          Tip: Google Account &gt; Security &gt; 2-Step Verification &gt; App Passwords se 16-character code generate karein.
+                        </span>
+                      </div>
+
+                      <div className="pt-2 flex items-center justify-between gap-2">
+                        <button
+                          type="submit"
+                          disabled={connectingGmail || !gmailForm.pass}
+                          className="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-sm cursor-pointer disabled:opacity-50 transition"
+                        >
+                          {connectingGmail ? (
+                            <>
+                              <Loader2 size={13} className="animate-spin" />
+                              <span>Verifying...</span>
+                            </>
+                          ) : (
+                            <>
+                              <Zap size={13} />
+                              <span>⚡ Verify & Connect Gmail</span>
+                            </>
+                          )}
+                        </button>
+
+                        {connectors?.gmail?.connected && (
+                          <button
+                            type="button"
+                            onClick={() => handleDisconnectChannel('gmail')}
+                            className="px-3 py-2.5 border border-rose-300 text-rose-700 hover:bg-rose-50 rounded-lg text-xs font-bold uppercase tracking-wider cursor-pointer transition"
+                          >
+                            Disconnect
+                          </button>
+                        )}
+                      </div>
+                    </form>
+                  )}
+                </div>
+
+                <div className="pt-3 border-t border-slate-200 text-[10px] text-slate-500 flex items-center gap-1.5">
+                  <ShieldCheck size={14} className="text-blue-600 flex-shrink-0" />
+                  <span>Google Workspace / Gmail delivers directly to inbox. Daily quota: 12 leads.</span>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Modal Footer */}
+            <div className="pt-4 border-t border-slate-200 flex items-center justify-between">
+              <span className="text-xs text-slate-500 font-medium">
+                Dono accounts connect hone ke baad rozana kul <strong>24 leads</strong> dispatch hongi (12 Hostinger + 12 Gmail).
+              </span>
+              <button
+                type="button"
+                onClick={() => setShowConnectorsModal(false)}
+                className="px-5 py-2.5 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-bold uppercase tracking-wider cursor-pointer"
+              >
+                Done
+              </button>
+            </div>
+
           </div>
         </div>
       )}

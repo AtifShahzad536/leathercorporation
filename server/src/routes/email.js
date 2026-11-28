@@ -7,7 +7,8 @@ const EmailList = require('../models/EmailList');
 const EmailTemplate = require('../models/EmailTemplate');
 const EmailLog = require('../models/EmailLog');
 const parseExcelFile = require('../utils/parseExcel');
-const { createTransporter, SENDER_ACCOUNTS, getActiveChannels } = require('../config/email');
+const SiteSetting = require('../models/SiteSetting');
+const { createTransporter, createTransporterFromConfig, getChannelConfig, SENDER_ACCOUNTS, getActiveChannels } = require('../config/email');
 const { sendDailyEmails, ensureDefaultTemplates } = require('../cron/emailCron');
 const { protect } = require('../middleware/auth');
 
@@ -268,12 +269,237 @@ router.get('/stats', protect, async (req, res) => {
         dailyQuota: 24,
         hostingerQuota: 12,
         gmailQuota: 12,
-        channels: getActiveChannels(),
+        channels: await getActiveChannels(),
         schedule: 'Daily at 9:00 AM EST (USA Morning) • Dual Channels (24 Leads/Day)',
       },
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// ── EMAIL CONNECTORS & SETTINGS ──
+
+// GET /api/email/connectors - Retrieve live connection status for Hostinger & Gmail
+router.get('/connectors', protect, async (req, res) => {
+  try {
+    const channels = await getActiveChannels();
+    res.json({
+      success: true,
+      data: channels,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// POST /api/email/connect-smtp - Verify and save dynamic credentials for Hostinger or Gmail
+router.post('/connect-smtp', protect, async (req, res) => {
+  try {
+    const { channel = 'hostinger', user, pass, host, port, secure, dailyQuota = 12 } = req.body;
+
+    if (!user || !pass) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email address and password/app-password are required.',
+      });
+    }
+
+    const targetHost = host || (channel === 'hostinger' ? 'smtp.hostinger.com' : 'smtp.gmail.com');
+    const targetPort = parseInt(port || (channel === 'hostinger' ? '465' : '587'), 10);
+    const targetSecure = secure !== undefined ? Boolean(secure) : (targetPort === 465);
+
+    console.log(`[CONNECT SMTP] 🔌 Verifying credentials for ${channel}: ${user} on ${targetHost}:${targetPort}...`);
+
+    // 1. Live test credentials via Nodemailer
+    const testTransporter = createTransporterFromConfig({
+      host: targetHost,
+      port: targetPort,
+      secure: targetSecure,
+      user,
+      pass,
+    });
+
+    try {
+      await testTransporter.verify();
+      console.log(`[CONNECT SMTP] ✅ Verification SUCCESS for ${channel} (${user})!`);
+    } catch (authErr) {
+      console.error(`[CONNECT SMTP] ❌ Verification FAILED for ${channel} (${user}):`, authErr.message);
+      return res.status(400).json({
+        success: false,
+        message: `Verification failed: ${authErr.message}. Please check your email and password.`,
+      });
+    }
+
+    // 2. Persist verified connection in SiteSetting
+    const displayName = channel === 'hostinger' ? 'Hostinger Business Mail' : 'Google Workspace / Gmail';
+    await SiteSetting.findOneAndUpdate(
+      { key: `email_channel_${channel}` },
+      {
+        key: `email_channel_${channel}`,
+        value: {
+          key: channel,
+          displayName,
+          user,
+          pass,
+          host: targetHost,
+          port: targetPort,
+          secure: targetSecure,
+          dailyQuota: parseInt(dailyQuota, 10),
+          connected: true,
+          authType: 'smtp',
+          lastVerified: new Date().toISOString(),
+        },
+        description: `Verified dynamic SMTP settings for ${channel}`,
+      },
+      { upsert: true, new: true }
+    );
+
+    res.json({
+      success: true,
+      message: `🎉 Successfully verified and connected ${displayName} (${user})!`,
+      data: {
+        channel,
+        user,
+        host: targetHost,
+        port: targetPort,
+        connected: true,
+        lastVerified: new Date().toISOString(),
+      },
+    });
+  } catch (error) {
+    console.error('[CONNECT SMTP] Error:', error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// POST /api/email/disconnect - Disconnect an email channel
+router.post('/disconnect', protect, async (req, res) => {
+  try {
+    const { channel = 'hostinger' } = req.body;
+    await SiteSetting.findOneAndUpdate(
+      { key: `email_channel_${channel}` },
+      {
+        key: `email_channel_${channel}`,
+        value: {
+          connected: false,
+          pass: '',
+          refreshToken: '',
+          disconnectedAt: new Date().toISOString(),
+        },
+      },
+      { upsert: true, new: true }
+    );
+
+    res.json({
+      success: true,
+      message: `Successfully disconnected ${channel} channel.`,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// GET /api/email/oauth/google/url - Generate Google OAuth consent URL for Gmail
+router.get('/oauth/google/url', protect, async (req, res) => {
+  try {
+    const clientId = process.env.GOOGLE_CLIENT_ID;
+    if (!clientId) {
+      return res.json({
+        success: false,
+        configured: false,
+        message: 'Google Client ID is not set in environment variables (GOOGLE_CLIENT_ID).',
+      });
+    }
+
+    const host = req.get('host');
+    const protocol = req.protocol === 'https' || req.headers['x-forwarded-proto'] === 'https' ? 'https' : 'http';
+    const redirectUri = `${protocol}://${host}/api/email/oauth/google/callback`;
+    const scopes = encodeURIComponent('https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/userinfo.email');
+    const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${scopes}&access_type=offline&prompt=consent`;
+
+    res.json({
+      success: true,
+      configured: true,
+      url,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// GET /api/email/oauth/google/callback - Google OAuth callback handler
+router.get('/oauth/google/callback', async (req, res) => {
+  try {
+    const { code } = req.query;
+    if (!code) {
+      return res.status(400).send('OAuth authorization code missing.');
+    }
+
+    const clientId = process.env.GOOGLE_CLIENT_ID;
+    const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+    const host = req.get('host');
+    const protocol = req.protocol === 'https' || req.headers['x-forwarded-proto'] === 'https' ? 'https' : 'http';
+    const redirectUri = `${protocol}://${host}/api/email/oauth/google/callback`;
+
+    // Exchange authorization code for tokens
+    const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        code,
+        client_id: clientId,
+        client_secret: clientSecret,
+        redirect_uri: redirectUri,
+        grant_type: 'authorization_code',
+      }),
+    });
+
+    const tokenData = await tokenResponse.json();
+
+    if (!tokenData.refresh_token && !tokenData.access_token) {
+      throw new Error(tokenData.error_description || 'Failed to exchange code for tokens with Google.');
+    }
+
+    // Fetch user email from Google Profile
+    let userEmail = 'hamlosportswear@gmail.com';
+    if (tokenData.access_token) {
+      try {
+        const userInfoRes = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+          headers: { Authorization: `Bearer ${tokenData.access_token}` },
+        });
+        const userInfo = await userInfoRes.json();
+        if (userInfo.email) userEmail = userInfo.email;
+      } catch (e) {}
+    }
+
+    // Save OAuth tokens into SiteSetting
+    await SiteSetting.findOneAndUpdate(
+      { key: 'email_channel_gmail' },
+      {
+        key: 'email_channel_gmail',
+        value: {
+          key: 'gmail',
+          displayName: 'Google Workspace / Gmail',
+          user: userEmail,
+          authType: 'oauth2',
+          refreshToken: tokenData.refresh_token,
+          accessToken: tokenData.access_token,
+          connected: true,
+          dailyQuota: 12,
+          lastVerified: new Date().toISOString(),
+        },
+        description: 'Dynamic Google OAuth2 Connector for Gmail',
+      },
+      { upsert: true }
+    );
+
+    const adminUrl = process.env.ADMIN_URL || 'https://leathercorporation-oi7z.vercel.app';
+    res.redirect(`${adminUrl}/email-leads?oauth=success&channel=gmail`);
+  } catch (error) {
+    console.error('[GOOGLE OAUTH CALLBACK ERROR]:', error.message);
+    const adminUrl = process.env.ADMIN_URL || 'https://leathercorporation-oi7z.vercel.app';
+    res.redirect(`${adminUrl}/email-leads?oauth=error&message=${encodeURIComponent(error.message)}`);
   }
 });
 
@@ -336,12 +562,12 @@ router.post('/test-send', protect, async (req, res) => {
     }
 
     const selectedChannel = channel === 'gmail' ? 'gmail' : 'hostinger';
-    const senderConfig = SENDER_ACCOUNTS[selectedChannel];
+    const senderConfig = await getChannelConfig(selectedChannel);
 
-    if (selectedChannel === 'gmail' && !senderConfig.pass) {
+    if (selectedChannel === 'gmail' && !senderConfig.pass && !senderConfig.refreshToken) {
       return res.status(400).json({
         success: false,
-        message: 'Gmail App Password not set yet. Please generate a 16-character Google App Password for hamlosportswear@gmail.com and add it to server/.env.',
+        message: 'Gmail account not connected yet. Please connect via Google OAuth or enter App Password in Mail Connectors.',
       });
     }
 
@@ -375,7 +601,7 @@ router.post('/test-send', protect, async (req, res) => {
       `;
     }
 
-    const transporter = createTransporter(selectedChannel);
+    const transporter = createTransporterFromConfig(senderConfig);
 
     await transporter.sendMail({
       from: senderConfig.from,

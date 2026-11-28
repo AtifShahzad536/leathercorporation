@@ -2,7 +2,7 @@ const cron = require('node-cron');
 const EmailList = require('../models/EmailList');
 const EmailTemplate = require('../models/EmailTemplate');
 const EmailLog = require('../models/EmailLog');
-const { createTransporter, SENDER_ACCOUNTS } = require('../config/email');
+const { getDynamicTransporter, SENDER_ACCOUNTS } = require('../config/email');
 
 // Dual Channel Quotas: 12 from Hostinger + 12 from Gmail = 24 Leads / Day
 const HOSTINGER_QUOTA = parseInt(process.env.HOSTINGER_BATCH_SIZE || '12', 10);
@@ -466,9 +466,9 @@ const sendDailyEmails = async () => {
 
     console.log(`[EMAIL CRON] Processing dual batch of ${pendingEmails.length} leads from "${activeList.fileName}"...`);
 
-    // 4. Create Nodemailer transporters for both Hostinger and Gmail
-    const hostingerTransporter = createTransporter('hostinger');
-    const gmailTransporter = createTransporter('gmail');
+    // 4. Create Nodemailer transporters from dynamic DB / env settings
+    const { transporter: hostingerTransporter, config: hostingerConfig } = await getDynamicTransporter('hostinger');
+    const { transporter: gmailTransporter, config: gmailConfig } = await getDynamicTransporter('gmail');
 
     let hostingerSent = 0;
     let hostingerFailed = 0;
@@ -480,16 +480,16 @@ const sendDailyEmails = async () => {
       const entry = pendingEmails[i];
       // Assign channel: first HOSTINGER_QUOTA (12) to Hostinger, remainder (up to 12) to Gmail
       const channel = i < HOSTINGER_QUOTA ? 'hostinger' : 'gmail';
-      const senderConfig = SENDER_ACCOUNTS[channel];
+      const senderConfig = channel === 'hostinger' ? hostingerConfig : gmailConfig;
       const transporter = channel === 'hostinger' ? hostingerTransporter : gmailTransporter;
 
       // Rotate templates so every lead across both channels receives a different template
       const template = templates[i % templates.length];
 
       try {
-        // Validation check for Gmail App Password
-        if (channel === 'gmail' && !senderConfig.pass) {
-          throw new Error('Gmail App Password not configured yet in server environment. Please generate a 16-character Google App Password for hamlosportswear@gmail.com.');
+        // Validation check for Gmail authentication
+        if (channel === 'gmail' && !senderConfig.pass && !senderConfig.refreshToken) {
+          throw new Error('Gmail account not connected yet. Please connect via Google or enter App Password in Mail Connectors.');
         }
 
         let html = template.htmlBody
