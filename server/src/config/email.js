@@ -39,15 +39,30 @@ const getChannelConfig = async (channel = 'hostinger') => {
 
   try {
     const setting = await SiteSetting.findOne({ key: `email_channel_${channel}` });
-    if (setting && setting.value && setting.value.user) {
-      return {
-        ...fallback,
-        ...setting.value,
-        key: channel,
-        from: `"HAMLO SPORTS" <${setting.value.user}>`,
-        replyTo: 'sale@hamlosportswear.site',
-      };
+    let resolved = (setting && setting.value && setting.value.user) 
+      ? { ...fallback, ...setting.value } 
+      : { ...fallback };
+
+    if (channel === 'gmail') {
+      // Ensure Google OAuth Client ID & Secret are always injected from DB or env
+      if (!resolved.clientId || !resolved.clientSecret) {
+        const oauthSetting = await SiteSetting.findOne({ key: 'google_oauth_credentials' });
+        if (oauthSetting && oauthSetting.value) {
+          resolved.clientId = resolved.clientId || oauthSetting.value.clientId || process.env.GOOGLE_CLIENT_ID;
+          resolved.clientSecret = resolved.clientSecret || oauthSetting.value.clientSecret || process.env.GOOGLE_CLIENT_SECRET;
+        } else {
+          resolved.clientId = resolved.clientId || process.env.GOOGLE_CLIENT_ID;
+          resolved.clientSecret = resolved.clientSecret || process.env.GOOGLE_CLIENT_SECRET;
+        }
+      }
     }
+
+    return {
+      ...resolved,
+      key: channel,
+      from: `"HAMLO SPORTS" <${resolved.user}>`,
+      replyTo: 'sale@hamlosportswear.site',
+    };
   } catch (err) {
     console.warn(`[EMAIL CONFIG] Database read warning for ${channel}:`, err.message);
   }

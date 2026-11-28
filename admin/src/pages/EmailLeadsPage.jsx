@@ -452,65 +452,58 @@ export default function EmailLeadsPage() {
     <div className="space-y-8">
       
       {/* ── TOP HEADER ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200/80">
         <div>
-          <h1 className="text-2xl font-black text-slate-900 uppercase tracking-tight">
-            Email Marketing & Lead Automation
-          </h1>
-          <p className="text-xs text-slate-500 font-medium mt-1">
-            Excel Lead Ingestion • Daily 24 Leads at 9:00 AM EST • Dual Senders: Hostinger (12/day) + Gmail (12/day) • Alternating Templates
-          </p>
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#1E1B6E] to-indigo-600 text-white flex items-center justify-center shadow-sm">
+              <Mail size={18} />
+            </div>
+            <div>
+              <h1 className="text-xl sm:text-2xl font-black text-slate-900 uppercase tracking-tight">
+                Email Marketing & Leads Management
+              </h1>
+              <p className="text-xs text-slate-500 font-medium">
+                Dual Dispatch Engine • Hostinger (12/day) + Gmail (12/day) = 24 Leads/Day • 10 Pro Templates
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5">
+        {/* Clean, Non-Clustered Action Toolbar */}
+        <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => { setShowConnectorsModal(true); setConnectorResult(null); fetchConnectors(); }}
-            className="px-3.5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm cursor-pointer transition"
+            className="px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 hover:text-slate-900 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-xs cursor-pointer transition"
           >
-            <Link2 size={14} /> Mail Connectors
+            <Link2 size={14} className="text-indigo-600" />
+            <span>Mail Connectors</span>
             {(connectors?.hostinger?.connected || connectors?.gmail?.connected) && (
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
-            )}
-          </button>
-
-          <button
-            onClick={handleSendBatchNow}
-            disabled={sendingBatch}
-            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-sm cursor-pointer disabled:opacity-50 transition"
-          >
-            {sendingBatch ? (
-              <>
-                <Loader2 size={14} className="animate-spin" />
-                <span>Sending 24 Leads...</span>
-              </>
-            ) : (
-              <>
-                <Zap size={14} />
-                <span>⚡ Dispatch Dual Batch (24 Leads) Now</span>
-              </>
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             )}
           </button>
 
           <button
             onClick={() => { setShowTestModal(true); setTestResult(null); }}
-            className="px-3.5 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm cursor-pointer transition"
+            className="px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 hover:text-slate-900 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-xs cursor-pointer transition"
           >
-            <Mail size={14} /> Send Test Email
+            <Send size={14} className="text-slate-500" />
+            <span>Send Test</span>
           </button>
 
           <button
             onClick={() => setShowTemplateModal(true)}
-            className="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm cursor-pointer transition"
+            className="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-xs cursor-pointer transition"
           >
-            <Sparkles size={14} /> New Template
+            <Sparkles size={14} />
+            <span>+ New Template</span>
           </button>
 
           <button
             onClick={fetchData}
             title="Refresh Email Pipeline"
-            className="p-2 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg shadow-xs cursor-pointer"
+            className="p-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-600 hover:text-slate-900 rounded-xl shadow-xs cursor-pointer transition"
           >
-            <RefreshCw size={16} />
+            <RefreshCw size={15} />
           </button>
         </div>
       </div>
@@ -550,105 +543,132 @@ export default function EmailLeadsPage() {
         </div>
       )}
 
-      {/* ── LIVE DIGITAL DISPATCH COUNTDOWN & DUAL PIPELINE BANNER (LIGHT THEME) ── */}
-      <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-xs relative overflow-hidden bg-gradient-to-br from-white via-slate-50/70 to-indigo-50/20">
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#F26522] via-indigo-600 to-emerald-500" />
+      {/* ── LIVE DIGITAL DISPATCH COUNTDOWN & DUAL PIPELINE HERO CARD ── */}
+      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm relative overflow-hidden">
+        {/* Brand Accent Bar */}
+        <div className="h-1.5 w-full bg-gradient-to-r from-[#F26522] via-indigo-600 to-emerald-500" />
         
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          
-          {/* Schedule Info */}
-          <div className="flex items-start gap-4 flex-1">
-            <div className="w-12 h-12 rounded-xl bg-orange-50 text-[#F26522] border border-orange-200/80 flex items-center justify-center flex-shrink-0 mt-0.5 shadow-2xs">
-              <Clock size={24} className="text-[#F26522]" />
-            </div>
-            <div>
+        <div className="p-6 sm:p-7">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            
+            {/* Left Column: Pipeline Info & Connectors (lg:col-span-6) */}
+            <div className="lg:col-span-6 space-y-3.5">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-200">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-2xs">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  Dual Pipeline Active
+                  Dual Engine Active
                 </span>
-                <span className="text-[10px] bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-md font-mono border border-slate-200 font-bold">
-                  Daily 9:00 AM EST (14:00 UTC)
+                <span className="text-[11px] bg-slate-100 text-slate-700 px-3 py-1 rounded-full font-mono font-bold border border-slate-200">
+                  Target: 9:00 AM EST (14:00 UTC)
                 </span>
               </div>
-              <h3 className="font-black text-lg sm:text-xl uppercase tracking-tight text-slate-900 mt-1.5">
-                Next Automated Dual Batch Dispatch (24 Leads)
-              </h3>
-              <p className="text-xs text-slate-600 mt-1 leading-relaxed max-w-xl">
-                Rozana Subha USA time per <strong>24 leads</strong> ko automatically emails dispatch hongi: 12 leads via Hostinger aur 12 leads via Gmail with alternating different templates.
-              </p>
+
+              <div>
+                <h3 className="font-black text-lg sm:text-xl uppercase tracking-tight text-slate-900">
+                  Next Automated Dual Batch Dispatch (24 Leads)
+                </h3>
+                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                  Rozana Subha <strong>24 leads</strong> ko automatically emails dispatch hoti hain: 12 leads via Hostinger + 12 leads via Gmail alternating 10 pro marketing templates.
+                </p>
+              </div>
 
               {/* Senders Channel Badges */}
-              <div className="flex flex-wrap items-center gap-2.5 mt-3.5">
-                <button
-                  type="button"
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                {/* Hostinger Card */}
+                <div 
                   onClick={() => { setShowConnectorsModal(true); setConnectorResult(null); }}
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold border transition cursor-pointer shadow-2xs ${connectors?.hostinger?.connected ? 'bg-emerald-50/90 border-emerald-200 text-emerald-900 hover:bg-emerald-100' : 'bg-rose-50 border-rose-200 text-rose-900 hover:bg-rose-100'}`}
+                  className="flex items-center justify-between p-2.5 rounded-xl border border-slate-200 bg-slate-50/70 hover:bg-slate-100 transition cursor-pointer group shadow-2xs"
                 >
-                  <span className={`w-2 h-2 rounded-full ${connectors?.hostinger?.connected ? 'bg-emerald-500' : 'bg-rose-500'}`} />
-                  <span className="text-slate-600">Hostinger (12/day):</span>
-                  <span className="font-mono text-slate-900">{connectors?.hostinger?.email || 'sale@hamlosportswear.site'}</span>
-                  <span className={`text-[9px] uppercase px-1.5 py-0.5 rounded font-black tracking-wider ${connectors?.hostinger?.connected ? 'bg-emerald-200/70 text-emerald-900' : 'bg-rose-200/70 text-rose-900'}`}>
-                    {connectors?.hostinger?.connected ? 'Connected ✓' : 'Connect'}
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${connectors?.hostinger?.connected ? 'bg-emerald-500' : 'bg-rose-500'}`} />
+                    <div className="min-w-0">
+                      <div className="text-[10px] font-black uppercase tracking-wider text-slate-500">Hostinger (12/day)</div>
+                      <div className="text-xs font-mono font-bold text-slate-800 truncate" title={connectors?.hostinger?.email || 'sale@hamlosportswear.site'}>
+                        {connectors?.hostinger?.email || 'sale@hamlosportswear.site'}
+                      </div>
+                    </div>
+                  </div>
+                  <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-md tracking-wider flex-shrink-0 ml-2 ${connectors?.hostinger?.connected ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-rose-100 text-rose-800 border border-rose-200'}`}>
+                    {connectors?.hostinger?.connected ? 'ACTIVE' : 'SETUP'}
                   </span>
-                </button>
+                </div>
 
-                <button
-                  type="button"
+                {/* Gmail Card */}
+                <div 
                   onClick={() => { setShowConnectorsModal(true); setConnectorResult(null); }}
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold border transition cursor-pointer shadow-2xs ${connectors?.gmail?.connected ? 'bg-blue-50/90 border-blue-200 text-blue-900 hover:bg-blue-100' : 'bg-amber-50 border-amber-200 text-amber-900 hover:bg-amber-100'}`}
+                  className="flex items-center justify-between p-2.5 rounded-xl border border-slate-200 bg-slate-50/70 hover:bg-slate-100 transition cursor-pointer group shadow-2xs"
                 >
-                  <span className={`w-2 h-2 rounded-full ${connectors?.gmail?.connected ? 'bg-blue-500' : 'bg-amber-500'}`} />
-                  <span className="text-slate-600">Gmail (12/day):</span>
-                  <span className="font-mono text-slate-900">{connectors?.gmail?.email || 'hamlosportswear@gmail.com'}</span>
-                  <span className={`text-[9px] uppercase px-1.5 py-0.5 rounded font-black tracking-wider ${connectors?.gmail?.connected ? 'bg-blue-200/70 text-blue-900' : 'bg-amber-200/70 text-amber-900'}`}>
-                    {connectors?.gmail?.connected ? 'Connected ✓' : 'Connect'}
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${connectors?.gmail?.connected ? 'bg-blue-500' : 'bg-amber-500'}`} />
+                    <div className="min-w-0">
+                      <div className="text-[10px] font-black uppercase tracking-wider text-slate-500">Gmail (12/day)</div>
+                      <div className="text-xs font-mono font-bold text-slate-800 truncate" title={connectors?.gmail?.email || 'hamlosportswear@gmail.com'}>
+                        {connectors?.gmail?.email || 'hamlosportswear@gmail.com'}
+                      </div>
+                    </div>
+                  </div>
+                  <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-md tracking-wider flex-shrink-0 ml-2 ${connectors?.gmail?.connected ? 'bg-blue-100 text-blue-800 border border-blue-200' : 'bg-amber-100 text-amber-800 border border-amber-200'}`}>
+                    {connectors?.gmail?.connected ? 'ACTIVE' : 'SETUP'}
                   </span>
-                </button>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* ── LIVE DIGITAL COUNTDOWN CLOCK ── */}
-          <div className="flex items-center gap-2 bg-slate-900 p-3 sm:p-3.5 rounded-2xl border border-slate-800 shadow-md self-start lg:self-auto">
-            <div className="text-center min-w-[56px]">
-              <div className="font-mono text-2xl sm:text-3xl font-black bg-slate-800 text-white px-2.5 py-1 rounded-xl border border-slate-700/80 shadow-inner">
-                {timeLeft.hours}
+            {/* Middle Column: Digital Countdown Clock (lg:col-span-3) */}
+            <div className="lg:col-span-3 flex flex-col items-center justify-center p-4 bg-slate-950 rounded-2xl border border-slate-800 shadow-md">
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 flex items-center gap-1.5">
+                <Clock size={12} className="text-[#F26522]" /> Countdown to 9 AM EST
+              </span>
+              <div className="flex items-center gap-1.5 font-mono">
+                <div className="text-center">
+                  <div className="text-2xl sm:text-3xl font-black bg-slate-900 text-white px-2.5 py-1.5 rounded-xl border border-slate-800 shadow-inner min-w-[52px]">
+                    {timeLeft.hours}
+                  </div>
+                  <span className="text-[9px] font-black uppercase text-slate-400 mt-1 block tracking-wider">HRS</span>
+                </div>
+                <span className="text-xl font-black text-[#F26522] pb-4">:</span>
+                <div className="text-center">
+                  <div className="text-2xl sm:text-3xl font-black bg-slate-900 text-white px-2.5 py-1.5 rounded-xl border border-slate-800 shadow-inner min-w-[52px]">
+                    {timeLeft.minutes}
+                  </div>
+                  <span className="text-[9px] font-black uppercase text-slate-400 mt-1 block tracking-wider">MIN</span>
+                </div>
+                <span className="text-xl font-black text-[#F26522] pb-4">:</span>
+                <div className="text-center">
+                  <div className="text-2xl sm:text-3xl font-black bg-slate-900 text-[#F26522] px-2.5 py-1.5 rounded-xl border border-slate-800 shadow-inner min-w-[52px]">
+                    {timeLeft.seconds}
+                  </div>
+                  <span className="text-[9px] font-black uppercase text-slate-400 mt-1 block tracking-wider">SEC</span>
+                </div>
               </div>
-              <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 mt-1 block">Hours</span>
             </div>
-            <span className="text-xl sm:text-2xl font-black text-[#F26522] pb-4">:</span>
-            <div className="text-center min-w-[56px]">
-              <div className="font-mono text-2xl sm:text-3xl font-black bg-slate-800 text-white px-2.5 py-1 rounded-xl border border-slate-700/80 shadow-inner">
-                {timeLeft.minutes}
-              </div>
-              <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 mt-1 block">Mins</span>
-            </div>
-            <span className="text-xl sm:text-2xl font-black text-[#F26522] pb-4">:</span>
-            <div className="text-center min-w-[56px]">
-              <div className="font-mono text-2xl sm:text-3xl font-black bg-slate-800 text-[#F26522] px-2.5 py-1 rounded-xl border border-slate-700/80 shadow-inner">
-                {timeLeft.seconds}
-              </div>
-              <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 mt-1 block">Secs</span>
-            </div>
-          </div>
 
-          {/* Action Button & Toggle */}
-          <div className="flex flex-col gap-2 flex-shrink-0 self-start lg:self-auto">
-            <button
-              onClick={handleSendBatchNow}
-              disabled={sendingBatch}
-              className="px-5 py-3.5 bg-[#F26522] hover:bg-[#d95316] text-white rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-md hover:shadow-lg cursor-pointer disabled:opacity-50 transition"
-            >
-              {sendingBatch ? <Loader2 size={16} className="animate-spin" /> : <Zap size={16} />}
-              <span>⚡ Dispatch 24 Leads Now</span>
-            </button>
-            <div className="flex items-center justify-center gap-2 text-[11px] text-slate-500 font-medium">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-              <span>Auto-Run at 00:00:00: <strong className="text-slate-800">Active</strong></span>
+            {/* Right Column: Unified Primary Dispatch Action Button (lg:col-span-3) */}
+            <div className="lg:col-span-3 flex flex-col items-stretch justify-center gap-2.5">
+              <button
+                onClick={handleSendBatchNow}
+                disabled={sendingBatch}
+                className="w-full py-4 px-5 bg-gradient-to-r from-[#F26522] to-orange-600 hover:from-[#d95316] hover:to-orange-700 text-white rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-md hover:shadow-lg transition cursor-pointer disabled:opacity-50"
+              >
+                {sendingBatch ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" />
+                    <span>Dispatching 24 Leads...</span>
+                  </>
+                ) : (
+                  <>
+                    <Zap size={18} className="fill-white" />
+                    <span>Dispatch 24 Leads Now</span>
+                  </>
+                )}
+              </button>
+              <div className="flex items-center justify-center gap-2 text-[11px] text-slate-500 font-medium">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                <span>Auto-Runs Daily at 9:00 AM: <strong className="text-slate-800">Active</strong></span>
+              </div>
             </div>
-          </div>
 
+          </div>
         </div>
       </div>
 
@@ -863,94 +883,131 @@ export default function EmailLeadsPage() {
       </div>
 
       {/* ── UPLOADED LISTS TABLE ── */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
-        <div className="p-5 border-b border-slate-100 flex items-center justify-between">
-          <h3 className="font-black text-sm uppercase tracking-tight text-slate-900">
-            Uploaded Lead Batches ({lists.length})
-          </h3>
-          <span className="text-xs text-slate-500 font-medium">Daily automated cron picks from active list</span>
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/40">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-green-50 text-green-700 border border-green-200 flex items-center justify-center flex-shrink-0">
+              <FileSpreadsheet size={16} />
+            </div>
+            <div>
+              <h3 className="font-black text-sm uppercase tracking-tight text-slate-900">
+                Uploaded Lead Batches ({lists.length})
+              </h3>
+              <p className="text-[11px] text-slate-500 font-medium">
+                Automated daily cron dispatches 24 contacts from the active batch queue
+              </p>
+            </div>
+          </div>
+          <span className="text-[11px] font-bold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full shadow-2xs self-start sm:self-auto">
+            Active Batch Priority: First Active List
+          </span>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50 text-slate-600 uppercase font-black tracking-wider text-[10px] border-b border-slate-200">
+            <thead className="bg-slate-50/80 text-slate-500 uppercase font-black tracking-wider text-[10px] border-b border-slate-200">
               <tr>
-                <th className="py-3 px-5">File Name</th>
-                <th className="py-3 px-5">Total Leads</th>
-                <th className="py-3 px-5">Sent</th>
-                <th className="py-3 px-5">Pending</th>
-                <th className="py-3 px-5">Progress</th>
-                <th className="py-3 px-5">Status</th>
-                <th className="py-3 px-5 text-right">Actions</th>
+                <th className="py-3.5 px-5">Batch File Name</th>
+                <th className="py-3.5 px-4 text-center">Total Leads</th>
+                <th className="py-3.5 px-4 text-center">Delivered</th>
+                <th className="py-3.5 px-4 text-center">Pending</th>
+                <th className="py-3.5 px-5">Progress</th>
+                <th className="py-3.5 px-4 text-center">Batch Status</th>
+                <th className="py-3.5 px-5 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
               {lists.map((l) => {
                 const percent = Math.round((l.sentCount / (l.totalEmails || 1)) * 100);
                 return (
-                  <tr key={l._id} className="hover:bg-slate-50/70 transition">
-                    <td className="py-3.5 px-5 font-bold text-slate-900 flex items-center gap-2">
-                      <FileSpreadsheet size={15} className="text-green-600 flex-shrink-0" />
-                      <span>{l.fileName}</span>
+                  <tr key={l._id} className="hover:bg-slate-50/80 transition">
+                    <td className="py-4 px-5">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-8 h-8 rounded-lg bg-green-50 text-green-700 border border-green-200/60 flex items-center justify-center flex-shrink-0">
+                          <FileSpreadsheet size={16} />
+                        </div>
+                        <div>
+                          <div className="font-bold text-slate-900">{l.fileName}</div>
+                          <div className="text-[10px] text-slate-400 mt-0.5">
+                            Uploaded {new Date(l.createdAt || Date.now()).toLocaleDateString()}
+                          </div>
+                        </div>
+                      </div>
                     </td>
-                    <td className="py-3.5 px-5 font-mono">{l.totalEmails}</td>
-                    <td className="py-3.5 px-5 font-mono">
-                      <span className="inline-flex items-center gap-1 text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                    <td className="py-4 px-4 text-center font-mono font-bold text-slate-900">
+                      {l.totalEmails}
+                    </td>
+                    <td className="py-4 px-4 text-center">
+                      <span className="inline-flex items-center gap-1 text-emerald-800 font-mono font-bold bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200 shadow-2xs">
                         <Check size={12} className="text-emerald-600 stroke-[3]" />
                         <span>{l.sentCount} sent</span>
                       </span>
                     </td>
-                    <td className="py-3.5 px-5 font-mono text-amber-700 font-bold">{l.pendingCount}</td>
-                    <td className="py-3.5 px-5">
-                      <div className="w-28 bg-slate-200 rounded-full h-2 overflow-hidden">
-                        <div className="bg-[#F26522] h-full" style={{ width: `${percent}%` }} />
-                      </div>
-                      <span className="text-[10px] text-slate-400 mt-0.5 block">{percent}%</span>
+                    <td className="py-4 px-4 text-center font-mono font-bold">
+                      {l.pendingCount > 0 ? (
+                        <span className="inline-block text-amber-800 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200 shadow-2xs">
+                          {l.pendingCount}
+                        </span>
+                      ) : (
+                        <span className="text-slate-400">0</span>
+                      )}
                     </td>
-                    <td className="py-3.5 px-5">
-                      <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${l.status === 'active' ? 'bg-green-100 text-green-800' : l.status === 'completed' ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800'}`}>
-                        {l.status}
+                    <td className="py-4 px-5">
+                      <div className="flex items-center gap-3">
+                        <div className="w-28 sm:w-36 bg-slate-100 rounded-full h-2.5 overflow-hidden border border-slate-200/60">
+                          <div 
+                            className="bg-gradient-to-r from-[#F26522] to-amber-500 h-full rounded-full transition-all duration-300" 
+                            style={{ width: `${percent}%` }} 
+                          />
+                        </div>
+                        <span className="text-[11px] font-mono font-bold text-slate-600 min-w-[32px]">
+                          {percent}%
+                        </span>
+                      </div>
+                    </td>
+                    <td className="py-4 px-4 text-center">
+                      <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shadow-2xs ${
+                        l.status === 'active' 
+                          ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' 
+                          : l.status === 'completed' 
+                            ? 'bg-blue-50 text-blue-800 border border-blue-200' 
+                            : 'bg-amber-50 text-amber-800 border border-amber-200'
+                      }`}>
+                        {l.status === 'active' && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />}
+                        <span>{l.status}</span>
                       </span>
                     </td>
-                    <td className="py-3.5 px-5 text-right space-x-2">
-                      {l.status === 'active' && l.pendingCount > 0 && (
+                    <td className="py-4 px-5 text-right">
+                      <div className="flex items-center justify-end gap-1.5">
                         <button
-                          onClick={handleSendBatchNow}
-                          disabled={sendingBatch}
-                          title="Immediately dispatch next 12 leads from this active list"
-                          className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-[11px] font-bold cursor-pointer inline-flex items-center gap-1 shadow-2xs disabled:opacity-50"
+                          onClick={() => handleViewDetails(l._id)}
+                          className="px-3 py-1.5 bg-slate-900 hover:bg-black text-white rounded-lg text-[11px] font-bold transition cursor-pointer shadow-2xs"
                         >
-                          {sendingBatch ? <Loader2 size={11} className="animate-spin" /> : <Zap size={11} />}
-                          <span>Send Now</span>
+                          View Leads
                         </button>
-                      )}
-                      <button
-                        onClick={() => handleToggleStatus(l)}
-                        title={l.status === 'active' ? 'Pause List' : 'Activate List'}
-                        className="p-1.5 rounded hover:bg-slate-200 text-slate-600 cursor-pointer"
-                      >
-                        {l.status === 'active' ? <Pause size={14} /> : <Play size={14} />}
-                      </button>
-                      <button
-                        onClick={() => handleViewDetails(l._id)}
-                        className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-[11px] font-bold cursor-pointer"
-                      >
-                        View
-                      </button>
-                      <button
-                        onClick={() => handleDeleteList(l._id)}
-                        className="p-1.5 rounded hover:bg-red-100 text-red-600 cursor-pointer"
-                      >
-                        <Trash2 size={14} />
-                      </button>
+                        <button
+                          onClick={() => handleToggleStatus(l)}
+                          title={l.status === 'active' ? 'Pause Batch' : 'Activate Batch'}
+                          className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-600 hover:text-slate-900 transition cursor-pointer"
+                        >
+                          {l.status === 'active' ? <Pause size={14} /> : <Play size={14} />}
+                        </button>
+                        <button
+                          onClick={() => handleDeleteList(l._id)}
+                          title="Delete Batch"
+                          className="p-1.5 rounded-lg border border-rose-200 bg-rose-50 hover:bg-rose-100 text-rose-600 transition cursor-pointer"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 );
               })}
               {lists.length === 0 && (
                 <tr>
-                  <td colSpan="7" className="py-8 text-center text-slate-400">
-                    No lead files uploaded yet. Choose an Excel file above to begin.
+                  <td colSpan="7" className="py-12 text-center text-slate-400 font-medium">
+                    No lead files uploaded yet. Choose an Excel or CSV file above to begin.
                   </td>
                 </tr>
               )}
@@ -960,27 +1017,28 @@ export default function EmailLeadsPage() {
       </div>
 
       {/* ── EMAIL TEMPLATES TABLE (ROTATING) ── */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-        <div className="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-50/50">
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-50/40">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-indigo-600" />
-              <h3 className="font-black text-sm uppercase tracking-tight text-slate-900">
-                Active Marketing Templates ({templates.length})
-              </h3>
-              <span className="text-[10px] font-bold bg-indigo-50 text-indigo-700 px-2.5 py-0.5 rounded-full border border-indigo-200 uppercase">
-                10 Alternating Rotation
-              </span>
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200 flex items-center justify-center flex-shrink-0">
+                <Sparkles size={16} />
+              </div>
+              <div>
+                <h3 className="font-black text-sm uppercase tracking-tight text-slate-900">
+                  Active Marketing Templates ({templates.length})
+                </h3>
+                <p className="text-[11px] text-slate-500 font-medium">
+                  Alternating across 24 daily leads with direct product links and 3D Uniform Studio
+                </p>
+              </div>
             </div>
-            <p className="text-xs text-slate-500 mt-1">
-              Rozana 24 leads ko alag-alag pro marketing templates rotate ho kar send hote hain with direct store and 3D studio links.
-            </p>
           </div>
           <div className="flex items-center gap-2 flex-wrap">
             <button
               onClick={handleSeedDefaultTemplates}
               disabled={seedingTemplates}
-              className="px-3.5 py-2 bg-slate-900 hover:bg-black text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-xs cursor-pointer disabled:opacity-50 transition"
+              className="px-3.5 py-2 bg-slate-900 hover:bg-black text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-2xs cursor-pointer disabled:opacity-50 transition"
             >
               {seedingTemplates ? <Loader2 size={13} className="animate-spin" /> : <Sparkles size={13} className="text-amber-400" />}
               <span>Sync 10 Pro Templates</span>
@@ -988,7 +1046,7 @@ export default function EmailLeadsPage() {
 
             <button
               onClick={() => setShowTemplateModal(true)}
-              className="px-3.5 py-2 bg-[#F26522] hover:bg-[#d95316] text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-xs cursor-pointer transition"
+              className="px-3.5 py-2 bg-[#F26522] hover:bg-[#d95316] text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-2xs cursor-pointer transition"
             >
               <span>+ Custom Template</span>
             </button>
@@ -997,64 +1055,75 @@ export default function EmailLeadsPage() {
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50 text-slate-600 uppercase font-black tracking-wider text-[10px] border-b border-slate-200">
+            <thead className="bg-slate-50/80 text-slate-500 uppercase font-black tracking-wider text-[10px] border-b border-slate-200">
               <tr>
-                <th className="py-3 px-5 w-12 text-center">#</th>
-                <th className="py-3 px-5">Template Name</th>
-                <th className="py-3 px-5">Category / Sport</th>
-                <th className="py-3 px-5">Email Subject Line</th>
-                <th className="py-3 px-5 text-center">Lifetime Sends</th>
-                <th className="py-3 px-5">Rotation Status</th>
-                <th className="py-3 px-5 text-right">Preview</th>
+                <th className="py-3.5 px-5 w-12 text-center">#</th>
+                <th className="py-3.5 px-5">Template Name</th>
+                <th className="py-3.5 px-5">Sport / Segment</th>
+                <th className="py-3.5 px-5">Subject Line</th>
+                <th className="py-3.5 px-4 text-center">Lifetime Sends</th>
+                <th className="py-3.5 px-4 text-center">Rotation Status</th>
+                <th className="py-3.5 px-5 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
-              {templates.map((tpl, idx) => (
-                <tr key={tpl._id} className="hover:bg-slate-50/80 transition group">
-                  <td className="py-3 px-5 text-center font-mono font-bold text-slate-400 text-[11px]">
-                    {String(idx + 1).padStart(2, '0')}
-                  </td>
-                  <td className="py-3 px-5 font-bold text-slate-900">
-                    <div className="flex items-center gap-2">
-                      <Mail size={14} className="text-indigo-600 flex-shrink-0" />
-                      <span>{tpl.name}</span>
-                    </div>
-                  </td>
-                  <td className="py-3 px-5">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200 group-hover:bg-indigo-50 group-hover:text-indigo-700 group-hover:border-indigo-200 transition">
-                      {getCategoryTag(tpl.name)}
-                    </span>
-                  </td>
-                  <td className="py-3 px-5 text-slate-600 max-w-sm">
-                    <span className="line-clamp-1 font-medium" title={tpl.subject}>
-                      {tpl.subject}
-                    </span>
-                  </td>
-                  <td className="py-3 px-5 text-center font-mono font-bold text-slate-800">
-                    <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-[11px]">
-                      {tpl.sendCount || 0}
-                    </span>
-                  </td>
-                  <td className="py-3 px-5">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-50 text-emerald-800 border border-emerald-200">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      Active Rotating
-                    </span>
-                  </td>
-                  <td className="py-3 px-5 text-right">
-                    <button
-                      onClick={() => setPreviewModalTemplate(tpl)}
-                      className="px-3 py-1 bg-slate-900 hover:bg-black text-white rounded-lg text-[11px] font-bold tracking-wide transition cursor-pointer shadow-2xs"
-                    >
-                      👁 View Email
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {templates.map((tpl, idx) => {
+                const category = getCategoryTag(tpl.name);
+                let catBadge = 'bg-slate-100 text-slate-700 border-slate-200';
+                if (category === 'Baseball') catBadge = 'bg-amber-50 text-amber-800 border-amber-200';
+                if (category === 'Basketball') catBadge = 'bg-orange-50 text-orange-800 border-orange-200';
+                if (category === 'Soccer') catBadge = 'bg-emerald-50 text-emerald-800 border-emerald-200';
+                if (category === 'Wrestling') catBadge = 'bg-rose-50 text-rose-800 border-rose-200';
+                if (category === 'Lacrosse') catBadge = 'bg-purple-50 text-purple-800 border-purple-200';
+                if (category === 'Club Partner') catBadge = 'bg-blue-50 text-blue-800 border-blue-200';
+
+                return (
+                  <tr key={tpl._id} className="hover:bg-slate-50/80 transition group">
+                    <td className="py-3.5 px-5 text-center font-mono font-bold text-slate-400 text-[11px]">
+                      {String(idx + 1).padStart(2, '0')}
+                    </td>
+                    <td className="py-3.5 px-5 font-bold text-slate-900">
+                      <div className="flex items-center gap-2">
+                        <Mail size={14} className="text-indigo-600 flex-shrink-0" />
+                        <span>{tpl.name}</span>
+                      </div>
+                    </td>
+                    <td className="py-3.5 px-5">
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border shadow-2xs ${catBadge}`}>
+                        {category}
+                      </span>
+                    </td>
+                    <td className="py-3.5 px-5 text-slate-600 max-w-sm">
+                      <span className="line-clamp-1 font-medium" title={tpl.subject}>
+                        {tpl.subject}
+                      </span>
+                    </td>
+                    <td className="py-3.5 px-4 text-center font-mono font-bold text-slate-800">
+                      <span className="px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-[11px] border border-slate-200">
+                        {tpl.sendCount || 0}
+                      </span>
+                    </td>
+                    <td className="py-3.5 px-4 text-center">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-2xs">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        <span>Active</span>
+                      </span>
+                    </td>
+                    <td className="py-3.5 px-5 text-right">
+                      <button
+                        onClick={() => setPreviewModalTemplate(tpl)}
+                        className="px-3 py-1.5 bg-slate-900 hover:bg-black text-white rounded-lg text-[11px] font-bold tracking-wide transition cursor-pointer shadow-2xs"
+                      >
+                        Preview
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
               {templates.length === 0 && (
                 <tr>
-                  <td colSpan="7" className="py-8 text-center text-slate-400">
-                    No marketing templates found. Click "Sync 10 Pro Templates" to populate default templates.
+                  <td colSpan="7" className="py-12 text-center text-slate-400 font-medium">
+                    No marketing templates found. Click "Sync 10 Pro Templates" to populate defaults.
                   </td>
                 </tr>
               )}
@@ -1623,6 +1692,26 @@ export default function EmailLeadsPage() {
                           </svg>
                           <span>Sign in with Google to Connect</span>
                         </button>
+
+                        <div className="p-2.5 bg-amber-50/80 border border-amber-200/80 rounded-lg text-left text-[11px] text-amber-900 space-y-1">
+                          <div className="font-bold flex items-center gap-1 text-amber-800">
+                            <AlertTriangle size={13} className="text-amber-600 flex-shrink-0" />
+                            <span>Important for Google OAuth:</span>
+                          </div>
+                          <p className="text-[10px] leading-relaxed text-amber-700">
+                            Google Cloud project me <strong>Gmail API</strong> enable hona zaroori hai.{' '}
+                            <a 
+                              href="https://console.developers.google.com/apis/api/gmail.googleapis.com/overview?project=1066347869958" 
+                              target="_blank" 
+                              rel="noreferrer"
+                              className="text-blue-600 underline font-bold inline-flex items-center gap-0.5"
+                            >
+                              Gmail API Enable Link <ExternalLink size={10} />
+                            </a>
+                            <br />
+                            <em>Tip: Agar Cloud setup nahi karna chahte to upar <strong>App Password (SMTP)</strong> tab se connect karein.</em>
+                          </p>
+                        </div>
                         
                         <div className="pt-2 text-left">
                           <button

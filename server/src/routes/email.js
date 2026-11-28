@@ -556,6 +556,8 @@ router.get('/oauth/google/callback', async (req, res) => {
           displayName: 'Google Workspace / Gmail',
           user: userEmail,
           authType: 'oauth2',
+          clientId,
+          clientSecret,
           refreshToken: tokenData.refresh_token,
           accessToken: tokenData.access_token,
           connected: true,
