@@ -692,7 +692,7 @@ export default function EmailLeadsPage() {
               </button>
               <div className="flex items-center justify-center gap-2 text-[10px] text-slate-500 font-medium">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-                <span>Fast 4x Parallel Dispatch • Zero Timeout</span>
+                <span>Fast 6x Parallel Dispatch • Zero Timeout</span>
               </div>
             </div>
 

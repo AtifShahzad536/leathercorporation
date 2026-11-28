@@ -558,8 +558,8 @@ const sendDailyEmails = async (options = {}) => {
     let gmailSent = 0;
     let gmailFailed = 0;
 
-    // 5. Partition and send emails in parallel chunks of 4 concurrent sends
-    const CHUNK_SIZE = 4;
+    // 5. Partition and send emails in parallel chunks of 6 concurrent sends (super fast dual throughput)
+    const CHUNK_SIZE = 6;
     const deadline = Date.now() + 8500; // 8.5 seconds max safety for Vercel
 
     for (let offset = 0; offset < pendingEmails.length; offset += CHUNK_SIZE) {
