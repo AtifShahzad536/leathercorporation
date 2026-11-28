@@ -404,18 +404,29 @@ router.post('/disconnect', protect, async (req, res) => {
 const getGoogleOAuthCredentials = async () => {
   let clientId = process.env.GOOGLE_CLIENT_ID;
   let clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+  let redirectUri = process.env.GOOGLE_REDIRECT_URI;
 
-  if (!clientId || !clientSecret) {
+  if (!clientId || !clientSecret || !redirectUri) {
     try {
       const setting = await SiteSetting.findOne({ key: 'google_oauth_credentials' });
       if (setting && setting.value) {
         clientId = clientId || setting.value.clientId;
         clientSecret = clientSecret || setting.value.clientSecret;
+        redirectUri = redirectUri || setting.value.redirectUri;
       }
     } catch (e) {}
   }
 
-  return { clientId, clientSecret };
+  return { clientId, clientSecret, redirectUri };
+};
+
+const getEffectiveRedirectUri = async (req) => {
+  const { redirectUri: customUri } = await getGoogleOAuthCredentials();
+  if (customUri) return customUri.trim();
+
+  const host = req.headers['x-forwarded-host'] || req.get('host');
+  const protocol = req.protocol === 'https' || req.headers['x-forwarded-proto'] === 'https' ? 'https' : 'http';
+  return `${protocol}://${host}/api/email/oauth/google/callback`;
 };
 
 // POST /api/email/oauth/google/config - Save Google OAuth Client ID and Secret dynamically
@@ -457,9 +468,7 @@ router.get('/oauth/google/url', protect, async (req, res) => {
       });
     }
 
-    const host = req.get('host');
-    const protocol = req.protocol === 'https' || req.headers['x-forwarded-proto'] === 'https' ? 'https' : 'http';
-    const redirectUri = `${protocol}://${host}/api/email/oauth/google/callback`;
+    const redirectUri = await getEffectiveRedirectUri(req);
     const scopes = encodeURIComponent('https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/userinfo.email');
     const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${scopes}&access_type=offline&prompt=consent`;
 
@@ -482,9 +491,7 @@ router.get('/oauth/google/callback', async (req, res) => {
     }
 
     const { clientId, clientSecret } = await getGoogleOAuthCredentials();
-    const host = req.get('host');
-    const protocol = req.protocol === 'https' || req.headers['x-forwarded-proto'] === 'https' ? 'https' : 'http';
-    const redirectUri = `${protocol}://${host}/api/email/oauth/google/callback`;
+    const redirectUri = await getEffectiveRedirectUri(req);
 
     // Exchange authorization code for tokens
     const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
