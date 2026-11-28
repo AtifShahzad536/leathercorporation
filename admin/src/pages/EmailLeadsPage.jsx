@@ -226,7 +226,7 @@ export default function EmailLeadsPage() {
       const todayStr = now.toISOString().slice(0, 10);
       if (diff <= 1000 && autoRunEnabled && lastTriggeredDateRef.current !== todayStr) {
         lastTriggeredDateRef.current = todayStr;
-        console.log('[AUTO-DISPATCH] ⏰ Daily timer reached 00:00:00! Automatically firing daily 12-lead batch...');
+        console.log('[AUTO-DISPATCH] ⏰ Daily timer reached 00:00:00! Automatically firing daily 24-lead batch (12 Hostinger + 12 Gmail)...');
         handleSendBatchNow();
       }
     };
@@ -242,7 +242,7 @@ export default function EmailLeadsPage() {
     setConsoleExpanded(true);
     fetchLiveLogs();
     try {
-      const res = await api.post('/email/send-batch', { limit: 12 });
+      const res = await api.post('/email/send-batch', { limit: 24 });
       setBatchResult({ type: res.data.success ? 'success' : 'error', text: res.data.message });
       fetchData();
       fetchLiveLogs();
@@ -681,18 +681,18 @@ export default function EmailLeadsPage() {
                 {sendingBatch ? (
                   <>
                     <Loader2 size={18} className="animate-spin" />
-                    <span>Dispatching 12 Leads...</span>
+                    <span>Dispatching 24 Leads...</span>
                   </>
                 ) : (
                   <>
                     <Zap size={18} className="fill-white" />
-                    <span>Dispatch 12 Leads Now</span>
+                    <span>Dispatch 24 Leads Now</span>
                   </>
                 )}
               </button>
               <div className="flex items-center justify-center gap-2 text-[10px] text-slate-500 font-medium">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-                <span>Fast 6x Parallel Dispatch • Zero Timeout</span>
+                <span>Dual Engine: 12 Hostinger + 12 Gmail • Fast Parallel</span>
               </div>
             </div>
 

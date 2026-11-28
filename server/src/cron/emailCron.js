@@ -502,10 +502,10 @@ const sendDailyEmails = async (options = {}) => {
   liveExecutionState.sent = 0;
   liveExecutionState.failed = 0;
 
-  const targetLimit = parseInt(options.limit || process.env.DISPATCH_BATCH_SIZE || '12', 10);
+  const targetLimit = parseInt(options.limit || process.env.DISPATCH_BATCH_SIZE || '24', 10);
 
   addLiveLog(`🚀 [DUAL-ENGINE] Initialized automated dispatch run at ${sessionStart.toLocaleTimeString('en-US')}`, 'info');
-  addLiveLog(`Dispatch Batch Size: ${targetLimit} leads (Parallel Concurrency Mode • Max Vercel Safety)`, 'info');
+  addLiveLog(`Dispatch Batch Size: ${targetLimit} leads (${Math.round(targetLimit / 2)} Hostinger + ${Math.round(targetLimit / 2)} Gmail • Parallel Concurrency Mode)`, 'info');
 
   try {
     // 1. Find the first active list that has pending emails
@@ -572,7 +572,7 @@ const sendDailyEmails = async (options = {}) => {
 
     // 5. Partition and send emails in parallel chunks of 6 concurrent sends (super fast dual throughput)
     const CHUNK_SIZE = 6;
-    const deadline = Date.now() + 8500; // 8.5 seconds max safety for Vercel
+    const deadline = Date.now() + 12000; // 12 seconds safety window for 24 emails (takes ~3s total)
 
     for (let offset = 0; offset < pendingEmails.length; offset += CHUNK_SIZE) {
       if (Date.now() >= deadline) {
