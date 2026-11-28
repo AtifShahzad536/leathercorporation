@@ -33,6 +33,21 @@ export default function EmailLeadsPage() {
   const [oauthConfig, setOauthConfig] = useState({ clientId: '', clientSecret: '' });
   const [savingOauthConfig, setSavingOauthConfig] = useState(false);
   const [showOauthSetup, setShowOauthSetup] = useState(false);
+  const [previewModalTemplate, setPreviewModalTemplate] = useState(null);
+
+  const getCategoryTag = (name = '') => {
+    const lower = name.toLowerCase();
+    if (lower.includes('baseball') || lower.includes('softball')) return 'Baseball';
+    if (lower.includes('football')) return 'Football';
+    if (lower.includes('basketball')) return 'Basketball';
+    if (lower.includes('soccer')) return 'Soccer';
+    if (lower.includes('wrestling')) return 'Wrestling';
+    if (lower.includes('track') || lower.includes('cross country')) return 'Track & Field';
+    if (lower.includes('volleyball')) return 'Volleyball';
+    if (lower.includes('lacrosse')) return 'Lacrosse';
+    if (lower.includes('club') || lower.includes('wholesale')) return 'Club Partner';
+    return 'General Pro';
+  };
 
   const [hostingerForm, setHostingerForm] = useState({
     user: 'sale@hamlosportswear.site',
@@ -466,63 +481,65 @@ export default function EmailLeadsPage() {
 
       {/* ── SPECIAL ALERT: SYSTEM CHECKS DAILY IF NEW LIST IS NEEDED ── */}
       {stats?.needsLeadsList && (
-        <div className="p-5 bg-gradient-to-r from-red-500 to-rose-600 rounded-xl text-white shadow-lg flex items-start gap-4">
-          <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0">
-            <AlertTriangle size={24} className="text-white animate-bounce" />
+        <div className="p-5 bg-gradient-to-r from-rose-50 via-red-50 to-orange-50 border border-rose-200/90 rounded-2xl text-slate-800 shadow-xs flex items-start gap-4">
+          <div className="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 border border-rose-200 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <AlertTriangle size={20} className="animate-bounce" />
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 bg-white text-red-700 font-black text-[10px] uppercase rounded tracking-wider">
-                System Requirement
+              <span className="px-2 py-0.5 bg-rose-600 text-white font-black text-[10px] uppercase rounded-md tracking-wider">
+                Action Needed
               </span>
-              <h3 className="font-black text-base uppercase tracking-tight">
-                PLEASE NEED LEADS LIST!
+              <h3 className="font-black text-sm uppercase tracking-tight text-rose-900">
+                Please Upload A Leads List
               </h3>
             </div>
-            <p className="text-xs text-white/90 mt-1 leading-relaxed">
-              All uploaded lead lists have finished sending or no active list was found. The automated daily script needs contacts to dispatch the next 24 daily emails (12 Hostinger + 12 Gmail). Please upload an Excel or CSV file below to resume the campaign.
+            <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+              All uploaded lead lists have completed sending or no active list was found. The automated daily script needs contacts to dispatch the next 24 daily emails (12 Hostinger + 12 Gmail). Please upload an Excel (.xlsx) or CSV file below.
             </p>
           </div>
         </div>
       )}
 
-      {/* ── LIVE DIGITAL DISPATCH COUNTDOWN & DUAL PIPELINE BANNER ── */}
-      <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 rounded-2xl p-6 text-white border border-indigo-900/40 shadow-xl space-y-4">
+      {/* ── LIVE DIGITAL DISPATCH COUNTDOWN & DUAL PIPELINE BANNER (LIGHT THEME) ── */}
+      <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-xs relative overflow-hidden bg-gradient-to-br from-white via-slate-50/70 to-indigo-50/20">
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#F26522] via-indigo-600 to-emerald-500" />
+        
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           
           {/* Schedule Info */}
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-orange-500/20 text-[#F26522] flex items-center justify-center flex-shrink-0 border border-orange-500/30 mt-0.5">
-              <Clock size={24} className="animate-pulse" />
+          <div className="flex items-start gap-4 flex-1">
+            <div className="w-12 h-12 rounded-xl bg-orange-50 text-[#F26522] border border-orange-200/80 flex items-center justify-center flex-shrink-0 mt-0.5 shadow-2xs">
+              <Clock size={24} className="text-[#F26522]" />
             </div>
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-                <span className="text-xs font-black uppercase tracking-wider text-emerald-400">
-                  Dual Pipeline Countdown Timer
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-200">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  Dual Pipeline Active
                 </span>
-                <span className="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-mono border border-slate-700">
+                <span className="text-[10px] bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-md font-mono border border-slate-200 font-bold">
                   Daily 9:00 AM EST (14:00 UTC)
                 </span>
               </div>
-              <h3 className="font-black text-lg uppercase tracking-tight text-white mt-1">
+              <h3 className="font-black text-lg sm:text-xl uppercase tracking-tight text-slate-900 mt-1.5">
                 Next Automated Dual Batch Dispatch (24 Leads)
               </h3>
-              <p className="text-xs text-slate-300 mt-1 leading-relaxed max-w-xl">
-                Rozana Subha USA time per <strong>24 leads</strong> ko automatically emails jayengi: 12 leads via Hostinger aur 12 leads via Gmail with alternating different templates.
+              <p className="text-xs text-slate-600 mt-1 leading-relaxed max-w-xl">
+                Rozana Subha USA time per <strong>24 leads</strong> ko automatically emails dispatch hongi: 12 leads via Hostinger aur 12 leads via Gmail with alternating different templates.
               </p>
 
               {/* Senders Channel Badges */}
-              <div className="flex flex-wrap items-center gap-2.5 mt-3">
+              <div className="flex flex-wrap items-center gap-2.5 mt-3.5">
                 <button
                   type="button"
                   onClick={() => { setShowConnectorsModal(true); setConnectorResult(null); }}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold border transition cursor-pointer shadow-xs ${connectors?.hostinger?.connected ? 'bg-emerald-950/70 border-emerald-500/50 text-emerald-300 hover:bg-emerald-900/80' : 'bg-rose-950/70 border-rose-500/50 text-rose-300 hover:bg-rose-900/80'}`}
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold border transition cursor-pointer shadow-2xs ${connectors?.hostinger?.connected ? 'bg-emerald-50/90 border-emerald-200 text-emerald-900 hover:bg-emerald-100' : 'bg-rose-50 border-rose-200 text-rose-900 hover:bg-rose-100'}`}
                 >
-                  <span className={`w-2 h-2 rounded-full ${connectors?.hostinger?.connected ? 'bg-emerald-400' : 'bg-rose-400'}`} />
-                  <span className="text-slate-300">Hostinger (12/day):</span>
-                  <span className="font-mono">{connectors?.hostinger?.email || 'sale@hamlosportswear.site'}</span>
-                  <span className={`text-[9px] uppercase ml-1 px-1.5 py-0.5 rounded font-black tracking-wider ${connectors?.hostinger?.connected ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-300 border border-rose-500/30'}`}>
+                  <span className={`w-2 h-2 rounded-full ${connectors?.hostinger?.connected ? 'bg-emerald-500' : 'bg-rose-500'}`} />
+                  <span className="text-slate-600">Hostinger (12/day):</span>
+                  <span className="font-mono text-slate-900">{connectors?.hostinger?.email || 'sale@hamlosportswear.site'}</span>
+                  <span className={`text-[9px] uppercase px-1.5 py-0.5 rounded font-black tracking-wider ${connectors?.hostinger?.connected ? 'bg-emerald-200/70 text-emerald-900' : 'bg-rose-200/70 text-rose-900'}`}>
                     {connectors?.hostinger?.connected ? 'Connected ✓' : 'Connect'}
                   </span>
                 </button>
@@ -530,12 +547,12 @@ export default function EmailLeadsPage() {
                 <button
                   type="button"
                   onClick={() => { setShowConnectorsModal(true); setConnectorResult(null); }}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold border transition cursor-pointer shadow-xs ${connectors?.gmail?.connected ? 'bg-emerald-950/70 border-emerald-500/50 text-emerald-300 hover:bg-emerald-900/80' : 'bg-amber-950/70 border-amber-500/50 text-amber-300 hover:bg-amber-900/80'}`}
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold border transition cursor-pointer shadow-2xs ${connectors?.gmail?.connected ? 'bg-blue-50/90 border-blue-200 text-blue-900 hover:bg-blue-100' : 'bg-amber-50 border-amber-200 text-amber-900 hover:bg-amber-100'}`}
                 >
-                  <span className={`w-2 h-2 rounded-full ${connectors?.gmail?.connected ? 'bg-emerald-400' : 'bg-amber-400'}`} />
-                  <span className="text-slate-300">Gmail (12/day):</span>
-                  <span className="font-mono">{connectors?.gmail?.email || 'hamlosportswear@gmail.com'}</span>
-                  <span className={`text-[9px] uppercase ml-1 px-1.5 py-0.5 rounded font-black tracking-wider ${connectors?.gmail?.connected ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'}`}>
+                  <span className={`w-2 h-2 rounded-full ${connectors?.gmail?.connected ? 'bg-blue-500' : 'bg-amber-500'}`} />
+                  <span className="text-slate-600">Gmail (12/day):</span>
+                  <span className="font-mono text-slate-900">{connectors?.gmail?.email || 'hamlosportswear@gmail.com'}</span>
+                  <span className={`text-[9px] uppercase px-1.5 py-0.5 rounded font-black tracking-wider ${connectors?.gmail?.connected ? 'bg-blue-200/70 text-blue-900' : 'bg-amber-200/70 text-amber-900'}`}>
                     {connectors?.gmail?.connected ? 'Connected ✓' : 'Connect'}
                   </span>
                 </button>
@@ -544,42 +561,42 @@ export default function EmailLeadsPage() {
           </div>
 
           {/* ── LIVE DIGITAL COUNTDOWN CLOCK ── */}
-          <div className="flex items-center gap-2.5 bg-slate-900/90 border border-slate-800 p-3 rounded-xl self-start lg:self-auto shadow-inner">
-            <div className="text-center min-w-[58px]">
-              <div className="font-mono text-2xl sm:text-3xl font-black bg-slate-800 text-white px-2.5 py-1.5 rounded-lg border border-slate-700 shadow-inner">
+          <div className="flex items-center gap-2 bg-slate-900 p-3 sm:p-3.5 rounded-2xl border border-slate-800 shadow-md self-start lg:self-auto">
+            <div className="text-center min-w-[56px]">
+              <div className="font-mono text-2xl sm:text-3xl font-black bg-slate-800 text-white px-2.5 py-1 rounded-xl border border-slate-700/80 shadow-inner">
                 {timeLeft.hours}
               </div>
-              <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 mt-1 block">Hours</span>
+              <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 mt-1 block">Hours</span>
             </div>
-            <span className="text-xl sm:text-2xl font-black text-[#F26522] animate-pulse pb-4">:</span>
-            <div className="text-center min-w-[58px]">
-              <div className="font-mono text-2xl sm:text-3xl font-black bg-slate-800 text-white px-2.5 py-1.5 rounded-lg border border-slate-700 shadow-inner">
+            <span className="text-xl sm:text-2xl font-black text-[#F26522] pb-4">:</span>
+            <div className="text-center min-w-[56px]">
+              <div className="font-mono text-2xl sm:text-3xl font-black bg-slate-800 text-white px-2.5 py-1 rounded-xl border border-slate-700/80 shadow-inner">
                 {timeLeft.minutes}
               </div>
-              <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 mt-1 block">Minutes</span>
+              <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 mt-1 block">Mins</span>
             </div>
-            <span className="text-xl sm:text-2xl font-black text-[#F26522] animate-pulse pb-4">:</span>
-            <div className="text-center min-w-[58px]">
-              <div className="font-mono text-2xl sm:text-3xl font-black bg-slate-800 text-orange-400 px-2.5 py-1.5 rounded-lg border border-slate-700 shadow-inner">
+            <span className="text-xl sm:text-2xl font-black text-[#F26522] pb-4">:</span>
+            <div className="text-center min-w-[56px]">
+              <div className="font-mono text-2xl sm:text-3xl font-black bg-slate-800 text-[#F26522] px-2.5 py-1 rounded-xl border border-slate-700/80 shadow-inner">
                 {timeLeft.seconds}
               </div>
-              <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 mt-1 block">Seconds</span>
+              <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 mt-1 block">Secs</span>
             </div>
           </div>
 
           {/* Action Button & Toggle */}
-          <div className="flex flex-col gap-2 flex-shrink-0">
+          <div className="flex flex-col gap-2 flex-shrink-0 self-start lg:self-auto">
             <button
               onClick={handleSendBatchNow}
               disabled={sendingBatch}
-              className="px-5 py-3 bg-[#F26522] hover:bg-[#d95316] text-white rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg cursor-pointer disabled:opacity-50 transition"
+              className="px-5 py-3.5 bg-[#F26522] hover:bg-[#d95316] text-white rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-md hover:shadow-lg cursor-pointer disabled:opacity-50 transition"
             >
-              {sendingBatch ? <Loader2 size={15} className="animate-spin" /> : <Zap size={15} />}
+              {sendingBatch ? <Loader2 size={16} className="animate-spin" /> : <Zap size={16} />}
               <span>⚡ Dispatch 24 Leads Now</span>
             </button>
-            <div className="flex items-center justify-center gap-2 text-[11px] text-slate-400">
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              <span>Dual Auto-Run on Zero: <strong className="text-emerald-400">Active</strong></span>
+            <div className="flex items-center justify-center gap-2 text-[11px] text-slate-500 font-medium">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+              <span>Auto-Run at 00:00:00: <strong className="text-slate-800">Active</strong></span>
             </div>
           </div>
 
@@ -768,48 +785,107 @@ export default function EmailLeadsPage() {
         </div>
       </div>
 
-      {/* ── EMAIL TEMPLATES LIST (ROTATING) ── */}
-      <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+      {/* ── EMAIL TEMPLATES TABLE (ROTATING) ── */}
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div className="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-50/50">
           <div>
-            <h3 className="font-black text-sm uppercase tracking-tight text-slate-900">
-              Active Marketing Templates ({templates.length})
-            </h3>
-            <p className="text-xs text-slate-500">
-              The daily script alternates between these templates (12 recipients per day receive rotating emails with direct product links).
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-indigo-600" />
+              <h3 className="font-black text-sm uppercase tracking-tight text-slate-900">
+                Active Marketing Templates ({templates.length})
+              </h3>
+              <span className="text-[10px] font-bold bg-indigo-50 text-indigo-700 px-2.5 py-0.5 rounded-full border border-indigo-200 uppercase">
+                10 Alternating Rotation
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 mt-1">
+              Rozana 24 leads ko alag-alag pro marketing templates rotate ho kar send hote hain with direct store and 3D studio links.
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <button
               onClick={handleSeedDefaultTemplates}
               disabled={seedingTemplates}
-              className="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 cursor-pointer disabled:opacity-50 transition"
+              className="px-3.5 py-2 bg-slate-900 hover:bg-black text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-xs cursor-pointer disabled:opacity-50 transition"
             >
-              {seedingTemplates ? <Loader2 size={13} className="animate-spin" /> : <Sparkles size={13} />}
+              {seedingTemplates ? <Loader2 size={13} className="animate-spin" /> : <Sparkles size={13} className="text-amber-400" />}
               <span>Sync 10 Pro Templates</span>
+            </button>
+
+            <button
+              onClick={() => setShowTemplateModal(true)}
+              className="px-3.5 py-2 bg-[#F26522] hover:bg-[#d95316] text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-xs cursor-pointer transition"
+            >
+              <span>+ Custom Template</span>
             </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {templates.map((tpl) => (
-            <div key={tpl._id} className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-black text-xs uppercase text-slate-800">{tpl.name}</h4>
-                  <span className="text-[10px] font-mono bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-bold">
-                    Sent {tpl.sendCount || 0}x
-                  </span>
-                </div>
-                <div className="text-xs text-slate-600 font-semibold mb-2">
-                  Subject: <span className="font-normal text-slate-700">{tpl.subject}</span>
-                </div>
-                <div className="text-[11px] text-slate-500 line-clamp-3 bg-white p-2.5 rounded border border-slate-200 font-mono">
-                  {tpl.htmlBody.replace(/<[^>]*>/g, ' ')}
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-slate-50 text-slate-600 uppercase font-black tracking-wider text-[10px] border-b border-slate-200">
+              <tr>
+                <th className="py-3 px-5 w-12 text-center">#</th>
+                <th className="py-3 px-5">Template Name</th>
+                <th className="py-3 px-5">Category / Sport</th>
+                <th className="py-3 px-5">Email Subject Line</th>
+                <th className="py-3 px-5 text-center">Lifetime Sends</th>
+                <th className="py-3 px-5">Rotation Status</th>
+                <th className="py-3 px-5 text-right">Preview</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
+              {templates.map((tpl, idx) => (
+                <tr key={tpl._id} className="hover:bg-slate-50/80 transition group">
+                  <td className="py-3 px-5 text-center font-mono font-bold text-slate-400 text-[11px]">
+                    {String(idx + 1).padStart(2, '0')}
+                  </td>
+                  <td className="py-3 px-5 font-bold text-slate-900">
+                    <div className="flex items-center gap-2">
+                      <Mail size={14} className="text-indigo-600 flex-shrink-0" />
+                      <span>{tpl.name}</span>
+                    </div>
+                  </td>
+                  <td className="py-3 px-5">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200 group-hover:bg-indigo-50 group-hover:text-indigo-700 group-hover:border-indigo-200 transition">
+                      {getCategoryTag(tpl.name)}
+                    </span>
+                  </td>
+                  <td className="py-3 px-5 text-slate-600 max-w-sm">
+                    <span className="line-clamp-1 font-medium" title={tpl.subject}>
+                      {tpl.subject}
+                    </span>
+                  </td>
+                  <td className="py-3 px-5 text-center font-mono font-bold text-slate-800">
+                    <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-[11px]">
+                      {tpl.sendCount || 0}
+                    </span>
+                  </td>
+                  <td className="py-3 px-5">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-50 text-emerald-800 border border-emerald-200">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      Active Rotating
+                    </span>
+                  </td>
+                  <td className="py-3 px-5 text-right">
+                    <button
+                      onClick={() => setPreviewModalTemplate(tpl)}
+                      className="px-3 py-1 bg-slate-900 hover:bg-black text-white rounded-lg text-[11px] font-bold tracking-wide transition cursor-pointer shadow-2xs"
+                    >
+                      👁 View Email
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {templates.length === 0 && (
+                <tr>
+                  <td colSpan="7" className="py-8 text-center text-slate-400">
+                    No marketing templates found. Click "Sync 10 Pro Templates" to populate default templates.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -1541,6 +1617,60 @@ export default function EmailLeadsPage() {
               </button>
             </div>
 
+          </div>
+        </div>
+      )}
+
+      {/* ── TEMPLATE HTML LIVE PREVIEW MODAL ── */}
+      {previewModalTemplate && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+            <div className="p-4 sm:p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50/70">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-indigo-50 border border-indigo-200 text-indigo-700 flex items-center justify-center">
+                  <Mail size={16} />
+                </div>
+                <div>
+                  <h3 className="font-black text-sm uppercase text-slate-900">
+                    {previewModalTemplate.name}
+                  </h3>
+                  <span className="text-[11px] text-slate-500 font-medium">
+                    Subject: {previewModalTemplate.subject}
+                  </span>
+                </div>
+              </div>
+              <button
+                onClick={() => setPreviewModalTemplate(null)}
+                className="text-slate-400 hover:text-slate-700 font-bold p-1 rounded-lg hover:bg-slate-200 cursor-pointer text-sm"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-slate-100">
+              <div className="bg-white rounded-xl shadow-xs border border-slate-200 p-2 overflow-hidden">
+                <div 
+                  dangerouslySetInnerHTML={{ 
+                    __html: previewModalTemplate.htmlBody
+                      .replace(/{{name}}/gi, 'John Coach')
+                      .replace(/{{company}}/gi, 'Varsity Athletic Program')
+                      .replace(/{{email}}/gi, 'coach@varsity.com')
+                  }} 
+                />
+              </div>
+            </div>
+
+            <div className="p-4 border-t border-slate-200 flex items-center justify-between bg-white">
+              <span className="text-xs text-slate-500">
+                Sample render with mock lead details: John Coach / Varsity Athletic Program.
+              </span>
+              <button
+                onClick={() => setPreviewModalTemplate(null)}
+                className="px-4 py-2 bg-slate-900 hover:bg-black text-white rounded-lg text-xs font-bold uppercase tracking-wider cursor-pointer"
+              >
+                Close Preview
+              </button>
+            </div>
           </div>
         </div>
       )}
