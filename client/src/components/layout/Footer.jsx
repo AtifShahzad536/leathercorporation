@@ -48,12 +48,56 @@ const getSocialIcon = (platform = '') => {
   return <IconInstagram />;
 };
 
-const footerLinks = {
-  Products: ['Baseball Uniforms', 'Basketball Jerseys', 'Football Uniforms', 'Soccer Kits', 'Cricket Uniforms', 'Ice Hockey Sweaters'],
-  'Apparel Cuts': ['3D Uniform Builder', 'Full Button Jerseys', '2-Button Pullovers', 'V-Neck Game Sets', 'Sublimated Hoodies', 'Cage Jackets'],
-  Explore: ['About HAMLO SPORTS', '3D Uniform Builder', 'Customer Reviews', 'Sizing Chart Guide', 'Turnaround Lead Time', 'Team Name Generator', 'Designs Portfolio'],
-  'Partner With Us': ['Register Your Club', 'Start Custom Orders', '12-Hour 3D Mockup', 'School & Club Orders', 'Contact Sales Desk'],
-};
+const footerSections = [
+  {
+    title: 'Sport Uniforms',
+    links: [
+      { label: 'Baseball Uniforms', href: '/custom-baseball-uniforms/', page: 'products', param: 'Baseball' },
+      { label: 'Basketball Uniforms', href: '/custom-basketball-uniforms/', page: 'products', param: 'Basketball' },
+      { label: 'Football Uniforms', href: '/custom-football-uniforms/', page: 'products', param: 'Football' },
+      { label: 'Soccer Kits & Jerseys', href: '/custom-soccer-uniforms/', page: 'products', param: 'Soccer' },
+      { label: 'Cricket Uniforms', href: '/custom-cricket-uniforms/', page: 'cricket' },
+      { label: 'Ice Hockey Sweaters', href: '/custom-ice-hockey-uniforms/', page: 'products', param: 'Ice Hockey' },
+      { label: 'Lacrosse Uniforms', href: '/custom-lacrosse-uniforms/', page: 'products', param: 'Lacrosse' },
+      { label: 'Volleyball Uniforms', href: '/custom-volleyball-uniforms/', page: 'products', param: 'Volleyball' },
+      { label: 'Wrestling Singlets', href: '/custom-wrestling-singlets/', page: 'products', param: 'Wrestling' },
+      { label: 'Flag Football Uniforms', href: '/custom-flag-football-uniforms/', page: 'products', param: 'Flag Football' },
+      { label: 'Softball Uniforms', href: '/custom-softball-uniforms/', page: 'products', param: 'Softball' },
+      { label: 'Esports Apparel', href: '/custom-esports-apparel/', page: 'products', param: 'Esports' },
+    ]
+  },
+  {
+    title: 'Design & Cuts',
+    links: [
+      { label: '3D Interactive Builder', href: '/builder/', page: 'builder' },
+      { label: 'Styles & Silhouette Guide', href: '/styles/', page: 'styles' },
+      { label: 'Performance Fabrics Hub', href: '/explore/', page: 'explore' },
+      { label: 'Youth & Adult Size Charts', href: '/sizing-chart/', page: 'sizing-chart' },
+      { label: 'Team Name & Mascot Generator', href: '/team-name-generator/', page: 'team-name-generator' },
+      { label: 'Production Turnaround Times', href: '/how-long-do-custom-uniforms-take/', page: 'lead-time' },
+    ]
+  },
+  {
+    title: 'Factory & Trust',
+    links: [
+      { label: 'About HAMLO SPORTS', href: '/about-us/', page: 'about' },
+      { label: 'Ethical Labor & Compliance', href: '/compliance/', page: 'compliance' },
+      { label: 'ISO 9001 & OEKO-TEX Certs', href: '/certification/', page: 'certification' },
+      { label: 'Customer Reviews & Feedback', href: '/reviews/', page: 'reviews' },
+      { label: 'Custom Uniforms Portfolio', href: '/portfolio/', page: 'portfolio' },
+      { label: 'HTML Site Directory', href: '/sitemap/', page: 'sitemap' },
+    ]
+  },
+  {
+    title: 'Partner With Us',
+    links: [
+      { label: 'Register Your Club (VIP Discounts)', href: '/register-club/', page: 'register-club' },
+      { label: 'How Team Ordering Works', href: '/start-custom-orders/', page: 'how-to-order' },
+      { label: 'Request Free 3D Proof & Quote', href: '/request-a-quote/', page: 'inquiry' },
+      { label: 'Contact Sialkot Export Desk', href: '/contact/', page: 'inquiry' },
+    ]
+  }
+];
 
 const Footer = ({ onNavigate = () => {} }) => {
   const [socialLinks, setSocialLinks] = useState([
@@ -94,8 +138,14 @@ const Footer = ({ onNavigate = () => {} }) => {
 
           {/* Brand Column */}
           <div className="md:col-span-2">
-            <div 
-              onClick={() => onNavigate('home')}
+            <a 
+              href="/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
+                  e.preventDefault();
+                  onNavigate('home');
+                }
+              }}
               className="flex items-center gap-3 mb-6 cursor-pointer"
             >
               <div className="relative w-12 h-12 flex items-center justify-center">
@@ -109,7 +159,7 @@ const Footer = ({ onNavigate = () => {} }) => {
                 <span className="text-2xl font-black tracking-tighter uppercase whitespace-nowrap text-white">HAMLO</span>
                 <span className="text-[9px] font-bold tracking-[0.25em] uppercase text-[#FB923C]">SPORTS</span>
               </div>
-            </div>
+            </a>
             <p className="text-sm text-white/70 leading-relaxed mb-4 max-w-[320px]">
               Direct from Sialkot, Pakistan. HAMLO SPORTS manufactures world-class custom team uniforms, pro-grade dye-sublimation, and performance sportswear engineered for schools, clubs, and professional leagues.
             </p>
@@ -138,41 +188,24 @@ const Footer = ({ onNavigate = () => {} }) => {
           </div>
 
           {/* Link Columns */}
-          {Object.entries(footerLinks).map(([section, links]) => (
-            <div key={section} className="md:col-span-1">
-              <h4 className="text-xs font-black tracking-[0.2em] uppercase mb-5 text-white">{section}</h4>
-              <ul className="space-y-3">
-                {links.map((link) => (
-                  <li key={link}>
-                    <button
-                      onClick={() => {
-                        if (section === 'Products') {
-                          if (link.includes('Cricket')) onNavigate('cricket');
-                          else onNavigate('products', link);
-                        } else if (section === 'Apparel Cuts') {
-                          if (link.includes('3D Uniform')) onNavigate('builder');
-                          else onNavigate('styles');
-                        } else if (section === 'Explore') {
-                          if (link.includes('About')) onNavigate('about');
-                          else if (link.includes('3D Uniform')) onNavigate('builder');
-                          else if (link.includes('Reviews')) onNavigate('reviews');
-                          else if (link.includes('Sizing')) onNavigate('sizing-chart');
-                          else if (link.includes('Turnaround')) onNavigate('lead-time');
-                          else if (link.includes('Generator')) onNavigate('team-name-generator');
-                          else if (link.includes('Portfolio')) onNavigate('portfolio');
-                          else if (link.includes('Compliance')) onNavigate('compliance');
-                          else onNavigate('explore');
-                        } else if (section === 'Partner With Us') {
-                          if (link.includes('Register')) onNavigate('register-club');
-                          else if (link.includes('Start Custom')) onNavigate('how-to-order');
-                          else if (link.includes('Contact')) onNavigate('inquiry');
-                          else onNavigate('inquiry');
+          {footerSections.map((sec) => (
+            <div key={sec.title} className="md:col-span-1">
+              <h3 className="text-xs font-black tracking-[0.2em] uppercase mb-5 text-white">{sec.title}</h3>
+              <ul className="space-y-2.5">
+                {sec.links.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      onClick={(e) => {
+                        if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
+                          e.preventDefault();
+                          onNavigate(link.page, link.param);
                         }
                       }}
-                      className="text-sm text-white/70 hover:text-orange-400 transition-colors duration-200 tracking-wide text-left cursor-pointer"
+                      className="text-xs sm:text-sm text-white/70 hover:text-orange-400 transition-colors duration-200 tracking-wide block"
                     >
-                      {link}
-                    </button>
+                      {link.label}
+                    </a>
                   </li>
                 ))}
               </ul>

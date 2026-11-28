@@ -170,7 +170,7 @@ export default function ExplorePage({
                     <span className="text-[10px] font-bold text-[var(--accent)] uppercase tracking-widest">{item.gsm}</span>
                     <span className="text-[10px] bg-neutral-100 text-[var(--secondary)] font-semibold px-2 py-0.5 rounded">OEKO-TEX PASSED</span>
                   </div>
-                  <h3 className="text-xl font-black uppercase text-[var(--secondary)] mb-2">{item.name}</h3>
+                  <h2 className="text-xl font-black uppercase text-[var(--secondary)] mb-2">{item.name}</h2>
                   <p className="text-xs text-[var(--secondary)]/70 leading-relaxed mb-3">{item.properties}</p>
                   <div className="text-[11px] font-bold text-[var(--secondary)]/90 pt-3 border-t border-neutral-100">
                     <span className="text-[var(--accent)]">Recommended For:</span> {item.bestFor}
@@ -181,7 +181,7 @@ export default function ExplorePage({
 
             <div className="bg-white p-6 md:p-8 rounded-[4px] border border-[var(--secondary)]/10 flex flex-col md:flex-row items-center justify-between gap-6">
               <div>
-                <h4 className="text-lg font-black uppercase text-[var(--secondary)] mb-1">Need a Custom GSM or Proprietary Blend?</h4>
+                <h2 className="text-lg font-black uppercase text-[var(--secondary)] mb-1">Need a Custom GSM or Proprietary Blend?</h2>
                 <p className="text-xs text-[var(--secondary)]/70">We source and knit custom poly-spandex formulations for professional leagues and large club franchises.</p>
               </div>
               <button
@@ -198,7 +198,7 @@ export default function ExplorePage({
         {activeTab === 'sublimation' && (
           <div className="space-y-6">
             <div className="bg-white p-8 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm">
-              <h3 className="text-2xl font-black uppercase text-[var(--secondary)] mb-2">Dye-Sublimation vs Screen Printing</h3>
+              <h2 className="text-2xl font-black uppercase text-[var(--secondary)] mb-2">Dye-Sublimation vs Screen Printing</h2>
               <p className="text-xs text-[var(--secondary)]/75 leading-relaxed max-w-3xl mb-8">
                 Unlike screen printing or vinyl transfers which sit on top of fabric and peel or crack over time, dye-sublimation transforms inks into gas under 205°C heat, infusing the design directly into the polyester molecules. The result is completely weightless, breathable, and permanently vibrant uniforms.
               </p>
@@ -207,7 +207,7 @@ export default function ExplorePage({
                 {sublimationSteps.map((step, idx) => (
                   <div key={idx} className="p-5 bg-neutral-50 rounded-[4px] border border-neutral-200">
                     <span className="text-2xl font-black text-[var(--accent)] font-mono">{step.step}</span>
-                    <h4 className="font-bold text-sm uppercase text-[var(--secondary)] mt-2 mb-2">{step.title}</h4>
+                    <h3 className="font-bold text-sm uppercase text-[var(--secondary)] mt-2 mb-2">{step.title}</h3>
                     <p className="text-xs text-neutral-600 leading-relaxed">{step.desc}</p>
                   </div>
                 ))}
@@ -221,7 +221,7 @@ export default function ExplorePage({
           <div className="bg-white p-8 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm space-y-6">
             <div>
               <span className="text-[10px] font-bold text-[var(--accent)] uppercase tracking-widest">PRO TEAM GRADE</span>
-              <h3 className="text-2xl font-black uppercase text-[var(--secondary)] mb-2">Collegiate Tackle Twill & 3D Appliqué</h3>
+              <h2 className="text-2xl font-black uppercase text-[var(--secondary)] mb-2">Collegiate Tackle Twill & 3D Appliqué</h2>
               <p className="text-xs text-[var(--secondary)]/75 leading-relaxed max-w-3xl">
                 For baseball full-button jerseys, hockey sweaters, and championship outerwear, we offer laser-cut tackle twill letters and numbers sewn with dense zigzag edge stitching that withstands 100+ industrial athletic washes.
               </p>
@@ -229,15 +229,15 @@ export default function ExplorePage({
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-4">
               <div className="p-5 border border-neutral-200 rounded-[3px]">
-                <h4 className="font-black text-sm uppercase text-[var(--secondary)] mb-2">Single-Layer Twill</h4>
+                <h3 className="font-black text-sm uppercase text-[var(--secondary)] mb-2">Single-Layer Twill</h3>
                 <p className="text-xs text-neutral-600">Clean classic laser-cut twill numbering stitched directly onto the jersey for clean lightweight movement.</p>
               </div>
               <div className="p-5 border border-neutral-200 rounded-[3px]">
-                <h4 className="font-black text-sm uppercase text-[var(--secondary)] mb-2">Double-Layer Zigzag Twill</h4>
+                <h3 className="font-black text-sm uppercase text-[var(--secondary)] mb-2">Double-Layer Zigzag Twill</h3>
                 <p className="text-xs text-neutral-600">Dual-color contrasted twill with collegiate drop-shadow styling, identical to NCAA and MLB uniforms.</p>
               </div>
               <div className="p-5 border border-neutral-200 rounded-[3px]">
-                <h4 className="font-black text-sm uppercase text-[var(--secondary)] mb-2">High-Density 3D Embroidery</h4>
+                <h3 className="font-black text-sm uppercase text-[var(--secondary)] mb-2">High-Density 3D Embroidery</h3>
                 <p className="text-xs text-neutral-600">Direct raised embroidery on caps, team hoodies, and jacket chest logos up to 100,000 stitches per crest.</p>
               </div>
             </div>
@@ -248,7 +248,7 @@ export default function ExplorePage({
         {activeTab === 'lookbook' && (
           <div className="space-y-6">
             <div className="bg-white p-8 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm text-center">
-              <h3 className="text-2xl font-black uppercase text-[var(--secondary)] mb-2">2026 Athletic Uniform Lookbook</h3>
+              <h2 className="text-2xl font-black uppercase text-[var(--secondary)] mb-2">2026 Athletic Uniform Lookbook</h2>
               <p className="text-xs text-[var(--secondary)]/70 max-w-xl mx-auto mb-6">
                 Discover our latest cuts, ergonomic athletic paneling, and sublimated team kits across Baseball, Basketball, Football, Soccer, Esports, Wrestling, and Hockey.
               </p>

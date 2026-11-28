@@ -134,6 +134,39 @@ const Navbar = ({ onNavigate = () => {} }) => {
     'ABOUT US'
   ];
 
+  const getSportHref = (sportName) => {
+    switch (sportName) {
+      case 'BASEBALL': return '/custom-baseball-uniforms/';
+      case 'BASKETBALL': return '/custom-basketball-uniforms/';
+      case 'FOOTBALL': return '/custom-football-uniforms/';
+      case 'FLAG FOOTBALL': return '/custom-flag-football-uniforms/';
+      case 'SOCCER': return '/custom-soccer-uniforms/';
+      case 'ESPORTS': return '/custom-esports-apparel/';
+      case 'ICE HOCKEY': return '/custom-ice-hockey-uniforms/';
+      case 'LACROSSE': return '/custom-lacrosse-uniforms/';
+      case 'RUGBY': return '/custom-rugby-uniforms/';
+      case 'SOFTBALL': return '/custom-softball-uniforms/';
+      case 'VOLLEYBALL': return '/custom-volleyball-uniforms/';
+      case 'WRESTLING': return '/custom-wrestling-singlets/';
+      case 'CRICKET': return '/custom-cricket-uniforms/';
+      default: return '/';
+    }
+  };
+
+  const getNavLinkHref = (link) => {
+    switch (link) {
+      case '3D BUILDER': return '/builder/';
+      case 'REGISTER CLUB': return '/register-club/';
+      case 'STYLES': return '/styles/';
+      case 'EXPLORE': return '/explore/';
+      case 'PARTNER WITH US': return '/request-a-quote/';
+      case 'COMPLIANCE': return '/compliance/';
+      case 'CERTIFICATION': return '/certification/';
+      case 'ABOUT US': return '/about-us/';
+      default: return '/';
+    }
+  };
+
   const handleNavLinkClick = (link) => {
     if (link === '3D BUILDER') {
       onNavigate('builder');
@@ -170,22 +203,34 @@ const Navbar = ({ onNavigate = () => {} }) => {
 
           {/* Right Utility Links */}
           <div className="flex items-center gap-2.5 sm:gap-5 text-[9px] sm:text-[10.5px] tracking-wider uppercase font-medium text-white/70 whitespace-nowrap flex-shrink-0">
-            <button
-              onClick={() => onNavigate('inquiry')}
+            <a
+              href="/request-a-quote/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
+                  e.preventDefault();
+                  onNavigate('inquiry');
+                }
+              }}
               className="flex items-center gap-1 hover:text-white transition-colors cursor-pointer"
             >
               <Sparkles size={11} className="text-[var(--accent)]" />
               <span>Free 3D Mockup</span>
-            </button>
+            </a>
             <div className="w-[1px] h-3 bg-white/20 hidden sm:block" />
-            <button
-              onClick={() => onNavigate('inquiry')}
+            <a
+              href="/request-a-quote/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
+                  e.preventDefault();
+                  onNavigate('inquiry');
+                }
+              }}
               className="hidden sm:flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer"
             >
               <Building2 size={11} className="text-[var(--accent)]" />
               <span className="hidden md:inline">B2B Team Quotes</span>
               <span className="md:hidden">B2B Quotes</span>
-            </button>
+            </a>
             <div className="w-[1px] h-3 bg-white/20 hidden md:block" />
             <a
               href="https://wa.me/923105464116"
@@ -218,9 +263,15 @@ const Navbar = ({ onNavigate = () => {} }) => {
         <div className="w-[96%] max-w-[1800px] mx-auto flex items-center justify-between h-16 md:h-20 gap-2 xl:gap-4">
           
           {/* Brand Logo & Name */}
-          <div 
+          <a 
+            href="/"
             className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group flex-shrink-0"
-            onClick={() => onNavigate('home')}
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
+                e.preventDefault();
+                onNavigate('home');
+              }
+            }}
           >
             <div className="w-9 h-9 sm:w-11 sm:h-11 relative flex-shrink-0">
               <img
@@ -242,7 +293,7 @@ const Navbar = ({ onNavigate = () => {} }) => {
                 SPORTS
               </span>
             </div>
-          </div>
+          </a>
 
           {/* Desktop Navigation Links — Compact & Responsive */}
           <div className="hidden lg:flex items-center gap-2 lg:gap-2.5 xl:gap-3.5 2xl:gap-5 h-full flex-nowrap">
@@ -259,9 +310,15 @@ const Navbar = ({ onNavigate = () => {} }) => {
                 }}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <div 
+                <a 
+                  href={getNavLinkHref(link)}
                   className="flex items-center gap-0.5 xl:gap-1 h-full whitespace-nowrap"
-                  onClick={() => handleNavLinkClick(link)}
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
+                      e.preventDefault();
+                      handleNavLinkClick(link);
+                    }
+                  }}
                 >
                   <span className={`nav-link text-[10px] xl:text-[11px] font-bold tracking-tight xl:tracking-wider whitespace-nowrap transition-all duration-300 ${activeDropdown === link ? 'text-[var(--accent)] font-black' : 'text-[var(--secondary)]'}`}>
                     {link}
@@ -272,7 +329,7 @@ const Navbar = ({ onNavigate = () => {} }) => {
                       className={`flex-shrink-0 transition-transform duration-300 ${activeDropdown === link ? 'rotate-180 text-[var(--accent)]' : 'group-hover:rotate-180 text-[var(--secondary)]'}`}
                     />
                   )}
-                </div>
+                </a>
 
                 {/* Dropdown for link */}
                 <NavbarDropdown
@@ -345,18 +402,22 @@ const Navbar = ({ onNavigate = () => {} }) => {
         <div className="w-[96%] max-w-[1800px] mx-auto flex items-center justify-between gap-1 sm:gap-2 py-2 overflow-x-auto no-scrollbar whitespace-nowrap">
           <div className="flex items-center justify-between w-full gap-1 sm:gap-2 overflow-x-auto no-scrollbar">
             {directSports.map((sport) => (
-              <button
+              <a
                 key={sport.name}
-                onClick={() => {
-                  if (sport.name === 'CRICKET') onNavigate('cricket');
-                  else onNavigate('products', sport.name);
+                href={getSportHref(sport.name)}
+                onClick={(e) => {
+                  if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
+                    e.preventDefault();
+                    if (sport.name === 'CRICKET') onNavigate('cricket');
+                    else onNavigate('products', sport.name);
+                  }
                 }}
-                className="relative px-1 sm:px-2 py-1.5 text-[9px] sm:text-[10px] xl:text-[11px] font-bold uppercase tracking-wider text-[var(--secondary)]/85 hover:text-[var(--accent)] transition-colors duration-200 cursor-pointer flex-shrink-0 group"
+                className="relative px-1 sm:px-2 py-1.5 text-[9px] sm:text-[10px] xl:text-[11px] font-bold uppercase tracking-wider text-[var(--secondary)]/85 hover:text-[var(--accent)] transition-colors duration-200 cursor-pointer flex-shrink-0 group inline-block"
               >
                 <span>{sport.label}</span>
                 {/* Clean underline on hover instead of orange background */}
                 <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[var(--accent)] transition-all duration-300 group-hover:w-full" />
-              </button>
+              </a>
             ))}
           </div>
         </div>

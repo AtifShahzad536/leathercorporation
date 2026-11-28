@@ -1046,12 +1046,12 @@ export default function RegisterClubPage({
               >
                 REQUEST 3D DESIGN PROOF
               </button>
-              <button
-                onClick={() => window.location.href = '/'}
-                className="w-full sm:w-auto px-6 py-3 bg-[#1E1B6E] hover:bg-[#161352] text-white text-xs font-black uppercase tracking-widest rounded-[5px] shadow transition cursor-pointer"
+              <a
+                href="/"
+                className="w-full sm:w-auto px-6 py-3 bg-[#1E1B6E] hover:bg-[#161352] text-white text-xs font-black uppercase tracking-widest rounded-[5px] shadow transition cursor-pointer inline-flex items-center justify-center text-center"
               >
                 RETURN TO HOMEPAGE
-              </button>
+              </a>
             </div>
           </div>
         )}

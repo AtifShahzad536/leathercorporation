@@ -176,7 +176,7 @@ export default function StylesPage({
                   <span className="text-[9.5px] font-bold text-[var(--accent)] uppercase tracking-wider block">
                     {style.tagline}
                   </span>
-                  <h3 className="text-base font-black uppercase">{style.title}</h3>
+                  <h2 className="text-base font-black uppercase">{style.title}</h2>
                 </div>
               </div>
 
@@ -233,9 +233,9 @@ export default function StylesPage({
               <span className="text-[9.5px] font-bold text-[var(--accent)] uppercase tracking-wider block">
                 IN-HOUSE TANNERY GRADES
               </span>
-              <h3 className="text-base sm:text-lg font-black uppercase text-[var(--secondary)]">
+              <h2 className="text-base sm:text-lg font-black uppercase text-[var(--secondary)]">
                 Available Leather Hides & Finishing Options
-              </h3>
+              </h2>
             </div>
           </div>
 
@@ -246,7 +246,7 @@ export default function StylesPage({
                 className="p-3 bg-gray-50 rounded-[3px] border border-gray-200 text-center hover:border-[var(--accent)] transition-colors"
               >
                 <div className="w-2 h-2 rounded-full bg-[var(--accent)] mx-auto mb-2" />
-                <h5 className="text-xs font-bold uppercase text-[var(--secondary)] mb-1">{hide}</h5>
+                <h3 className="text-xs font-bold uppercase text-[var(--secondary)] mb-1">{hide}</h3>
                 <span className="text-[10px] text-gray-500 block">Drum Dyed • 100% Genuine</span>
               </div>
             ))}

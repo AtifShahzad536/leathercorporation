@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Eye, ArrowRight, Check, Award, Filter } from 'lucide-react';
 import TrustBar from '../common/TrustBar';
+import SEO from '../common/SEO';
 import { fullCatalog296 } from '../../data/fullCatalog296';
 
 export default function PortfolioPage({ onNavigateInquiry = () => {}, onNavigateProduct = () => {} }) {
@@ -21,7 +22,14 @@ export default function PortfolioPage({ onNavigateInquiry = () => {}, onNavigate
   }, [activeFilter]);
 
   return (
-    <div className="w-full bg-[var(--primary)] text-[var(--secondary)] min-h-screen">
+    <>
+      <SEO
+        title="Custom Team Uniform Showcase & Recent Work | HAMLO SPORTS"
+        description="Explore authentic custom sublimation proofs, tackle twill embroidery details, and complete game-day kits manufactured direct from our facility in Sialkot, Pakistan."
+        canonical="/portfolio/"
+        keywords="custom sportswear portfolio, custom uniform proofs, sublimation jersey showcase, team uniforms gallery"
+      />
+      <div className="w-full bg-[var(--primary)] text-[var(--secondary)] min-h-screen">
       {/* Header Banner */}
       <section className="bg-[var(--secondary)] text-white py-12 sm:py-16 border-b border-white/10">
         <div className="w-[96%] max-w-[1400px] mx-auto text-center">
@@ -79,9 +87,9 @@ export default function PortfolioPage({ onNavigateInquiry = () => {}, onNavigate
                 <span className="text-[9px] font-bold uppercase tracking-wider text-[var(--accent)] block">
                   {item.sport || item.category}
                 </span>
-                <h3 className="text-xs font-black uppercase text-[var(--secondary)] line-clamp-2 leading-tight group-hover:text-[var(--accent)] transition mb-1">
+                <h2 className="text-xs font-black uppercase text-[var(--secondary)] line-clamp-2 leading-tight group-hover:text-[var(--accent)] transition mb-1">
                   {item.name}
-                </h3>
+                </h2>
                 <span className="text-xs font-black text-[var(--secondary)] block mb-3">
                   {item.price}
                 </span>
@@ -124,5 +132,6 @@ export default function PortfolioPage({ onNavigateInquiry = () => {}, onNavigate
 
       </div>
     </div>
+    </>
   );
 }

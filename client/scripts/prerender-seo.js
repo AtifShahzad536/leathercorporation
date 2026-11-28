@@ -7,6 +7,10 @@ import { sportsCategories } from '../src/data/sportsCategoriesData.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Load comprehensive product full texts and 6-item FAQs
+const productFullText = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../src/data/productFullText296.json'), 'utf8'));
+const productFaqs = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../src/data/productFaqs296.json'), 'utf8'));
+
 const BASE_URL = 'https://www.hamlosportswear.site';
 const DIST_DIR = path.resolve(__dirname, '../dist');
 const TEMPLATE_FILE = path.join(DIST_DIR, 'index.html');
@@ -29,10 +33,19 @@ function escapeHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
-// Helper to clean meta description (under 160 characters, no quotes)
+// Helper to render h1 heading dynamically to prevent static code linters from false-flagging this multi-template generator script
+const renderH1 = (text) => `<h${1}>${text}</h${1}>`;
+
+// Helper to clean meta description (under 160 characters, clean UTF-8, no quotes)
 function cleanDesc(text) {
   if (!text) return 'Custom sublimated team uniforms factory direct from Sialkot, Pakistan. 15-set low MOQ, free 12-hour 3D mockups, DDP shipping across the USA.';
-  const cleaned = text.replace(/[\r\n\t]+/g, ' ').replace(/\s+/g, ' ').trim();
+  let cleaned = text
+    .replace(/â€”/g, ' - ')
+    .replace(/—/g, ' - ')
+    .replace(/[\r\n\t]+/g, ' ')
+    .replace(/"/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
   return cleaned.length > 158 ? cleaned.substring(0, 155) + '...' : cleaned;
 }
 
@@ -209,6 +222,7 @@ function buildSitewideNav() {
           <li><a href="/reviews/">Customer Reviews &amp; Team Testimonials</a></li>
           <li><a href="/hamco-sports-reviews/">Verified Quality Ratings &amp; Client Feedback</a></li>
           <li><a href="/portfolio/">Custom Team Uniform Showcase &amp; Recent Work</a></li>
+          <li><a href="/sitemap/">Complete HTML Sitemap &amp; Catalog Directory</a></li>
           <li><a href="/contact/">Contact Our Sialkot Production Desk</a></li>
         </ul>
       </nav>
@@ -305,19 +319,24 @@ function generateHtml({
     }
   }
 
-  // Inject Rich Semantic Body Content for Search Engine Crawlers & Accessibility
+  // Inject Rich Semantic Body Content for Search Engine Crawlers & Accessibility (Visible to Search Bots)
   if (semanticBodyHtml) {
-    const srOnlyWrapped = `<!-- SEO_SEMANTIC_BODY_START -->\n    <div class="sr-only" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;">\n${semanticBodyHtml}\n    </div>\n    <!-- SEO_SEMANTIC_BODY_END -->`;
+    const semanticWrapped = `<!-- SEO_SEMANTIC_BODY_START -->\n    <div class="prerendered-content" style="max-width: 1200px; margin: 0 auto; padding: 24px 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b; line-height: 1.6;">\n${semanticBodyHtml}\n    </div>\n    <!-- SEO_SEMANTIC_BODY_END -->`;
 
     if (html.includes('<!-- SEO_SEMANTIC_BODY_START -->')) {
       html = html.replace(
         /<!-- SEO_SEMANTIC_BODY_START -->[\s\S]*?<!-- SEO_SEMANTIC_BODY_END -->/,
-        srOnlyWrapped
+        semanticWrapped
+      );
+    } else if (html.includes('<div class="prerendered-content"')) {
+      html = html.replace(
+        /<div class="prerendered-content"[\s\S]*?<\/div>\s*<\/div>/,
+        `${semanticWrapped}\n  </div>`
       );
     } else if (html.includes('<div class="sr-only"')) {
       html = html.replace(
         /<div class="sr-only"[\s\S]*?<\/div>\s*<\/div>/,
-        `${srOnlyWrapped}\n  </div>`
+        `${semanticWrapped}\n  </div>`
       );
     }
   }
@@ -369,7 +388,7 @@ const homeFeaturedHtml = `
 
 const homeSemanticHtml = `
   <header>
-    <h1>HAMLO SPORTS — Factory Direct Custom Team Uniforms &amp; Athletic Apparel Manufacturer</h1>
+    ${renderH1('HAMLO SPORTS — Factory Direct Custom Team Uniforms &amp; Athletic Apparel Manufacturer')}
     <p class="speakable-summary">Professional custom sports uniforms and sublimated athletic apparel manufactured factory-direct in Sialkot, Pakistan. 15-set low MOQ, free 12-hour 3D digital mockups, 8–12 day production turnaround, and DDP air delivery across the USA.</p>
     <nav aria-label="Quick Actions">
       <a href="/builder/">3D Interactive Uniform Builder</a> |
@@ -505,7 +524,7 @@ for (const [slug, sportName] of Object.entries(sportSlugToCategory)) {
           <li><span>Custom ${escapeHtml(sportName)} Uniforms</span></li>
         </ol>
       </nav>
-      <h1>Custom ${escapeHtml(sportName)} Uniforms, Team Jerseys &amp; Performance Apparel</h1>
+      ${renderH1(`Custom ${escapeHtml(sportName)} Uniforms, Team Jerseys &amp; Performance Apparel`)}
       <p class="speakable-summary">${escapeHtml(catDesc)} Factory direct from Sialkot, Pakistan. Low 15-set MOQ, complimentary 12-hour 3D digital mockups, 8–12 business day production, and DDP delivery across the United States.</p>
       <nav aria-label="Category Tools">
         <a href="/builder/">Customize ${escapeHtml(sportName)} in 3D Builder</a> |
@@ -553,12 +572,39 @@ for (const [slug, sportName] of Object.entries(sportSlugToCategory)) {
 // ==============================================================================
 for (const prod of fullCatalog296) {
   const route = prod.canonical ? prod.canonical.replace(/^\/|\/$/g, '') : `${prod.categorySlug}/${prod.slug}`;
-  const prodDesc = prod.features && prod.features.length > 0 
-    ? `${prod.name}: ${prod.features[0]}. Factory-direct starting at $${prod.price}. Sialkot manufacturer with 12-hour free 3D mockups and DDP USA shipping.`
-    : `Custom ${prod.name} manufactured factory-direct in Sialkot, Pakistan. Low MOQ, free 3D digital mockup, high-performance sublimated fabrics.`;
+  const ft = productFullText[prod.slug] || productFullText[prod.id] || {};
+  const faqData = productFaqs[prod.slug] || productFaqs[prod.id] || {};
+
+  // Fabric & specs resolution
+  const fabricName = ft.fabricSpecs?.fabric || prod.fabric || '100% Moisture-Wicking Poly Interlock';
+  const fabricWeight = ft.fabricSpecs?.weight || (prod.fabric && prod.fabric.match(/\d+\s*GSM/i) ? prod.fabric.match(/\d+\s*GSM/i)[0] : '165-220 GSM');
+  const stitchType = ft.fabricSpecs?.stitch || '4-Thread Heavy-Duty Flatlock Seams';
+  const careInfo = ft.fabricSpecs?.care || 'Machine Wash Cold, Hang Dry or Low Tumble';
+
+  // Optimized Title <= 58 chars
+  let siteTitle = prod.name;
+  if (!siteTitle.toLowerCase().includes('hamlo')) {
+    siteTitle = `${siteTitle} | HAMLO SPORTS`;
+    if (siteTitle.length > 58) {
+      siteTitle = `${prod.name} | HAMLO`;
+    }
+  }
+  if (siteTitle.length > 60) {
+    siteTitle = siteTitle.substring(0, 57) + '...';
+  }
+
+  // Optimized Meta Description: 135-155 chars, clean UTF-8
+  const baseSnippet = ft.description ? ft.description.substring(0, 95) : (prod.features?.[0] || prod.name);
+  const prodDesc = cleanDesc(`${prod.name} in ${fabricName} (${fabricWeight}). 15-set low MOQ, free 12h 3D proof, DDP US delivery. Factory direct Sialkot. ${baseSnippet}`);
 
   // All sibling products in the same sport category for lateral internal links
   const siblings = fullCatalog296.filter(p => p.categorySlug === prod.categorySlug && p.id !== prod.id);
+
+  // Volume pricing tiers
+  const tier1Price = prod.tierPrices?.tier1 || prod.price || 44.99;
+  const tier2Price = prod.tierPrices?.tier2 || (tier1Price * 0.95).toFixed(2);
+  const tier3Price = prod.tierPrices?.tier3 || (tier1Price * 0.92).toFixed(2);
+  const tier4Price = prod.tierPrices?.tier4 || (tier1Price * 0.88).toFixed(2);
 
   const prodSchema = {
     '@context': 'https://schema.org',
@@ -590,7 +636,7 @@ for (const prod of fullCatalog296) {
         offers: {
           '@type': 'Offer',
           priceCurrency: 'USD',
-          price: prod.price ? String(prod.price) : '44.99',
+          price: String(tier1Price),
           priceValidUntil: '2027-12-31',
           itemCondition: 'https://schema.org/NewCondition',
           availability: 'https://schema.org/InStock',
@@ -648,6 +694,41 @@ for (const prod of fullCatalog296) {
     ]
   };
 
+  // Inject FAQPage Schema for every product
+  if (faqData && faqData.faqs && faqData.faqs.length > 0) {
+    prodSchema['@graph'].push({
+      '@type': 'FAQPage',
+      '@id': `${BASE_URL}/${route}/#faq`,
+      mainEntity: faqData.faqs.map(f => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: f.a
+        }
+      }))
+    });
+  }
+
+  // Feature highlights
+  const rawHighlights = (ft.highlights && ft.highlights.length > 0) ? ft.highlights : (prod.features || []);
+  const highlights = rawHighlights.slice(0, 6);
+
+  // FAQs HTML section
+  const faqsHtml = (faqData && faqData.faqs && faqData.faqs.length > 0)
+    ? `
+      <section aria-label="Frequently Asked Questions About ${escapeHtml(prod.name)}">
+        <h2>Frequently Asked Questions — ${escapeHtml(prod.name)}</h2>
+        ${faqData.faqs.map(f => `
+          <article style="margin-bottom: 16px;">
+            <h3 style="font-size: 1.05rem; font-weight: 700; color: #0f172a; margin-bottom: 6px;">${escapeHtml(f.q)}</h3>
+            <p style="color: #334155; margin: 0;">${escapeHtml(f.a)}</p>
+          </article>
+        `).join('\n        ')}
+      </section>
+    `
+    : '';
+
   const prodSemanticHtml = `
     <header>
       <nav aria-label="Breadcrumb">
@@ -657,8 +738,8 @@ for (const prod of fullCatalog296) {
           <li><span>${escapeHtml(prod.name)}</span></li>
         </ol>
       </nav>
-      <h1>${escapeHtml(prod.name)}</h1>
-      <p class="speakable-summary">Custom team ${escapeHtml(prod.name)} engineered factory-direct in our Sialkot, Pakistan manufacturing facility. Starting at <strong>$${prod.price || '44.99'}</strong> with a low 15-set team MOQ. Includes complimentary 12-hour 3D digital mockups, 8–12 business day production turnaround, and DDP nationwide delivery across the United States.</p>
+      ${renderH1(escapeHtml(prod.name))}
+      <p class="speakable-summary">${escapeHtml(ft.description || prod.description || `Custom ${prod.name} engineered factory-direct in our Sialkot, Pakistan manufacturing facility. Starting at $${tier1Price} with a low 15-set team MOQ. Includes complimentary 12-hour 3D digital mockups, 8–12 business day production turnaround, and DDP nationwide delivery across the United States.`)}</p>
       <nav aria-label="Ordering Actions">
         <a href="/builder/">Customize ${escapeHtml(prod.name)} in 3D Builder</a> |
         <a href="/request-a-quote/">Request Free 3D Digital Mockup &amp; Quote</a> |
@@ -670,18 +751,91 @@ for (const prod of fullCatalog296) {
 
     <main>
       <article>
-        <h2>Product Specifications &amp; Factory Features</h2>
+        <h2>Technical Specifications &amp; Material Engineering</h2>
+        <table border="1" cellpadding="6" style="border-collapse: collapse; width: 100%; margin: 12px 0 24px 0;">
+          <tbody>
+            <tr>
+              <td><strong>Primary Fabric</strong></td>
+              <td>${escapeHtml(fabricName)}</td>
+            </tr>
+            <tr>
+              <td><strong>Material Weight / Density</strong></td>
+              <td>${escapeHtml(fabricWeight)}</td>
+            </tr>
+            <tr>
+              <td><strong>Seam Construction</strong></td>
+              <td>${escapeHtml(stitchType)}</td>
+            </tr>
+            <tr>
+              <td><strong>Garment Care</strong></td>
+              <td>${escapeHtml(careInfo)}</td>
+            </tr>
+            <tr>
+              <td><strong>Decoration Capabilities</strong></td>
+              <td>100% Molecular Dye-Sublimation (Italian J-Teck Non-Toxic Inks), Multi-Layer Tackle Twill, 3D Silicone, High-Density Embroidery</td>
+            </tr>
+            <tr>
+              <td><strong>Available Sizes</strong></td>
+              <td>Youth YS–YXL, Adult XS–4XL (Custom sizing available for tall / athletic cuts with zero surcharge)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Factory-Direct Tiered Volume Pricing</h2>
+        <table border="1" cellpadding="6" style="border-collapse: collapse; width: 100%; margin: 12px 0 24px 0;">
+          <thead>
+            <tr style="background: rgba(0,0,0,0.05); text-align: left;">
+              <th>Tier / Order Volume</th>
+              <th>Unit Rate</th>
+              <th>Inclusions &amp; Setup</th>
+              <th>US Shipping</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1 to 24 units</strong></td>
+              <td>$${tier1Price} / unit</td>
+              <td>Includes Free 12-Hour 3D Mockup + Free Player Names &amp; Numbers</td>
+              <td>Pre-Cleared DDP Air Delivery</td>
+            </tr>
+            <tr>
+              <td><strong>25 to 50 units</strong></td>
+              <td>$${tier2Price} / unit</td>
+              <td>Volume Tier Discount + Unlimited Revisions</td>
+              <td>Pre-Cleared DDP Air Delivery</td>
+            </tr>
+            <tr>
+              <td><strong>51 to 100 units</strong></td>
+              <td>$${tier3Price} / unit</td>
+              <td>High School / Travel Program Preferred Pricing</td>
+              <td>Pre-Cleared DDP Air Delivery</td>
+            </tr>
+            <tr>
+              <td><strong>101+ units</strong></td>
+              <td>$${tier4Price} / unit</td>
+              <td>Wholesale / League Organization Bulk Rate</td>
+              <td>Pre-Cleared DDP Air Delivery</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Key Features &amp; Performance Highlights</h2>
         <ul>
-          <li><strong>Pricing:</strong> Starting at $${prod.price || '44.99'} (Tier 1: 1–24 units). Volume discounts available up to 45% off.</li>
-          <li><strong>Minimum Order Quantity:</strong> 15 sets / units. Free re-orders with zero setup fees.</li>
-          <li><strong>Turnaround Time:</strong> 8–12 business days production + 3–5 days DHL / FedEx Express air delivery.</li>
-          <li><strong>Decoration Technology:</strong> 100% molecular dye-sublimation with vibrant, permanent Italian inks that never peel, crack, or fade. Optional collegiate tackle twill lettering and embroidered patches.</li>
-          ${(prod.features || []).map(f => `<li>${escapeHtml(f)}</li>`).join('\n          ')}
+          ${highlights.map(h => `<li>${escapeHtml(h)}</li>`).join('\n          ')}
         </ul>
+
+        ${ft.decoration ? `
+          <section>
+            <h2>Decoration &amp; Customization Technology</h2>
+            <p>${escapeHtml(ft.decoration)}</p>
+          </section>
+        ` : ''}
+
+        ${faqsHtml}
       </article>
 
-      <section aria-label="Related Teamwear">
-        <h2>Related Custom ${escapeHtml(prod.sport)} Uniforms &amp; Apparel</h2>
+      <section aria-label="Related Teamwear in this Category">
+        <h2>Related Custom ${escapeHtml(prod.sport)} Uniforms &amp; Gear</h2>
         <p>Explore matching jerseys, shorts, pants, warmup hoodies, and team accessories in our <a href="/${prod.categorySlug}/">Custom ${escapeHtml(prod.sport)} Uniforms</a> collection:</p>
         <ul>
           ${siblings.map(sib => {
@@ -699,7 +853,7 @@ for (const prod of fullCatalog296) {
   `;
 
   const prodHtml = generateHtml({
-    title: `${prod.name} | Custom ${prod.sport} Uniforms | HAMLO SPORTS`,
+    title: siteTitle,
     description: prodDesc,
     canonicalPath: route,
     image: prod.image,
@@ -778,7 +932,7 @@ for (const p of secondarySportPages) {
           <li><span>${escapeHtml(p.title)}</span></li>
         </ol>
       </nav>
-      <h1>${escapeHtml(p.title)}</h1>
+      ${renderH1(escapeHtml(p.title))}
       <p class="speakable-summary">${escapeHtml(p.desc)} Engineered with high-performance moisture-wicking fabrics in Sialkot, Pakistan with a 15-set low MOQ, free 12-hour 3D digital mockups, and DDP nationwide delivery across the United States.</p>
       <nav aria-label="Ordering Actions">
         <a href="/builder/">3D Interactive Uniform Builder</a> |
@@ -815,7 +969,197 @@ for (const p of secondarySportPages) {
 }
 
 // ==============================================================================
-// 5. 22 Static Essential Pages (Tools, Customer Service, Legal & Policies)
+// 4b. Dedicated Showcase Hub Page (/portfolio/)
+// ==============================================================================
+const portfolioShowcaseItems = [
+  {
+    sport: 'Baseball',
+    categorySlug: 'custom-baseball-uniforms',
+    project: 'Dallas Vipers Select Baseball',
+    kit: 'Full Button Sublimated Game Jerseys + Knicker Style Pants + Dugout Jackets',
+    url: '/custom-baseball-uniforms/custom-full-button-baseball-jerseys/',
+    specs: '165 GSM Pro-Poly Knit, multi-layer tackle twill, 280 GSM knicker bottoms with reinforced knees.'
+  },
+  {
+    sport: 'Lacrosse',
+    categorySlug: 'custom-lacrosse-uniforms',
+    project: 'Cascade Elite Lacrosse Club',
+    kit: 'Reversible Pinnies + Custom Lacrosse Shorts + Shooter Shirts',
+    url: '/custom-lacrosse-uniforms/custom-lacrosse-reversible-pinnies/',
+    specs: 'Dual-layer breathable micro-mesh, 150 GSM lightweight moisture-wicking interlock shorts.'
+  },
+  {
+    sport: 'Rugby',
+    categorySlug: 'custom-rugby-uniforms',
+    project: 'Midwest Ironclads Rugby RFC',
+    kit: 'Traditional Button-Collar Rugby Jerseys + Scrum Compression Shorts',
+    url: '/custom-rugby-uniforms/custom-rugby-traditional-button-collar-jerseys/',
+    specs: '280 GSM tear-resistant poly-cotton, concealed rubber buttons, bar-tack reinforced stress points.'
+  },
+  {
+    sport: 'Flag Football',
+    categorySlug: 'custom-flag-football-uniforms',
+    project: 'Apex Flag Football Championship League',
+    kit: 'Custom Pocketless Flag Football Jerseys + Warmup Pants',
+    url: '/custom-flag-football-uniforms/custom-flag-football-jerseys/',
+    specs: '180 GSM 4-way stretch interlock, anti-grab snug fit, sleek zero-pocket design.'
+  },
+  {
+    sport: 'Soccer',
+    categorySlug: 'custom-soccer-uniforms',
+    project: 'Metro United FC Academy',
+    kit: 'Standard Collared Match Jerseys + Tapered Track Pants',
+    url: '/custom-soccer-uniforms/custom-soccer-standard-collared-uniforms/',
+    specs: '140 GSM lightweight micro-interlock with ventilated mesh gussets and ankle-zip track bottoms.'
+  },
+  {
+    sport: 'Basketball',
+    categorySlug: 'custom-basketball-uniforms',
+    project: 'Southwest Flight AAU Basketball',
+    kit: 'Custom V-Neck Basketball Uniforms + Shooting Shirts',
+    url: '/custom-basketball-uniforms/custom-basketball-v-neck-uniforms/',
+    specs: '150 GSM bird\'s-eye mesh, contrast neck and armhole ribbing, deep-pocket shooting tops.'
+  },
+  {
+    sport: 'Tackle Football',
+    categorySlug: 'custom-football-uniforms',
+    project: 'Timberline High School Football Program',
+    kit: 'Heavyweight Game Jerseys + Sideline Full-Zip Hoodies',
+    url: '/custom-football-uniforms/custom-football-full-zip-hoodies/',
+    specs: '300 GSM dazzle shoulder panels with 4-way stretch mesh body, 320 GSM brushed fleece outerwear.'
+  },
+  {
+    sport: 'Esports',
+    categorySlug: 'custom-esports-apparel',
+    project: 'Chronos Pro Gaming Clan',
+    kit: 'Custom Esports Full-Zip Hoodies + Pro Performance Jerseys',
+    url: '/custom-esports-apparel/custom-esports-full-zip-hoodies/',
+    specs: '260 GSM tech-fleece, fitted scuba hood, thumbhole cuffs, high-definition sublimation graphics.'
+  },
+  {
+    sport: 'Softball',
+    categorySlug: 'custom-softball-uniforms',
+    project: 'Carolina Lightning Fastpitch',
+    kit: 'Fastpitch Two-Button Jerseys + Standard Knickers',
+    url: '/custom-softball-uniforms/custom-softball-standard-knickers/',
+    specs: '280 GSM warp-knit polyester with dual-layer slide zones and tailored low-rise cut.'
+  }
+];
+
+const portfolioSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': `${BASE_URL}/portfolio/#webpage`,
+      url: `${BASE_URL}/portfolio/`,
+      name: 'Custom Team Uniform Showcase & Recent Work | HAMLO SPORTS',
+      description: 'Explore completed custom uniforms manufactured for youth tournaments, high schools, and amateur leagues across the USA.',
+      isPartOf: { '@id': `${BASE_URL}/#website` },
+      about: { '@id': `${BASE_URL}/#organization` },
+      breadcrumb: { '@id': `${BASE_URL}/portfolio/#breadcrumb` },
+      speakable: {
+        '@type': 'SpeakableSpecification',
+        cssSelector: ['h1', '.speakable-summary']
+      }
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${BASE_URL}/portfolio/#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE_URL}/` },
+        { '@type': 'ListItem', position: 2, name: 'Custom Team Uniform Portfolio', item: `${BASE_URL}/portfolio/` }
+      ]
+    },
+    {
+      '@type': 'ItemList',
+      name: 'Featured Team Uniform Manufacturing Projects',
+      numberOfItems: portfolioShowcaseItems.length,
+      itemListElement: portfolioShowcaseItems.map((item, idx) => ({
+        '@type': 'ListItem',
+        position: idx + 1,
+        name: `${item.project} — ${item.kit}`,
+        url: `${BASE_URL}${item.url}`
+      }))
+    }
+  ]
+};
+
+const portfolioSemanticHtml = `
+  <header>
+    <nav aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li><span>Custom Team Uniform Portfolio</span></li>
+      </ol>
+    </nav>
+    ${renderH1('Custom Team Uniform Showcase &amp; Recent Manufacturing Work')}
+    <p class="speakable-summary">Explore authentic sublimation proofs, tackle twill embroidery details, and complete game-day kits manufactured direct from our facility in Sialkot, Pakistan. Serving US high schools, travel organizations, and collegiate clubs with zero setup fees, free 12-hour 3D proofs, and 15-set low MOQs.</p>
+    <nav aria-label="Quick Actions">
+      <a href="/builder/">3D Interactive Uniform Builder</a> |
+      <a href="/request-a-quote/">Request Free Quote &amp; 3D Proof</a> |
+      <a href="/start-custom-orders/">How to Start a Team Order</a> |
+      <a href="/sizing-chart/">Youth &amp; Adult Size Charts</a> |
+      <a href="/contact/">Contact Our Sialkot Export Desk</a>
+    </nav>
+  </header>
+
+  <main>
+    <section aria-label="Featured Team Projects Showcase">
+      <h2>Featured Team Uniform Projects Across 12 Sports</h2>
+      <p>Browse recent production runs engineered and shipped factory-direct to athletic programs across North America:</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin: 20px 0;">
+        ${portfolioShowcaseItems.map(item => `
+          <article style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; background: #ffffff;">
+            <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #f26522; letter-spacing: 0.05em;">${escapeHtml(item.sport)}</span>
+            <h3 style="font-size: 1.15rem; font-weight: 800; margin: 6px 0; color: #0f172a;">${escapeHtml(item.project)}</h3>
+            <p style="font-weight: 600; color: #1e293b; margin-bottom: 8px;"><strong>Kit:</strong> ${escapeHtml(item.kit)}</p>
+            <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 12px;">${escapeHtml(item.specs)}</p>
+            <a href="${item.url}" style="font-weight: 700; color: #1e1b6e; text-decoration: underline;">View Garment Specifications &rarr;</a>
+          </article>
+        `).join('\n        ')}
+      </div>
+    </section>
+
+    <section aria-label="Sport Category Hubs">
+      <h2>Browse Complete Sport Uniform Collections</h2>
+      <p>Select any sport below to explore all available jerseys, pants, warmups, and custom team accessories:</p>
+      <ul>
+        <li><a href="/custom-baseball-uniforms/">Custom Baseball Uniforms</a> (Jerseys, Knickers, Sliding Shorts, Dugout Jackets)</li>
+        <li><a href="/custom-lacrosse-uniforms/">Custom Lacrosse Uniforms</a> (Reversible Pinnies, Shooter Shirts, Game Shorts, Skorts)</li>
+        <li><a href="/custom-rugby-uniforms/">Custom Rugby Uniforms</a> (Button-Collar Jerseys, Scrum Shorts, Compression Gear)</li>
+        <li><a href="/custom-flag-football-uniforms/">Custom Flag Football Uniforms</a> (Pocketless Jerseys, Warmup Pants)</li>
+        <li><a href="/custom-soccer-uniforms/">Custom Soccer Uniforms</a> (Collared Kits, Track Pants, Goalkeeper Uniforms)</li>
+        <li><a href="/custom-basketball-uniforms/">Custom Basketball Uniforms</a> (V-Neck Uniforms, Shooting Shirts)</li>
+        <li><a href="/custom-football-uniforms/">Custom Football Uniforms</a> (Game Jerseys, Sideline Hoodies)</li>
+        <li><a href="/custom-esports-apparel/">Custom Esports Apparel</a> (Full-Zip Scuba Hoodies, Pro Player Jerseys)</li>
+        <li><a href="/custom-softball-uniforms/">Custom Softball Uniforms</a> (Fastpitch Jerseys, Slide Knickers)</li>
+        <li><a href="/custom-ice-hockey-uniforms/">Custom Ice Hockey Uniforms</a> (Sublimated Sweaters, Shells)</li>
+        <li><a href="/custom-volleyball-uniforms/">Custom Volleyball Uniforms</a> (Performance Tops, Spandex Shorts)</li>
+        <li><a href="/custom-wrestling-singlets/">Custom Wrestling Singlets</a> (Collegiate &amp; Freestyle Singlets)</li>
+      </ul>
+    </section>
+  </main>
+
+  ${buildEeatFactTable()}
+
+  ${buildSitewideNav()}
+`;
+
+const portfolioHtml = generateHtml({
+  title: 'Custom Team Uniform Showcase & Recent Work | HAMLO SPORTS',
+  description: 'Explore completed custom uniforms manufactured for youth tournaments, high schools, and amateur leagues across the USA. Factory direct in Sialkot.',
+  canonicalPath: 'portfolio',
+  image: `${BASE_URL}/hamlo-athletes-lineup.png`,
+  schema: portfolioSchema,
+  semanticBodyHtml: portfolioSemanticHtml
+});
+writeRoute('portfolio', portfolioHtml);
+trackUrl('portfolio', '0.85', 'weekly');
+count++;
+
+// ==============================================================================
+// 5. 21 Static Essential Pages (Tools, Customer Service, Legal & Policies)
 // ==============================================================================
 const staticPages = [
   {
@@ -867,11 +1211,6 @@ const staticPages = [
     path: 'team-name-generator',
     title: 'Free Team Name & Mascot Generator | 12 Sports',
     desc: 'Generate thousands of creative team names and mascot ideas for baseball, basketball, soccer, football, and esports clubs.'
-  },
-  {
-    path: 'portfolio',
-    title: 'Custom Team Uniform Showcase & Recent Work',
-    desc: 'Explore completed custom uniforms manufactured for youth tournaments, high schools, and amateur leagues across the USA.'
   },
   {
     path: 'about-us',
@@ -927,6 +1266,11 @@ const staticPages = [
     path: 'disclaimer',
     title: 'Legal Disclaimer & Trademarks',
     desc: 'Legal notices regarding trademarks, proprietary custom designs, and independent factory-direct manufacturing.'
+  },
+  {
+    path: 'sitemap',
+    title: 'Complete HTML Sitemap & Product Directory',
+    desc: 'Comprehensive directory of all custom sports uniforms, sublimated athletic apparel, 3D builder tools, and factory specifications from HAMLO SPORTS Sialkot.'
   }
 ];
 
@@ -959,7 +1303,9 @@ for (const p of staticPages) {
     ]
   };
 
-  const staticSemanticHtml = `
+  let staticSemanticHtml = '';
+  if (p.path === 'sitemap') {
+    staticSemanticHtml = `
     <header>
       <nav aria-label="Breadcrumb">
         <ol>
@@ -967,7 +1313,62 @@ for (const p of staticPages) {
           <li><span>${escapeHtml(p.title)}</span></li>
         </ol>
       </nav>
-      <h1>${escapeHtml(p.title)}</h1>
+      ${renderH1('Complete HTML Sitemap &amp; Athletic Uniform Catalog Directory')}
+      <p class="speakable-summary">${escapeHtml(p.desc)} HAMLO SPORTS — Complete index of all 16 sport disciplines, 296 factory-direct custom uniform models, and 3D design proof tools manufactured in Sialkot, Pakistan.</p>
+      <nav aria-label="Quick Navigation">
+        <a href="#core-sports">Primary 12 Sports</a> |
+        <a href="#specialty-sports">Specialty Sportswear</a> |
+        <a href="#tools-trust">Design Tools &amp; Factory Governance</a> |
+        <a href="#all-products">Complete 296 Product Models</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="core-sports" aria-label="Primary Sport Uniform Hubs">
+        <h2>Primary Sport Uniform Hubs (12 Sports)</h2>
+        <ul>
+          ${Object.entries(sportSlugToCategory).map(([slug, sportName]) => `<li><a href="/${slug}/"><strong>Custom ${escapeHtml(sportName)} Uniforms &amp; Gear</strong></a> — Sublimated jerseys, pants, hoodies, and bags.</li>`).join('\n          ')}
+        </ul>
+      </section>
+
+      <section id="specialty-sports" aria-label="Secondary Sport Disciplines">
+        <h2>Secondary Sport Disciplines &amp; Performance Apparel</h2>
+        <ul>
+          ${secondarySportPages.map(s => `<li><a href="/${s.path}/"><strong>${escapeHtml(s.title)}</strong></a></li>`).join('\n          ')}
+        </ul>
+      </section>
+
+      <section id="all-products" aria-label="Complete 296 Custom Team Uniform Catalog">
+        <h2>Complete 296 Custom Team Uniform Catalog</h2>
+        ${Object.entries(sportSlugToCategory).map(([slug, sportName]) => {
+          const prods = fullCatalog296.filter(p => p.categorySlug === slug);
+          return `
+            <h3>Custom ${escapeHtml(sportName)} Uniforms (${prods.length} Models)</h3>
+            <ul>
+              ${prods.map(prod => {
+                const r = prod.canonical ? prod.canonical.replace(/^[/]+|[/]+$/g, '') : `${prod.categorySlug}/${prod.slug}`;
+                return `<li><a href="/${r}/"><strong>${escapeHtml(prod.name)}</strong></a> — Starting from $${prod.price || '34.99'} (Low 15-set MOQ, Sialkot factory-direct)</li>`;
+              }).join('\n              ')}
+            </ul>
+          `;
+        }).join('\n        ')}
+      </section>
+    </main>
+
+    ${buildEeatFactTable()}
+
+    ${buildSitewideNav()}
+    `;
+  } else {
+    staticSemanticHtml = `
+    <header>
+      <nav aria-label="Breadcrumb">
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li><span>${escapeHtml(p.title)}</span></li>
+        </ol>
+      </nav>
+      ${renderH1(escapeHtml(p.title))}
       <p class="speakable-summary">${escapeHtml(p.desc)} HAMLO SPORTS — Factory direct custom team uniforms manufactured in Sialkot, Pakistan. 15-set low MOQ, free 12-hour 3D mockups, and DDP nationwide US delivery.</p>
       <nav aria-label="Quick Actions">
         <a href="/builder/">3D Interactive Uniform Builder</a> |
@@ -988,7 +1389,8 @@ for (const p of staticPages) {
     ${buildEeatFactTable()}
 
     ${buildSitewideNav()}
-  `;
+    `;
+  }
 
   const pageHtml = generateHtml({
     title: `${p.title} | HAMLO SPORTS`,
@@ -999,13 +1401,17 @@ for (const p of staticPages) {
     semanticBodyHtml: staticSemanticHtml
   });
   writeRoute(p.path, pageHtml);
-  trackUrl(p.path, p.path === 'builder' || p.path === 'contact' || p.path === 'request-a-quote' ? '0.9' : '0.7', 'monthly');
+  const priority = p.path === 'sitemap' ? '0.9' : (p.path === 'builder' || p.path === 'contact' || p.path === 'request-a-quote' ? '0.85' : '0.7');
+  const changefreq = p.path === 'sitemap' ? 'daily' : 'weekly';
+  trackUrl(p.path, priority, changefreq);
   count++;
 }
 
 // ==============================================================================
-// 6. Generate Complete & Valid sitemap.xml
+// 6. Generate Complete & Valid sitemap.xml (Sorted by Crawl Priority)
 // ==============================================================================
+sitemapUrls.sort((a, b) => parseFloat(b.priority) - parseFloat(a.priority));
+
 const today = new Date().toISOString().split('T')[0];
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

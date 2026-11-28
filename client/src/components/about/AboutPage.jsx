@@ -4,6 +4,7 @@ import {
   Sparkles, Mail, Phone, MapPin, Users, HeartHandshake, MessageSquare,
   Leaf, Newspaper, CheckCircle, Clock, Truck, Shield, Layers, Zap
 } from 'lucide-react';
+import SEO from '../common/SEO';
 
 export default function AboutPage({ 
   initialTab = 'story',
@@ -82,7 +83,14 @@ export default function AboutPage({
   ];
 
   return (
-    <div className="w-full bg-[#f8f9fa] min-h-screen text-[var(--secondary)] py-8">
+    <>
+      <SEO
+        title="About HAMLO SPORTS - Sialkot Manufacturing Heritage"
+        description="Learn about our three-decade sporting goods heritage in Sialkot, Pakistan, ethical manufacturing, OEKO-TEX certified sublimation, and direct-to-team values."
+        canonical="/about-us/"
+        keywords="about hamlo sports, sialkot sportswear manufacturer, custom uniform factory, ethical athletic manufacturing"
+      />
+      <div className="w-full bg-[#f8f9fa] min-h-screen text-[var(--secondary)] py-8">
       <div className="w-[96%] max-w-[1800px] mx-auto space-y-8">
         
         {/* Breadcrumb */}
@@ -154,13 +162,13 @@ export default function AboutPage({
             </div>
 
             <div className="bg-white p-8 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm space-y-6">
-              <h3 className="text-2xl font-black uppercase text-[var(--secondary)]">Manufacturing Heritage & Milestones</h3>
+              <h2 className="text-2xl font-black uppercase text-[var(--secondary)]">Manufacturing Heritage & Milestones</h2>
               <div className="space-y-6 border-l-2 border-[var(--accent)] pl-6">
                 {milestones.map((m, idx) => (
                   <div key={idx} className="relative">
                     <span className="absolute -left-[31px] top-1 w-3.5 h-3.5 rounded-full bg-[var(--accent)] border-2 border-white shadow" />
                     <span className="text-xs font-mono font-bold text-[var(--accent)] block">{m.year}</span>
-                    <h4 className="text-base font-bold uppercase text-[var(--secondary)] mt-0.5">{m.title}</h4>
+                    <h3 className="text-base font-bold uppercase text-[var(--secondary)] mt-0.5">{m.title}</h3>
                     <p className="text-xs text-neutral-600 mt-1 leading-relaxed max-w-2xl">{m.desc}</p>
                   </div>
                 ))}
@@ -172,24 +180,24 @@ export default function AboutPage({
         {/* TAB 2: TECH */}
         {activeTab === 'tech' && (
           <div className="bg-white p-8 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm space-y-6">
-            <h3 className="text-2xl font-black uppercase text-[var(--secondary)] mb-2">Sialkot Sublimation & Engineering Lab</h3>
+            <h2 className="text-2xl font-black uppercase text-[var(--secondary)] mb-2">Sialkot Sublimation & Engineering Lab</h2>
             <p className="text-xs text-[var(--secondary)]/75 leading-relaxed max-w-3xl">
               Our integrated manufacturing campus in Sialkot combines warp knitting, laser cutting, automated multi-head embroidery, and wide-format dye sublimation under one roof. We test every production batch for burst strength, stretch recovery, and wash durability before dispatch.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-4">
               <div className="p-5 border border-neutral-200 rounded-[3px]">
                 <Zap size={22} className="text-[var(--accent)] mb-2" />
-                <h4 className="font-bold text-sm uppercase text-[var(--secondary)] mb-1">12-Hour Mockup Turnaround</h4>
+                <h3 className="font-bold text-sm uppercase text-[var(--secondary)] mb-1">12-Hour Mockup Turnaround</h3>
                 <p className="text-xs text-neutral-600">Digital artwork teams render accurate team crests, player names, and Pantone swatches within 12 hours.</p>
               </div>
               <div className="p-5 border border-neutral-200 rounded-[3px]">
                 <ShieldCheck size={22} className="text-[var(--accent)] mb-2" />
-                <h4 className="font-bold text-sm uppercase text-[var(--secondary)] mb-1">4-Thread Coverstitch Seams</h4>
+                <h3 className="font-bold text-sm uppercase text-[var(--secondary)] mb-1">4-Thread Coverstitch Seams</h3>
                 <p className="text-xs text-neutral-600">Reinforced flatlock stitching ensures zero chafing and extreme tear resistance in high-contact sports.</p>
               </div>
               <div className="p-5 border border-neutral-200 rounded-[3px]">
                 <Layers size={22} className="text-[var(--accent)] mb-2" />
-                <h4 className="font-bold text-sm uppercase text-[var(--secondary)] mb-1">Zero Minimum Orders (No MOQ)</h4>
+                <h3 className="font-bold text-sm uppercase text-[var(--secondary)] mb-1">Zero Minimum Orders (No MOQ)</h3>
                 <p className="text-xs text-neutral-600">Single athlete replacements or 5,000-piece league programs receive the exact same factory-direct quality.</p>
               </div>
             </div>
@@ -199,7 +207,7 @@ export default function AboutPage({
         {/* TAB 3: SUSTAINABILITY */}
         {activeTab === 'sustainability' && (
           <div className="bg-white p-8 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm space-y-4">
-            <h3 className="text-2xl font-black uppercase text-[var(--secondary)]">Eco-Friendly Sportswear Production</h3>
+            <h2 className="text-2xl font-black uppercase text-[var(--secondary)]">Eco-Friendly Sportswear Production</h2>
             <p className="text-xs text-[var(--secondary)]/75 leading-relaxed max-w-3xl">
               Dye-sublimation produces zero hazardous effluent runoff compared to legacy wet-dye processes. We use OEKO-TEX certified water-based inks and offer recycled polyester (rPET) options derived from post-consumer recycled plastic bottles.
             </p>
@@ -211,7 +219,7 @@ export default function AboutPage({
           <div className="bg-white p-8 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm space-y-6">
             <div className="max-w-3xl">
               <span className="text-[10px] font-mono text-[var(--accent)] font-bold tracking-widest uppercase">Ethical Manufacturing Principles</span>
-              <h3 className="text-2xl font-black uppercase text-[var(--secondary)] mt-1">Fair Labor, Worker Welfare & Zero Child Labor</h3>
+              <h2 className="text-2xl font-black uppercase text-[var(--secondary)] mt-1">Fair Labor, Worker Welfare & Zero Child Labor</h2>
               <p className="text-xs text-[var(--secondary)]/75 leading-relaxed mt-2">
                 HAMLO SPORTS operates on uncompromising ethical principles across our Sialkot manufacturing facilities. We ensure fair living wages, 48-hour maximum work weeks, comprehensive healthcare coverage, and modern climate-controlled working conditions for all master cutters, sublimation technicians, and stitching staff.
               </p>
@@ -220,22 +228,22 @@ export default function AboutPage({
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
               <div className="p-5 bg-neutral-50 rounded-[4px] border border-neutral-200">
                 <ShieldCheck className="text-[var(--accent)] mb-2" size={24} />
-                <h4 className="font-bold text-sm uppercase text-[var(--secondary)]">Zero Child Labor</h4>
+                <h3 className="font-bold text-sm uppercase text-[var(--secondary)]">Zero Child Labor</h3>
                 <p className="text-xs text-neutral-600 mt-1">Strict 18+ age verification with government biometric ID validation before facility onboarding.</p>
               </div>
               <div className="p-5 bg-neutral-50 rounded-[4px] border border-neutral-200">
                 <HeartHandshake className="text-[var(--accent)] mb-2" size={24} />
-                <h4 className="font-bold text-sm uppercase text-[var(--secondary)]">Fair Living Wages</h4>
+                <h3 className="font-bold text-sm uppercase text-[var(--secondary)]">Fair Living Wages</h3>
                 <p className="text-xs text-neutral-600 mt-1">Wages significantly above regional statutory minimums with performance incentives and social security.</p>
               </div>
               <div className="p-5 bg-neutral-50 rounded-[4px] border border-neutral-200">
                 <CheckCircle className="text-[var(--accent)] mb-2" size={24} />
-                <h4 className="font-bold text-sm uppercase text-[var(--secondary)]">Workplace Safety</h4>
+                <h3 className="font-bold text-sm uppercase text-[var(--secondary)]">Workplace Safety</h3>
                 <p className="text-xs text-neutral-600 mt-1">High-efficiency ventilation, eye-protection PPE, fire suppression systems, and clean drinking water filtration.</p>
               </div>
               <div className="p-5 bg-neutral-50 rounded-[4px] border border-neutral-200">
                 <Award className="text-[var(--accent)] mb-2" size={24} />
-                <h4 className="font-bold text-sm uppercase text-[var(--secondary)]">Global Audit Ready</h4>
+                <h3 className="font-bold text-sm uppercase text-[var(--secondary)]">Global Audit Ready</h3>
                 <p className="text-xs text-neutral-600 mt-1">Full traceability and audit-ready supply chain meeting US high school, NCAA, and club league procurement standards.</p>
               </div>
             </div>
@@ -255,12 +263,12 @@ export default function AboutPage({
         {/* TAB 4: EXPORTS */}
         {activeTab === 'exports' && (
           <div className="bg-white p-8 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm space-y-6">
-            <h3 className="text-2xl font-black uppercase text-[var(--secondary)]">Global Export Corridors</h3>
+            <h2 className="text-2xl font-black uppercase text-[var(--secondary)]">Global Export Corridors</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {exportCountries.map((c, idx) => (
                 <div key={idx} className="p-5 bg-neutral-50 rounded-[4px] border border-neutral-200">
                   <span className="text-xl font-mono font-bold text-[var(--accent)]">{c.share}</span>
-                  <h4 className="font-bold text-sm uppercase text-[var(--secondary)] mt-1">{c.region}</h4>
+                  <h3 className="font-bold text-sm uppercase text-[var(--secondary)] mt-1">{c.region}</h3>
                   <p className="text-xs text-neutral-600 mt-1">{c.markets}</p>
                 </div>
               ))}
@@ -277,7 +285,7 @@ export default function AboutPage({
                   <span className="text-[10px] font-mono text-[var(--accent)] font-bold">{n.date}</span>
                   <span className="text-[9px] bg-neutral-100 text-[var(--secondary)] font-bold px-2 py-0.5 rounded">{n.tag}</span>
                 </div>
-                <h4 className="text-base font-bold uppercase text-[var(--secondary)] mb-1">{n.title}</h4>
+                <h2 className="text-base font-bold uppercase text-[var(--secondary)] mb-1">{n.title}</h2>
                 <p className="text-xs text-neutral-600 leading-relaxed">{n.desc}</p>
               </div>
             ))}
@@ -287,26 +295,26 @@ export default function AboutPage({
         {/* TAB 6: CONTACT */}
         {activeTab === 'contact' && (
           <div className="bg-white p-8 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm space-y-6">
-            <h3 className="text-2xl font-black uppercase text-[var(--secondary)]">Factory Direct Contact Information</h3>
+            <h2 className="text-2xl font-black uppercase text-[var(--secondary)]">Factory Direct Contact Information</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
               <div className="flex items-start gap-3">
                 <MapPin className="text-[var(--accent)] flex-shrink-0 mt-1" size={20} />
                 <div>
-                  <h5 className="font-bold text-xs uppercase text-[var(--secondary)]">Headquarters & Manufacturing</h5>
+                  <h3 className="font-bold text-xs uppercase text-[var(--secondary)]">Headquarters & Manufacturing</h3>
                   <p className="text-xs text-neutral-600 mt-0.5">Sialkot Export Zone, Punjab, Pakistan</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <Mail className="text-[var(--accent)] flex-shrink-0 mt-1" size={20} />
                 <div>
-                  <h5 className="font-bold text-xs uppercase text-[var(--secondary)]">B2B Team Quotes</h5>
+                  <h3 className="font-bold text-xs uppercase text-[var(--secondary)]">B2B Team Quotes</h3>
                   <p className="text-xs text-neutral-600 mt-0.5">sale@hamlosportswear.site</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <Phone className="text-[var(--accent)] flex-shrink-0 mt-1" size={20} />
                 <div>
-                  <h5 className="font-bold text-xs uppercase text-[var(--secondary)]">Direct WhatsApp Desk</h5>
+                  <h3 className="font-bold text-xs uppercase text-[var(--secondary)]">Direct WhatsApp Desk</h3>
                   <a href="https://wa.me/923105464116" target="_blank" rel="noopener noreferrer" className="text-xs text-[var(--accent)] hover:underline font-bold mt-0.5 block">+92 310 5464116</a>
                 </div>
               </div>
@@ -325,5 +333,6 @@ export default function AboutPage({
 
       </div>
     </div>
+    </>
   );
 }

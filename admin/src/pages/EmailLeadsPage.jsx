@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import api from '../api/client';
 import { 
   Upload, FileSpreadsheet, Mail, CheckCircle, Clock, AlertTriangle, 
   Trash2, Play, Pause, RefreshCw, FileText, Send, Sparkles, ChevronRight,
-  Zap, Loader2, Check, X
+  Zap, Loader2, Check, X, ShieldCheck
 } from 'lucide-react';
 
 export default function EmailLeadsPage() {
@@ -19,6 +19,13 @@ export default function EmailLeadsPage() {
   // Manual Dispatch State
   const [sendingBatch, setSendingBatch] = useState(false);
   const [batchResult, setBatchResult] = useState(null);
+  const [seedingTemplates, setSeedingTemplates] = useState(false);
+
+  // Automated Daily Dispatch Countdown Timer (Target: 9:00 AM EST / 14:00 UTC)
+  const [timeLeft, setTimeLeft] = useState({ hours: '00', minutes: '00', seconds: '00', totalMs: 0 });
+  const [autoRunEnabled, setAutoRunEnabled] = useState(true);
+  const lastTriggeredDateRef = useRef(null);
+  const [contactsFilter, setContactsFilter] = useState('all');
 
   // Send Test Email Modal State
   const [showTestModal, setShowTestModal] = useState(false);
@@ -53,6 +60,48 @@ export default function EmailLeadsPage() {
     fetchData();
   }, []);
 
+  // ── LIVE COUNTDOWN TIMER TO 9:00 AM EST (14:00 UTC) ──
+  useEffect(() => {
+    const updateCountdown = () => {
+      const now = new Date();
+      // Target: 14:00:00 UTC
+      const target = new Date(Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate(),
+        14, 0, 0, 0
+      ));
+
+      if (now >= target) {
+        target.setUTCDate(target.getUTCDate() + 1);
+      }
+
+      const diff = Math.max(0, target.getTime() - now.getTime());
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      setTimeLeft({
+        hours: String(hours).padStart(2, '0'),
+        minutes: String(minutes).padStart(2, '0'),
+        seconds: String(seconds).padStart(2, '0'),
+        totalMs: diff,
+      });
+
+      // When timer hits 0 (diff <= 1000 ms), auto-trigger batch execution
+      const todayStr = now.toISOString().slice(0, 10);
+      if (diff <= 1000 && autoRunEnabled && lastTriggeredDateRef.current !== todayStr) {
+        lastTriggeredDateRef.current = todayStr;
+        console.log('[AUTO-DISPATCH] ⏰ Daily timer reached 00:00:00! Automatically firing daily 12-lead batch...');
+        handleSendBatchNow();
+      }
+    };
+
+    updateCountdown();
+    const timerInterval = setInterval(updateCountdown, 1000);
+    return () => clearInterval(timerInterval);
+  }, [autoRunEnabled]);
+
   const handleSendBatchNow = async () => {
     setSendingBatch(true);
     setBatchResult(null);
@@ -60,10 +109,28 @@ export default function EmailLeadsPage() {
       const res = await api.post('/email/send-batch');
       setBatchResult({ type: res.data.success ? 'success' : 'error', text: res.data.message });
       fetchData();
+      if (selectedListDetail?._id) {
+        handleViewDetails(selectedListDetail._id);
+      }
     } catch (err) {
       setBatchResult({ type: 'error', text: err.response?.data?.message || err.message });
     } finally {
       setSendingBatch(false);
+    }
+  };
+
+  const handleSeedDefaultTemplates = async () => {
+    setSeedingTemplates(true);
+    try {
+      const res = await api.post('/email/templates/seed-defaults');
+      if (res.data.success) {
+        setBatchResult({ type: 'success', text: res.data.message || '10 Marketing Templates Synced Successfully!' });
+        fetchData();
+      }
+    } catch (err) {
+      setBatchResult({ type: 'error', text: err.response?.data?.message || err.message });
+    } finally {
+      setSeedingTemplates(false);
     }
   };
 
@@ -162,7 +229,7 @@ export default function EmailLeadsPage() {
             Email Marketing & Lead Automation
           </h1>
           <p className="text-xs text-slate-500 font-medium mt-1">
-            Excel Lead Ingestion • Daily 10 Automated Emails • Alternating Templates • Continuous Pipeline Check
+            Excel Lead Ingestion • Daily 12 Leads at 9:00 AM EST (USA Morning) • Direct Product Links • Alternating Templates
           </p>
         </div>
 
@@ -175,12 +242,12 @@ export default function EmailLeadsPage() {
             {sendingBatch ? (
               <>
                 <Loader2 size={14} className="animate-spin" />
-                <span>Sending 10 Leads...</span>
+                <span>Sending 12 Leads...</span>
               </>
             ) : (
               <>
                 <Zap size={14} />
-                <span>Dispatch Batch Now</span>
+                <span>⚡ Dispatch 12 Leads Now</span>
               </>
             )}
           </button>
@@ -238,11 +305,82 @@ export default function EmailLeadsPage() {
               </h3>
             </div>
             <p className="text-xs text-white/90 mt-1 leading-relaxed">
-              All uploaded lead lists have finished sending or no active list was found. The automated daily script needs contacts to dispatch the next 10 daily emails. Please upload an Excel or CSV file below to resume the campaign.
+              All uploaded lead lists have finished sending or no active list was found. The automated daily script needs contacts to dispatch the next 12 daily emails. Please upload an Excel or CSV file below to resume the campaign.
             </p>
           </div>
         </div>
       )}
+
+      {/* ── LIVE DIGITAL DISPATCH COUNTDOWN & AUTOMATED SCHEDULE BANNER ── */}
+      <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 rounded-2xl p-6 text-white border border-indigo-900/40 shadow-xl space-y-4">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          
+          {/* Schedule Info */}
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 rounded-xl bg-orange-500/20 text-[#F26522] flex items-center justify-center flex-shrink-0 border border-orange-500/30 mt-0.5">
+              <Clock size={24} className="animate-pulse" />
+            </div>
+            <div>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+                <span className="text-xs font-black uppercase tracking-wider text-emerald-400">
+                  Live Dispatch Countdown Timer
+                </span>
+                <span className="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-mono border border-slate-700">
+                  Daily 9:00 AM EST (14:00 UTC)
+                </span>
+              </div>
+              <h3 className="font-black text-lg uppercase tracking-tight text-white mt-1">
+                Next Automated Batch Dispatch
+              </h3>
+              <p className="text-xs text-slate-300 mt-1 leading-relaxed max-w-xl">
+                Jasy hi countdown zero hoga, system automatically active list sy <strong>12 leads</strong> ko emails dispatch kr dega. Subha USA time per daily automatically mails send hongi.
+              </p>
+            </div>
+          </div>
+
+          {/* ── LIVE DIGITAL COUNTDOWN CLOCK ── */}
+          <div className="flex items-center gap-2.5 bg-slate-900/90 border border-slate-800 p-3 rounded-xl self-start lg:self-auto shadow-inner">
+            <div className="text-center min-w-[58px]">
+              <div className="font-mono text-2xl sm:text-3xl font-black bg-slate-800 text-white px-2.5 py-1.5 rounded-lg border border-slate-700 shadow-inner">
+                {timeLeft.hours}
+              </div>
+              <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 mt-1 block">Hours</span>
+            </div>
+            <span className="text-xl sm:text-2xl font-black text-[#F26522] animate-pulse pb-4">:</span>
+            <div className="text-center min-w-[58px]">
+              <div className="font-mono text-2xl sm:text-3xl font-black bg-slate-800 text-white px-2.5 py-1.5 rounded-lg border border-slate-700 shadow-inner">
+                {timeLeft.minutes}
+              </div>
+              <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 mt-1 block">Minutes</span>
+            </div>
+            <span className="text-xl sm:text-2xl font-black text-[#F26522] animate-pulse pb-4">:</span>
+            <div className="text-center min-w-[58px]">
+              <div className="font-mono text-2xl sm:text-3xl font-black bg-slate-800 text-orange-400 px-2.5 py-1.5 rounded-lg border border-slate-700 shadow-inner">
+                {timeLeft.seconds}
+              </div>
+              <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 mt-1 block">Seconds</span>
+            </div>
+          </div>
+
+          {/* Action Button & Toggle */}
+          <div className="flex flex-col gap-2 flex-shrink-0">
+            <button
+              onClick={handleSendBatchNow}
+              disabled={sendingBatch}
+              className="px-5 py-3 bg-[#F26522] hover:bg-[#d95316] text-white rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg cursor-pointer disabled:opacity-50 transition"
+            >
+              {sendingBatch ? <Loader2 size={15} className="animate-spin" /> : <Zap size={15} />}
+              <span>⚡ Dispatch 12 Leads Now</span>
+            </button>
+            <div className="flex items-center justify-center gap-2 text-[11px] text-slate-400">
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+              <span>Auto-Run on Zero: <strong className="text-emerald-400">Active</strong></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
 
       {/* ── METRIC STATS CARDS ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -260,8 +398,8 @@ export default function EmailLeadsPage() {
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Emails Sent Today</span>
             <Send size={18} className="text-[#F26522]" />
           </div>
-          <div className="text-2xl font-black text-slate-900">{stats?.sentToday || 0} / 10</div>
-          <span className="text-[11px] text-slate-500 mt-1 block">Daily automated quota</span>
+          <div className="text-2xl font-black text-slate-900">{stats?.sentToday || 0} / {stats?.dailyQuota || 12}</div>
+          <span className="text-[11px] text-slate-500 mt-1 block">Daily USA Quota (12 Leads)</span>
         </div>
 
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
@@ -361,7 +499,12 @@ export default function EmailLeadsPage() {
                       <span>{l.fileName}</span>
                     </td>
                     <td className="py-3.5 px-5 font-mono">{l.totalEmails}</td>
-                    <td className="py-3.5 px-5 font-mono text-green-700 font-bold">{l.sentCount}</td>
+                    <td className="py-3.5 px-5 font-mono">
+                      <span className="inline-flex items-center gap-1 text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                        <Check size={12} className="text-emerald-600 stroke-[3]" />
+                        <span>{l.sentCount} sent</span>
+                      </span>
+                    </td>
                     <td className="py-3.5 px-5 font-mono text-amber-700 font-bold">{l.pendingCount}</td>
                     <td className="py-3.5 px-5">
                       <div className="w-28 bg-slate-200 rounded-full h-2 overflow-hidden">
@@ -375,6 +518,17 @@ export default function EmailLeadsPage() {
                       </span>
                     </td>
                     <td className="py-3.5 px-5 text-right space-x-2">
+                      {l.status === 'active' && l.pendingCount > 0 && (
+                        <button
+                          onClick={handleSendBatchNow}
+                          disabled={sendingBatch}
+                          title="Immediately dispatch next 12 leads from this active list"
+                          className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-[11px] font-bold cursor-pointer inline-flex items-center gap-1 shadow-2xs disabled:opacity-50"
+                        >
+                          {sendingBatch ? <Loader2 size={11} className="animate-spin" /> : <Zap size={11} />}
+                          <span>Send Now</span>
+                        </button>
+                      )}
                       <button
                         onClick={() => handleToggleStatus(l)}
                         title={l.status === 'active' ? 'Pause List' : 'Activate List'}
@@ -412,14 +566,24 @@ export default function EmailLeadsPage() {
 
       {/* ── EMAIL TEMPLATES LIST (ROTATING) ── */}
       <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
           <div>
             <h3 className="font-black text-sm uppercase tracking-tight text-slate-900">
               Active Marketing Templates ({templates.length})
             </h3>
             <p className="text-xs text-slate-500">
-              The daily script alternates between these templates (10 users receive rotating different emails).
+              The daily script alternates between these templates (12 recipients per day receive rotating emails with direct product links).
             </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleSeedDefaultTemplates}
+              disabled={seedingTemplates}
+              className="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 cursor-pointer disabled:opacity-50 transition"
+            >
+              {seedingTemplates ? <Loader2 size={13} className="animate-spin" /> : <Sparkles size={13} />}
+              <span>Sync 10 Pro Templates</span>
+            </button>
           </div>
         </div>
 
@@ -507,60 +671,144 @@ export default function EmailLeadsPage() {
       )}
 
       {/* ── LIST CONTACTS MODAL ── */}
-      {selectedListDetail && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl max-w-3xl w-full max-h-[85vh] flex flex-col p-6 shadow-2xl">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-200">
-              <div>
-                <h3 className="font-black text-sm uppercase text-slate-900">
-                  {selectedListDetail.fileName} Contacts ({selectedListDetail.emails?.length || 0})
-                </h3>
-                <span className="text-xs text-slate-500 font-medium">Individual dispatch status</span>
-              </div>
-              <button
-                onClick={() => setSelectedListDetail(null)}
-                className="text-slate-400 hover:text-slate-700 font-bold text-sm cursor-pointer"
-              >
-                ✕ Close
-              </button>
-            </div>
+      {selectedListDetail && (() => {
+        const total = selectedListDetail.emails?.length || 0;
+        const sentCount = selectedListDetail.emails?.filter(e => e.status === 'sent').length || 0;
+        const pendingCount = selectedListDetail.emails?.filter(e => e.status === 'pending').length || 0;
+        const failedCount = selectedListDetail.emails?.filter(e => e.status === 'failed').length || 0;
 
-            <div className="overflow-y-auto flex-1 my-4">
-              <table className="w-full text-xs text-left">
-                <thead className="bg-slate-50 text-[10px] uppercase font-bold text-slate-500 sticky top-0">
-                  <tr>
-                    <th className="p-2.5">Email</th>
-                    <th className="p-2.5">Name</th>
-                    <th className="p-2.5">Company</th>
-                    <th className="p-2.5">Status</th>
-                    <th className="p-2.5">Template</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100 text-slate-700">
-                  {selectedListDetail.emails?.slice(0, 100).map((e, idx) => (
-                    <tr key={idx} className="hover:bg-slate-50">
-                      <td className="p-2.5 font-mono">{e.email}</td>
-                      <td className="p-2.5">{e.name || '-'}</td>
-                      <td className="p-2.5">{e.company || '-'}</td>
-                      <td className="p-2.5">
-                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${e.status === 'sent' ? 'bg-green-100 text-green-800' : e.status === 'failed' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800'}`}>
-                          {e.status}
-                        </span>
-                      </td>
-                      <td className="p-2.5 text-[11px] text-slate-500">{e.templateUsed || '-'}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              {selectedListDetail.emails?.length > 100 && (
-                <div className="p-3 text-center text-xs text-slate-400">
-                  Showing first 100 of {selectedListDetail.emails.length} leads
+        const filteredList = (selectedListDetail.emails || []).filter(e => {
+          if (contactsFilter === 'sent') return e.status === 'sent';
+          if (contactsFilter === 'pending') return e.status === 'pending';
+          if (contactsFilter === 'failed') return e.status === 'failed';
+          return true;
+        });
+
+        return (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-xl max-w-4xl w-full max-h-[85vh] flex flex-col p-6 shadow-2xl">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+                <div>
+                  <h3 className="font-black text-sm uppercase text-slate-900 flex items-center gap-2">
+                    <FileSpreadsheet size={16} className="text-green-600" />
+                    <span>{selectedListDetail.fileName} Contacts ({total})</span>
+                  </h3>
+                  <div className="flex flex-wrap items-center gap-2 mt-2">
+                    <button
+                      onClick={() => setContactsFilter('all')}
+                      className={`px-2.5 py-1 rounded text-xs font-bold cursor-pointer transition ${contactsFilter === 'all' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+                    >
+                      All ({total})
+                    </button>
+                    <button
+                      onClick={() => setContactsFilter('sent')}
+                      className={`px-2.5 py-1 rounded text-xs font-bold flex items-center gap-1 cursor-pointer transition ${contactsFilter === 'sent' ? 'bg-emerald-600 text-white' : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'}`}
+                    >
+                      <CheckCircle size={12} />
+                      <span>✓ Sent ({sentCount})</span>
+                    </button>
+                    <button
+                      onClick={() => setContactsFilter('pending')}
+                      className={`px-2.5 py-1 rounded text-xs font-bold flex items-center gap-1 cursor-pointer transition ${contactsFilter === 'pending' ? 'bg-amber-600 text-white' : 'bg-amber-50 text-amber-700 hover:bg-amber-100'}`}
+                    >
+                      <Clock size={12} />
+                      <span>⏳ Pending ({pendingCount})</span>
+                    </button>
+                    {failedCount > 0 && (
+                      <button
+                        onClick={() => setContactsFilter('failed')}
+                        className={`px-2.5 py-1 rounded text-xs font-bold flex items-center gap-1 cursor-pointer transition ${contactsFilter === 'failed' ? 'bg-rose-600 text-white' : 'bg-rose-50 text-rose-700 hover:bg-rose-100'}`}
+                      >
+                        <X size={12} />
+                        <span>✕ Failed ({failedCount})</span>
+                      </button>
+                    )}
+                  </div>
                 </div>
-              )}
+
+                <div className="flex items-center gap-2">
+                  {pendingCount > 0 && (
+                    <button
+                      onClick={handleSendBatchNow}
+                      disabled={sendingBatch}
+                      className="px-3.5 py-1.5 bg-[#F26522] hover:bg-[#d95316] text-white rounded-lg text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow cursor-pointer disabled:opacity-50"
+                    >
+                      {sendingBatch ? <Loader2 size={13} className="animate-spin" /> : <Zap size={13} />}
+                      <span>Send 12 Leads Now</span>
+                    </button>
+                  )}
+                  <button
+                    onClick={() => { setSelectedListDetail(null); setContactsFilter('all'); }}
+                    className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg font-bold text-sm cursor-pointer"
+                  >
+                    ✕ Close
+                  </button>
+                </div>
+              </div>
+
+              <div className="overflow-y-auto flex-1 my-4">
+                <table className="w-full text-xs text-left">
+                  <thead className="bg-slate-50 text-[10px] uppercase font-bold text-slate-500 sticky top-0 border-b border-slate-200">
+                    <tr>
+                      <th className="p-2.5">Email</th>
+                      <th className="p-2.5">Name</th>
+                      <th className="p-2.5">Company</th>
+                      <th className="p-2.5">Status</th>
+                      <th className="p-2.5">Sent Template</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 text-slate-700">
+                    {filteredList.slice(0, 100).map((e, idx) => (
+                      <tr key={idx} className="hover:bg-slate-50 transition">
+                        <td className="p-2.5 font-mono font-medium text-slate-900">{e.email}</td>
+                        <td className="p-2.5 font-semibold text-slate-800">{e.name || '-'}</td>
+                        <td className="p-2.5 text-slate-600">{e.company || '-'}</td>
+                        <td className="p-2.5">
+                          {e.status === 'sent' ? (
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-2xs">
+                              <CheckCircle size={14} className="text-emerald-600 flex-shrink-0" />
+                              <span>✓ Sent & Delivered</span>
+                            </span>
+                          ) : e.status === 'failed' ? (
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-rose-100 text-rose-800 border border-rose-200" title={e.errorMessage}>
+                              <X size={14} className="text-rose-600 flex-shrink-0" />
+                              <span>✕ Failed</span>
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                              <Clock size={13} className="text-amber-500 flex-shrink-0" />
+                              <span>⏳ Pending Queue</span>
+                            </span>
+                          )}
+                        </td>
+                        <td className="p-2.5 text-[11px] text-slate-500">
+                          {e.templateUsed ? (
+                            <span className="font-semibold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
+                              {e.templateUsed}
+                            </span>
+                          ) : '-'}
+                        </td>
+                      </tr>
+                    ))}
+                    {filteredList.length === 0 && (
+                      <tr>
+                        <td colSpan="5" className="p-8 text-center text-slate-400">
+                          No contacts found for filter: <strong className="text-slate-600 uppercase">{contactsFilter}</strong>
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+                {filteredList.length > 100 && (
+                  <div className="p-3 text-center text-xs text-slate-400">
+                    Showing first 100 of {filteredList.length} leads
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* ── SEND TEST EMAIL MODAL ── */}
       {showTestModal && (

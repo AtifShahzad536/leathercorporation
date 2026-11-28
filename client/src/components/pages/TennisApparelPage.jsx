@@ -73,17 +73,17 @@ Product: Custom Sublimated Tennis Polos & Team Apparel`,
       <section className="w-[96%] max-w-[1800px] mx-auto my-14 sm:my-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white p-6 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm">
-            <h3 className="text-base font-black uppercase text-[var(--secondary)] mb-2">Custom Sublimated Team Polos</h3>
+            <h2 className="text-base font-black uppercase text-[var(--secondary)] mb-2">Custom Sublimated Team Polos</h2>
             <p className="text-xs text-neutral-600 mb-4 leading-relaxed">140 GSM moisture-wicking micro-pique fabric with self-fabric collar, 3-button placket, and sublimated team colors.</p>
             <div className="text-sm font-black text-[var(--accent)]">From $32.99 / each</div>
           </div>
           <div className="bg-white p-6 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm">
-            <h3 className="text-base font-black uppercase text-[var(--secondary)] mb-2">Custom Tennis Skirts & Skorts</h3>
+            <h2 className="text-base font-black uppercase text-[var(--secondary)] mb-2">Custom Tennis Skirts & Skorts</h2>
             <p className="text-xs text-neutral-600 mb-4 leading-relaxed">Built-in compression shorts with ball pockets, wide non-rolling elastic waistband, and anti-chafing flatlock seams.</p>
             <div className="text-sm font-black text-[var(--accent)]">From $28.99 / each</div>
           </div>
           <div className="bg-white p-6 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm">
-            <h3 className="text-base font-black uppercase text-[var(--secondary)] mb-2">Tennis Sideline Warm-Up Jackets</h3>
+            <h2 className="text-base font-black uppercase text-[var(--secondary)] mb-2">Tennis Sideline Warm-Up Jackets</h2>
             <p className="text-xs text-neutral-600 mb-4 leading-relaxed">Water-resistant, breathable windbreaker jackets with full-zip front, raglan sleeves, and custom embroidered club crests.</p>
             <div className="text-sm font-black text-[var(--accent)]">From $46.99 / each</div>
           </div>

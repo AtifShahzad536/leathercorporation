@@ -8,7 +8,7 @@ const EmailTemplate = require('../models/EmailTemplate');
 const EmailLog = require('../models/EmailLog');
 const parseExcelFile = require('../utils/parseExcel');
 const createTransporter = require('../config/email');
-const { sendDailyEmails } = require('../cron/emailCron');
+const { sendDailyEmails, ensureDefaultTemplates } = require('../cron/emailCron');
 const { protect } = require('../middleware/auth');
 
 const router = express.Router();
@@ -145,8 +145,24 @@ router.delete('/lists/:id', protect, async (req, res) => {
 // GET /api/email/templates
 router.get('/templates', protect, async (req, res) => {
   try {
+    await ensureDefaultTemplates();
     const templates = await EmailTemplate.find().sort('-createdAt');
     res.json({ success: true, data: templates });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// POST /api/email/templates/seed-defaults - Force sync/seed all 10 templates
+router.post('/templates/seed-defaults', protect, async (req, res) => {
+  try {
+    await ensureDefaultTemplates();
+    const templates = await EmailTemplate.find().sort('-createdAt');
+    res.json({
+      success: true,
+      message: `Successfully synced ${templates.length} distinct marketing templates!`,
+      data: templates,
+    });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -249,6 +265,8 @@ router.get('/stats', protect, async (req, res) => {
         totalPending,
         needsLeadsList,
         dailySends,
+        dailyQuota: 12,
+        schedule: 'Daily at 9:00 AM EST (USA Morning)',
       },
     });
   } catch (error) {
@@ -256,7 +274,43 @@ router.get('/stats', protect, async (req, res) => {
   }
 });
 
-// POST /api/email/send-batch - Admin trigger: immediately dispatch the next pending batch (10 leads)
+// GET / POST /api/email/cron-trigger - Automated cron trigger (Vercel Cron / External Scheduler)
+router.all('/cron-trigger', async (req, res) => {
+  try {
+    const cronSecret = process.env.CRON_SECRET;
+    const authHeader = req.headers.authorization;
+    const userAgent = req.headers['user-agent'] || '';
+    const isVercelCronAgent = userAgent.includes('vercel-cron');
+
+    if (cronSecret) {
+      const isAuthorized = 
+        authHeader === `Bearer ${cronSecret}` || 
+        req.query.secret === cronSecret;
+
+      if (!isAuthorized && !isVercelCronAgent) {
+        return res.status(401).json({
+          success: false,
+          message: 'Unauthorized cron trigger. Provide valid CRON_SECRET.',
+        });
+      }
+    }
+
+    console.log(`[CRON TRIGGER] ⏰ Triggered daily 12-lead batch at ${new Date().toISOString()} (Agent: ${userAgent})`);
+    const result = await sendDailyEmails();
+
+    res.json({
+      success: result.success !== false,
+      schedule: '09:00 AM EST (14:00 UTC) • 12 Leads/Day',
+      timestamp: new Date().toISOString(),
+      result,
+    });
+  } catch (error) {
+    console.error('[CRON TRIGGER] Fatal error:', error.message);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// POST /api/email/send-batch - Admin trigger: immediately dispatch the next pending batch (12 leads)
 router.post('/send-batch', protect, async (req, res) => {
   try {
     const result = await sendDailyEmails();

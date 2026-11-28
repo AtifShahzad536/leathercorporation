@@ -267,6 +267,25 @@ const SubCatList = ({ subCats, onNavigate }) => (
 /* ─────────────────────────────────────────────────────────────────────────
    MobileMenu
 ──────────────────────────────────────────────────────────────────────────*/
+const getSportHref = (sportName) => {
+  switch (sportName) {
+    case 'BASEBALL': return '/custom-baseball-uniforms/';
+    case 'BASKETBALL': return '/custom-basketball-uniforms/';
+    case 'FOOTBALL': return '/custom-football-uniforms/';
+    case 'FLAG FOOTBALL': return '/custom-flag-football-uniforms/';
+    case 'SOCCER': return '/custom-soccer-uniforms/';
+    case 'ESPORTS': return '/custom-esports-apparel/';
+    case 'ICE HOCKEY': return '/custom-ice-hockey-uniforms/';
+    case 'LACROSSE': return '/custom-lacrosse-uniforms/';
+    case 'RUGBY': return '/custom-rugby-uniforms/';
+    case 'SOFTBALL': return '/custom-softball-uniforms/';
+    case 'VOLLEYBALL': return '/custom-volleyball-uniforms/';
+    case 'WRESTLING': return '/custom-wrestling-singlets/';
+    case 'CRICKET': return '/custom-cricket-uniforms/';
+    default: return '/';
+  }
+};
+
 const MobileMenu = ({ isOpen, onClose, navLinks, drawerData, directSports = [], onNavigate = () => {} }) => {
   const [expandedLink, setExpandedLink] = useState(null);
   const [mounted, setMounted] = useState(false);
@@ -373,11 +392,15 @@ const MobileMenu = ({ isOpen, onClose, navLinks, drawerData, directSports = [], 
             WebkitOverflowScrolling: 'touch'
           }}>
             {directSports.map((s) => (
-              <button
+              <a
                 key={s.name}
-                onClick={() => {
-                  onNavigate('sports-hub', s.name);
-                  onClose();
+                href={getSportHref(s.name)}
+                onClick={(e) => {
+                  if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
+                    e.preventDefault();
+                    onNavigate('sports-hub', s.name);
+                    onClose();
+                  }
                 }}
                 style={{
                   padding: '6px 12px',
@@ -391,11 +414,13 @@ const MobileMenu = ({ isOpen, onClose, navLinks, drawerData, directSports = [], 
                   border: '1px solid #e5e7eb',
                   whiteSpace: 'nowrap',
                   cursor: 'pointer',
-                  flexShrink: 0
+                  flexShrink: 0,
+                  textDecoration: 'none',
+                  display: 'inline-block'
                 }}
               >
                 {s.label}
-              </button>
+              </a>
             ))}
           </div>
         )}

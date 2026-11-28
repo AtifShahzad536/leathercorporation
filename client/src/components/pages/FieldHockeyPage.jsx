@@ -73,17 +73,17 @@ Product: Sublimated Match Tops, Kilts & Goalie Smocks`,
       <section className="w-[96%] max-w-[1800px] mx-auto my-14 sm:my-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white p-6 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm">
-            <h3 className="text-base font-black uppercase text-[var(--secondary)] mb-2">Racerback Field Hockey Jerseys</h3>
+            <h2 className="text-base font-black uppercase text-[var(--secondary)] mb-2">Racerback Field Hockey Jerseys</h2>
             <p className="text-xs text-neutral-600 mb-4 leading-relaxed">Full dye-sublimated 160 GSM athletic polyester with moisture-wicking capillary channels and pad-compatible armholes.</p>
             <div className="text-sm font-black text-[var(--accent)]">From $34.99 / each</div>
           </div>
           <div className="bg-white p-6 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm">
-            <h3 className="text-base font-black uppercase text-[var(--secondary)] mb-2">Custom Field Hockey Kilts & Skorts</h3>
+            <h2 className="text-base font-black uppercase text-[var(--secondary)] mb-2">Custom Field Hockey Kilts & Skorts</h2>
             <p className="text-xs text-neutral-600 mb-4 leading-relaxed">Box pleat or athletic A-line cut with integrated compression undershorts and reinforced waistband.</p>
             <div className="text-sm font-black text-[var(--accent)]">From $29.99 / each</div>
           </div>
           <div className="bg-white p-6 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm">
-            <h3 className="text-base font-black uppercase text-[var(--secondary)] mb-2">Padded Goalkeeper Smocks</h3>
+            <h2 className="text-base font-black uppercase text-[var(--secondary)] mb-2">Padded Goalkeeper Smocks</h2>
             <p className="text-xs text-neutral-600 mb-4 leading-relaxed">Oversized cut designed to fit comfortably over chest protectors and arm guards without binding.</p>
             <div className="text-sm font-black text-[var(--accent)]">From $44.99 / each</div>
           </div>

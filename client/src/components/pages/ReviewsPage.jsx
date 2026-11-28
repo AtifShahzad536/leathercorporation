@@ -108,9 +108,9 @@ export default function ReviewsPage({ onNavigateInquiry = () => {} }) {
                   </span>
                 </div>
 
-                <h3 className="text-sm font-black uppercase text-[var(--secondary)] mb-2 leading-snug">
+                <h2 className="text-sm font-black uppercase text-[var(--secondary)] mb-2 leading-snug">
                   "{rev.title}"
-                </h3>
+                </h2>
                 <p className="text-xs text-neutral-600 leading-relaxed mb-6 font-light">
                   {rev.content}
                 </p>

@@ -184,9 +184,9 @@ export default function ProductsPage({
             
             {/* Search Input */}
             <div>
-              <h4 className="text-[11px] font-bold tracking-wider uppercase text-[var(--secondary)] mb-2">
+              <h2 className="text-[11px] font-bold tracking-wider uppercase text-[var(--secondary)] mb-2">
                 Search Uniforms
-              </h4>
+              </h2>
               <div className="relative">
                 <input
                   type="text"
@@ -201,9 +201,9 @@ export default function ProductsPage({
 
             {/* Sport Categories */}
             <div>
-              <h4 className="text-[11px] font-bold tracking-wider uppercase text-[var(--secondary)] mb-2.5">
+              <h2 className="text-[11px] font-bold tracking-wider uppercase text-[var(--secondary)] mb-2.5">
                 Sport Categories
-              </h4>
+              </h2>
               <div className="space-y-1 max-h-60 overflow-y-auto no-scrollbar">
                 {categories.map((cat) => (
                   <button
@@ -224,9 +224,9 @@ export default function ProductsPage({
 
             {/* Standard Sizes */}
             <div>
-              <h4 className="text-[11px] font-bold tracking-wider uppercase text-[var(--secondary)] mb-2.5">
+              <h2 className="text-[11px] font-bold tracking-wider uppercase text-[var(--secondary)] mb-2.5">
                 Athletic Sizes
-              </h4>
+              </h2>
               <div className="flex flex-wrap gap-1.5">
                 {['YS', 'YM', 'YL', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'].map((s) => (
                   <button
@@ -249,7 +249,7 @@ export default function ProductsPage({
               <span className="text-[9px] font-bold text-[var(--accent)] uppercase tracking-wider block">
                 SIALKOT FACTORY DIRECT
               </span>
-              <h5 className="text-xs font-black uppercase">Free 3D Mockup in 12 Hours</h5>
+              <h3 className="text-xs font-black uppercase">Free 3D Mockup in 12 Hours</h3>
               <p className="text-[10px] text-white/70 leading-relaxed">
                 Send your team logos & colors. Our design engineers will generate a multi-angle 3D proof before production.
               </p>

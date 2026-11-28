@@ -73,17 +73,17 @@ Product: Pro German Latex Match Goalkeeper Gloves`,
       <section className="w-[96%] max-w-[1800px] mx-auto my-14 sm:my-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white p-6 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm">
-            <h3 className="text-base font-black uppercase text-[var(--secondary)] mb-2">Pro Match Goalkeeper Gloves</h3>
+            <h2 className="text-base font-black uppercase text-[var(--secondary)] mb-2">Pro Match Goalkeeper Gloves</h2>
             <p className="text-xs text-neutral-600 mb-4 leading-relaxed">Negative cut or roll finger palm with 4mm German Contact Latex, 3D embossed silicone punch zone, and sublimated latex wrist strap.</p>
             <div className="text-sm font-black text-[var(--accent)]">From $36.99 / pair</div>
           </div>
           <div className="bg-white p-6 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm">
-            <h3 className="text-base font-black uppercase text-[var(--secondary)] mb-2">Custom Football Receiver Gloves</h3>
+            <h2 className="text-base font-black uppercase text-[var(--secondary)] mb-2">Custom Football Receiver Gloves</h2>
             <p className="text-xs text-neutral-600 mb-4 leading-relaxed">Ultra-tack silicone palms, 4-way stretch poly-spandex backhand, and interlocking team logo graphics across both palms.</p>
             <div className="text-sm font-black text-[var(--accent)]">From $24.99 / pair</div>
           </div>
           <div className="bg-white p-6 rounded-[4px] border border-[var(--secondary)]/10 shadow-sm">
-            <h3 className="text-base font-black uppercase text-[var(--secondary)] mb-2">Custom Batting & Equipment Gloves</h3>
+            <h2 className="text-base font-black uppercase text-[var(--secondary)] mb-2">Custom Batting & Equipment Gloves</h2>
             <p className="text-xs text-neutral-600 mb-4 leading-relaxed">Pittards sheepskin leather palms with reinforced thumb padding, neoprene wrist cuffs, and embroidered club logos.</p>
             <div className="text-sm font-black text-[var(--accent)]">From $26.99 / pair</div>
           </div>

@@ -3,6 +3,7 @@ import {
   ArrowLeft, ShieldCheck, CheckCircle, FileText, 
   Leaf, Award, Lock, Download, Sparkles, Building2, Layers
 } from 'lucide-react';
+import SEO from '../common/SEO';
 
 export default function CompliancePage({ 
   onNavigateHome = () => {}, 
@@ -56,7 +57,14 @@ export default function CompliancePage({
   ];
 
   return (
-    <div className="w-full bg-[#f8f9fa] min-h-screen text-[var(--secondary)] py-8">
+    <>
+      <SEO
+        title="Compliance, Safety & Ethical Factory Standards | HAMLO SPORTS"
+        description="Learn about HAMLO SPORTS compliance, OEKO-TEX Standard 100 non-toxic certified inks, fair labor standards, and ISO 9001 quality assurance in Sialkot."
+        canonical="/compliance/"
+        keywords="compliance, ethical sportswear manufacturer, OEKO-TEX certified, fair trade athletic apparel, Sialkot sports manufacturer"
+      />
+      <div className="w-full bg-[#f8f9fa] min-h-screen text-[var(--secondary)] py-8">
       <div className="w-[96%] max-w-[1800px] mx-auto space-y-8">
         
         {/* Breadcrumb */}
@@ -94,9 +102,9 @@ export default function CompliancePage({
                 <span className="text-[10px] font-bold text-[var(--accent)] tracking-widest uppercase block mb-1">
                   {p.regId}
                 </span>
-                <h3 className="text-xl font-black uppercase text-[var(--secondary)] mb-3">
+                <h2 className="text-xl font-black uppercase text-[var(--secondary)] mb-3">
                   {p.title}
-                </h3>
+                </h2>
                 <p className="text-xs text-[var(--secondary)]/75 leading-relaxed mb-5 font-normal">
                   {p.desc}
                 </p>
@@ -117,9 +125,9 @@ export default function CompliancePage({
         {/* Audit Report Banner */}
         <div className="bg-white p-8 rounded-[4px] border border-[var(--secondary)]/10 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <h3 className="text-lg font-black uppercase text-[var(--secondary)] mb-1">
+            <h2 className="text-lg font-black uppercase text-[var(--secondary)] mb-1">
               Need a School District or League Compliance Packet?
-            </h3>
+            </h2>
             <p className="text-xs text-[var(--secondary)]/70 max-w-2xl">
               We furnish verified lab test reports for dye toxicity, lead/phthalate CPSIA compliance certificates, and factory Sedex audit summaries for institutional purchasing directors.
             </p>
@@ -134,5 +142,6 @@ export default function CompliancePage({
 
       </div>
     </div>
+    </>
   );
 }

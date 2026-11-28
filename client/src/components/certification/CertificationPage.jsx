@@ -3,6 +3,7 @@ import {
   ArrowLeft, Award, ShieldCheck, CheckCircle2, 
   FileCheck, ExternalLink, Download, Search, Sparkles
 } from 'lucide-react';
+import SEO from '../common/SEO';
 
 export default function CertificationPage({ 
   onNavigateHome = () => {}, 
@@ -80,7 +81,14 @@ export default function CertificationPage({
   );
 
   return (
-    <div className="w-full bg-[#f8f9fa] min-h-screen text-[var(--secondary)] py-8">
+    <>
+      <SEO
+        title="ISO & OEKO-TEX Export Quality Certifications | HAMLO SPORTS"
+        description="View our ISO 9001 quality management, OEKO-TEX Standard 100 non-toxic ink certifications, and SEDEX ethical audits for export manufacturing."
+        canonical="/certification/"
+        keywords="ISO 9001 certified, OEKO-TEX standard 100, BSCI audit, SEDEX factory, ethical sportswear certification"
+      />
+      <div className="w-full bg-[#f8f9fa] min-h-screen text-[var(--secondary)] py-8">
       <div className="w-[96%] max-w-[1800px] mx-auto space-y-8">
         
         {/* Breadcrumb */}
@@ -131,7 +139,7 @@ export default function CertificationPage({
                   <span className="text-[10px] font-mono font-bold text-[var(--accent)] uppercase">{cert.certNumber}</span>
                   <span className="text-[9px] bg-green-100 text-green-800 font-bold px-2 py-0.5 rounded">{cert.validity}</span>
                 </div>
-                <h3 className="text-base font-black uppercase text-[var(--secondary)] mb-1 leading-snug">{cert.title}</h3>
+                <h2 className="text-base font-black uppercase text-[var(--secondary)] mb-1 leading-snug">{cert.title}</h2>
                 <span className="text-[10px] text-[var(--secondary)]/60 font-semibold block mb-3">{cert.issuingBody}</span>
                 <p className="text-xs text-neutral-600 leading-relaxed mb-4">{cert.description}</p>
               </div>
@@ -152,7 +160,7 @@ export default function CertificationPage({
         {/* Footer CTA */}
         <div className="bg-white p-8 rounded-[4px] border border-[var(--secondary)]/10 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <h4 className="text-lg font-black uppercase text-[var(--secondary)] mb-1">Request Verified Audit Certificates</h4>
+            <h2 className="text-lg font-black uppercase text-[var(--secondary)] mb-1">Request Verified Audit Certificates</h2>
             <p className="text-xs text-[var(--secondary)]/70">Need original high-resolution PDF certificate copies for institutional vendor onboarding? Contact our compliance department.</p>
           </div>
           <button
@@ -165,5 +173,6 @@ export default function CertificationPage({
 
       </div>
     </div>
+    </>
   );
 }

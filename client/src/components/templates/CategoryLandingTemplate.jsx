@@ -326,9 +326,9 @@ export default function CategoryLandingTemplate({
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="p-6 bg-white rounded-[3px] border border-[var(--secondary)]/10 shadow-md">
-            <h4 className="text-base font-black uppercase text-[var(--secondary)] mb-2">
+            <h3 className="text-base font-black uppercase text-[var(--secondary)] mb-2">
               Youth & Rec Leagues
-            </h4>
+            </h3>
             <p className="text-xs text-[var(--secondary)]/70 leading-relaxed mb-4">
               Combine your entire league into a single order to qualify for the 101+ tier ($69.99/set). Free size exchanges on mid-season growth spurts.
             </p>
@@ -338,9 +338,9 @@ export default function CategoryLandingTemplate({
           </div>
 
           <div className="p-6 bg-white rounded-[3px] border border-[var(--secondary)]/10 shadow-md">
-            <h4 className="text-base font-black uppercase text-[var(--secondary)] mb-2">
+            <h3 className="text-base font-black uppercase text-[var(--secondary)] mb-2">
               High School & Varsity
-            </h4>
+            </h3>
             <p className="text-xs text-[var(--secondary)]/70 leading-relaxed mb-4">
               Home, Away, and Goalkeeper kits on a single invoice. School Purchase Orders (POs) accepted with net terms for verified athletic departments.
             </p>
@@ -350,9 +350,9 @@ export default function CategoryLandingTemplate({
           </div>
 
           <div className="p-6 bg-white rounded-[3px] border border-[var(--secondary)]/10 shadow-md">
-            <h4 className="text-base font-black uppercase text-[var(--secondary)] mb-2">
+            <h3 className="text-base font-black uppercase text-[var(--secondary)] mb-2">
               Competitive Club & Travel
-            </h4>
+            </h3>
             <p className="text-xs text-[var(--secondary)]/70 leading-relaxed mb-4">
               Multiple age brackets (U10 through U19) unified under your official club palette. Sideline hoodies, tracksuits, and gear bags included.
             </p>
@@ -377,10 +377,10 @@ export default function CategoryLandingTemplate({
         <div className="space-y-4">
           {faqs.map((faq, i) => (
             <div key={i} className="p-5 bg-white rounded-[3px] border border-[var(--secondary)]/10">
-              <h4 className="text-sm font-bold text-[var(--secondary)] mb-2 flex items-center gap-2">
+              <h3 className="text-sm font-bold text-[var(--secondary)] mb-2 flex items-center gap-2">
                 <HelpCircle size={15} className="text-[var(--accent)] flex-shrink-0" />
                 {faq.q}
-              </h4>
+              </h3>
               <p className="text-xs text-[var(--secondary)]/70 leading-relaxed pl-6">
                 {faq.a}
               </p>

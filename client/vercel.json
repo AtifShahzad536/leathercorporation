@@ -1,4 +1,5 @@
 {
+  "trailingSlash": true,
   "headers": [
     {
       "source": "/.well-known/(.*)",
@@ -109,6 +110,17 @@
   ],
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "hamlosportswear.site"
+        }
+      ],
+      "destination": "https://www.hamlosportswear.site/:path*",
+      "permanent": true
+    },
+    {
       "source": "/custom-ice-hockey-sweaters/:path*",
       "destination": "/custom-ice-hockey-uniforms/",
       "permanent": true
@@ -129,7 +141,7 @@
       "destination": "https://leathercorporation-jmrv.vercel.app/uploads/:path*"
     },
     {
-      "source": "/((?!assets/|\\.well-known/|llms\\.txt|ard\\.json|ai-catalog\\.json|favicon|apple-touch-icon|android-chrome|site\\.webmanifest|logo|robots\\.txt|sitemap\\.xml).*)",
+      "source": "/((?!assets/|\\.well-known/|llms\\.txt|ard\\.json|ai-catalog\\.json|favicon|apple-touch-icon|android-chrome|site\\.webmanifest|logo|robots\\.txt|sitemap.*\\.xml).*)",
       "destination": "/index.html"
     }
   ]
