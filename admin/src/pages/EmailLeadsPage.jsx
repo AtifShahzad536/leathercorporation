@@ -30,6 +30,9 @@ export default function EmailLeadsPage() {
   const [gmailConnectMode, setGmailConnectMode] = useState('app_password'); // 'oauth' or 'app_password'
   const [showHostingerPass, setShowHostingerPass] = useState(false);
   const [showGmailPass, setShowGmailPass] = useState(false);
+  const [oauthConfig, setOauthConfig] = useState({ clientId: '', clientSecret: '' });
+  const [savingOauthConfig, setSavingOauthConfig] = useState(false);
+  const [showOauthSetup, setShowOauthSetup] = useState(false);
 
   const [hostingerForm, setHostingerForm] = useState({
     user: 'sale@hamlosportswear.site',
@@ -341,13 +344,31 @@ export default function EmailLeadsPage() {
       } else {
         setConnectorResult({ 
           type: 'error', 
-          text: res.data.message || 'Google OAuth is not configured with client ID / secret in server environment. Please use 16-character App Password option.' 
+          text: res.data.message || 'Google OAuth is not configured with client ID / secret. Enter them below to activate 1-click connect.' 
         });
+        setShowOauthSetup(true);
       }
     } catch (err) {
       setConnectorResult({ type: 'error', text: err.response?.data?.message || err.message });
+      setShowOauthSetup(true);
     } finally {
       setConnectingGmail(false);
+    }
+  };
+
+  const handleSaveGoogleOAuthConfig = async (e) => {
+    e.preventDefault();
+    if (!oauthConfig.clientId || !oauthConfig.clientSecret) return;
+    setSavingOauthConfig(true);
+    setConnectorResult(null);
+    try {
+      const res = await api.post('/email/oauth/google/config', oauthConfig);
+      setConnectorResult({ type: 'success', text: res.data.message || 'Google OAuth credentials saved!' });
+      setShowOauthSetup(false);
+    } catch (err) {
+      setConnectorResult({ type: 'error', text: err.response?.data?.message || err.message });
+    } finally {
+      setSavingOauthConfig(false);
     }
   };
 
@@ -1352,9 +1373,53 @@ export default function EmailLeadsPage() {
                           </svg>
                           <span>Sign in with Google to Connect</span>
                         </button>
-                        <p className="text-[10px] text-slate-400">
-                          Note: Requires GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET configured in server .env.
-                        </p>
+                        
+                        <div className="pt-2 text-left">
+                          <button
+                            type="button"
+                            onClick={() => setShowOauthSetup(!showOauthSetup)}
+                            className="text-[11px] text-blue-600 hover:underline font-bold flex items-center gap-1 cursor-pointer"
+                          >
+                            <span>{showOauthSetup ? '▲ Hide Client ID & Secret Setup' : '▼ Configure / Paste Google Client ID & Secret'}</span>
+                          </button>
+
+                          {showOauthSetup && (
+                            <form onSubmit={handleSaveGoogleOAuthConfig} className="mt-3 p-3 bg-slate-50 border border-slate-200 rounded-lg space-y-2.5 text-left">
+                              <span className="text-[10px] text-slate-500 font-semibold block">
+                                Google Cloud Console se copy ki hui Client ID aur Secret yahan paste karein:
+                              </span>
+                              <div>
+                                <label className="block text-[10px] font-bold uppercase text-slate-600 mb-0.5">Google Client ID</label>
+                                <input
+                                  type="text"
+                                  required
+                                  value={oauthConfig.clientId}
+                                  onChange={(e) => setOauthConfig({ ...oauthConfig, clientId: e.target.value })}
+                                  placeholder="xxxxxx.apps.googleusercontent.com"
+                                  className="w-full border border-slate-300 rounded p-1.5 text-xs bg-white text-slate-900 font-mono"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-bold uppercase text-slate-600 mb-0.5">Google Client Secret</label>
+                                <input
+                                  type="password"
+                                  required
+                                  value={oauthConfig.clientSecret}
+                                  onChange={(e) => setOauthConfig({ ...oauthConfig, clientSecret: e.target.value })}
+                                  placeholder="GOCSPX-xxxxxx"
+                                  className="w-full border border-slate-300 rounded p-1.5 text-xs bg-white text-slate-900 font-mono"
+                                />
+                              </div>
+                              <button
+                                type="submit"
+                                disabled={savingOauthConfig}
+                                className="w-full py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-bold uppercase tracking-wider cursor-pointer"
+                              >
+                                {savingOauthConfig ? 'Saving...' : '💾 Save Google Credentials'}
+                              </button>
+                            </form>
+                          )}
+                        </div>
                       </div>
 
                       {connectors?.gmail?.connected && (

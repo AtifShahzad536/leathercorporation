@@ -400,15 +400,60 @@ router.post('/disconnect', protect, async (req, res) => {
   }
 });
 
+// Helper to retrieve Google OAuth Client ID and Secret (from env or DB SiteSetting)
+const getGoogleOAuthCredentials = async () => {
+  let clientId = process.env.GOOGLE_CLIENT_ID;
+  let clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+
+  if (!clientId || !clientSecret) {
+    try {
+      const setting = await SiteSetting.findOne({ key: 'google_oauth_credentials' });
+      if (setting && setting.value) {
+        clientId = clientId || setting.value.clientId;
+        clientSecret = clientSecret || setting.value.clientSecret;
+      }
+    } catch (e) {}
+  }
+
+  return { clientId, clientSecret };
+};
+
+// POST /api/email/oauth/google/config - Save Google OAuth Client ID and Secret dynamically
+router.post('/oauth/google/config', protect, async (req, res) => {
+  try {
+    const { clientId, clientSecret } = req.body;
+    if (!clientId || !clientSecret) {
+      return res.status(400).json({ success: false, message: 'Client ID and Client Secret are required.' });
+    }
+
+    await SiteSetting.findOneAndUpdate(
+      { key: 'google_oauth_credentials' },
+      {
+        key: 'google_oauth_credentials',
+        value: { clientId: clientId.trim(), clientSecret: clientSecret.trim() },
+        description: 'Dynamic Google OAuth Client ID and Secret',
+      },
+      { upsert: true, new: true }
+    );
+
+    res.json({
+      success: true,
+      message: 'Google OAuth Client ID & Secret saved successfully in database!',
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 // GET /api/email/oauth/google/url - Generate Google OAuth consent URL for Gmail
 router.get('/oauth/google/url', protect, async (req, res) => {
   try {
-    const clientId = process.env.GOOGLE_CLIENT_ID;
+    const { clientId } = await getGoogleOAuthCredentials();
     if (!clientId) {
       return res.json({
         success: false,
         configured: false,
-        message: 'Google Client ID is not set in environment variables (GOOGLE_CLIENT_ID).',
+        message: 'Google Client ID is not configured yet. Please enter Client ID & Secret below or set GOOGLE_CLIENT_ID.',
       });
     }
 
@@ -436,8 +481,7 @@ router.get('/oauth/google/callback', async (req, res) => {
       return res.status(400).send('OAuth authorization code missing.');
     }
 
-    const clientId = process.env.GOOGLE_CLIENT_ID;
-    const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+    const { clientId, clientSecret } = await getGoogleOAuthCredentials();
     const host = req.get('host');
     const protocol = req.protocol === 'https' || req.headers['x-forwarded-proto'] === 'https' ? 'https' : 'http';
     const redirectUri = `${protocol}://${host}/api/email/oauth/google/callback`;
