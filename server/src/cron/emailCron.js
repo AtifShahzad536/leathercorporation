@@ -481,7 +481,7 @@ const clearLiveExecutionLogs = () => {
   return true;
 };
 
-const sendDailyEmails = async () => {
+const sendDailyEmails = async (options = {}) => {
   const sessionStart = new Date();
   liveExecutionState.isRunning = true;
   liveExecutionState.startTime = sessionStart.toISOString();
@@ -490,8 +490,10 @@ const sendDailyEmails = async () => {
   liveExecutionState.sent = 0;
   liveExecutionState.failed = 0;
 
+  const targetLimit = parseInt(options.limit || process.env.DISPATCH_BATCH_SIZE || '12', 10);
+
   addLiveLog(`🚀 [DUAL-ENGINE] Initialized automated dispatch run at ${sessionStart.toLocaleTimeString('en-US')}`, 'info');
-  addLiveLog(`Target Quota: ${HOSTINGER_QUOTA} Hostinger + ${GMAIL_QUOTA} Gmail = ${TOTAL_DAILY_BATCH} leads`, 'info');
+  addLiveLog(`Dispatch Batch Size: ${targetLimit} leads (Parallel Concurrency Mode • Max Vercel Safety)`, 'info');
 
   try {
     // 1. Find the first active list that has pending emails
@@ -518,10 +520,10 @@ const sendDailyEmails = async () => {
 
     addLiveLog(`✨ Active Templates Synced: ${templates.length} alternating pro templates loaded`, 'info');
 
-    // 3. Pick next TOTAL_DAILY_BATCH pending emails (up to 24 leads)
+    // 3. Pick next batch of pending emails (e.g. 12 leads per fast batch to prevent Vercel 504 timeouts)
     const pendingEmails = activeList.emails
       .filter(e => e.status === 'pending')
-      .slice(0, TOTAL_DAILY_BATCH);
+      .slice(0, targetLimit);
 
     if (pendingEmails.length === 0) {
       activeList.recalcCounts();
@@ -556,161 +558,161 @@ const sendDailyEmails = async () => {
     let gmailSent = 0;
     let gmailFailed = 0;
 
-    // 5. Partition and send each email, rotating templates
-    for (let i = 0; i < pendingEmails.length; i++) {
-      const entry = pendingEmails[i];
-      liveExecutionState.currentLead = entry.email;
-      
-      // Smart Channel Selection:
-      let channel = 'hostinger';
-      if (hostingerReady && gmailReady) {
-        channel = i < HOSTINGER_QUOTA ? 'hostinger' : 'gmail';
-      } else if (hostingerReady && !gmailReady) {
-        channel = 'hostinger'; // Fallback
-      } else if (!hostingerReady && gmailReady) {
-        channel = 'gmail';
-      }
+    // 5. Partition and send emails in parallel chunks of 4 concurrent sends
+    const CHUNK_SIZE = 4;
+    for (let offset = 0; offset < pendingEmails.length; offset += CHUNK_SIZE) {
+      const chunk = pendingEmails.slice(offset, offset + CHUNK_SIZE);
+      await Promise.all(chunk.map(async (entry, chunkIdx) => {
+        const i = offset + chunkIdx;
+        liveExecutionState.currentLead = entry.email;
 
-      const senderConfig = channel === 'hostinger' ? hostingerConfig : gmailConfig;
-      const transporter = channel === 'hostinger' ? hostingerTransporter : gmailTransporter;
+        // Alternate channels when both ready: even index -> Hostinger, odd index -> Gmail
+        let channel = 'hostinger';
+        if (hostingerReady && gmailReady) {
+          channel = (i % 2 === 0) ? 'hostinger' : 'gmail';
+        } else if (hostingerReady && !gmailReady) {
+          channel = 'hostinger';
+        } else if (!hostingerReady && gmailReady) {
+          channel = 'gmail';
+        }
 
-      // Rotate templates
-      const template = templates[i % templates.length];
+        const senderConfig = channel === 'hostinger' ? hostingerConfig : gmailConfig;
+        const transporter = channel === 'hostinger' ? hostingerTransporter : gmailTransporter;
+        const template = templates[i % templates.length];
 
-      addLiveLog(`[${i + 1}/${pendingEmails.length}] [${channel.toUpperCase()}] Preparing: ${entry.email} (Template: "${template.name}")`, channel);
+        addLiveLog(`[${i + 1}/${pendingEmails.length}] [${channel.toUpperCase()}] Preparing: ${entry.email} (Template: "${template.name}")`, channel);
 
-      let effectiveChannel = channel;
-      let effectiveSenderConfig = senderConfig;
-      let effectiveTransporter = transporter;
+        let effectiveChannel = channel;
+        let effectiveSenderConfig = senderConfig;
+        let effectiveTransporter = transporter;
 
-      try {
-        let html = template.htmlBody
-          .replace(/{{name}}/gi, entry.name || 'Team Director')
-          .replace(/{{email}}/gi, entry.email)
-          .replace(/{{company}}/gi, entry.company || 'Athletic Program');
-
-        let subject = template.subject
-          .replace(/{{name}}/gi, entry.name || 'Team Director')
-          .replace(/{{company}}/gi, entry.company || 'Athletic Program');
-
-        let delivered = false;
-        let lastError = null;
-
-        // Try primary channel
         try {
-          await effectiveTransporter.sendMail({
-            from: effectiveSenderConfig.from,
-            replyTo: effectiveSenderConfig.replyTo,
-            to: entry.email,
-            subject,
-            html,
-          });
-          delivered = true;
-        } catch (primaryErr) {
-          lastError = primaryErr;
-          // Smart fallback: If Gmail fails (e.g. Gmail API disabled or OAuth expired), auto-route via Hostinger!
-          if (effectiveChannel === 'gmail' && hostingerReady) {
-            addLiveLog(`  ⚠️ [GMAIL RE-ROUTE] ${primaryErr.message}. Automatically routing via Hostinger for ${entry.email}...`, 'warn');
-            try {
-              effectiveChannel = 'hostinger';
-              effectiveSenderConfig = hostingerConfig;
-              effectiveTransporter = hostingerTransporter;
-              await effectiveTransporter.sendMail({
-                from: effectiveSenderConfig.from,
-                replyTo: effectiveSenderConfig.replyTo,
-                to: entry.email,
-                subject,
-                html,
-              });
-              delivered = true;
-            } catch (fallbackErr) {
-              lastError = fallbackErr;
+          let html = template.htmlBody
+            .replace(/{{name}}/gi, entry.name || 'Team Director')
+            .replace(/{{email}}/gi, entry.email)
+            .replace(/{{company}}/gi, entry.company || 'Athletic Program');
+
+          let subject = template.subject
+            .replace(/{{name}}/gi, entry.name || 'Team Director')
+            .replace(/{{company}}/gi, entry.company || 'Athletic Program');
+
+          let delivered = false;
+          let lastError = null;
+
+          // Try primary channel
+          try {
+            await effectiveTransporter.sendMail({
+              from: effectiveSenderConfig.from,
+              replyTo: effectiveSenderConfig.replyTo,
+              to: entry.email,
+              subject,
+              html,
+            });
+            delivered = true;
+          } catch (primaryErr) {
+            lastError = primaryErr;
+            // Smart fallback: If Gmail fails (e.g. Gmail API disabled or OAuth expired), auto-route via Hostinger!
+            if (effectiveChannel === 'gmail' && hostingerReady) {
+              addLiveLog(`  ⚠️ [GMAIL RE-ROUTE] ${primaryErr.message}. Automatically routing via Hostinger for ${entry.email}...`, 'warn');
+              try {
+                effectiveChannel = 'hostinger';
+                effectiveSenderConfig = hostingerConfig;
+                effectiveTransporter = hostingerTransporter;
+                await effectiveTransporter.sendMail({
+                  from: effectiveSenderConfig.from,
+                  replyTo: effectiveSenderConfig.replyTo,
+                  to: entry.email,
+                  subject,
+                  html,
+                });
+                delivered = true;
+              } catch (fallbackErr) {
+                lastError = fallbackErr;
+              }
             }
           }
-        }
 
-        if (!delivered) {
-          throw lastError || new Error('Delivery failed on all channels');
-        }
-
-        // 1. Immediately update entry in memory and ATOMICALLY in MongoDB
-        await EmailList.updateOne(
-          { _id: activeList._id, 'emails._id': entry._id },
-          {
-            $set: {
-              'emails.$.status': 'sent',
-              'emails.$.sentAt': new Date(),
-              'emails.$.templateUsed': template.name,
-              'emails.$.senderEmail': effectiveSenderConfig.user,
-              'emails.$.senderChannel': effectiveChannel,
-            },
-            $inc: { sentCount: 1, pendingCount: -1 }
+          if (!delivered) {
+            throw lastError || new Error('Delivery failed on all channels');
           }
-        );
 
-        // 2. Log success
-        await EmailLog.create({
-          to: entry.email,
-          from: effectiveSenderConfig.user,
-          senderChannel: effectiveChannel,
-          subject,
-          templateId: template._id,
-          templateName: template.name,
-          status: 'sent',
-          listId: activeList._id,
-        });
+          // Atomically update in MongoDB
+          await EmailList.updateOne(
+            { _id: activeList._id, 'emails._id': entry._id },
+            {
+              $set: {
+                'emails.$.status': 'sent',
+                'emails.$.sentAt': new Date(),
+                'emails.$.templateUsed': template.name,
+                'emails.$.senderEmail': effectiveSenderConfig.user,
+                'emails.$.senderChannel': effectiveChannel,
+              },
+              $inc: { sentCount: 1, pendingCount: -1 }
+            }
+          );
 
-        template.sendCount = (template.sendCount || 0) + 1;
-        await template.save();
+          await EmailLog.create({
+            to: entry.email,
+            from: effectiveSenderConfig.user,
+            senderChannel: effectiveChannel,
+            subject,
+            templateId: template._id,
+            templateName: template.name,
+            status: 'sent',
+            listId: activeList._id,
+          });
 
-        if (effectiveChannel === 'hostinger') {
-          hostingerSent++;
-        } else {
-          gmailSent++;
-        }
+          template.sendCount = (template.sendCount || 0) + 1;
+          await template.save();
 
-        liveExecutionState.processed = i + 1;
-        liveExecutionState.sent = hostingerSent + gmailSent;
-
-        addLiveLog(`  ✅ [${effectiveChannel.toUpperCase()}] DELIVERED to ${entry.email} via ${effectiveSenderConfig.user} (250 OK)`, 'success', { lead: entry.email, channel: effectiveChannel });
-      } catch (sendError) {
-        if (effectiveChannel === 'hostinger') {
-          hostingerFailed++;
-        } else {
-          gmailFailed++;
-        }
-
-        // Atomically record failure in MongoDB
-        await EmailList.updateOne(
-          { _id: activeList._id, 'emails._id': entry._id },
-          {
-            $set: {
-              'emails.$.status': 'failed',
-              'emails.$.errorMessage': sendError.message,
-              'emails.$.senderChannel': effectiveChannel,
-              'emails.$.senderEmail': effectiveSenderConfig.user,
-            },
-            $inc: { failedCount: 1, pendingCount: -1 }
+          if (effectiveChannel === 'hostinger') {
+            hostingerSent++;
+          } else {
+            gmailSent++;
           }
-        );
 
-        await EmailLog.create({
-          to: entry.email,
-          from: effectiveSenderConfig.user,
-          senderChannel: effectiveChannel,
-          subject: template.subject,
-          templateId: template._id,
-          templateName: template.name,
-          status: 'failed',
-          error: sendError.message,
-          listId: activeList._id,
-        });
+          liveExecutionState.processed = liveExecutionState.processed + 1;
+          liveExecutionState.sent = hostingerSent + gmailSent;
 
-        liveExecutionState.processed = i + 1;
-        liveExecutionState.failed = hostingerFailed + gmailFailed;
+          addLiveLog(`  ✅ [${effectiveChannel.toUpperCase()}] DELIVERED to ${entry.email} via ${effectiveSenderConfig.user} (250 OK)`, 'success', { lead: entry.email, channel: effectiveChannel });
+        } catch (sendError) {
+          if (effectiveChannel === 'hostinger') {
+            hostingerFailed++;
+          } else {
+            gmailFailed++;
+          }
 
-        addLiveLog(`  ❌ [${effectiveChannel.toUpperCase()}] FAILED for ${entry.email}: ${sendError.message}`, 'error', { lead: entry.email, channel: effectiveChannel, error: sendError.message });
-      }
+          await EmailList.updateOne(
+            { _id: activeList._id, 'emails._id': entry._id },
+            {
+              $set: {
+                'emails.$.status': 'failed',
+                'emails.$.errorMessage': sendError.message,
+                'emails.$.senderChannel': effectiveChannel,
+                'emails.$.senderEmail': effectiveSenderConfig.user,
+              },
+              $inc: { failedCount: 1, pendingCount: -1 }
+            }
+          );
+
+          await EmailLog.create({
+            to: entry.email,
+            from: effectiveSenderConfig.user,
+            senderChannel: effectiveChannel,
+            subject: template.subject,
+            templateId: template._id,
+            templateName: template.name,
+            status: 'failed',
+            error: sendError.message,
+            listId: activeList._id,
+          });
+
+          liveExecutionState.processed = liveExecutionState.processed + 1;
+          liveExecutionState.failed = hostingerFailed + gmailFailed;
+
+          addLiveLog(`  ❌ [${effectiveChannel.toUpperCase()}] FAILED for ${entry.email}: ${sendError.message}`, 'error', { lead: entry.email, channel: effectiveChannel, error: sendError.message });
+        }
+      }));
     }
 
     // 6. Recalculate counts and sync final state

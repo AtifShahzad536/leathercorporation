@@ -18,9 +18,13 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      localStorage.removeItem('hamlo_admin_token');
-      localStorage.removeItem('hamlo_admin_user');
-      window.dispatchEvent(new Event('auth_logout'));
+      const url = error.config?.url || '';
+      // Do not kill session on background polling of live logs or connectors
+      if (!url.includes('/live-logs') && !url.includes('/connectors')) {
+        localStorage.removeItem('hamlo_admin_token');
+        localStorage.removeItem('hamlo_admin_user');
+        window.dispatchEvent(new Event('auth_logout'));
+      }
     }
     return Promise.reject(error);
   }

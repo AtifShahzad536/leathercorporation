@@ -622,10 +622,11 @@ router.all('/cron-trigger', async (req, res) => {
   }
 });
 
-// POST /api/email/send-batch - Admin trigger: immediately dispatch the next dual pending batch (24 leads)
+// POST /api/email/send-batch - Admin trigger: immediately dispatch the next dual pending batch (fast parallel execution)
 router.post('/send-batch', protect, async (req, res) => {
   try {
-    const result = await sendDailyEmails();
+    const limit = parseInt(req.body?.limit || req.query?.limit || '12', 10);
+    const result = await sendDailyEmails({ limit });
     res.json({
       success: result.success !== false,
       message: result.message || 'Dual batch dispatched successfully',

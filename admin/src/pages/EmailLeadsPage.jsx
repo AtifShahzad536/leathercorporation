@@ -242,7 +242,7 @@ export default function EmailLeadsPage() {
     setConsoleExpanded(true);
     fetchLiveLogs();
     try {
-      const res = await api.post('/email/send-batch');
+      const res = await api.post('/email/send-batch', { limit: 12 });
       setBatchResult({ type: res.data.success ? 'success' : 'error', text: res.data.message });
       fetchData();
       fetchLiveLogs();
@@ -644,27 +644,27 @@ export default function EmailLeadsPage() {
             </div>
 
             {/* Right Column: Unified Primary Dispatch Action Button (lg:col-span-3) */}
-            <div className="lg:col-span-3 flex flex-col items-stretch justify-center gap-2.5">
+            <div className="lg:col-span-3 flex flex-col items-stretch justify-center gap-2">
               <button
                 onClick={handleSendBatchNow}
                 disabled={sendingBatch}
-                className="w-full py-4 px-5 bg-gradient-to-r from-[#F26522] to-orange-600 hover:from-[#d95316] hover:to-orange-700 text-white rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-md hover:shadow-lg transition cursor-pointer disabled:opacity-50"
+                className="w-full py-3.5 px-5 bg-gradient-to-r from-[#F26522] to-orange-600 hover:from-[#d95316] hover:to-orange-700 text-white rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-md hover:shadow-lg transition cursor-pointer disabled:opacity-50"
               >
                 {sendingBatch ? (
                   <>
                     <Loader2 size={18} className="animate-spin" />
-                    <span>Dispatching 24 Leads...</span>
+                    <span>Dispatching 12 Leads...</span>
                   </>
                 ) : (
                   <>
                     <Zap size={18} className="fill-white" />
-                    <span>Dispatch 24 Leads Now</span>
+                    <span>Dispatch 12 Leads Now</span>
                   </>
                 )}
               </button>
-              <div className="flex items-center justify-center gap-2 text-[11px] text-slate-500 font-medium">
+              <div className="flex items-center justify-center gap-2 text-[10px] text-slate-500 font-medium">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-                <span>Auto-Runs Daily at 9:00 AM: <strong className="text-slate-800">Active</strong></span>
+                <span>Fast 4x Parallel Dispatch • Zero Timeout</span>
               </div>
             </div>
 
